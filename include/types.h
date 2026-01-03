@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                             :+:      :+:    :+:   */
+/*   types.h                                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,6 +14,8 @@
 # define TYPES_H
 
 # include <cub3d.h>
+
+# define MAX_KEYS	512
 
 /* ************************************************************************** */
 /*    NUMERIC TYPES                                                           */
@@ -167,5 +169,11 @@ typedef enum e_comp
 	COMP_TRIGGER = 1 << 13,
 	COMP_LIGHT = 1 << 14
 }	t_comp;
+
+typedef enum e_axis
+{
+	AXIS_X = 0,
+	AXIS_Y = 1
+}	t_axis;
 
 #endif

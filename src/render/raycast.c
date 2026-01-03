@@ -12,9 +12,6 @@
 
 #include <cub3d.h>
 
-# define AXIS_X 0
-# define AXIS_Y 1
-
 typedef struct s_ray
 {
 	t_vec2	dir;

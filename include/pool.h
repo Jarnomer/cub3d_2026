@@ -17,7 +17,9 @@
 
 # define DARRAY_INITIAL_CAP 8
 # define DARRAY_GROWTH_FACTOR 2
-# define ARENA_ALIGNMENT 8
+# define DARRAY_TEMP_SIZE   256
+
+# define ARENA_ALIGNMENT    8
 
 typedef struct s_pool
 {

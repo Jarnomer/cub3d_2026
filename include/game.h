@@ -32,8 +32,8 @@ typedef struct s_map
 
 typedef struct s_input
 {
-	bool	keys[512];
-	bool	keys_prev[512];
+	bool	keys[MAX_KEYS];
+	bool	keys_prev[MAX_KEYS];
 	t_vec2	mouse_pos;
 	t_vec2	mouse_delta;
 	bool	mouse_captured;

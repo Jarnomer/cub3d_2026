@@ -31,7 +31,7 @@ t_u32	rand_next(void)
 
 t_f32	rand_float(void)
 {
-	return ((t_f32)rand_next() / (t_f32)0xFFFFFFFF);
+	return ((t_f32)rand_next() / (t_f32)U32_MAX);
 }
 
 t_f32	rand_range(t_f32 lo, t_f32 hi)

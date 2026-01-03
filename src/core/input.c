@@ -22,7 +22,7 @@ void	input_update(t_game *game)
 	int	i;
 
 	i = 0;
-	while (i < 512)
+	while (i < MAX_KEYS)
 	{
 		game->input.keys_prev[i] = game->input.keys[i];
 		game->input.keys[i] = mlx_is_key_down(game->mlx, i);
@@ -32,21 +32,21 @@ void	input_update(t_game *game)
 
 bool	input_key_down(t_input *input, int key)
 {
-	if (key < 0 || key >= 512)
+	if (key < 0 || key >= MAX_KEYS)
 		return (false);
 	return (input->keys[key]);
 }
 
 bool	input_key_pressed(t_input *input, int key)
 {
-	if (key < 0 || key >= 512)
+	if (key < 0 || key >= MAX_KEYS)
 		return (false);
 	return (input->keys[key] && !input->keys_prev[key]);
 }
 
 bool	input_key_released(t_input *input, int key)
 {
-	if (key < 0 || key >= 512)
+	if (key < 0 || key >= MAX_KEYS)
 		return (false);
 	return (!input->keys[key] && input->keys_prev[key]);
 }

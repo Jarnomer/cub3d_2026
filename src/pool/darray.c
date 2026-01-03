@@ -25,7 +25,7 @@ void	darray_init(t_darray *arr, size_t elem_size, size_t init_cap)
 void	darray_destroy(t_darray *arr)
 {
 	free(arr->data);
-	*arr = (t_darray){0}
+	ft_bzero(arr, sizeof(t_darray));
 }
 
 void	darray_clear(t_darray *arr)

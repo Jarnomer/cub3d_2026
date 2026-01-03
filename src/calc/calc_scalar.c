@@ -45,6 +45,6 @@ t_f32	absf(t_f32 val)
 t_f32	inv_absf(t_f32 v)
 {
 	if (v == 0.0f)
-		return (1e30f);
+		return (INFINITE);
 	return (absf(1.0f / v));
 }

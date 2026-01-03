@@ -14,7 +14,7 @@
 
 t_err	darray_swap(t_darray *arr, size_t i, size_t j)
 {
-	char	temp[256];
+	char	temp[DARRAY_TEMP_SIZE];
 	void	*pi;
 	void	*pj;
 
