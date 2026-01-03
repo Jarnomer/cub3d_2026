@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                             :+:      :+:    :+:  */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
 
-# include <cub3d.h>
-
-# define MAX_KEYS	512
+# include <stdint.h>
+# include <stdbool.h>
+# include <stddef.h>
 
 /* ************************************************************************** */
 /*    NUMERIC TYPES                                                           */
@@ -33,35 +33,22 @@ typedef float		t_f32;
 typedef double		t_f64;
 
 /* ************************************************************************** */
-/*    VECTOR TYPES                                                            */
+/*    NUMERIC CONSTANTS                                                       */
 /* ************************************************************************** */
 
-typedef struct s_vec2
-{
-	t_f32	x;
-	t_f32	y;
-}	t_vec2;
+# define U32_MAX		0xFFFFFFFF
+# define FLOAT_LARGE	1e30f
 
-typedef struct s_vec2i
-{
-	t_i32	x;
-	t_i32	y;
-}	t_vec2i;
+/* ************************************************************************** */
+/*    MATH CONSTANTS                                                          */
+/* ************************************************************************** */
 
-typedef struct s_vec3
-{
-	t_f32	x;
-	t_f32	y;
-	t_f32	z;
-}	t_vec3;
-
-typedef struct s_vec4
-{
-	t_f32	x;
-	t_f32	y;
-	t_f32	z;
-	t_f32	w;
-}	t_vec4;
+# define PI				3.14159265358979323846f
+# define TAU			6.28318530717958647692f
+# define PI_HALF		1.57079632679489661923f
+# define DEG2RAD		0.01745329251994329577f
+# define RAD2DEG		57.2957795130823208768f
+# define EPSILON		0.0001f
 
 /* ************************************************************************** */
 /*    COLOR TYPES                                                             */
@@ -104,6 +91,12 @@ typedef struct s_rectf
 /* ************************************************************************** */
 /*    DIRECTION TYPES                                                         */
 /* ************************************************************************** */
+
+typedef enum e_axis
+{
+	AXIS_X = 0,
+	AXIS_Y = 1
+}	t_axis;
 
 typedef enum e_dir4
 {
@@ -169,11 +162,5 @@ typedef enum e_comp
 	COMP_TRIGGER = 1 << 13,
 	COMP_LIGHT = 1 << 14
 }	t_comp;
-
-typedef enum e_axis
-{
-	AXIS_X = 0,
-	AXIS_Y = 1
-}	t_axis;
 
 #endif

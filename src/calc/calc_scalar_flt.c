@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar.c                                      :+:      :+:    :+:   */
+/*   calc_scalar_flt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <calc.h>
+#include <game.h>
 
 t_f32	minf(t_f32 a, t_f32 b)
 {
@@ -45,6 +45,6 @@ t_f32	absf(t_f32 val)
 t_f32	inv_absf(t_f32 v)
 {
 	if (v == 0.0f)
-		return (INFINITE);
+		return (FLOAT_LARGE);
 	return (absf(1.0f / v));
 }

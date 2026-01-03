@@ -5,17 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pool.h>
+#include <game.h>
 
 void	arena_init(t_arena *arena, size_t size)
 {
 	arena->data = safe_calloc(size);
 	arena->size = size;
+	arena->offset = 0;
+	arena->peak_usage = 0;
 }
 
 void	arena_destroy(t_arena *arena)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <calc.h>
+#include <game.h>
 
 t_f32	deg_to_rad(t_f32 deg)
 {
@@ -24,10 +24,9 @@ t_f32	rad_to_deg(t_f32 rad)
 
 t_f32	angle_normalize(t_f32 angle)
 {
-	while (angle < 0)
+	angle = fmodf(angle, TAU);
+	if (angle < 0.0f)
 		angle += TAU;
-	while (angle >= TAU)
-		angle -= TAU;
 	return (angle);
 }
 
@@ -35,10 +34,10 @@ t_f32	angle_diff(t_f32 from, t_f32 to)
 {
 	t_f32	diff;
 
-	diff = to - from;
-	while (diff > PI)
+	diff = fmodf(to - from, TAU);
+	if (diff > PI)
 		diff -= TAU;
-	while (diff < -PI)
+	else if (diff < -PI)
 		diff += TAU;
 	return (diff);
 }

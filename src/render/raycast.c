@@ -5,24 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
-
-typedef struct s_ray
-{
-	t_vec2	dir;
-	t_vec2	delta;
-	t_vec2	axis;
-	t_vec2i	pos;
-	t_vec2i	step;
-	t_f32	perp_dist;
-	int		side;
-	bool	hit;
-}	t_ray;
+#include <game.h>
 
 static void	init_ray(t_ray *ray, t_game *game, int x)
 {

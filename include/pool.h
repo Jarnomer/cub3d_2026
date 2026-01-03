@@ -5,48 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef POOL_H
 # define POOL_H
 
-# include <cub3d.h>
+# include <types.h>
+# include <error.h>
 
-# define DARRAY_INITIAL_CAP 8
-# define DARRAY_GROWTH_FACTOR 2
-# define DARRAY_TEMP_SIZE   256
+/* ************************************************************************** */
+/*    POOL CONSTANTS                                                          */
+/* ************************************************************************** */
 
-# define ARENA_ALIGNMENT    8
+# define DARRAY_INITIAL_CAP		8
+# define DARRAY_GROWTH_FACTOR	2
+# define ARENA_ALIGNMENT		8
+
+/* ************************************************************************** */
+/*    OBJECT POOL                                                             */
+/* ************************************************************************** */
+
+/*
+** Generic object pool for zero-allocation entity management
+** - Pre-allocates fixed capacity at startup
+** - No memory allocation during gameplay
+*/
 
 typedef struct s_pool
 {
 	void		*data;
 	t_u32		*free_stack;
+	t_u8		*active_flags;
 	t_u32		capacity;
 	t_u32		free_count;
 	t_u32		active_count;
 	size_t		elem_size;
-	t_u8		*active_flags;
 }	t_pool;
-
-typedef struct s_arena
-{
-	t_u8		*data;
-	size_t		size;
-	size_t		offset;
-	size_t		peak_usage;
-}	t_arena;
-
-typedef struct s_darray
-{
-	void		*data;
-	size_t		size;
-	size_t		capacity;
-	size_t		elem_size;
-}	t_darray;
 
 void	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size);
 void	pool_destroy(t_pool *pool);
@@ -59,6 +56,26 @@ bool	pool_is_empty(t_pool *pool);
 bool	pool_is_full(t_pool *pool);
 t_u32	pool_active_count(t_pool *pool);
 
+/* ************************************************************************** */
+/*    MEMORY ARENA                                                            */
+/* ************************************************************************** */
+
+/*
+** Linear allocator for per-frame temporary allocations
+** - Single allocation at startup
+** - O(1) allocation (pointer bump)
+** - O(1) reset (just reset offset)
+** - No free calls needed
+*/
+
+typedef struct s_arena
+{
+	t_u8		*data;
+	size_t		size;
+	size_t		offset;
+	size_t		peak_usage;
+}	t_arena;
+
 void	arena_init(t_arena *arena, size_t size);
 void	arena_destroy(t_arena *arena);
 void	*arena_alloc(t_arena *arena, size_t size);
@@ -67,6 +84,24 @@ void	*arena_calloc(t_arena *arena, size_t count, size_t size);
 void	arena_reset(t_arena *arena);
 size_t	arena_usage(t_arena *arena);
 size_t	arena_peak(t_arena *arena);
+
+/* ************************************************************************** */
+/*    DYNAMIC ARRAY                                                           */
+/* ************************************************************************** */
+
+/*
+** Generic growable array
+** - Automatic capacity growth (factor of 2)
+** - Type-agnostic via void* and element size
+*/
+
+typedef struct s_darray
+{
+	void		*data;
+	size_t		size;
+	size_t		capacity;
+	size_t		elem_size;
+}	t_darray;
 
 void	darray_init(t_darray *arr, size_t elem_size, size_t init_cap);
 void	darray_destroy(t_darray *arr);

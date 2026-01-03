@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,22 @@
 # define WIN_RESIZABLE	1
 
 /* ************************************************************************** */
+/*    INPUT SETTINGS                                                          */
+/* ************************************************************************** */
+
+# define MAX_KEYS		512
+
+/* ************************************************************************** */
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
-# define RENDER_SCALE	1
-# define FOV_DEFAULT	66.0f
-# define FOV_MIN		30.0f
-# define FOV_MAX		120.0f
-# define Z_NEAR			0.1f
-# define Z_FAR			64.0f
-# define MAX_RENDER_DIST 32.0f
+# define RENDER_SCALE		1
+# define FOV_DEFAULT		66.0f
+# define FOV_MIN			30.0f
+# define FOV_MAX			120.0f
+# define Z_NEAR				0.1f
+# define Z_FAR				64.0f
+# define MAX_RENDER_DIST	32.0f
 
 /* ************************************************************************** */
 /*    RAYCAST SETTINGS                                                        */
@@ -79,10 +85,10 @@
 /*    ENEMY SETTINGS                                                          */
 /* ************************************************************************** */
 
-# define ENEMY_SIGHT_RANGE	16.0f
-# define ENEMY_ATTACK_RANGE	1.5f
-# define ENEMY_ALERT_DECAY	0.5f
-# define ENEMY_PATROL_RADIUS 4.0f
+# define ENEMY_SIGHT_RANGE		16.0f
+# define ENEMY_ATTACK_RANGE		1.5f
+# define ENEMY_ALERT_DECAY		0.5f
+# define ENEMY_PATROL_RADIUS	4.0f
 
 /* ************************************************************************** */
 /*    COMBAT SETTINGS                                                         */
@@ -129,11 +135,11 @@
 /*    DEBUG SETTINGS                                                          */
 /* ************************************************************************** */
 
-# define DEBUG_SHOW_FPS		1
-# define DEBUG_SHOW_POS		0
-# define DEBUG_SHOW_COLLIDERS 0
-# define DEBUG_SHOW_SPATIAL	0
-# define DEBUG_SHOW_AI		0
+# define DEBUG_SHOW_FPS			1
+# define DEBUG_SHOW_POS			0
+# define DEBUG_SHOW_COLLIDERS	0
+# define DEBUG_SHOW_SPATIAL		0
+# define DEBUG_SHOW_AI			0
 
 /* ************************************************************************** */
 /*    MAP LIMITS                                                              */
@@ -150,12 +156,12 @@
 /*    FILE PATHS                                                              */
 /* ************************************************************************** */
 
-# define PATH_ASSETS		"assets/"
-# define PATH_TEXTURES		"assets/textures/"
-# define PATH_SPRITES		"assets/sprites/"
-# define PATH_SOUNDS		"assets/sounds/"
-# define PATH_MAPS			"assets/maps/"
-# define PATH_CONFIG		"config/"
+# define PATH_ASSETS	"assets/"
+# define PATH_TEXTURES	"assets/textures/"
+# define PATH_SPRITES	"assets/sprites/"
+# define PATH_SOUNDS	"assets/sounds/"
+# define PATH_MAPS		"assets/maps/"
+# define PATH_CONFIG	"config/"
 
 /* ************************************************************************** */
 /*    RUNTIME CONFIG STRUCTURE                                                */

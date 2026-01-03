@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pool.h>
+#include <game.h>
 
 t_err	darray_swap(t_darray *arr, size_t i, size_t j)
 {
-	char	temp[DARRAY_TEMP_SIZE];
+	void	*temp;
 	void	*pi;
 	void	*pj;
 
@@ -22,11 +22,13 @@ t_err	darray_swap(t_darray *arr, size_t i, size_t j)
 		return (ERR_INVALID);
 	if (i == j)
 		return (ERR_NONE);
+	temp = safe_calloc(arr->elem_size);
 	pi = (char *)arr->data + i * arr->elem_size;
 	pj = (char *)arr->data + j * arr->elem_size;
 	ft_memcpy(temp, pi, arr->elem_size);
 	ft_memcpy(pi, pj, arr->elem_size);
 	ft_memcpy(pj, temp, arr->elem_size);
+	free(temp);
 	return (ERR_NONE);
 }
 

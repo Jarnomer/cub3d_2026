@@ -106,9 +106,9 @@ SOURCES := main \
            calc_rand \
            calc_rand_vec \
            calc_rect \
-           calc_scalar \
-           calc_scalar_ops \
+           calc_scalar_flt \
            calc_scalar_int \
+           calc_scalar_ops \
            vec2 \
            vec2_arith \
            vec2_prod \
