@@ -1,0 +1,14 @@
+cub3D
+*build
+*lib
+*bak
+*docs
+*.vscode
+*.DS_Store
+*.log
+*.pdf
+*.txt
+*.sh
+*.a
+*.o
+*.d

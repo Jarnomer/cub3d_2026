@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   safe_srt.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <cub3d.h>
+
+void	*safe_calloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = ft_calloc(1, size);
+	if (!ptr)
+	{
+		perror(ERR_PREFIX);
+		exit(EXIT_FAILURE);
+	}
+	return (ptr);
+}
+
+char	*safe_strjoin(char *s1, char *s2)
+{
+	char	*s;
+
+	s = ft_strjoin(s1, s2);
+	if (!s)
+	{
+		perror(ERR_PREFIX);
+		exit(EXIT_FAILURE);
+	}
+	return (s);
+}
+
+char	*safe_strdup(char *s1)
+{
+	char	*s;
+
+	s = ft_strdup(s1);
+	if (!s)
+	{
+		perror(ERR_PREFIX);
+		exit(EXIT_FAILURE);
+	}
+	return (s);
+}
+
+char	**safe_split(char *str, char c)
+{
+	char	**s;
+
+	s = ft_split(str, c);
+	if (!s)
+	{
+		perror(ERR_PREFIX);
+		exit(EXIT_FAILURE);
+	}
+	return (s);
+}
