@@ -27,11 +27,11 @@ static void	darray_grow(t_darray *arr)
 		ft_memcpy(new_data, arr->data, arr->size * arr->elem_size);
 		free(arr->data);
 	}
-	arr->data = new_data;
 	arr->capacity = new_cap;
+	arr->data = new_data;
 }
 
-t_err	darray_push(t_darray *arr, const void *elem)
+void	darray_push(t_darray *arr, const void *elem)
 {
 	void	*dest;
 
@@ -40,7 +40,6 @@ t_err	darray_push(t_darray *arr, const void *elem)
 	dest = (char *)arr->data + arr->size * arr->elem_size;
 	ft_memcpy(dest, elem, arr->elem_size);
 	arr->size++;
-	return (ERR_NONE);
 }
 
 t_err	darray_pop(t_darray *arr, void *out)
@@ -58,33 +57,31 @@ t_err	darray_pop(t_darray *arr, void *out)
 	return (ERR_NONE);
 }
 
-t_err	darray_shrink(t_darray *arr)
+void	darray_shrink(t_darray *arr)
 {
 	void	*new_data;
 
 	if (arr->size == arr->capacity || arr->size == 0)
-		return (ERR_NONE);
+		return ;
 	new_data = safe_calloc(arr->size * arr->elem_size);
 	ft_memcpy(new_data, arr->data, arr->size * arr->elem_size);
-	free(arr->data);
-	arr->data = new_data;
 	arr->capacity = arr->size;
-	return (ERR_NONE);
+	arr->data = new_data;
+	free(arr->data);
 }
 
-t_err	darray_reserve(t_darray *arr, size_t capacity)
+void	darray_reserve(t_darray *arr, size_t capacity)
 {
 	void	*new_data;
 
 	if (capacity <= arr->capacity)
-		return (ERR_NONE);
+		return ;
 	new_data = safe_calloc(capacity * arr->elem_size);
 	if (arr->data)
 	{
 		ft_memcpy(new_data, arr->data, arr->size * arr->elem_size);
 		free(arr->data);
 	}
-	arr->data = new_data;
 	arr->capacity = capacity;
-	return (ERR_NONE);
+	arr->data = new_data;
 }

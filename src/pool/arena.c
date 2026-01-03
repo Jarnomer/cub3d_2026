@@ -12,25 +12,16 @@
 
 #include <pool.h>
 
-#define ARENA_ALIGNMENT 8
-
-t_err	arena_init(t_arena *arena, size_t size)
+void	arena_init(t_arena *arena, size_t size)
 {
 	arena->data = safe_calloc(size);
 	arena->size = size;
-	arena->offset = 0;
-	arena->peak_usage = 0;
-	return (ERR_NONE);
 }
 
 void	arena_destroy(t_arena *arena)
 {
-	if (arena->data)
-		free(arena->data);
-	arena->data = NULL;
-	arena->size = 0;
-	arena->offset = 0;
-	arena->peak_usage = 0;
+	free(arena->data);
+	ft_bzero(arena, sizeof(t_arena));
 }
 
 static size_t	align_up(size_t value, size_t alignment)
@@ -58,9 +49,11 @@ void	*arena_calloc(t_arena *arena, size_t count, size_t size)
 	void	*ptr;
 	size_t	total;
 
+	if (count > SIZE_MAX / size)
+		return (NULL);
 	total = count * size;
 	ptr = arena_alloc(arena, total);
 	if (ptr)
-		ft_memset(ptr, 0, total);
+		ft_bzero(ptr, total);
 	return (ptr);
 }

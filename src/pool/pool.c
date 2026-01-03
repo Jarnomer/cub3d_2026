@@ -12,7 +12,7 @@
 
 #include <pool.h>
 
-t_err	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size)
+void	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size)
 {
 	t_u32	i;
 
@@ -28,20 +28,14 @@ t_err	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size)
 		pool->free_stack[i] = capacity - 1 - i;
 		i++;
 	}
-	return (ERR_NONE);
 }
 
 void	pool_destroy(t_pool *pool)
 {
-	if (pool->data)
-		free(pool->data);
-	if (pool->free_stack)
-		free(pool->free_stack);
-	pool->data = NULL;
-	pool->free_stack = NULL;
-	pool->capacity = 0;
-	pool->free_count = 0;
-	pool->active_count = 0;
+	free(pool->data);
+	free(pool->free_stack);
+	free(pool->active_flags);
+	ft_bzero(pool, sizeof(t_pool));
 }
 
 t_i32	pool_alloc(t_pool *pool)
