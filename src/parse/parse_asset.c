@@ -18,10 +18,10 @@ static int	parse_color_value(char *str)
 
 	str = parse_skip_spaces(str);
 	if (!ft_isdigit(*str))
-		err_exit_context(str, MSG_COLOR_FMT);
+		err_exit_msg(MSG_COLOR_FMT);
 	value = ft_atoi(str);
 	if (value < 0 || value > 255)
-		err_exit_context(str, MSG_COLOR_VAL);
+		err_exit_msg(MSG_COLOR_VAL);
 	return (value);
 }
 
@@ -42,39 +42,23 @@ static t_color	extract_rgb(char **parts)
 	return (color);
 }
 
-static void	validate_color_commas(char *str)
+static void	validate_color_format(char *str)
 {
 	int		i;
 	char	*trimmed;
 
+	if (!str || *str == '\0')
+		err_exit_msg(MSG_COLOR_FMT);
 	trimmed = parse_skip_spaces(str);
 	if (*trimmed == ',')
-		err_exit_context(str, MSG_COLOR_FMT);
-	i = ft_strlen(str) - 1;
-	while (i >= 0 && str[i] == ' ')
-		i--;
-	if (i >= 0 && str[i] == ',')
-		err_exit_context(str, MSG_COLOR_FMT);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ',' && str[i + 1] == ',')
-			err_exit_context(str, MSG_COLOR_FMT);
-		i++;
-	}
-}
-
-static void	validate_color_chars(char *str)
-{
-	int	i;
-
-	if (!str || *str == '\0')
-		err_exit_context(str, MSG_COLOR_FMT);
+		err_exit_msg(MSG_COLOR_FMT);
 	i = 0;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != ',')
-			err_exit_context(str, MSG_COLOR_FMT);
+			err_exit_msg(MSG_COLOR_FMT);
+		if (str[i] == ',' && str[i + 1] == ',')
+			err_exit_msg(MSG_COLOR_FMT);
 		i++;
 	}
 }
@@ -87,8 +71,7 @@ void	parse_color(t_parse *ctx, t_elem type)
 
 	value = parse_skip_spaces(ctx->line + 2);
 	parse_remove_newline(value);
-	validate_color_chars(value);
-	validate_color_commas(value);
+	validate_color_format(value);
 	parts = safe_split(value, ',');
 	color = extract_rgb(parts);
 	ft_free_double((void ***)&parts);
@@ -96,4 +79,16 @@ void	parse_color(t_parse *ctx, t_elem type)
 		ctx->map->floor = color;
 	else
 		ctx->map->ceiling = color;
+}
+
+void	parse_texture(t_parse *ctx, t_elem type)
+{
+	char	*value;
+	char	*path;
+
+	value = parse_skip_spaces(ctx->line + 3);
+	path = safe_strdup(value);
+	parse_remove_newline(path);
+	parse_file_validate(path, ".png");
+	ctx->map->tex_paths[type] = path;
 }

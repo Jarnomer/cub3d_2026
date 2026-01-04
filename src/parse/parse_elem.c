@@ -65,8 +65,6 @@ void	parse_elements(t_parse *ctx)
 {
 	while (ctx->elem_count < ELEM_COUNT)
 	{
-		if (ctx->elem_count == ELEM_COUNT)
-			break ;
 		ctx->line = get_next_line(ctx->fd);
 		if (!ctx->line)
 			err_exit_msg(MSG_ELEM_MISS);

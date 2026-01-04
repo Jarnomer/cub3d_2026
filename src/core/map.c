@@ -12,20 +12,43 @@
 
 #include <game.h>
 
+void	map_load_textures(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (map->tex_paths[i])
+			texture_load(&map->textures[i], map->tex_paths[i]);
+		i++;
+	}
+}
+
+static void	map_destroy_textures(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		texture_destroy(&map->textures[i]);
+		i++;
+	}
+}
+
 void	map_destroy(t_map *map)
 {
 	int	i;
 
 	if (!map)
 		return ;
-	if (map->grid)
-		ft_free_double((void ***)&map->grid);
+	map_destroy_textures(map);
+	ft_free_double((void ***)&map->grid);
 	i = 0;
 	while (i < 4)
 	{
-		if (map->tex_paths[i])
-			free(map->tex_paths[i]);
-		map->tex_paths[i] = NULL;
+		ft_free_single((void **)&map->tex_paths[i]);
 		i++;
 	}
 	free(map);

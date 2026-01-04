@@ -42,9 +42,9 @@
 # include <vector.h>
 # include <calc.h>
 # include <error.h>
-# include <pool.h>
 # include <config.h>
 # include <parse.h>
+# include <raycast.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
@@ -53,7 +53,36 @@
 typedef struct s_game	t_game;
 
 /* ************************************************************************** */
-/*    INPUT                                                                   */
+/*    TEXTURE STRUCTURE                                                       */
+/* ************************************************************************** */
+
+typedef struct s_texture
+{
+	mlx_texture_t	*mlx_tex;
+	t_u32			*pixels;
+	t_i32			width;
+	t_i32			height;
+}	t_texture;
+
+/* ************************************************************************** */
+/*    MAP STRUCTURE                                                           */
+/* ************************************************************************** */
+
+typedef struct s_map
+{
+	char		**grid;
+	t_i32		width;
+	t_i32		height;
+	t_vec2		spawn_pos;
+	t_f32		spawn_angle;
+	char		*tex_paths[4];
+	t_texture	textures[4];
+	t_color		floor;
+	t_color		ceiling;
+}	t_map;
+
+/* ************************************************************************** */
+/*    INPUT STRUCTURE                                                         */
 /* ************************************************************************** */
 
 typedef struct s_input
@@ -66,7 +95,7 @@ typedef struct s_input
 }	t_input;
 
 /* ************************************************************************** */
-/*    TIME                                                                    */
+/*    TIME STRUCTURE                                                          */
 /* ************************************************************************** */
 
 typedef struct s_time
@@ -81,7 +110,7 @@ typedef struct s_time
 }	t_time;
 
 /* ************************************************************************** */
-/*    CAMERA                                                                  */
+/*    CAMERA STRUCTURE                                                        */
 /* ************************************************************************** */
 
 typedef struct s_camera
@@ -95,34 +124,19 @@ typedef struct s_camera
 }	t_camera;
 
 /* ************************************************************************** */
-/*    RENDER                                                                  */
+/*    RENDER STRUCTURE                                                        */
 /* ************************************************************************** */
 
 typedef struct s_render
 {
-	mlx_image_t	*frame;
-	t_i32		width;
-	t_i32		height;
+	t_mimg	*frame;
+	t_f32	*z_buffer;
+	t_i32	width;
+	t_i32	height;
 }	t_render;
 
 /* ************************************************************************** */
-/*    RAY                                                                     */
-/* ************************************************************************** */
-
-typedef struct s_ray
-{
-	t_vec2	dir;
-	t_vec2	delta;
-	t_vec2	axis;
-	t_vec2i	pos;
-	t_vec2i	step;
-	t_f32	perp_dist;
-	t_axis	side;
-	bool	hit;
-}	t_ray;
-
-/* ************************************************************************** */
-/*    GAME                                                                    */
+/*    MAIN GAME STRUCTURE                                                     */
 /* ************************************************************************** */
 
 struct s_game
@@ -140,75 +154,79 @@ struct s_game
 /*    GAME FUNCTIONS                                                          */
 /* ************************************************************************** */
 
-void			game_init(t_game *game);
-void			game_destroy(t_game *game);
-void			game_run(t_game *game);
-void			game_loop(void *param);
+void	game_init(t_game *game);
+void	game_destroy(t_game *game);
+void	game_run(t_game *game);
+void	game_loop(void *param);
 
 /* ************************************************************************** */
 /*    PLAYER FUNCTIONS                                                        */
 /* ************************************************************************** */
 
-void			player_update(t_game *game, t_f32 dt);
+void	player_update(t_game *game, t_f32 dt);
 
 /* ************************************************************************** */
 /*    INPUT FUNCTIONS                                                         */
 /* ************************************************************************** */
 
-void			input_init(t_input *input);
-void			input_update(t_game *game);
-bool			input_key_down(t_input *input, int key);
-bool			input_key_pressed(t_input *input, int key);
-bool			input_key_released(t_input *input, int key);
+void	input_init(t_input *input);
+void	input_update(t_game *game);
+bool	input_key_down(t_input *input, int key);
+bool	input_key_pressed(t_input *input, int key);
+bool	input_key_released(t_input *input, int key);
 
 /* ************************************************************************** */
 /*    TIME FUNCTIONS                                                          */
 /* ************************************************************************** */
 
-void			time_init(t_time *time);
-void			time_update(t_time *time);
-t_f64			time_get_seconds(void);
+void	time_init(t_time *time);
+void	time_update(t_time *time);
+t_f64	time_get_seconds(void);
 
 /* ************************************************************************** */
 /*    CAMERA FUNCTIONS                                                        */
 /* ************************************************************************** */
 
-void			camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov);
-void			camera_update(t_camera *cam);
+void	camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov);
+void	camera_update(t_camera *cam);
 
 /* ************************************************************************** */
 /*    RENDER FUNCTIONS                                                        */
 /* ************************************************************************** */
 
-void			render_init(t_game *game);
-void			render_vline(t_game *game, int x, int *y, t_color c);
-void			render_background(t_game *game);
-
-/* ************************************************************************** */
-/*    RAYCAST FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-void			raycast(t_game *game);
+void	render_init(t_game *game);
+void	render_destroy(t_render *render);
+void	render_background(t_game *game);
+void	render_put_pixel(t_game *game, t_i32 x, t_i32 y, t_color c);
 
 /* ************************************************************************** */
 /*    MAP FUNCTIONS                                                           */
 /* ************************************************************************** */
 
-void			map_destroy(t_map *map);
-bool			map_is_wall(t_map *map, t_i32 x, t_i32 y);
+void	map_destroy(t_map *map);
+bool	map_is_wall(t_map *map, t_i32 x, t_i32 y);
+void	map_load_textures(t_map *map);
+
+/* ************************************************************************** */
+/*    TEXTURE FUNCTIONS                                                       */
+/* ************************************************************************** */
+
+void	texture_load(t_texture *tex, const char *path);
+void	texture_destroy(t_texture *tex);
+t_u32	texture_sample(t_texture *tex, t_i32 x, t_i32 y);
+t_color	texture_sample_color(t_texture *tex, t_i32 x, t_i32 y);
 
 /* ************************************************************************** */
 /*    SAFE WRAPPER FUNCTIONS                                                  */
 /* ************************************************************************** */
 
-void			*safe_calloc(size_t size);
-char			*safe_strjoin(char *s1, char *s2);
-char			*safe_strdup(char *s1);
-char			**safe_split(char *str, char c);
+void	*safe_calloc(size_t size);
+char	*safe_strjoin(char *s1, char *s2);
+char	*safe_strdup(char *s1);
+char	**safe_split(char *str, char c);
 
-void			safe_image_to_window(mlx_t *mlx,
-					mlx_image_t *img, t_i32 x, t_i32 y);
-mlx_image_t		*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
-mlx_texture_t	*safe_load_png(const char *path);
+void	safe_image_to_window(mlx_t *mlx, t_mimg *img, t_i32 x, t_i32 y);
+t_mimg	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
+t_mtex	*safe_load_png(const char *path);
 
 #endif

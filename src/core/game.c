@@ -27,6 +27,7 @@ void	game_init(t_game *game)
 	if (!game->mlx)
 		err_exit_mlx();
 	render_init(game);
+	map_load_textures(game->map);
 	input_init(&game->input);
 	time_init(&game->time);
 	camera_init(&game->camera, game->map->spawn_pos,
@@ -37,6 +38,7 @@ void	game_init(t_game *game)
 
 void	game_destroy(t_game *game)
 {
+	render_destroy(&game->render);
 	map_destroy(game->map);
 	if (game->mlx)
 		mlx_terminate(game->mlx);
@@ -56,7 +58,7 @@ void	game_loop(void *param)
 	}
 	player_update(game, game->time.delta);
 	render_background(game);
-	raycast(game);
+	raycast_walls(game);
 }
 
 void	game_run(t_game *game)

@@ -12,6 +12,13 @@
 
 #include <game.h>
 
+void	render_destroy(t_render *render)
+{
+	if (!render)
+		return ;
+	ft_bzero(render, sizeof(t_render));
+}
+
 void	render_init(t_game *game)
 {
 	game->render.width = WIN_WIDTH;
@@ -20,7 +27,7 @@ void	render_init(t_game *game)
 	safe_image_to_window(game->mlx, game->render.frame, 0, 0);
 }
 
-static void	put_pixel(mlx_image_t *img, t_i32 x, t_i32 y, t_color c)
+static void	put_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c)
 {
 	t_u32	color;
 

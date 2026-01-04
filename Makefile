@@ -79,44 +79,30 @@ SOURCES := main \
            time \
            input \
            camera \
-           render \
-           raycast \
            player \
            map \
            parse \
            parse_file \
            parse_elem \
-           parse_tex \
-           parse_col \
+           parse_asset \
            parse_map \
            parse_map_valid \
            parse_map_walls \
            parse_utils \
-           pool \
-           pool_utils \
-           arena \
-           arena_utils \
-           darray \
-           darray_ops \
-           darray_edit \
-           calc_angle \
+           render \
+           texture \
+           raycast \
+           raycast_dda \
+           raycast_utils \
            calc_color \
-           calc_color_ops \
-           calc_lookup \
-           calc_rand \
-           calc_rand_vec \
-           calc_rect \
-           calc_scalar_flt \
+           calc_angle \
+           calc_scalar \
            calc_scalar_int \
            calc_scalar_ops \
            vec2 \
            vec2_arith \
            vec2_prod \
-           vec2_dist \
-           vec2_trans \
-           vec2_move \
            vec2i \
-           vec2i_arith \
            err_exit \
            err_print \
            safe_mlx \

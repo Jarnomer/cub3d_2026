@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar_flt.c                                  :+:      :+:    :+:   */
+/*   calc_scalar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -42,9 +42,9 @@ t_f32	absf(t_f32 val)
 	return (val);
 }
 
-t_f32	inv_absf(t_f32 v)
+t_f32	iabsf(t_f32 v)
 {
 	if (v == 0.0f)
-		return (FLOAT_LARGE);
+		return (INFINITE);
 	return (absf(1.0f / v));
 }

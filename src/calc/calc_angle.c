@@ -24,28 +24,9 @@ t_f32	rad_to_deg(t_f32 rad)
 
 t_f32	angle_normalize(t_f32 angle)
 {
-	angle = fmodf(angle, TAU);
-	if (angle < 0.0f)
+	while (angle < 0)
 		angle += TAU;
+	while (angle >= TAU)
+		angle -= TAU;
 	return (angle);
-}
-
-t_f32	angle_diff(t_f32 from, t_f32 to)
-{
-	t_f32	diff;
-
-	diff = fmodf(to - from, TAU);
-	if (diff > PI)
-		diff -= TAU;
-	else if (diff < -PI)
-		diff += TAU;
-	return (diff);
-}
-
-t_f32	angle_lerp(t_f32 from, t_f32 to, t_f32 t)
-{
-	t_f32	diff;
-
-	diff = angle_diff(from, to);
-	return (angle_normalize(from + diff * t));
 }

@@ -12,26 +12,6 @@
 
 #include <game.h>
 
-void	parse_cleanup(t_parse *ctx)
-{
-	int	i;
-
-	if (!ctx)
-		return ;
-	if (ctx->fd > 0)
-		close(ctx->fd);
-	if (ctx->line)
-		free(ctx->line);
-	if (ctx->map)
-	{
-		i = 0;
-		while (i < 4)
-			free(ctx->map->tex_paths[i++]);
-		ft_free_double((void ***)&ctx->map->grid);
-		free(ctx->map);
-	}
-}
-
 static t_map	*init_map(void)
 {
 	t_map	*map;

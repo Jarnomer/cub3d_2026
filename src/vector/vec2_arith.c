@@ -33,8 +33,3 @@ t_vec2	vec2_div(t_vec2 v, t_f32 scalar)
 		return (vec2_zero());
 	return ((t_vec2){v.x / scalar, v.y / scalar});
 }
-
-t_vec2	vec2_negate(t_vec2 v)
-{
-	return ((t_vec2){-v.x, -v.y});
-}

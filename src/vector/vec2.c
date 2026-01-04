@@ -22,11 +22,6 @@ t_vec2	vec2_zero(void)
 	return ((t_vec2){0.0f, 0.0f});
 }
 
-t_vec2	vec2_one(void)
-{
-	return ((t_vec2){1.0f, 1.0f});
-}
-
 t_vec2	vec2_from_angle(t_f32 angle)
 {
 	return ((t_vec2){cosf(angle), sinf(angle)});

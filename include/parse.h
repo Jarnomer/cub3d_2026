@@ -13,18 +13,8 @@
 #ifndef PARSE_H
 # define PARSE_H
 
-# include <vector.h>
-
-/* ************************************************************************** */
-/*    MAP CONSTANTS                                                           */
-/* ************************************************************************** */
-
 # define MAP_MIN_SIZE		3
 # define MAP_MAX_SIZE		256
-
-/* ************************************************************************** */
-/*    MAP CHARACTERS                                                          */
-/* ************************************************************************** */
 
 # define CHAR_EMPTY			'0'
 # define CHAR_WALL			'1'
@@ -36,10 +26,6 @@
 # define CHARSET_VALID		"01 NSEW"
 # define CHARSET_PLAYER		"NSEW"
 
-/* ************************************************************************** */
-/*    ELEMENT IDENTIFIERS                                                     */
-/* ************************************************************************** */
-
 # define ID_NORTH			"NO "
 # define ID_SOUTH			"SO "
 # define ID_WEST			"WE "
@@ -47,9 +33,7 @@
 # define ID_FLOOR			"F "
 # define ID_CEILING			"C "
 
-/* ************************************************************************** */
-/*    ELEMENT ENUM                                                            */
-/* ************************************************************************** */
+typedef struct s_map	t_map;
 
 typedef enum e_elem
 {
@@ -62,39 +46,14 @@ typedef enum e_elem
 	ELEM_COUNT
 }	t_elem;
 
-/* ************************************************************************** */
-/*    MAP STRUCTURE                                                           */
-/* ************************************************************************** */
-
-typedef struct s_map
-{
-	char	**grid;
-	t_i32	width;
-	t_i32	height;
-	t_vec2	spawn_pos;
-	t_f32	spawn_angle;
-	char	*tex_paths[4];
-	t_color	floor;
-	t_color	ceiling;
-}	t_map;
-
-/* ************************************************************************** */
-/*    PARSE CONTEXT                                                           */
-/* ************************************************************************** */
-
 typedef struct s_parse
 {
 	int			fd;
 	char		*line;
-	char		*filename;
 	bool		elements[ELEM_COUNT];
 	int			elem_count;
 	t_map		*map;
 }	t_parse;
-
-/* ************************************************************************** */
-/*    PARSE FUNCTIONS                                                         */
-/* ************************************************************************** */
 
 t_map	*parse(const char *filepath);
 
@@ -112,6 +71,5 @@ void	parse_map_walls(t_parse *ctx);
 char	*parse_skip_spaces(char *str);
 bool	parse_is_empty_line(const char *line);
 void	parse_remove_newline(char *str);
-void	parse_cleanup(t_parse *ctx);
 
 #endif

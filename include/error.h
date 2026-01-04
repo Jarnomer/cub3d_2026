@@ -14,13 +14,8 @@
 # define ERROR_H
 
 # define C_RESET		"\033[0m"
-# define C_RED			"\033[31m"
-# define C_GREEN		"\033[32m"
 # define C_YELLOW		"\033[33m"
-# define C_BLUE			"\033[34m"
 # define C_BOLD_RED		"\033[1;31m"
-# define C_BOLD_GREEN	"\033[1;32m"
-# define C_BOLD_YELLOW	"\033[1;33m"
 
 # define ERR_PREFIX		"Error\ncub3D: "
 # define ERR_USAGE		"Usage: ./cub3D <map.cub>"
@@ -35,11 +30,9 @@
 # define MSG_ELEM_MISS	"Missing element"
 # define MSG_ELEM_DUP	"Duplicate element"
 # define MSG_ELEM_ID	"Invalid identifier"
-# define MSG_ELEM_VAL	"Invalid element value"
 
 # define MSG_COLOR_FMT	"Invalid color format"
 # define MSG_COLOR_VAL	"Color value out of range"
-# define MSG_COLOR_SEP	"Invalid color separator"
 # define MSG_COLOR_CNT	"Invalid amount of color values"
 
 # define MSG_MAP_MISS	"Missing map"
@@ -51,7 +44,6 @@
 
 # define MSG_MALLOC		"Memory allocation failed"
 # define MSG_MLX		"MLX42 error"
-# define MSG_THREAD		"Thread creation failed"
 
 typedef enum e_err
 {
@@ -63,8 +55,7 @@ typedef enum e_err
 	ERR_TEXTURE,
 	ERR_INVALID,
 	ERR_MALLOC,
-	ERR_MLX,
-	ERR_THREAD
+	ERR_MLX
 }	t_err;
 
 void	err_exit_msg(const char *msg);

@@ -34,10 +34,3 @@ t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi)
 		return (hi);
 	return (val);
 }
-
-t_i32	absi(t_i32 val)
-{
-	if (val < 0)
-		return (-val);
-	return (val);
-}
