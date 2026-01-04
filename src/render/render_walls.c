@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   render_walls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,16 +25,16 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 	while (y <= wall->end)
 	{
 		tex_y = clampi((t_i32)tex_pos, 0, tex->height - 1);
-		render_pixel_fast(game->render.frame, x, y,
-			texture_sample_u32(tex, wall->tex_x, tex_y));
+		render_pixel(game->render.frame, x, y,
+			texture_sample(tex, wall->tex_x, tex_y));
 		tex_pos += step;
 		y++;
 	}
 }
 
-static void	raycast_pitch_offset(t_game *game, t_wall	*wall)
+static void	calc_wall_offset(t_game *game, t_wall *wall)
 {
-	t_i32		game_height;
+	t_i32	game_height;
 
 	game_height = game->render.height;
 	wall->offset = (t_i32)(game->camera.pitch * game_height);
@@ -42,7 +42,7 @@ static void	raycast_pitch_offset(t_game *game, t_wall	*wall)
 	wall->end = clampi(wall->bottom + wall->offset, 0, game_height - 1);
 }
 
-static t_wall	raycast_get_wall(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
+static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 {
 	t_wall	wall;
 
@@ -60,7 +60,7 @@ static t_wall	raycast_get_wall(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 	return (wall);
 }
 
-static void	raycast_column(t_game *game, t_i32 x)
+void	render_wall_column(t_game *game, t_i32 x)
 {
 	t_ray	ray;
 	t_hit	hit;
@@ -74,22 +74,10 @@ static void	raycast_column(t_game *game, t_i32 x)
 	hit = perform_dda(&ray, game->map, RAY_MAX_DIST);
 	if (!hit.hit)
 		return ;
-	wall = raycast_get_wall(&hit, game->render.height,
+	wall = calc_wall_slice(&hit, game->render.height,
 			game->map->textures[hit.dir].width);
-	raycast_pitch_offset(game, &wall);
+	calc_wall_offset(game, &wall);
 	if (game->render.z_buffer)
 		game->render.z_buffer[x] = hit.dist;
 	draw_tex_column(game, x, &wall, &game->map->textures[hit.dir]);
-}
-
-void	render_walls(t_game *game)
-{
-	t_i32	x;
-
-	x = 0;
-	while (x < game->render.width)
-	{
-		raycast_column(game, x);
-		x++;
-	}
 }

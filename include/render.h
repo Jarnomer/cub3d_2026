@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.h                                          :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCAST_H
-# define RAYCAST_H
+#ifndef RENDER_H
+# define RENDER_H
 
 # include <vector.h>
 # include <types.h>
 
 typedef struct s_map	t_map;
 typedef struct s_game	t_game;
+typedef struct s_render	t_render;
 
 typedef enum e_axis
 {
@@ -32,6 +33,18 @@ typedef enum e_dir
 	WALL_EAST,
 	WALL_WEST
 }	t_dir;
+
+/* ************************************************************************** */
+/*    TEXTURE STRUCTURE                                                       */
+/* ************************************************************************** */
+
+typedef struct s_texture
+{
+	t_mlxt	*mlx_tex;
+	t_u32	*pixels;
+	t_i32	width;
+	t_i32	height;
+}	t_tex;
 
 /* ************************************************************************** */
 /*    RAY CALC STRUCTURE                                                      */
@@ -146,10 +159,22 @@ typedef struct s_floor
 /* ************************************************************************** */
 
 void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
+
 t_hit	perform_dda(t_ray *ray, t_map *map, t_f32 max_dist);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_map *map);
 
-void	render_walls(t_game *game);
-void	render_floor(t_game *game);
+void	render_wall_column(t_game *game, t_i32 x);
+void	render_floor_row(t_game *game, t_i32 y);
+
+void	render_init(t_game *game);
+void	render_destroy(t_render *render);
+void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c);
+void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
+
+void	texture_load(t_tex *tex, const char *path);
+void	texture_destroy(t_tex *tex);
+t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
+t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
+
 
 #endif

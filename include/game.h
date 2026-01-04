@@ -45,25 +45,14 @@
 # include <config.h>
 # include <parse.h>
 # include <input.h>
-# include <raycast.h>
+# include <thread.h>
+# include <render.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
 /* ************************************************************************** */
 
 typedef struct s_game	t_game;
-
-/* ************************************************************************** */
-/*    TEXTURE STRUCTURE                                                       */
-/* ************************************************************************** */
-
-typedef struct s_texture
-{
-	t_mtex	*mlx_tex;
-	t_u32	*pixels;
-	t_i32	width;
-	t_i32	height;
-}	t_tex;
 
 /* ************************************************************************** */
 /*    MAP STRUCTURE                                                           */
@@ -119,7 +108,7 @@ typedef struct s_camera
 
 typedef struct s_render
 {
-	t_mimg	*frame;
+	t_mlxi	*frame;
 	t_f32	*z_buffer;
 	t_i32	width;
 	t_i32	height;
@@ -187,27 +176,8 @@ char	*safe_strjoin(char *s1, char *s2);
 char	*safe_strdup(char *s1);
 char	**safe_split(char *str, char c);
 
-void	safe_image_to_window(mlx_t *mlx, t_mimg *img, t_i32 x, t_i32 y);
-t_mimg	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
-t_mtex	*safe_load_png(const char *path);
-
-/* ************************************************************************** */
-/*    RENDER FUNCTIONS                                                        */
-/* ************************************************************************** */
-
-void	render_init(t_game *game);
-void	render_destroy(t_render *render);
-void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c);
-void	render_pixel_fast(t_mimg *img, t_i32 x, t_i32 y, t_u32 color);
-
-/* ************************************************************************** */
-/*    TEXTURE FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-void	texture_load(t_tex *tex, const char *path);
-void	texture_destroy(t_tex *tex);
-t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
-t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
-t_u32	texture_sample_u32(t_tex *tex, t_i32 x, t_i32 y);
+void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y);
+t_mlxi	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
+t_mlxt	*safe_load_png(const char *path);
 
 #endif

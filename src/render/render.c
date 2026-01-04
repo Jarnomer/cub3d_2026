@@ -30,7 +30,7 @@ void	render_destroy(t_render *render)
 	ft_bzero(render, sizeof(t_render));
 }
 
-void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c)
+void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c)
 {
 	t_u32	color;
 
@@ -42,7 +42,7 @@ void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c)
 	mlx_put_pixel(img, x, y, color);
 }
 
-void	render_pixel_fast(t_mimg *img, t_i32 x, t_i32 y, t_u32 color)
+void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
 {
 	((t_u32 *)img->pixels)[y * img->width + x] = color;
 }

@@ -28,8 +28,8 @@ typedef int64_t			t_i64;
 typedef float			t_f32;
 typedef double			t_f64;
 
-typedef mlx_image_t		t_mimg;
-typedef mlx_texture_t	t_mtex;
+typedef mlx_image_t		t_mlxi;
+typedef mlx_texture_t	t_mlxt;
 typedef pthread_mutex_t	t_mtx;
 
 typedef struct s_color

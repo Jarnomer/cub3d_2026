@@ -49,13 +49,3 @@ t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y)
 	c.a = (pixel >> 24) & 0xFF;
 	return (c);
 }
-
-t_u32	texture_sample_u32(t_tex *tex, t_i32 x, t_i32 y)
-{
-	t_i32	idx;
-
-	x = clampi(x, 0, tex->width - 1);
-	y = clampi(y, 0, tex->height - 1);
-	idx = y * tex->width + x;
-	return (tex->pixels[idx]);
-}

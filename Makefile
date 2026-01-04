@@ -69,6 +69,7 @@ VLGFLAGS := --leak-check=full \
 MODULES := core \
            input \
            render \
+           thread \
            parse \
            pool \
            calc \
@@ -99,6 +100,8 @@ SOURCES := main \
            raycast_dda \
            raycast_utils \
            texture \
+           thread_floor \
+           thread_walls \
            calc_color \
            calc_angle \
            calc_scalar \

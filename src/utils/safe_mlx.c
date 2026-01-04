@@ -12,15 +12,15 @@
 
 #include <game.h>
 
-void	safe_image_to_window(mlx_t *mlx, t_mimg *img, t_i32 x, t_i32 y)
+void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y)
 {
 	if (mlx_image_to_window(mlx, img, x, y) == -1)
 		err_exit_mlx();
 }
 
-t_mimg	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h)
+t_mlxi	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h)
 {
-	t_mimg	*img;
+	t_mlxi	*img;
 
 	img = mlx_new_image(mlx, w, h);
 	if (!img)
@@ -28,9 +28,9 @@ t_mimg	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h)
 	return (img);
 }
 
-t_mtex	*safe_load_png(const char *path)
+t_mlxt	*safe_load_png(const char *path)
 {
-	t_mtex	*tex;
+	t_mlxt	*tex;
 
 	tex = mlx_load_png(path);
 	if (!tex)
