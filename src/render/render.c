@@ -27,7 +27,7 @@ void	render_init(t_game *game)
 	safe_image_to_window(game->mlx, game->render.frame, 0, 0);
 }
 
-static void	put_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c)
+void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c)
 {
 	t_u32	color;
 
@@ -43,7 +43,7 @@ void	render_vline(t_game *game, int x, int *y, t_color c)
 {
 	while (y[0] <= y[1])
 	{
-		put_pixel(game->render.frame, x, y[0], c);
+		render_pixel(game->render.frame, x, y[0], c);
 		y[0]++;
 	}
 }
@@ -62,9 +62,9 @@ void	render_background(t_game *game)
 		while (x < game->render.width)
 		{
 			if (y < half_h)
-				put_pixel(game->render.frame, x, y, game->map->ceiling);
+				render_pixel(game->render.frame, x, y, game->map->ceiling);
 			else
-				put_pixel(game->render.frame, x, y, game->map->floor);
+				render_pixel(game->render.frame, x, y, game->map->floor);
 			x++;
 		}
 		y++;

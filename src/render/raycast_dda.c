@@ -82,7 +82,7 @@ t_hit	ray_cast(t_ray *ray, t_map *map, t_f32 max_dist)
 	int		axis;
 
 	ft_bzero(&hit, sizeof(t_hit));
-	axis = AXIS_X;
+	axis = -1;
 	while (!hit.hit)
 	{
 		if (ray->dist.x < ray->dist.y)

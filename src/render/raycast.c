@@ -28,7 +28,7 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *s, t_texture *t)
 	{
 		tex_y = clampi((t_i32)tex_pos, 0, t->height - 1);
 		c = texture_sample_color(t, s->tex_x, tex_y);
-		render_put_pixel(game, x, y, c);
+		render_pixel(game->render.frame, x, y, c);
 		tex_pos += step;
 		y++;
 	}

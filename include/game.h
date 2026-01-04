@@ -197,7 +197,7 @@ void	camera_update(t_camera *cam);
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
 void	render_background(t_game *game);
-void	render_put_pixel(t_game *game, t_i32 x, t_i32 y, t_color c);
+void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c);
 
 /* ************************************************************************** */
 /*    MAP FUNCTIONS                                                           */
