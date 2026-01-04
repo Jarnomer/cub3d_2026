@@ -12,12 +12,12 @@
 
 #include <game.h>
 
-static void	draw_tex_column(t_game *game, t_i32 x, t_wall *s, t_texture *t)
+static void	draw_tex_column(t_game *game, t_i32 x, t_wall *s, t_tex *t)
 {
 	t_f32	step;
 	t_f32	tex_pos;
-	t_i32	y;
 	t_i32	tex_y;
+	t_i32	y;
 	t_color	c;
 
 	step = (t_f32)t->height / (t_f32)s->height;
@@ -34,7 +34,7 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *s, t_texture *t)
 	}
 }
 
-static t_vec2	get_ray_dir(t_camera *cam, t_i32 x, t_i32 screen_w)
+static t_vec2	get_dir(t_camera *cam, t_i32 x, t_i32 screen_w)
 {
 	t_f32	cam_x;
 
@@ -44,22 +44,22 @@ static t_vec2	get_ray_dir(t_camera *cam, t_i32 x, t_i32 screen_w)
 
 static void	raycast_column(t_game *game, t_i32 x)
 {
-	t_ray			ray;
-	t_hit			hit;
-	t_wall	slice;
-	t_texture		*tex;
-	t_vec2			ray_dir;
+	t_ray	ray;
+	t_hit	hit;
+	t_wall	wall;
+	t_tex	*tex;
+	t_vec2	dir;
 
-	ray_dir = get_ray_dir(&game->camera, x, game->render.width);
-	ray_init(&ray, game->camera.pos, ray_dir);
+	dir = get_dir(&game->camera, x, game->render.width);
+	ray_init(&ray, game->camera.pos, dir);
 	hit = ray_cast(&ray, game->map, RAY_MAX_DIST);
 	if (!hit.hit)
 		return ;
 	tex = &game->map->textures[hit.dir];
-	slice = raycast_get_wall(&hit, game->render.height, tex->width);
+	wall = raycast_get_wall(&hit, game->render.height, tex->width);
 	if (game->render.z_buffer)
 		game->render.z_buffer[x] = hit.dist;
-	draw_tex_column(game, x, &slice, tex);
+	draw_tex_column(game, x, &wall, tex);
 }
 
 void	raycast_walls(t_game *game)

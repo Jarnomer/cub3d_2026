@@ -58,11 +58,11 @@ typedef struct s_game	t_game;
 
 typedef struct s_texture
 {
-	mlx_texture_t	*mlx_tex;
-	t_u32			*pixels;
-	t_i32			width;
-	t_i32			height;
-}	t_texture;
+	t_mtex	*mlx_tex;
+	t_u32	*pixels;
+	t_i32	width;
+	t_i32	height;
+}	t_tex;
 
 /* ************************************************************************** */
 /*    MAP STRUCTURE                                                           */
@@ -70,15 +70,15 @@ typedef struct s_texture
 
 typedef struct s_map
 {
-	char		**grid;
-	t_i32		width;
-	t_i32		height;
-	t_vec2		spawn_pos;
-	t_f32		spawn_angle;
-	char		*tex_paths[4];
-	t_texture	textures[4];
-	t_color		floor;
-	t_color		ceiling;
+	char	**grid;
+	t_i32	width;
+	t_i32	height;
+	t_vec2	spawn_pos;
+	t_f32	spawn_angle;
+	char	*tex_paths[4];
+	t_tex	textures[4];
+	t_color	floor;
+	t_color	ceiling;
 }	t_map;
 
 /* ************************************************************************** */
@@ -211,10 +211,10 @@ void	map_load_textures(t_map *map);
 /*    TEXTURE FUNCTIONS                                                       */
 /* ************************************************************************** */
 
-void	texture_load(t_texture *tex, const char *path);
-void	texture_destroy(t_texture *tex);
-t_u32	texture_sample(t_texture *tex, t_i32 x, t_i32 y);
-t_color	texture_sample_color(t_texture *tex, t_i32 x, t_i32 y);
+void	texture_load(t_tex *tex, const char *path);
+void	texture_destroy(t_tex *tex);
+t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
+t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
 
 /* ************************************************************************** */
 /*    SAFE WRAPPER FUNCTIONS                                                  */

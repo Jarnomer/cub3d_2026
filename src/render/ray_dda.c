@@ -12,35 +12,6 @@
 
 #include <game.h>
 
-void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir)
-{
-	ray->origin = origin;
-	ray->dir = dir;
-	ray->grid = vec2i_from_vec2(origin);
-	ray->delta.x = iabsf(dir.x);
-	ray->delta.y = iabsf(dir.y);
-	if (dir.x < 0)
-	{
-		ray->step.x = -1;
-		ray->dist.x = (origin.x - ray->grid.x) * ray->delta.x;
-	}
-	else
-	{
-		ray->step.x = 1;
-		ray->dist.x = (ray->grid.x + 1.0f - origin.x) * ray->delta.x;
-	}
-	if (dir.y < 0)
-	{
-		ray->step.y = -1;
-		ray->dist.y = (origin.y - ray->grid.y) * ray->delta.y;
-	}
-	else
-	{
-		ray->step.y = 1;
-		ray->dist.y = (ray->grid.y + 1.0f - origin.y) * ray->delta.y;
-	}
-}
-
 static t_dir	get_dir(t_ray *ray, int axis)
 {
 	if (axis == AXIS_X)
@@ -76,6 +47,16 @@ static t_f32	calc_dist(t_ray *ray, int axis)
 	return (maxf(dist, EPSILON));
 }
 
+static t_hit	update_ray_data(t_hit *hit, t_ray *ray, int axis)
+{
+	hit->axis = axis;
+	hit->dist = calc_dist(ray, axis);
+	hit->wall_x = calc_wall_x(ray, hit->dist, axis);
+	hit->dir = get_dir(ray, axis);
+	hit->grid = ray->grid;
+	return (*hit);
+}
+
 t_hit	ray_cast(t_ray *ray, t_map *map, t_f32 max_dist)
 {
 	t_hit	hit;
@@ -102,10 +83,5 @@ t_hit	ray_cast(t_ray *ray, t_map *map, t_f32 max_dist)
 		if (calc_dist(ray, axis) > max_dist)
 			break ;
 	}
-	hit.axis = axis;
-	hit.dist = calc_dist(ray, axis);
-	hit.wall_x = calc_wall_x(ray, hit.dist, axis);
-	hit.dir = get_dir(ray, axis);
-	hit.grid = ray->grid;
-	return (hit);
+	return (update_ray_data(&hit, ray, axis));
 }

@@ -78,8 +78,8 @@ SOURCES := main \
            game \
            time \
            input \
-           camera \
            player \
+           camera \
            map \
            parse \
            parse_file \
@@ -92,8 +92,9 @@ SOURCES := main \
            render \
            texture \
            raycast \
-           raycast_dda \
-           raycast_utils \
+           ray_init \
+           ray_dda \
+           ray_utils \
            calc_color \
            calc_angle \
            calc_scalar \
@@ -102,6 +103,7 @@ SOURCES := main \
            vec2 \
            vec2_arith \
            vec2_prod \
+           vec2_trans \
            vec2i \
            err_exit \
            err_print \

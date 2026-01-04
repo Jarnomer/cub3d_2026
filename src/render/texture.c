@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-void	texture_load(t_texture *tex, const char *path)
+void	texture_load(t_tex *tex, const char *path)
 {
 	tex->mlx_tex = safe_load_png(path);
 	tex->width = tex->mlx_tex->width;
@@ -20,14 +20,14 @@ void	texture_load(t_texture *tex, const char *path)
 	tex->pixels = (t_u32 *)tex->mlx_tex->pixels;
 }
 
-void	texture_destroy(t_texture *tex)
+void	texture_destroy(t_tex *tex)
 {
 	if (tex->mlx_tex)
 		mlx_delete_texture(tex->mlx_tex);
-    ft_bzero(tex, sizeof(t_texture));
+	ft_bzero(tex, sizeof(t_tex));
 }
 
-t_u32	texture_sample(t_texture *tex, t_i32 x, t_i32 y)
+t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y)
 {
 	t_i32	idx;
 
@@ -37,7 +37,7 @@ t_u32	texture_sample(t_texture *tex, t_i32 x, t_i32 y)
 	return (tex->pixels[idx]);
 }
 
-t_color	texture_sample_color(t_texture *tex, t_i32 x, t_i32 y)
+t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y)
 {
 	t_u32	pixel;
 	t_color	c;
