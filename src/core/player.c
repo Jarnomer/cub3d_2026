@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ static void	player_rotate(t_game *game, t_f32 dt)
 		game->camera.angle += rot_speed;
 	game->camera.angle = angle_normalize(game->camera.angle);
 	camera_update(&game->camera);
+}
+
+static void	player_mouse(t_game *game, t_f32 dt)
+{
+	t_f32	yaw;
+	t_f32	pitch_delta;
+
+	(void)dt;
+	yaw = game->input.mouse_delta.x * PLAYER_MOUSE_SENS;
+	pitch_delta = -game->input.mouse_delta.y * PLAYER_MOUSE_SENS;
+	game->camera.angle += yaw;
+	game->camera.angle = angle_normalize(game->camera.angle);
+	game->camera.pitch += pitch_delta;
+	game->camera.pitch = clampf(game->camera.pitch,
+			-PLAYER_MAX_PITCH, PLAYER_MAX_PITCH);
 }
 
 static t_vec2	get_move_input(t_game *game)
@@ -64,5 +79,6 @@ static void	player_move(t_game *game, t_f32 dt)
 void	player_update(t_game *game, t_f32 dt)
 {
 	player_rotate(game, dt);
+	player_mouse(game, dt);
 	player_move(game, dt);
 }

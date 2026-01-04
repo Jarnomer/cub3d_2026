@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	game_init(t_game *game)
 	if (!game->mlx)
 		err_exit_mlx();
 	render_init(game);
-	map_load_textures(game->map);
-	input_init(&game->input);
 	time_init(&game->time);
+	input_init(&game->input);
+	input_mouse_init(game);
+	input_mouse_capture(game);
+	map_load_textures(game->map);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);
 	game->running = true;
@@ -57,8 +59,8 @@ void	game_loop(void *param)
 		return ;
 	}
 	player_update(game, game->time.delta);
-	render_background(game);
-	raycast_walls(game);
+	render_floor(game);
+	render_walls(game);
 }
 
 void	game_run(t_game *game)

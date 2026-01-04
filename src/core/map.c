@@ -23,6 +23,8 @@ void	map_load_textures(t_map *map)
 			texture_load(&map->textures[i], map->tex_paths[i]);
 		i++;
 	}
+	texture_load(&map->floor_tex, TEX_FLOOR);
+	texture_load(&map->ceil_tex, TEX_CEILING);
 }
 
 static void	map_destroy_textures(t_map *map)
@@ -35,6 +37,8 @@ static void	map_destroy_textures(t_map *map)
 		texture_destroy(&map->textures[i]);
 		i++;
 	}
+	texture_destroy(&map->floor_tex);
+	texture_destroy(&map->ceil_tex);
 }
 
 void	map_destroy(t_map *map)

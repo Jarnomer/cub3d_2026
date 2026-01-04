@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar_int.c                                  :+:      :+:    :+:   */
+/*   input_keys.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,23 @@
 
 #include <game.h>
 
-t_i32	mini(t_i32 a, t_i32 b)
+bool	input_key_down(t_input *input, int key)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	if (key < 0 || key >= MAX_KEYS)
+		return (false);
+	return (input->keys[key]);
 }
 
-t_i32	maxi(t_i32 a, t_i32 b)
+bool	input_key_pressed(t_input *input, int key)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	if (key < 0 || key >= MAX_KEYS)
+		return (false);
+	return (input->keys[key] && !input->keys_prev[key]);
 }
 
-t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi)
+bool	input_key_released(t_input *input, int key)
 {
-	if (val < lo)
-		return (lo);
-	if (val > hi)
-		return (hi);
-	return (val);
-}
-
-t_i32	absi(t_i32 val)
-{
-	if (val < 0)
-		return (-val);
-	return (val);
+	if (key < 0 || key >= MAX_KEYS)
+		return (false);
+	return (!input->keys[key] && input->keys_prev[key]);
 }

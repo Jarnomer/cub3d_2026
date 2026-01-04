@@ -47,12 +47,17 @@
 
 # define PLAYER_SPEED		4.0f
 # define PLAYER_LOOK_SPEED	2.0f
+# define PLAYER_MOUSE_SENS	0.001f
+# define PLAYER_MAX_PITCH	1.2f
 
 /* ************************************************************************** */
 /*    TEXTURE SETTINGS                                                        */
 /* ************************************************************************** */
 
-# define TEX_WIDTH		64
-# define TEX_HEIGHT		64
+# define TEX_WIDTH		256
+# define TEX_HEIGHT		256
+
+# define TEX_FLOOR		"assets/textures/floor.png"
+# define TEX_CEILING	"assets/textures/ceiling.png"
 
 #endif

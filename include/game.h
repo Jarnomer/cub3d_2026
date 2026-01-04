@@ -44,6 +44,7 @@
 # include <error.h>
 # include <config.h>
 # include <parse.h>
+# include <input.h>
 # include <raycast.h>
 
 /* ************************************************************************** */
@@ -77,22 +78,11 @@ typedef struct s_map
 	t_f32	spawn_angle;
 	char	*tex_paths[4];
 	t_tex	textures[4];
-	t_color	floor;
-	t_color	ceiling;
+	t_color	floor_col;
+	t_color	ciel_col;
+	t_tex	floor_tex;
+	t_tex	ceil_tex;
 }	t_map;
-
-/* ************************************************************************** */
-/*    INPUT STRUCTURE                                                         */
-/* ************************************************************************** */
-
-typedef struct s_input
-{
-	bool	keys[MAX_KEYS];
-	bool	keys_prev[MAX_KEYS];
-	t_vec2	mouse_pos;
-	t_vec2	mouse_delta;
-	bool	mouse_captured;
-}	t_input;
 
 /* ************************************************************************** */
 /*    TIME STRUCTURE                                                          */
@@ -166,16 +156,6 @@ void	game_loop(void *param);
 void	player_update(t_game *game, t_f32 dt);
 
 /* ************************************************************************** */
-/*    INPUT FUNCTIONS                                                         */
-/* ************************************************************************** */
-
-void	input_init(t_input *input);
-void	input_update(t_game *game);
-bool	input_key_down(t_input *input, int key);
-bool	input_key_pressed(t_input *input, int key);
-bool	input_key_released(t_input *input, int key);
-
-/* ************************************************************************** */
 /*    TIME FUNCTIONS                                                          */
 /* ************************************************************************** */
 
@@ -196,7 +176,6 @@ void	camera_update(t_camera *cam);
 
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
-void	render_background(t_game *game);
 void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c);
 
 /* ************************************************************************** */

@@ -22,7 +22,6 @@
 # define RAD2DEG	57.2957795130823208768f
 # define INFINITE	1e30f
 # define EPSILON	0.0001f
-# define U32_MAX    0xFFFFFFFF
 
 t_color	color_new(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
 t_color	color_from_u32(t_u32 val);
@@ -42,6 +41,7 @@ t_f32	iabsf(t_f32 val);
 t_i32	mini(t_i32 a, t_i32 b);
 t_i32	maxi(t_i32 a, t_i32 b);
 t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi);
+t_i32	absi(t_i32 val);
 
 t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t);
 

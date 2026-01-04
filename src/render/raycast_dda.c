@@ -47,7 +47,7 @@ static t_f32	calc_dist(t_ray *ray, int axis)
 	return (maxf(dist, EPSILON));
 }
 
-static t_hit	update_ray_data(t_hit *hit, t_ray *ray, int axis)
+static t_hit	update_ray_ctx(t_hit *hit, t_ray *ray, int axis)
 {
 	hit->axis = axis;
 	hit->dist = calc_dist(ray, axis);
@@ -57,13 +57,12 @@ static t_hit	update_ray_data(t_hit *hit, t_ray *ray, int axis)
 	return (*hit);
 }
 
-t_hit	ray_cast(t_ray *ray, t_map *map, t_f32 max_dist)
+t_hit	perform_dda(t_ray *ray, t_map *map, t_f32 max_dist)
 {
-	t_hit	hit;
-	int		axis;
+	static int	axis = 0;
+	t_hit		hit;
 
 	ft_bzero(&hit, sizeof(t_hit));
-	axis = -1;
 	while (!hit.hit)
 	{
 		if (ray->dist.x < ray->dist.y)
@@ -83,5 +82,5 @@ t_hit	ray_cast(t_ray *ray, t_map *map, t_f32 max_dist)
 		if (calc_dist(ray, axis) > max_dist)
 			break ;
 	}
-	return (update_ray_data(&hit, ray, axis));
+	return (update_ray_ctx(&hit, ray, axis));
 }

@@ -67,6 +67,7 @@ VLGFLAGS := --leak-check=full \
 # **************************************************************************** #
 
 MODULES := core \
+           input \
            render \
            parse \
            pool \
@@ -78,6 +79,8 @@ SOURCES := main \
            game \
            time \
            input \
+           input_keys \
+           input_mouse \
            player \
            camera \
            map \
@@ -90,11 +93,12 @@ SOURCES := main \
            parse_map_walls \
            parse_utils \
            render \
-           texture \
+           render_walls \
+           render_floor \
            raycast \
-           ray_init \
-           ray_dda \
-           ray_utils \
+           raycast_dda \
+           raycast_utils \
+           texture \
            calc_color \
            calc_angle \
            calc_scalar \

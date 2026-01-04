@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,43 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#ifndef INPUT_H
+# define INPUT_H
 
-void	input_init(t_input *input)
+# include <vector.h>
+# include <types.h>
+
+typedef struct s_game	t_game;
+
+typedef struct s_input
 {
-	ft_bzero(input, sizeof(t_input));
-}
+	bool	keys[MAX_KEYS];
+	bool	keys_prev[MAX_KEYS];
+	t_vec2	mouse_pos;
+	t_vec2	mouse_delta;
+	bool	mouse_captured;
+}	t_input;
 
-void	input_update(t_game *game)
-{
-	int	i;
+void	input_init(t_input *input);
+void	input_update(t_game *game);
+void	input_mouse_init(t_game *game);
 
-	i = 0;
-	while (i < MAX_KEYS)
-	{
-		game->input.keys_prev[i] = game->input.keys[i];
-		game->input.keys[i] = mlx_is_key_down(game->mlx, i);
-		i++;
-	}
-}
+void	input_mouse_capture(t_game *game);
+void	input_mouse_release(t_game *game);
+void	input_mouse_center(t_game *game);
 
-bool	input_key_down(t_input *input, int key)
-{
-	if (key < 0 || key >= MAX_KEYS)
-		return (false);
-	return (input->keys[key]);
-}
+bool	input_key_down(t_input *input, int key);
+bool	input_key_pressed(t_input *input, int key);
+bool	input_key_released(t_input *input, int key);
 
-bool	input_key_pressed(t_input *input, int key)
-{
-	if (key < 0 || key >= MAX_KEYS)
-		return (false);
-	return (input->keys[key] && !input->keys_prev[key]);
-}
-
-bool	input_key_released(t_input *input, int key)
-{
-	if (key < 0 || key >= MAX_KEYS)
-		return (false);
-	return (!input->keys[key] && input->keys_prev[key]);
-}
+#endif

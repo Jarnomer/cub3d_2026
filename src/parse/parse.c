@@ -17,8 +17,8 @@ static t_map	*init_map(void)
 	t_map	*map;
 
 	map = safe_calloc(sizeof(t_map));
-	map->floor.a = 255;
-	map->ceiling.a = 255;
+	map->floor_col.a = 255;
+	map->ciel_col.a = 255;
 	return (map);
 }
 
