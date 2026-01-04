@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static t_color	sample_floor_tex(t_tex *tex, t_vec2 pos)
+static t_u32	sample_floor_u32(t_tex *tex, t_vec2 pos)
 {
 	t_i32	tx;
 	t_i32	ty;
@@ -23,7 +23,7 @@ static t_color	sample_floor_tex(t_tex *tex, t_vec2 pos)
 		tx += tex->width;
 	if (ty < 0)
 		ty += tex->height;
-	return (texture_sample_color(tex, tx, ty));
+	return (texture_sample_u32(tex, tx, ty));
 }
 
 static void	init_row_ctx(t_floor *f, t_game *game, t_i32 y, t_i32 horizon)
@@ -53,7 +53,7 @@ static void	calc_floor_step(t_floor *f, t_game *game)
 static void	draw_row(t_game *game, t_floor *f, t_i32 y, bool is_floor)
 {
 	t_i32	x;
-	t_color	col;
+	t_u32	col;
 	t_tex	*tex;
 
 	calc_floor_step(f, game);
@@ -64,8 +64,8 @@ static void	draw_row(t_game *game, t_floor *f, t_i32 y, bool is_floor)
 	x = 0;
 	while (x < game->render.width)
 	{
-		col = sample_floor_tex(tex, f->floor_pos);
-		render_pixel(game->render.frame, x, y, col);
+		col = sample_floor_u32(tex, f->floor_pos);
+		render_pixel_fast(game->render.frame, x, y, col);
 		f->floor_pos = vec2_add(f->floor_pos, f->floor_step);
 		x++;
 	}

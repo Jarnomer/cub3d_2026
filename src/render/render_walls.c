@@ -25,8 +25,8 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 	while (y <= wall->end)
 	{
 		tex_y = clampi((t_i32)tex_pos, 0, tex->height - 1);
-		render_pixel(game->render.frame, x, y,
-			texture_sample_color(tex, wall->tex_x, tex_y));
+		render_pixel_fast(game->render.frame, x, y,
+			texture_sample_u32(tex, wall->tex_x, tex_y));
 		tex_pos += step;
 		y++;
 	}

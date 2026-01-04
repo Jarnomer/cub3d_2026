@@ -49,6 +49,7 @@
 # define PLAYER_LOOK_SPEED	2.0f
 # define PLAYER_MOUSE_SENS	0.001f
 # define PLAYER_MAX_PITCH	1.2f
+# define PLAYER_RADIUS		0.2f
 
 /* ************************************************************************** */
 /*    TEXTURE SETTINGS                                                        */

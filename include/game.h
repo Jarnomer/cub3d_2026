@@ -171,29 +171,12 @@ void	camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov);
 void	camera_update(t_camera *cam);
 
 /* ************************************************************************** */
-/*    RENDER FUNCTIONS                                                        */
-/* ************************************************************************** */
-
-void	render_init(t_game *game);
-void	render_destroy(t_render *render);
-void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c);
-
-/* ************************************************************************** */
 /*    MAP FUNCTIONS                                                           */
 /* ************************************************************************** */
 
 void	map_destroy(t_map *map);
 bool	map_is_wall(t_map *map, t_i32 x, t_i32 y);
 void	map_load_textures(t_map *map);
-
-/* ************************************************************************** */
-/*    TEXTURE FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-void	texture_load(t_tex *tex, const char *path);
-void	texture_destroy(t_tex *tex);
-t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
-t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
 
 /* ************************************************************************** */
 /*    SAFE WRAPPER FUNCTIONS                                                  */
@@ -207,5 +190,24 @@ char	**safe_split(char *str, char c);
 void	safe_image_to_window(mlx_t *mlx, t_mimg *img, t_i32 x, t_i32 y);
 t_mimg	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
 t_mtex	*safe_load_png(const char *path);
+
+/* ************************************************************************** */
+/*    RENDER FUNCTIONS                                                        */
+/* ************************************************************************** */
+
+void	render_init(t_game *game);
+void	render_destroy(t_render *render);
+void	render_pixel(t_mimg *img, t_i32 x, t_i32 y, t_color c);
+void	render_pixel_fast(t_mimg *img, t_i32 x, t_i32 y, t_u32 color);
+
+/* ************************************************************************** */
+/*    TEXTURE FUNCTIONS                                                       */
+/* ************************************************************************** */
+
+void	texture_load(t_tex *tex, const char *path);
+void	texture_destroy(t_tex *tex);
+t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
+t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
+t_u32	texture_sample_u32(t_tex *tex, t_i32 x, t_i32 y);
 
 #endif
