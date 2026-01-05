@@ -68,7 +68,9 @@ VLGFLAGS := --leak-check=full \
 
 MODULES := core \
            input \
+           entity \
            render \
+           sprite \
            thread \
            parse \
            pool \
@@ -96,13 +98,25 @@ SOURCES := main \
            render \
            render_walls \
            render_floor \
+           render_sprites \
            render_fog \
            raycast \
            raycast_dda \
            raycast_utils \
            texture \
+           entity \
+           sprite_proj \
+           sprite_utils \
            thread_floor \
            thread_walls \
+           thread_sprites \
+           pool \
+           pool_utils \
+           arena \
+           arena_utils \
+           darray \
+           darray_edit \
+           darray_ops \
            calc_color \
            calc_angle \
            calc_scalar \

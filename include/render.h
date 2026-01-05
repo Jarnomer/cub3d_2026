@@ -16,9 +16,7 @@
 # include <vector.h>
 # include <types.h>
 
-typedef struct s_map	t_map;
-typedef struct s_game	t_game;
-typedef struct s_render	t_render;
+typedef struct s_proj	t_proj;
 
 typedef enum e_axis
 {
@@ -47,6 +45,19 @@ typedef struct s_texture
 }	t_tex;
 
 /* ************************************************************************** */
+/*    RENDER STRUCTURE                                                        */
+/* ************************************************************************** */
+
+typedef struct s_render
+{
+	t_mlxi	*frame;
+	t_f32	*z_buffer;
+	t_i32	width;
+	t_i32	height;
+	t_tex	barrel;
+}	t_render;
+
+/* ************************************************************************** */
 /*    RAY CALC STRUCTURE                                                      */
 /* ************************************************************************** */
 
@@ -63,12 +74,12 @@ typedef struct s_texture
 
 typedef struct s_ray
 {
-	t_vec2		origin;
-	t_vec2		dir;
-	t_vec2		delta;
-	t_vec2		dist;
-	t_vec2i		grid;
-	t_vec2i		step;
+	t_vec2	origin;
+	t_vec2	dir;
+	t_vec2	delta;
+	t_vec2	dist;
+	t_vec2i	grid;
+	t_vec2i	step;
 }	t_ray;
 
 /* ************************************************************************** */
@@ -107,7 +118,7 @@ typedef struct s_hit
 **
 ** - top:   	Top pixel of wall on screen (before pitch)
 ** - end:   	Bottom pixel of wall on screen (before pitch)
-** - begin: 	Actual top pixel after pitch offset
+** - start: 	Actual top pixel after pitch offset
 ** - end:   	Actual bottom pixel after pitch offset
 ** - height:	Total height of wall slice (can exceed screen)
 ** - tex_x: 	X coordinate in texture (0 to tex_width - 1)
@@ -120,7 +131,7 @@ typedef struct s_wall
 {
 	t_i32	top;
 	t_i32	bottom;
-	t_i32	begin;
+	t_i32	start;
 	t_i32	end;
 	t_i32	height;
 	t_i32	tex_x;
@@ -136,21 +147,21 @@ typedef struct s_wall
 /*
 ** Context for floor/ceiling rendering using horizontal scanlines
 **
-** - ray_left:    Ray direction at left edge of screen (dir - plane)
-** - ray_right:   Ray direction at right edge of screen (dir + plane)
-** - floor_step:  World coordinate increment per pixel horizontally
-** - floor_pos:   Current world position being sampled for texture
-** - row_dist:    Perpendicular distance from camera to current row's plane
-** - horizon:     Screen Y coordinate of horizon line (with pitch offset)
+** - left:		Ray direction at left edge of screen (dir - plane)
+** - right:		Ray direction at right edge of screen (dir + plane)
+** - step:		World coordinate increment per pixel horizontally
+** - grid:		Current world position being sampled for texture
+** - dist:		Perpendicular distance from camera to current row's plane
+** - horizon:	Screen Y coordinate of horizon line (with pitch offset)
 */
 
 typedef struct s_floor
 {
-	t_vec2	ray_left;
-	t_vec2	ray_right;
-	t_f32	row_dist;
-	t_vec2	floor_step;
-	t_vec2	floor_pos;
+	t_vec2	left;
+	t_vec2	right;
+	t_f32	dist;
+	t_vec2	step;
+	t_vec2	grid;
 	t_i32	horizon;
 }	t_floor;
 
@@ -168,8 +179,9 @@ void	render_destroy(t_render *render);
 void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
-void	render_wall_column(t_game *game, t_i32 x);
 void	render_floor_row(t_game *game, t_i32 y);
+void	render_wall_column(t_game *game, t_i32 x);
+void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x);
 
 t_u32	fog_blend(t_u32 color, t_f32 factor);
 t_f32	fog_factor(t_f32 dist);

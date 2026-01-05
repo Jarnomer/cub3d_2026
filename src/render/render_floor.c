@@ -33,12 +33,12 @@ static void	init_row_ctx(t_floor *f, t_game *game, t_i32 y)
 
 	horizon = game->render.height / 2
 		+ (t_i32)(game->camera.pitch * game->render.height);
-	f->ray_left = vec2_sub(game->camera.dir, game->camera.plane);
-	f->ray_right = vec2_add(game->camera.dir, game->camera.plane);
+	f->left = vec2_sub(game->camera.dir, game->camera.plane);
+	f->right = vec2_add(game->camera.dir, game->camera.plane);
 	p = absi(y - horizon);
 	if (p == 0)
 		p = 1;
-	f->row_dist = (0.5f * game->render.height) / (t_f32)p;
+	f->dist = (0.5f * game->render.height) / (t_f32)p;
 	f->horizon = horizon;
 }
 
@@ -46,11 +46,11 @@ static void	calc_floor_step(t_floor *f, t_game *game)
 {
 	t_f32	step_scale;
 
-	step_scale = f->row_dist / (t_f32)game->render.width;
-	f->floor_step = vec2_sub(f->ray_right, f->ray_left);
-	f->floor_step = vec2_mul(f->floor_step, step_scale);
-	f->floor_pos.x = game->camera.pos.x + f->ray_left.x * f->row_dist;
-	f->floor_pos.y = game->camera.pos.y + f->ray_left.y * f->row_dist;
+	step_scale = f->dist / (t_f32)game->render.width;
+	f->step = vec2_sub(f->right, f->left);
+	f->step = vec2_mul(f->step, step_scale);
+	f->grid.x = game->camera.pos.x + f->left.x * f->dist;
+	f->grid.y = game->camera.pos.y + f->left.y * f->dist;
 }
 
 void	render_floor_row(t_game *game, t_i32 y)
@@ -71,10 +71,10 @@ void	render_floor_row(t_game *game, t_i32 y)
 	x = 0;
 	while (x < game->render.width)
 	{
-		color = fog_blend(sample_floor(tex, f.floor_pos),
-				fog_factor(f.row_dist));
+		color = fog_blend(sample_floor(tex, f.grid),
+				fog_factor(f.dist));
 		render_pixel(game->render.frame, x, y, color);
-		f.floor_pos = vec2_add(f.floor_pos, f.floor_step);
+		f.grid = vec2_add(f.grid, f.step);
 		x++;
 	}
 }

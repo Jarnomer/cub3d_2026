@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.h                                           :+:      :+:    :+:   */
+/*   arena_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/04 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THREAD_H
-# define THREAD_H
+#include <game.h>
 
-# include <pthread.h>
-# include <types.h>
-
-typedef struct s_game	t_game;
-typedef struct s_proj	t_proj;
-
-typedef struct s_thd
+void	arena_reset(t_arena *arena)
 {
-	t_game	*game;
-	t_proj	*projs;
-	t_u32	count;
-	t_i32	start;
-	t_i32	end;
-	t_i32	id;
-}	t_thd;
+	arena->offset = 0;
+}
 
-void	render_walls(t_game *game);
-void	render_floor(t_game *game);
-void	render_sprites(t_game *game);
+size_t	arena_usage(t_arena *arena)
+{
+	return (arena->offset);
+}
 
-#endif
+size_t	arena_peak(t_arena *arena)
+{
+	return (arena->peak_usage);
+}

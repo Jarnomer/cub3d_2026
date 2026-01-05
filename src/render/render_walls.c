@@ -21,9 +21,9 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 	t_f32	fog;
 
 	step = (t_f32)tex->height / (t_f32)wall->height;
-	tex_pos = (wall->begin - wall->top - wall->offset) * step;
+	tex_pos = (wall->start - wall->top - wall->offset) * step;
 	fog = fog_factor(wall->dist);
-	y = wall->begin;
+	y = wall->start;
 	while (y <= wall->end)
 	{
 		color = fog_blend(texture_sample(tex, wall->tex_x,
@@ -40,7 +40,7 @@ static void	calc_wall_offset(t_game *game, t_wall *wall)
 
 	game_height = game->render.height;
 	wall->offset = (t_i32)(game->camera.pitch * game_height);
-	wall->begin = clampi(wall->top + wall->offset, 0, game_height - 1);
+	wall->start = clampi(wall->top + wall->offset, 0, game_height - 1);
 	wall->end = clampi(wall->bottom + wall->offset, 0, game_height - 1);
 }
 

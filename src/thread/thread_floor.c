@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	init_floor_ctx(t_thd *data, t_game *game, t_i32 count)
+static void	init_floor_ctx(t_thd *ctx, t_game *game, t_i32 count)
 {
 	t_i32	rows_per_thread;
 	t_i32	i;
@@ -21,27 +21,29 @@ static void	init_floor_ctx(t_thd *data, t_game *game, t_i32 count)
 	i = 0;
 	while (i < count)
 	{
-		data[i].game = game;
-		data[i].id = i;
-		data[i].start = i * rows_per_thread;
+		ctx[i].game = game;
+		ctx[i].projs = NULL;
+		ctx[i].count = 0;
+		ctx[i].id = i;
+		ctx[i].start = i * rows_per_thread;
 		if (i == count - 1)
-			data[i].end = game->render.height;
+			ctx[i].end = game->render.height;
 		else
-			data[i].end = (i + 1) * rows_per_thread;
+			ctx[i].end = (i + 1) * rows_per_thread;
 		i++;
 	}
 }
 
 static void	*floor_worker(void *arg)
 {
-	t_thd	*data;
+	t_thd	*ctx;
 	t_i32	y;
 
-	data = (t_thd *)arg;
-	y = data->start;
-	while (y < data->end)
+	ctx = (t_thd *)arg;
+	y = ctx->start;
+	while (y < ctx->end)
 	{
-		render_floor_row(data->game, y);
+		render_floor_row(ctx->game, y);
 		y++;
 	}
 	return (NULL);
@@ -50,15 +52,15 @@ static void	*floor_worker(void *arg)
 void	render_floor(t_game *game)
 {
 	pthread_t	threads[THREAD_COUNT];
-	t_thd		data[THREAD_COUNT];
-	t_i32		i;
+	t_thd		ctx[THREAD_COUNT];
 	int			err;
+	t_i32		i;
 
-	init_floor_ctx(data, game, THREAD_COUNT);
+	init_floor_ctx(ctx, game, THREAD_COUNT);
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		err = pthread_create(&threads[i], NULL, floor_worker, &data[i]);
+		err = pthread_create(&threads[i], NULL, floor_worker, &ctx[i]);
 		if (err != 0)
 			err_exit_context("pthread_create", strerror(err));
 		i++;

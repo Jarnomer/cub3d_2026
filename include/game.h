@@ -38,15 +38,18 @@
 /*    PROJECT HEADERS                                                         */
 /* ************************************************************************** */
 
-# include <types.h>
-# include <vector.h>
-# include <calc.h>
-# include <error.h>
-# include <config.h>
 # include <parse.h>
 # include <input.h>
-# include <thread.h>
+# include <config.h>
+# include <entity.h>
 # include <render.h>
+# include <sprite.h>
+# include <thread.h>
+# include <pool.h>
+# include <calc.h>
+# include <vector.h>
+# include <types.h>
+# include <error.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
@@ -103,18 +106,6 @@ typedef struct s_camera
 }	t_camera;
 
 /* ************************************************************************** */
-/*    RENDER STRUCTURE                                                        */
-/* ************************************************************************** */
-
-typedef struct s_render
-{
-	t_mlxi	*frame;
-	t_f32	*z_buffer;
-	t_i32	width;
-	t_i32	height;
-}	t_render;
-
-/* ************************************************************************** */
 /*    MAIN GAME STRUCTURE                                                     */
 /* ************************************************************************** */
 
@@ -126,6 +117,8 @@ struct s_game
 	t_time		time;
 	t_camera	camera;
 	t_render	render;
+	t_darray	entities;
+	t_arena		arena;
 	bool		running;
 };
 

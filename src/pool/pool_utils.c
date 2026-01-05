@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.h                                           :+:      :+:    :+:   */
+/*   pool_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/04 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THREAD_H
-# define THREAD_H
+#include <game.h>
 
-# include <pthread.h>
-# include <types.h>
-
-typedef struct s_game	t_game;
-typedef struct s_proj	t_proj;
-
-typedef struct s_thd
+void	*pool_get(t_pool *pool, t_u32 index)
 {
-	t_game	*game;
-	t_proj	*projs;
-	t_u32	count;
-	t_i32	start;
-	t_i32	end;
-	t_i32	id;
-}	t_thd;
+	if (index >= pool->capacity)
+		return (NULL);
+	return ((char *)pool->data + index * pool->elem_size);
+}
 
-void	render_walls(t_game *game);
-void	render_floor(t_game *game);
-void	render_sprites(t_game *game);
+bool	pool_is_empty(t_pool *pool)
+{
+	return (pool->active_count == 0);
+}
 
-#endif
+bool	pool_is_full(t_pool *pool)
+{
+	return (pool->free_count == 0);
+}
+
+t_u32	pool_active_count(t_pool *pool)
+{
+	return (pool->active_count);
+}

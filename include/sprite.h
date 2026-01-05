@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.h                                           :+:      :+:    :+:   */
+/*   sprite.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/04 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THREAD_H
-# define THREAD_H
+#ifndef SPRITE_H
+# define SPRITE_H
 
-# include <pthread.h>
+# include <vector.h>
 # include <types.h>
 
 typedef struct s_game	t_game;
-typedef struct s_proj	t_proj;
+typedef struct s_entity	t_entity;
 
-typedef struct s_thd
+typedef struct s_proj
 {
-	t_game	*game;
-	t_proj	*projs;
-	t_u32	count;
-	t_i32	start;
-	t_i32	end;
-	t_i32	id;
-}	t_thd;
+	t_vec2		trans;
+	t_vec2i		screen;
+	t_vec2i		size;
+	t_vec2i		start;
+	t_vec2i		end;
+	t_u32		tex_id;
+	t_f32		dist;
+}	t_proj;
 
-void	render_walls(t_game *game);
-void	render_floor(t_game *game);
-void	render_sprites(t_game *game);
+bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj);
+t_u32	collect_sprites(t_game *game, t_proj *projs);
+void	sort_sprites(t_proj *projs, t_u32 count);
 
 #endif

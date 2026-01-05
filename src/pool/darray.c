@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_color.c                                       :+:      :+:    :+:   */
+/*   darray.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,40 +12,41 @@
 
 #include <game.h>
 
-t_color	color_new(t_u8 r, t_u8 g, t_u8 b, t_u8 a)
+void	darray_init(t_darray *arr, size_t elem_size, size_t init_cap)
 {
-	return ((t_color){r, g, b, a});
+	arr->elem_size = elem_size;
+	arr->capacity = init_cap;
+	arr->data = NULL;
+	arr->size = 0;
+	if (init_cap > 0)
+		arr->data = safe_calloc(init_cap * elem_size);
 }
 
-t_u32	color_to_u32(t_color c)
+void	darray_destroy(t_darray *arr)
 {
-	return ((t_u32)c.r << 24 | (t_u32)c.g << 16 | (t_u32)c.b << 8 | c.a);
+	free(arr->data);
+	ft_bzero(arr, sizeof(t_darray));
 }
 
-t_color	color_from_u32(t_u32 val)
+void	darray_clear(t_darray *arr)
 {
-	t_color	c;
-
-	c.r = (val >> 24) & 0xFF;
-	c.g = (val >> 16) & 0xFF;
-	c.b = (val >> 8) & 0xFF;
-	c.a = val & 0xFF;
-	return (c);
+	arr->size = 0;
 }
 
-static t_u8	lerp_u8(t_u8 a, t_u8 b, t_f32 t)
+void	*darray_get(t_darray *arr, size_t index)
 {
-	return ((t_u8)(a + (b - a) * t));
+	if (index >= arr->size)
+		return (NULL);
+	return ((char *)arr->data + index * arr->elem_size);
 }
 
-t_color	color_lerp(t_color a, t_color b, t_f32 t)
+t_err	darray_set(t_darray *arr, size_t index, const void *elem)
 {
-	t_color	c;
+	void	*dest;
 
-	t = clampf(t, 0.0f, 1.0f);
-	c.r = lerp_u8(a.r, b.r, t);
-	c.g = lerp_u8(a.g, b.g, t);
-	c.b = lerp_u8(a.b, b.b, t);
-	c.a = lerp_u8(a.a, b.a, t);
-	return (c);
+	if (index >= arr->size)
+		return (ERR_INVALID);
+	dest = (char *)arr->data + index * arr->elem_size;
+	ft_memcpy(dest, elem, arr->elem_size);
+	return (ERR_NONE);
 }
