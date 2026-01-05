@@ -27,6 +27,7 @@ t_color	color_new(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
 t_color	color_from_u32(t_u32 val);
 t_u32	color_to_u32(t_color c);
 t_color	color_mul(t_color c, t_f32 factor);
+t_color	color_lerp(t_color a, t_color b, t_f32 t);
 
 t_f32	angle_normalize(t_f32 angle);
 t_f32	deg_to_rad(t_f32 deg);

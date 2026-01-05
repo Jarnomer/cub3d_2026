@@ -16,17 +16,19 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 {
 	t_f32	step;
 	t_f32	tex_pos;
-	t_i32	tex_y;
 	t_i32	y;
+	t_u32	color;
+	t_f32	fog;
 
 	step = (t_f32)tex->height / (t_f32)wall->height;
 	tex_pos = (wall->begin - wall->top - wall->offset) * step;
+	fog = fog_factor(wall->dist);
 	y = wall->begin;
 	while (y <= wall->end)
 	{
-		tex_y = clampi((t_i32)tex_pos, 0, tex->height - 1);
-		render_pixel(game->render.frame, x, y,
-			texture_sample(tex, wall->tex_x, tex_y));
+		color = fog_blend(texture_sample(tex, wall->tex_x,
+				clampi((t_i32)tex_pos, 0, tex->height - 1)), fog);
+		render_pixel(game->render.frame, x, y, color);
 		tex_pos += step;
 		y++;
 	}

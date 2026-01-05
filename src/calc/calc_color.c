@@ -44,3 +44,20 @@ t_color	color_mul(t_color c, t_f32 factor)
 	result.a = c.a;
 	return (result);
 }
+
+static t_u8	lerp_u8(t_u8 a, t_u8 b, t_f32 t)
+{
+	return ((t_u8)(a + (b - a) * t));
+}
+
+t_color	color_lerp(t_color a, t_color b, t_f32 t)
+{
+	t_color	result;
+
+	t = clampf(t, 0.0f, 1.0f);
+	result.r = lerp_u8(a.r, b.r, t);
+	result.g = lerp_u8(a.g, b.g, t);
+	result.b = lerp_u8(a.b, b.b, t);
+	result.a = lerp_u8(a.a, b.a, t);
+	return (result);
+}

@@ -26,7 +26,7 @@
 /*    THREAD SETTINGS                                                          */
 /* ************************************************************************** */
 
-# define THREAD_COUNT	4
+# define THREAD_COUNT	8
 
 /* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */
@@ -40,6 +40,18 @@
 
 # define FOV_DEFAULT	66.0f
 # define RAY_MAX_DIST	64.0f
+
+/* ************************************************************************** */
+/*    FOG SETTINGS                                                            */
+/* ************************************************************************** */
+
+# define FOG_ENABLED	1
+# define FOG_START		1.2f
+# define FOG_END		15.0f
+# define FOG_INTENSITY	2.0f
+# define FOG_COLOR_R	0
+# define FOG_COLOR_G	0
+# define FOG_COLOR_B	0
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */

@@ -96,6 +96,7 @@ SOURCES := main \
            render \
            render_walls \
            render_floor \
+           render_fog \
            raycast \
            raycast_dda \
            raycast_utils \

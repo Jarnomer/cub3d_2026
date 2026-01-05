@@ -163,18 +163,20 @@ void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
 t_hit	perform_dda(t_ray *ray, t_map *map, t_f32 max_dist);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_map *map);
 
-void	render_wall_column(t_game *game, t_i32 x);
-void	render_floor_row(t_game *game, t_i32 y);
-
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
 void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
+void	render_wall_column(t_game *game, t_i32 x);
+void	render_floor_row(t_game *game, t_i32 y);
+
+t_u32	fog_blend(t_u32 color, t_f32 factor);
+t_f32	fog_factor(t_f32 dist);
+
 void	texture_load(t_tex *tex, const char *path);
 void	texture_destroy(t_tex *tex);
 t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
 t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
-
 
 #endif

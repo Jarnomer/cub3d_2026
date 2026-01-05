@@ -58,6 +58,7 @@ void	render_floor_row(t_game *game, t_i32 y)
 	t_floor	f;
 	t_i32	x;
 	t_tex	*tex;
+	t_u32	color;
 
 	init_row_ctx(&f, game, y);
 	calc_floor_step(&f, game);
@@ -70,8 +71,9 @@ void	render_floor_row(t_game *game, t_i32 y)
 	x = 0;
 	while (x < game->render.width)
 	{
-		render_pixel(game->render.frame, x, y,
-			sample_floor(tex, f.floor_pos));
+		color = fog_blend(sample_floor(tex, f.floor_pos),
+				fog_factor(f.row_dist));
+		render_pixel(game->render.frame, x, y, color);
 		f.floor_pos = vec2_add(f.floor_pos, f.floor_step);
 		x++;
 	}
