@@ -30,6 +30,7 @@ static void	load_textures(t_assets *assets, t_map *map)
 void	assets_init(t_assets *assets, t_map *map)
 {
 	ft_bzero(assets, sizeof(t_assets));
+	config_load_all(assets);
 	load_textures(assets, map);
 	load_sprites(assets);
 	assets->loaded = true;

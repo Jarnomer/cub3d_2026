@@ -13,6 +13,8 @@
 #ifndef PARSE_H
 # define PARSE_H
 
+# include <types.h>
+
 # define MAP_MIN_SIZE		3
 # define MAP_MAX_SIZE		256
 
@@ -60,7 +62,7 @@ typedef struct s_parse
 
 t_map	*parse(const char *filepath);
 
-int		parse_file_open(const char *filepath);
+int		parse_file_open(const char *filepath, const char *ext);
 void	parse_file_validate(const char *filepath, const char *ext);
 
 void	parse_elements(t_parse *ctx);
@@ -72,8 +74,10 @@ void	parse_map_validate(t_parse *ctx);
 void	parse_map_walls(t_parse *ctx);
 
 char	*parse_skip_spaces(char *str);
+bool	parse_skip_line(const char *line);
 bool	parse_is_empty_line(const char *line);
 void	parse_remove_newline(char *str);
+t_i32	parse_count_parts(char **parts);
 
 void	parse_save_spawn(t_parse *ctx, int x, int y, char c);
 

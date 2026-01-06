@@ -1,0 +1,15 @@
+# Entity    Definition
+# Headers:  entity.h / assets.h
+# Format:   TYPE SPRITE SCALE Z_OFFSET HEALTH SOLID
+
+# TYPE:     Entity type name (must match e_type enum)
+# SPRITE:   Sprite ID name (must match e_spr_id enum)
+# SCALE:    Render scale (0.1 - 2.0)
+# Z_OFFSET: Vertical offset (0.0 = floor, 1.0 = ceiling)
+# HEALTH:   Hit points (0 = invulnerable)
+# SOLID:    Collision (0 = passable, 1 = solid)
+
+BARREL      SPRITE_BARREL       0.7  -0.2  20  1
+DOOR        SPRITE_DOOR         1.0  0.0   0   1
+PICKUP_HP   SPRITE_PICKUP_HP    0.5  0.3   0   0
+PICKUP_AMMO SPRITE_PICKUP_AMMO  0.5  0.3   0   0

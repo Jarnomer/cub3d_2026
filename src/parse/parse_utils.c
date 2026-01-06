@@ -21,6 +21,17 @@ char	*parse_skip_spaces(char *str)
 	return (str);
 }
 
+bool	parse_skip_line(const char *line)
+{
+	if (!line)
+		return (true);
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (*line == '\0' || *line == '\n' || *line == '#')
+		return (true);
+	return (false);
+}
+
 bool	parse_is_empty_line(const char *line)
 {
 	if (!line)
@@ -43,4 +54,16 @@ void	parse_remove_newline(char *str)
 	len = ft_strlen(str);
 	if (len > 0 && str[len - 1] == '\n')
 		str[len - 1] = '\0';
+}
+
+t_i32	parse_count_parts(char **parts)
+{
+	t_i32	count;
+
+	if (!parts)
+		return (0);
+	count = 0;
+	while (parts[count])
+		count++;
+	return (count);
 }

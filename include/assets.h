@@ -21,8 +21,7 @@
 typedef enum e_spr_id
 {
 	SPRITE_BARREL,
-	SPRITE_DOOR_CLOSED,
-	SPRITE_DOOR_OPEN,
+	SPRITE_DOOR,
 	SPRITE_LAMP,
 	SPRITE_PICKUP_HP,
 	SPRITE_PICKUP_AMMO,
@@ -56,7 +55,7 @@ typedef struct s_assets
 	t_sheet		sheets[MAX_SHEETS];
 	t_anidef	anidefs[MAX_ANIMS];
 	t_entdef	entdefs[MAX_ENTITIES];
-	bool	loaded;
+	bool		loaded;
 }	t_assets;
 
 void	assets_init(t_assets *assets, t_map *map);

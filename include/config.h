@@ -13,6 +13,9 @@
 #ifndef CONFIG_H
 # define CONFIG_H
 
+typedef struct s_assets	t_assets;
+typedef struct s_entdef	t_entdef;
+
 /* ************************************************************************** */
 /*    WINDOW SETTINGS                                                         */
 /* ************************************************************************** */
@@ -89,5 +92,26 @@
 # define FOG_COLOR_R	0
 # define FOG_COLOR_G	0
 # define FOG_COLOR_B	0
+
+/* ************************************************************************** */
+/*    CONFIG PATHS                                                            */
+/* ************************************************************************** */
+
+# define ENTDEF_FIELD_COUNT	6
+# define WPNDEF_FIELD_COUNT	8
+# define ENEDEF_FIELD_COUNT	10
+
+# define PATH_CONFIG_ENTITY		"config/entity.def"
+# define PATH_CONFIG_WEAPON		"config/weapon.def"
+# define PATH_CONFIG_ENEMY		"config/enemy.def"
+
+/* ************************************************************************** */
+/*    CONFIG FUNCTIONS                                                        */
+/* ************************************************************************** */
+
+void	config_load_all(t_assets *assets);
+void	config_load_entities(t_entdef *defs);
+
+t_f32	ft_atof(const char *str);
 
 #endif

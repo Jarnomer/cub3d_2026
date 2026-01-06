@@ -28,7 +28,7 @@ t_map	*parse(const char *filepath)
 
 	ft_bzero(&ctx, sizeof(t_parse));
 	ctx.map = init_map();
-	ctx.fd = parse_file_open(filepath);
+	ctx.fd = parse_file_open(filepath, ".cub");
 	parse_elements(&ctx);
 	parse_map(&ctx);
 	close(ctx.fd);

@@ -25,16 +25,18 @@ static void	transform_to_camera(t_game *game, t_vec2 rel, t_proj *proj)
 	proj->trans.y = inv_det * (-plane.y * rel.x + plane.x * rel.y);
 }
 
-static void	calc_screen_pos(t_game *game, t_f32 scale, t_proj *proj)
+static void	calc_screen_pos(t_game *game, t_entity *ent, t_proj *proj)
 {
 	t_i32	pitch_offset;
+	t_i32	z_shift;
 
 	pitch_offset = (t_i32)(game->camera.pitch * game->render.height);
+	z_shift = (t_i32)(ent->z_offset * game->render.height / proj->trans.y);
 	proj->screen.x = (t_i32)((game->render.width / 2)
 			* (1.0f + proj->trans.x / proj->trans.y));
-	proj->screen.y = game->render.height / 2 + pitch_offset;
-	proj->size.y = absi((t_i32)(game->render.height / proj->trans.y * scale));
-	proj->size.x = absi((t_i32)(game->render.width / proj->trans.y * scale));
+	proj->screen.y = game->render.height / 2 + pitch_offset - z_shift;
+	proj->size.y = absi((t_i32)(game->render.height / proj->trans.y * ent->scale));
+	proj->size.x = absi((t_i32)(game->render.width / proj->trans.y * ent->scale));
 }
 
 static void	calc_draw_bounds(t_game *game, t_proj *proj)
@@ -59,7 +61,7 @@ bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj)
 		return (false);
 	proj->dist = proj->trans.y;
 	proj->tex_id = ent->tex_id;
-	calc_screen_pos(game, ent->scale, proj);
+	calc_screen_pos(game, ent, proj);
 	calc_draw_bounds(game, proj);
 	if (proj->end.x < 0 || proj->start.x >= game->render.width)
 		return (false);

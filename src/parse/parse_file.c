@@ -59,12 +59,12 @@ void	parse_file_validate(const char *filepath, const char *ext)
 	check_directory(filepath);
 }
 
-int	parse_file_open(const char *filepath)
+int	parse_file_open(const char *filepath, const char *ext)
 {
 	char	buf;
 	int		fd;
 
-	parse_file_validate(filepath, ".cub");
+	parse_file_validate(filepath, ext);
 	fd = open(filepath, O_RDONLY);
 	if (fd < 0)
 		err_exit_errno(filepath);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity.c                                           :+:      :+:    :+:   */
+/*   config_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,34 @@
 
 #include <game.h>
 
-static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
+t_f32	ft_atof(const char *str)
 {
-	const t_entdef	*def;
-	t_entity		ent;
+	t_f32	result;
+	t_f32	decimal;
+	int		sign;
 
-	ft_bzero(&ent, sizeof(t_entity));
-	ent.type = type;
-	ent.pos = pos;
-	ent.active = true;
-	def = &assets->entdefs[type];
-	entity_apply_entdef(&ent, def);
-	return (ent);
-}
-
-void	entity_load_spawns(t_game *game)
-{
-	t_spawn		*spawn;
-	t_entity	ent;
-	t_u32		i;
-
-	i = 0;
-	while (i < game->map->spawn_count)
+	result = 0.0f;
+	sign = 1;
+	while (*str == ' ' || *str == '\t')
+		str++;
+	if (*str == '-')
 	{
-		spawn = &game->map->spawns[i];
-		ent = entity_create(&game->assets, spawn->type, spawn->pos);
-		darray_push(&game->entities, &ent);
-		i++;
+		sign = -1;
+		str++;
 	}
+	else if (*str == '+')
+		str++;
+	while (*str >= '0' && *str <= '9')
+		result = result * 10.0f + (*str++ - '0');
+	if (*str == '.')
+	{
+		str++;
+		decimal = 0.1f;
+		while (*str >= '0' && *str <= '9')
+		{
+			result += (*str++ - '0') * decimal;
+			decimal *= 0.1f;
+		}
+	}
+	return (result * sign);
 }

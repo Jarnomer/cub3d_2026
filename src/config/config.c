@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity.c                                           :+:      :+:    :+:   */
+/*   config.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,7 @@
 
 #include <game.h>
 
-static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
+void	config_load_all(t_assets *assets)
 {
-	const t_entdef	*def;
-	t_entity		ent;
-
-	ft_bzero(&ent, sizeof(t_entity));
-	ent.type = type;
-	ent.pos = pos;
-	ent.active = true;
-	def = &assets->entdefs[type];
-	entity_apply_entdef(&ent, def);
-	return (ent);
-}
-
-void	entity_load_spawns(t_game *game)
-{
-	t_spawn		*spawn;
-	t_entity	ent;
-	t_u32		i;
-
-	i = 0;
-	while (i < game->map->spawn_count)
-	{
-		spawn = &game->map->spawns[i];
-		ent = entity_create(&game->assets, spawn->type, spawn->pos);
-		darray_push(&game->entities, &ent);
-		i++;
-	}
+	config_load_entities(assets->entdefs);
 }

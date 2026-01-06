@@ -45,6 +45,7 @@ typedef struct s_entdef
 	t_type		type;
 	t_u32		sprite_id;
 	t_f32		scale;
+	t_f32		z_offset;
 	t_i32		health;
 	bool		solid;
 }	t_entdef;
@@ -57,14 +58,14 @@ typedef struct s_entity
 	t_state		state;
 	t_u32		tex_id;
 	t_f32		scale;
+	t_f32		z_offset;
 	t_i32		health;
 	bool		active;
 	bool		solid;
 }	t_entity;
 
 void			entity_load_spawns(t_game *game);
-const t_entdef	*entity_get_def(t_type type);
-void			entity_apply_def(t_entity *ent, const t_entdef *def);
+void			entity_apply_entdef(t_entity *ent, const t_entdef *def);
 t_entity		*entity_get(t_game *game, t_u32 index);
 t_u32			entity_count(t_game *game);
 

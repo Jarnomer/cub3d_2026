@@ -66,18 +66,7 @@ VLGFLAGS := --leak-check=full \
 #    SOURCES
 # **************************************************************************** #
 
-MODULES := core \
-           input \
-           entity \
-           render \
-           assets \
-           sprite \
-           thread \
-           parse \
-           pool \
-           calc \
-           vector \
-           utils
+MODULES := MODULES := $(notdir $(wildcard src/*))
 
 SOURCES := main \
            game \
@@ -85,6 +74,9 @@ SOURCES := main \
            input \
            input_keys \
            input_mouse \
+           config \
+           config_ent \
+           config_utils \
            player \
            camera \
            parse \
