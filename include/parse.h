@@ -23,8 +23,11 @@
 # define CHAR_PLAYER_S		'S'
 # define CHAR_PLAYER_E		'E'
 # define CHAR_PLAYER_W		'W'
-# define CHARSET_VALID		"01 NSEW"
+# define CHAR_BARREL		'B'
+# define CHAR_DOOR			'D'
+# define CHARSET_VALID		"01 NSEWBD"
 # define CHARSET_PLAYER		"NSEW"
+# define CHARSET_SPAWN		"BD"
 
 # define ID_NORTH			"NO "
 # define ID_SOUTH			"SO "
@@ -71,5 +74,7 @@ void	parse_map_walls(t_parse *ctx);
 char	*parse_skip_spaces(char *str);
 bool	parse_is_empty_line(const char *line);
 void	parse_remove_newline(char *str);
+
+void	parse_save_spawn(t_parse *ctx, int x, int y, char c);
 
 #endif

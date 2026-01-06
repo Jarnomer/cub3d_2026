@@ -15,12 +15,8 @@
 
 # include <render.h>
 # include <sprite.h>
+# include <entity.h>
 # include <anim.h>
-
-# define MAX_TEXTURES 32
-# define MAX_SPRITES  32
-# define MAX_SHEETS   32
-# define MAX_ANIMS    32
 
 typedef enum e_spr_id
 {
@@ -55,10 +51,11 @@ typedef enum e_tex_id
 
 typedef struct s_assets
 {
-	t_tex	textures[MAX_TEXTURES];
-	t_tex	sprites[MAX_SPRITES];
-	t_sheet	sheets[MAX_SHEETS];
-	t_def	anims[MAX_ANIMS];
+	t_tex		textures[MAX_TEXTURES];
+	t_tex		sprites[MAX_SPRITES];
+	t_sheet		sheets[MAX_SHEETS];
+	t_anidef	anidefs[MAX_ANIMS];
+	t_entdef	entdefs[MAX_ENTITIES];
 	bool	loaded;
 }	t_assets;
 

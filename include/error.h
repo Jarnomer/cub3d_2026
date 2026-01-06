@@ -41,6 +41,7 @@
 # define MSG_MAP_WALL	"Map is not enclosed by walls"
 # define MSG_MAP_PLAYER	"Invalid player count"
 # define MSG_MAP_CHAR	"Invalid map character"
+# define MSG_MAP_ENTITY	"Too many entities in map"
 
 # define MSG_MALLOC		"Memory allocation failed"
 # define MSG_MLX		"MLX42 error"

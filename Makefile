@@ -87,7 +87,6 @@ SOURCES := main \
            input_mouse \
            player \
            camera \
-           map \
            parse \
            parse_file \
            parse_elem \
@@ -95,6 +94,7 @@ SOURCES := main \
            parse_map \
            parse_map_valid \
            parse_map_walls \
+           parse_entity \
            parse_utils \
            render \
            render_walls \
@@ -108,6 +108,8 @@ SOURCES := main \
            assets \
            assets_utils \
            entity \
+           entity_def \
+           entity_utils \
            sprite_proj \
            sprite_utils \
            thread_floor \
@@ -130,6 +132,8 @@ SOURCES := main \
            vec2_prod \
            vec2_trans \
            vec2i \
+           map_utils \
+           free_utils \
            err_exit \
            err_print \
            safe_mlx \

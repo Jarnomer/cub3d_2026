@@ -15,7 +15,7 @@
 
 # include <types.h>
 
-typedef struct s_def
+typedef struct s_anidef
 {
 	t_u16	id;
 	t_u16	start;
@@ -23,7 +23,7 @@ typedef struct s_def
 	t_u16	next;
 	t_f32	time;
 	bool	loop;
-}	t_def;
+}	t_anidef;
 
 typedef struct s_anim
 {
