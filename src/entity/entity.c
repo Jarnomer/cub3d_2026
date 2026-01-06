@@ -22,7 +22,7 @@ void	entity_init(t_entity *ent)
 
 static void	setup_barrel(t_entity *ent)
 {
-	ent->tex_id = 0;
+	ent->tex_id = SPRITE_BARREL;
 	ent->scale = 0.7f;
 	ent->health = 20;
 	ent->solid = true;

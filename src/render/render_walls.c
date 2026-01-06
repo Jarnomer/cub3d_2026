@@ -77,9 +77,9 @@ void	render_wall_column(t_game *game, t_i32 x)
 	if (!hit.hit)
 		return ;
 	wall = calc_wall_slice(&hit, game->render.height,
-			game->map->textures[hit.dir].width);
+			game->assets.textures[hit.dir].width);
 	calc_wall_offset(game, &wall);
 	if (game->render.z_buffer)
 		game->render.z_buffer[x] = hit.dist;
-	draw_tex_column(game, x, &wall, &game->map->textures[hit.dir]);
+	draw_tex_column(game, x, &wall, &game->assets.textures[hit.dir]);
 }

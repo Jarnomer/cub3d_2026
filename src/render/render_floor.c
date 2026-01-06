@@ -63,9 +63,9 @@ void	render_floor_row(t_game *game, t_i32 y)
 	init_row_ctx(&f, game, y);
 	calc_floor_step(&f, game);
 	if (y > f.horizon)
-		tex = &game->map->floor_tex;
+		tex = &game->assets.textures[TEXTURE_FLOOR];
 	else if (y < f.horizon)
-		tex = &game->map->ceil_tex;
+		tex = &game->assets.textures[TEXTURE_CEILING];
 	else
 		return ;
 	x = 0;

@@ -54,7 +54,6 @@ typedef struct s_render
 	t_f32	*z_buffer;
 	t_i32	width;
 	t_i32	height;
-	t_tex	barrel;
 }	t_render;
 
 /* ************************************************************************** */

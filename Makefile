@@ -70,6 +70,7 @@ MODULES := core \
            input \
            entity \
            render \
+           assets \
            sprite \
            thread \
            parse \
@@ -104,6 +105,8 @@ SOURCES := main \
            raycast_dda \
            raycast_utils \
            texture \
+           assets \
+           assets_utils \
            entity \
            sprite_proj \
            sprite_utils \

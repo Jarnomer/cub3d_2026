@@ -28,8 +28,8 @@
 
 # define ID_NORTH			"NO "
 # define ID_SOUTH			"SO "
-# define ID_WEST			"WE "
 # define ID_EAST			"EA "
+# define ID_WEST			"WE "
 # define ID_FLOOR			"F "
 # define ID_CEILING			"C "
 

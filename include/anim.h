@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   anim.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,29 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#ifndef ANIM_H
+# define ANIM_H
 
-void	map_destroy(t_map *map)
+# include <types.h>
+
+typedef struct s_def
 {
-	int	i;
+	t_u16	id;
+	t_u16	start;
+	t_u16	total;
+	t_u16	next;
+	t_f32	time;
+	bool	loop;
+}	t_def;
 
-	if (!map)
-		return ;
-	i = 0;
-	while (i < 4)
-	{
-		ft_free_single((void **)&map->textures[i]);
-		i++;
-	}
-	ft_free_double((void ***)&map->grid);
-	free(map);
-}
-
-bool	map_is_wall(t_map *map, t_i32 x, t_i32 y)
+typedef struct s_anim
 {
-	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
-		return (true);
-	if (!map->grid[y] || x >= (t_i32)ft_strlen(map->grid[y]))
-		return (true);
-	return (map->grid[y][x] == CHAR_WALL);
-}
+	t_u16	def_id;
+	t_u16	frame;
+	t_f32	timer;
+	bool	playing;
+	bool	finished;
+}	t_anim;
+
+#endif

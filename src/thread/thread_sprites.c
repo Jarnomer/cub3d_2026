@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	init_sprite_ctx(t_thd *ctx, t_game *game,t_proj *projs, t_u32 cnt)
+static void	init_sprite_ctx(t_thd *ctx, t_game *game, t_proj *projs, t_u32 cnt)
 {
 	t_i32	cols_per_thread;
 	t_i32	i;

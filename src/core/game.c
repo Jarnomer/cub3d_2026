@@ -31,12 +31,9 @@ void	game_init(t_game *game)
 	input_init(&game->input);
 	input_mouse_init(game);
 	input_mouse_capture(game);
-	map_load_textures(game->map);
+	assets_init(&game->assets, game->map);
 	darray_init(&game->entities, sizeof(t_entity), 32);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
-	texture_load(&game->render.barrel, "assets/sprites/barrel.png");
-	t_entity barrel = entity_create(ENTITY_BARREL, vec2_new(5.5f, 5.5f));
-	darray_push(&game->entities, &barrel);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);
 	game->running = true;
@@ -45,12 +42,13 @@ void	game_init(t_game *game)
 
 void	game_destroy(t_game *game)
 {
+	assets_destroy(&game->assets);
 	render_destroy(&game->render);
-	map_destroy(game->map);
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	darray_destroy(&game->entities);
 	arena_destroy(&game->arena);
+	map_destroy(game->map);
 }
 
 void	game_loop(void *param)

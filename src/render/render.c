@@ -28,7 +28,6 @@ void	render_destroy(t_render *render)
 	if (render->z_buffer)
 		free(render->z_buffer);
 	ft_bzero(render, sizeof(t_render));
-	texture_destroy(&render->barrel);
 }
 
 void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c)

@@ -39,7 +39,9 @@ void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x)
 	t_i32	y;
 	t_u32	color;
 
-	tex = &game->render.barrel;
+	tex = assets_get_sprite(&game->assets, proj->tex_id);
+	if (!tex || !tex->pixels)
+		return ;
 	tex_x = calc_tex_x(proj, x, tex->width);
 	y = proj->start.y;
 	while (y < proj->end.y)

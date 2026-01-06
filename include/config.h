@@ -91,7 +91,4 @@
 # define TEX_WIDTH		256
 # define TEX_HEIGHT		256
 
-# define TEX_FLOOR		"assets/textures/floor.png"
-# define TEX_CEILING	"assets/textures/ceiling.png"
-
 #endif

@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   asset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-void	map_destroy(t_map *map)
+t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
 {
-	int	i;
-
-	if (!map)
-		return ;
-	i = 0;
-	while (i < 4)
-	{
-		ft_free_single((void **)&map->textures[i]);
-		i++;
-	}
-	ft_free_double((void ***)&map->grid);
-	free(map);
+	if (id < 0 || id >= SPRITE_COUNT)
+		return (NULL);
+	return (&assets->sprites[id]);
 }
 
-bool	map_is_wall(t_map *map, t_i32 x, t_i32 y)
+t_tex	*assets_get_texture(t_assets *assets, t_tex_id id)
 {
-	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
-		return (true);
-	if (!map->grid[y] || x >= (t_i32)ft_strlen(map->grid[y]))
-		return (true);
-	return (map->grid[y][x] == CHAR_WALL);
+	if (id < 0 || id >= TEXTURE_COUNT)
+		return (NULL);
+	return (&assets->textures[id]);
 }

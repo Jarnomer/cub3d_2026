@@ -41,10 +41,12 @@
 # include <parse.h>
 # include <input.h>
 # include <config.h>
+# include <assets.h>
 # include <entity.h>
 # include <render.h>
 # include <sprite.h>
 # include <thread.h>
+# include <anim.h>
 # include <pool.h>
 # include <calc.h>
 # include <vector.h>
@@ -68,12 +70,9 @@ typedef struct s_map
 	t_i32	height;
 	t_vec2	spawn_pos;
 	t_f32	spawn_angle;
-	char	*tex_paths[4];
-	t_tex	textures[4];
+	char	*textures[4];
 	t_color	floor_col;
 	t_color	ciel_col;
-	t_tex	floor_tex;
-	t_tex	ceil_tex;
 }	t_map;
 
 /* ************************************************************************** */
@@ -117,6 +116,7 @@ struct s_game
 	t_time		time;
 	t_camera	camera;
 	t_render	render;
+	t_assets	assets;
 	t_darray	entities;
 	t_arena		arena;
 	bool		running;
@@ -158,7 +158,6 @@ void	camera_update(t_camera *cam);
 
 void	map_destroy(t_map *map);
 bool	map_is_wall(t_map *map, t_i32 x, t_i32 y);
-void	map_load_textures(t_map *map);
 
 /* ************************************************************************** */
 /*    SAFE WRAPPER FUNCTIONS                                                  */

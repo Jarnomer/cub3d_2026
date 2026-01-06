@@ -90,5 +90,5 @@ void	parse_texture(t_parse *ctx, t_elem type)
 	path = safe_strdup(value);
 	parse_remove_newline(path);
 	parse_file_validate(path, ".png");
-	ctx->map->tex_paths[type] = path;
+	ctx->map->textures[type] = path;
 }
