@@ -33,6 +33,7 @@ void	game_init(t_game *game)
 	input_mouse_capture(game);
 	assets_init(&game->assets, game->map);
 	darray_init(&game->entities, sizeof(t_entity), 32);
+	entity_load_spawns(game);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);

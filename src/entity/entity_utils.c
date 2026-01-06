@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity.c                                           :+:      :+:    :+:   */
+/*   entity_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,12 @@
 
 #include <game.h>
 
-static t_entity	entity_create(t_type type, t_vec2 pos)
+t_entity	*entity_get(t_game *game, t_u32 index)
 {
-	const t_entdef	*def;
-	t_entity		ent;
-
-	ft_bzero(&ent, sizeof(t_entity));
-	ent.type = type;
-	ent.pos = pos;
-	ent.active = true;
-	def = entity_get_def(type);
-	entity_apply_def(&ent, def);
-	return (ent);
+	return ((t_entity *)darray_get(&game->entities, index));
 }
 
-void	entity_load_spawns(t_game *game)
+t_u32	entity_count(t_game *game)
 {
-	t_spawn		*spawn;
-	t_entity	ent;
-	t_u32		i;
-
-	i = 0;
-	while (i < game->map->spawn_count)
-	{
-		spawn = &game->map->spawns[i];
-		ent = entity_create(spawn->type, spawn->pos);
-		darray_push(&game->entities, &ent);
-		i++;
-	}
+	return ((t_u32)game->entities.size);
 }

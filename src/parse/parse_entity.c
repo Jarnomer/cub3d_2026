@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity.c                                           :+:      :+:    :+:   */
+/*   parse_entity.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,25 @@
 
 #include <game.h>
 
-static t_entity	entity_create(t_type type, t_vec2 pos)
+static t_type	char_to_entity(char c)
 {
-	const t_entdef	*def;
-	t_entity		ent;
-
-	ft_bzero(&ent, sizeof(t_entity));
-	ent.type = type;
-	ent.pos = pos;
-	ent.active = true;
-	def = entity_get_def(type);
-	entity_apply_def(&ent, def);
-	return (ent);
+	if (c == CHAR_BARREL)
+		return (ENTITY_BARREL);
+	if (c == CHAR_DOOR)
+		return (ENTITY_DOOR);
+	return (ENTITY_NONE);
 }
 
-void	entity_load_spawns(t_game *game)
+void	parse_save_spawn(t_parse *ctx, int x, int y, char c)
 {
-	t_spawn		*spawn;
-	t_entity	ent;
-	t_u32		i;
+	t_spawn	*spawn;
 
-	i = 0;
-	while (i < game->map->spawn_count)
-	{
-		spawn = &game->map->spawns[i];
-		ent = entity_create(spawn->type, spawn->pos);
-		darray_push(&game->entities, &ent);
-		i++;
-	}
+	if (ctx->map->spawn_count >= MAX_ENTITIES)
+		err_exit_msg(MSG_MAP_ENTITY);
+	spawn = &ctx->map->spawns[ctx->map->spawn_count];
+	spawn->pos.x = (t_f32)x + 0.5f;
+	spawn->pos.y = (t_f32)y + 0.5f;
+	spawn->type = char_to_entity(c);
+	ctx->map->grid[y][x] = CHAR_EMPTY;
+	ctx->map->spawn_count++;
 }

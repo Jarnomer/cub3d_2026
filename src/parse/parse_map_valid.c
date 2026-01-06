@@ -31,7 +31,7 @@ static void	save_player(t_parse *ctx, int x, int y, char c)
 	ctx->map->grid[y][x] = CHAR_EMPTY;
 }
 
-static void	validate_characters(t_parse *ctx, int *player_count)
+static void	validate_characters(t_parse *ctx)
 {
 	int		x;
 	int		y;
@@ -49,8 +49,10 @@ static void	validate_characters(t_parse *ctx, int *player_count)
 			if (ft_strchr(CHARSET_PLAYER, c))
 			{
 				save_player(ctx, x, y, c);
-				(*player_count)++;
+				ctx->map->player_count++;
 			}
+			else if (ft_strchr(CHARSET_SPAWN, c))
+				parse_save_spawn(ctx, x, y, c);
 			x++;
 		}
 		y++;
@@ -81,12 +83,9 @@ static void	calculate_dimensions(t_parse *ctx)
 
 void	parse_map_validate(t_parse *ctx)
 {
-	int	player_count;
-
 	calculate_dimensions(ctx);
-	player_count = 0;
-	validate_characters(ctx, &player_count);
-	if (player_count != 1)
+	validate_characters(ctx);
+	if (ctx->map->player_count != 1)
 		err_exit_msg(MSG_MAP_PLAYER);
 	parse_map_walls(ctx);
 }

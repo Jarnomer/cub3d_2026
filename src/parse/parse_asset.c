@@ -74,7 +74,7 @@ void	parse_color(t_parse *ctx, t_elem type)
 	validate_color_format(value);
 	parts = safe_split(value, ',');
 	color = extract_rgb(parts);
-	ft_free_double((void ***)&parts);
+	free_arr(parts);
 	if (type == ELEM_F)
 		ctx->map->floor_col = color;
 	else

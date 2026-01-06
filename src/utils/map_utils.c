@@ -21,10 +21,10 @@ void	map_destroy(t_map *map)
 	i = 0;
 	while (i < 4)
 	{
-		ft_free_single((void **)&map->textures[i]);
+		free(map->textures[i]);
 		i++;
 	}
-	ft_free_double((void ***)&map->grid);
+	free_arr(map->grid);
 	free(map);
 }
 

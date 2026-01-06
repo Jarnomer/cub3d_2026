@@ -64,5 +64,5 @@ void	parse_map_walls(t_parse *ctx)
 	start_x = (int)ctx->map->spawn_pos.x;
 	start_y = (int)ctx->map->spawn_pos.y;
 	floodfill(dup, start_x, start_y, ctx);
-	ft_free_double((void ***)&dup);
+	free_arr(dup);
 }

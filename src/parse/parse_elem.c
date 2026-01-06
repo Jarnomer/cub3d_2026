@@ -69,6 +69,6 @@ void	parse_elements(t_parse *ctx)
 		if (!ctx->line)
 			err_exit_msg(MSG_ELEM_MISS);
 		parse_element_line(ctx);
-		ft_free_single((void **)&ctx->line);
+		free_str(ctx->line);
 	}
 }
