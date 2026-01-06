@@ -18,6 +18,11 @@
 # include <entity.h>
 # include <anim.h>
 
+# define PATH_FLOOR		"assets/textures/floor.png"
+# define PATH_CEILING	"assets/textures/ceiling.png"
+# define PATH_BARREL	"assets/sprites/barrel.png"
+# define PATH_DOOR		"assets/sprites/door.png"
+
 typedef enum e_spr_id
 {
 	SPRITE_BARREL,
@@ -38,15 +43,6 @@ typedef enum e_tex_id
 	TEXTURE_CEILING,
 	TEXTURE_COUNT
 }	t_tex_id;
-
-# define PATH_FLOOR		"assets/textures/floor.png"
-# define PATH_CEILING	"assets/textures/ceiling.png"
-# define PATH_BARREL	"assets/sprites/barrel.png"
-# define PATH_DOOR		"assets/sprites/door.png"
-
-/* ************************************************************************** */
-/*    ASSETS STRUCTURE                                                        */
-/* ************************************************************************** */
 
 typedef struct s_assets
 {

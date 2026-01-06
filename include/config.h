@@ -36,13 +36,6 @@ typedef struct s_entdef	t_entdef;
 # define MAX_ENTITIES	128
 
 /* ************************************************************************** */
-/*    TEXTURE SETTINGS                                                        */
-/* ************************************************************************** */
-
-# define TEX_WIDTH		256
-# define TEX_HEIGHT		256
-
-/* ************************************************************************** */
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
@@ -94,7 +87,7 @@ typedef struct s_entdef	t_entdef;
 # define FOG_COLOR_B	0
 
 /* ************************************************************************** */
-/*    CONFIG PATHS                                                            */
+/*    CONFIG SETTINGS                                                         */
 /* ************************************************************************** */
 
 # define ENTDEF_FIELD_COUNT	6
@@ -111,7 +104,5 @@ typedef struct s_entdef	t_entdef;
 
 void	config_load_all(t_assets *assets);
 void	config_load_entities(t_entdef *defs);
-
-t_f32	ft_atof(const char *str);
 
 #endif

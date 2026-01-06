@@ -51,7 +51,7 @@ static void	calc_draw_bounds(t_game *game, t_proj *proj)
 	proj->end.y = mini(proj->end.y, game->render.height - 1);
 }
 
-bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj)
+bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj)
 {
 	t_vec2	rel;
 

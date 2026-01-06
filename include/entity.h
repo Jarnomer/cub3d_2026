@@ -66,6 +66,7 @@ typedef struct s_entity
 
 void			entity_load_spawns(t_game *game);
 void			entity_apply_entdef(t_entity *ent, const t_entdef *def);
+
 t_entity		*entity_get(t_game *game, t_u32 index);
 t_u32			entity_count(t_game *game);
 

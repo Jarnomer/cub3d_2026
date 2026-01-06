@@ -49,7 +49,7 @@ t_u32	collect_sprites(t_game *game, t_proj *projs)
 			i++;
 			continue ;
 		}
-		if (sprite_project(game, ent, &projs[count]))
+		if (project_sprite(game, ent, &projs[count]))
 			count++;
 		i++;
 	}

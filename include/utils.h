@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar.c                                      :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,41 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#ifndef UTILS_H
+# define UTILS_H
 
-t_f32	minf(t_f32 a, t_f32 b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
+# include <types.h>
 
-t_f32	maxf(t_f32 a, t_f32 b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
+typedef struct s_map	t_map;
 
-t_f32	clampf(t_f32 val, t_f32 lo, t_f32 hi)
-{
-	if (val < lo)
-		return (lo);
-	if (val > hi)
-		return (hi);
-	return (val);
-}
+void	map_destroy(t_map *map);
+bool	map_is_wall(t_map *map, t_i32 x, t_i32 y);
 
-t_f32	absf(t_f32 val)
-{
-	if (val < 0.0f)
-		return (-val);
-	return (val);
-}
+void	*safe_calloc(size_t size);
+char	*safe_strjoin(char *s1, char *s2);
+char	*safe_strdup(char *s1);
+char	**safe_split(char *str, char c);
 
-t_f32	iabsf(t_f32 val)
-{
-	if (val == 0.0f)
-		return (INFINITE);
-	return (absf(1.0f / val));
-}
+void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y);
+t_mlxi	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
+t_mlxt	*safe_load_png(const char *path);
+
+t_f32	ft_atof(const char *str);
+
+void	free_str(char *str);
+void	free_arr(char **arr);
+
+#endif

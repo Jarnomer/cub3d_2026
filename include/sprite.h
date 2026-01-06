@@ -13,10 +13,9 @@
 #ifndef SPRITE_H
 # define SPRITE_H
 
+# include <render.h>
 # include <vector.h>
 # include <types.h>
-
-# include <render.h>
 
 typedef struct s_game	t_game;
 typedef struct s_entity	t_entity;
@@ -42,7 +41,7 @@ typedef struct s_proj
 	t_f32		dist;
 }	t_proj;
 
-bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj);
+bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj);
 t_u32	collect_sprites(t_game *game, t_proj *projs);
 void	sort_sprites(t_proj *projs, t_u32 count);
 

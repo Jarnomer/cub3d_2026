@@ -76,7 +76,6 @@ SOURCES := main \
            input_mouse \
            config \
            config_ent \
-           config_utils \
            player \
            camera \
            parse \
@@ -126,6 +125,7 @@ SOURCES := main \
            vec2i \
            map_utils \
            free_utils \
+           calc_utils \
            err_exit \
            err_print \
            safe_mlx \
