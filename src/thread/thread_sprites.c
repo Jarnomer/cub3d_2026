@@ -21,10 +21,7 @@ static void	init_sprite_ctx(t_thd *ctx, t_game *game, t_proj *projs, t_u32 cnt)
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		ctx[i].game = game;
-		ctx[i].projs = projs;
-		ctx[i].count = cnt;
-		ctx[i].id = i;
+		ctx[i] = (t_thd){.game = game, .projs = projs, .id = i, .count = cnt};
 		ctx[i].start = i * cols_per_thread;
 		if (i == THREAD_COUNT - 1)
 			ctx[i].end = game->render.width;
@@ -65,8 +62,8 @@ static void	thread_sprites(t_game *game, t_proj *projs, t_u32 count)
 {
 	pthread_t	threads[THREAD_COUNT];
 	t_thd		ctx[THREAD_COUNT];
-	t_i32		i;
 	int			err;
+	t_i32		i;
 
 	init_sprite_ctx(ctx, game, projs, count);
 	i = 0;

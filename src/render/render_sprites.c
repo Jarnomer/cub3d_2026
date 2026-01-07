@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,19 @@ void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x)
 	t_i32	tex_x;
 	t_i32	y;
 	t_u32	color;
+	t_u8	fog;
 
 	tex = assets_get_sprite(&game->assets, proj->tex_id);
 	if (!tex || !tex->pixels)
 		return ;
+	fog = lookup_fog(&game->lookup, proj->dist);
 	tex_x = calc_tex_x(proj, x, tex->width);
 	y = proj->start.y;
 	while (y < proj->end.y)
 	{
 		color = texture_sample(tex, tex_x, calc_tex_y(proj, y, tex->height));
-		if ((color >> 24) > 128)
-		{
-			color = fog_blend(color, fog_factor(proj->dist));
-			render_pixel(game->render.frame, x, y, color);
-		}
+		if (color_a(color) > 128)
+			render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		y++;
 	}
 }

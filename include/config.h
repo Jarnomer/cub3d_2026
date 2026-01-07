@@ -46,7 +46,8 @@ typedef struct s_anidef	t_anidef;
 
 # define FOV_DEFAULT	66.0f
 # define RAY_MAX_DIST	64.0f
-# define THREAD_COUNT	4
+# define THREAD_COUNT	8
+# define SKYBOX_ENABLED	0
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */

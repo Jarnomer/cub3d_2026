@@ -12,6 +12,13 @@
 
 #include <game.h>
 
+t_tex	*assets_get_texture(t_assets *assets, t_tex_id id)
+{
+	if (id < 0 || id >= TEXTURE_COUNT)
+		return (NULL);
+	return (&assets->textures[id]);
+}
+
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
 {
 	if (id < 0 || id >= SPRITE_COUNT)
@@ -19,9 +26,9 @@ t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
 	return (&assets->sprites[id]);
 }
 
-t_tex	*assets_get_texture(t_assets *assets, t_tex_id id)
+t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id)
 {
-	if (id < 0 || id >= TEXTURE_COUNT)
+	if (id < 0 || id >= SHEET_COUNT)
 		return (NULL);
-	return (&assets->textures[id]);
+	return (&assets->sheets[id]);
 }

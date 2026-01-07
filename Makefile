@@ -83,12 +83,11 @@ SOURCES := main \
            config_entity \
            config_sheet \
            config_anim \
-           texture \
            assets \
+           assets_texture \
            assets_sheet \
            assets_utils \
            entity \
-           entity_def \
            entity_door \
            entity_utils \
            sprite_proj \
@@ -112,7 +111,7 @@ SOURCES := main \
            parse_map \
            parse_map_valid \
            parse_map_walls \
-           parse_entity \
+           parse_spawn \
            parse_utils \
            pool \
            pool_utils \
@@ -121,6 +120,8 @@ SOURCES := main \
            darray \
            darray_edit \
            darray_ops \
+           lookup \
+           lookup_utils \
            calc_color \
            calc_angle \
            calc_scalar \

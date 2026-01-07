@@ -71,8 +71,5 @@ int	parse_file_open(const char *filepath, const char *ext)
 	if (read(fd, &buf, 1) <= 0)
 		err_exit_context(filepath, MSG_FILE_EMPTY);
 	close(fd);
-	fd = open(filepath, O_RDONLY);
-	if (fd < 0)
-		err_exit_errno(filepath);
-	return (fd);
+	return (open(filepath, O_RDONLY));
 }

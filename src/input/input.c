@@ -14,7 +14,7 @@
 
 void	input_init(t_input *input)
 {
-	ft_bzero(input, sizeof(t_input));
+	*input = (t_input){0};
 }
 
 static void	update_mouse_delta(t_game *game)

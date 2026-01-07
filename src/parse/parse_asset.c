@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_col.c                                        :+:      :+:    :+:   */
+/*   parse_asset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,45 @@ static int	parse_color_value(char *str)
 	return (value);
 }
 
-static t_color	extract_rgb(char **parts)
+static t_u32	extract_rgb(char **parts)
 {
-	t_color	color;
 	int		count;
+	t_u8	r;
+	t_u8	g;
+	t_u8	b;
 
 	count = 0;
 	while (parts[count])
 		count++;
 	if (count != 3)
 		err_exit_msg(MSG_COLOR_CNT);
-	color.r = parse_color_value(parts[0]);
-	color.g = parse_color_value(parts[1]);
-	color.b = parse_color_value(parts[2]);
-	color.a = 255;
-	return (color);
+	r = parse_color_value(parts[0]);
+	g = parse_color_value(parts[1]);
+	b = parse_color_value(parts[2]);
+	return (color_pack(r, g, b, 255));
 }
 
 static void	validate_color_format(char *str)
 {
-	int		i;
-	char	*trimmed;
+	char	*end;
 
 	if (!str || *str == '\0')
 		err_exit_msg(MSG_COLOR_FMT);
-	trimmed = parse_skip_spaces(str);
-	if (*trimmed == ',')
+	str = parse_skip_spaces(str);
+	if (*str == ',')
 		err_exit_msg(MSG_COLOR_FMT);
-	i = 0;
-	while (str[i])
+	end = str + ft_strlen(str) - 1;
+	while (end > str && *end == ' ')
+		end--;
+	if (*end == ',')
+		err_exit_msg(MSG_COLOR_FMT);
+	while (*str)
 	{
-		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != ',')
+		if (!ft_isdigit(*str) && *str != ' ' && *str != ',')
 			err_exit_msg(MSG_COLOR_FMT);
-		if (str[i] == ',' && str[i + 1] == ',')
+		if (*str == ',' && *(str + 1) == ',')
 			err_exit_msg(MSG_COLOR_FMT);
-		i++;
+		str++;
 	}
 }
 
@@ -67,7 +71,7 @@ void	parse_color(t_parse *ctx, t_elem type)
 {
 	char	*value;
 	char	**parts;
-	t_color	color;
+	t_u32	color;
 
 	value = parse_skip_spaces(ctx->line + 2);
 	parse_remove_newline(value);
@@ -78,7 +82,7 @@ void	parse_color(t_parse *ctx, t_elem type)
 	if (type == ELEM_F)
 		ctx->map->floor_col = color;
 	else
-		ctx->map->ciel_col = color;
+		ctx->map->ceil_col = color;
 }
 
 void	parse_texture(t_parse *ctx, t_elem type)

@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # include <pool.h>
 # include <calc.h>
 # include <vector.h>
+# include <lookup.h>
 # include <error.h>
 # include <utils.h>
 # include <types.h>
@@ -83,8 +84,8 @@ typedef struct s_map
 	t_vec2	spawn_pos;
 	t_f32	spawn_angle;
 	char	*textures[4];
-	t_color	floor_col;
-	t_color	ciel_col;
+	t_u32	floor_col;
+	t_u32	ceil_col;
 	t_spawn	spawns[MAX_ENTITIES];
 	t_u32	spawn_count;
 	t_u32	player_count;
@@ -134,6 +135,7 @@ struct s_game
 	t_assets	assets;
 	t_darray	entities;
 	t_arena		arena;
+	t_lookup	lookup;
 	bool		running;
 };
 

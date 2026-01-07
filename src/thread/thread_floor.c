@@ -21,10 +21,7 @@ static void	init_floor_ctx(t_thd *ctx, t_game *game, t_i32 count)
 	i = 0;
 	while (i < count)
 	{
-		ctx[i].game = game;
-		ctx[i].projs = NULL;
-		ctx[i].count = 0;
-		ctx[i].id = i;
+		ctx[i] = (t_thd){.game = game, .id = i};
 		ctx[i].start = i * rows_per_thread;
 		if (i == count - 1)
 			ctx[i].end = game->render.height;

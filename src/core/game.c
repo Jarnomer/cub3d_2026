@@ -34,6 +34,7 @@ void	game_init(t_game *game)
 	assets_init(&game->assets, game->map);
 	darray_init(&game->entities, sizeof(t_entity), 32);
 	entity_load_spawns(game);
+	lookup_init(&game->lookup);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);
@@ -60,10 +61,7 @@ void	game_loop(void *param)
 	time_update(&game->time);
 	input_update(game);
 	if (input_key_pressed(&game->input, MLX_KEY_ESCAPE))
-	{
-		mlx_close_window(game->mlx);
-		return ;
-	}
+		return ((void)mlx_close_window(game->mlx));
 	player_update(game, game->time.delta);
 	arena_reset(&game->arena);
 	render_floor(game);

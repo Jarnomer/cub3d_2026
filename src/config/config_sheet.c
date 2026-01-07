@@ -39,8 +39,6 @@ static void	process_line(char *line, t_assets *assets)
 {
 	char	**parts;
 
-	if (parse_skip_line(line))
-		return ;
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < SHEETDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_ENT);
@@ -57,7 +55,8 @@ void	config_load_sheets(t_assets *assets)
 	line = get_next_line(fd);
 	while (line)
 	{
-		process_line(line, assets);
+		if (!parse_skip_line(line))
+			process_line(line, assets);
 		free_str(line);
 		line = get_next_line(fd);
 	}

@@ -38,8 +38,6 @@ static void	process_line(char *line, t_anidef *defs)
 	char		**parts;
 	t_anidef	def;
 
-	if (parse_skip_line(line))
-		return ;
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < ANIMDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_ENT);
@@ -60,7 +58,8 @@ void	config_load_anims(t_anidef *defs)
 	line = get_next_line(fd);
 	while (line)
 	{
-		process_line(line, defs);
+		if (!parse_skip_line(line))
+			process_line(line, defs);
 		free_str(line);
 		line = get_next_line(fd);
 	}

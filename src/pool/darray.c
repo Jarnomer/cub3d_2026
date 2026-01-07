@@ -14,10 +14,7 @@
 
 void	darray_init(t_darray *arr, size_t elem_size, size_t init_cap)
 {
-	arr->elem_size = elem_size;
-	arr->capacity = init_cap;
-	arr->data = NULL;
-	arr->size = 0;
+	*arr = (t_darray){.elem_size = elem_size, .capacity = init_cap};
 	if (init_cap > 0)
 		arr->data = safe_calloc(init_cap * elem_size);
 }
@@ -25,7 +22,7 @@ void	darray_init(t_darray *arr, size_t elem_size, size_t init_cap)
 void	darray_destroy(t_darray *arr)
 {
 	free(arr->data);
-	ft_bzero(arr, sizeof(t_darray));
+	*arr = (t_darray){0};
 }
 
 void	darray_clear(t_darray *arr)

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_utils.c                                       :+:      :+:    :+:   */
+/*   parse_spawn.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,25 @@
 
 #include <game.h>
 
-t_f32	ft_atof(const char *str)
+static t_type	char_to_entity(char c)
 {
-	t_f32	result;
-	t_f32	decimal;
-	int		sign;
+	if (c == CHAR_BARREL)
+		return (ENTITY_BARREL);
+	if (c == CHAR_DOOR)
+		return (ENTITY_DOOR);
+	return (ENTITY_NONE);
+}
 
-	result = 0.0f;
-	sign = 1;
-	while (*str == ' ' || *str == '\t')
-		str++;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	else if (*str == '+')
-		str++;
-	while (*str >= '0' && *str <= '9')
-		result = result * 10.0f + (*str++ - '0');
-	if (*str == '.')
-	{
-		str++;
-		decimal = 0.1f;
-		while (*str >= '0' && *str <= '9')
-		{
-			result += (*str++ - '0') * decimal;
-			decimal *= 0.1f;
-		}
-	}
-	return (result * sign);
+void	parse_save_spawn(t_parse *ctx, int x, int y, char c)
+{
+	t_spawn	*spawn;
+
+	if (ctx->map->spawn_count >= MAX_ENTITIES)
+		err_exit_msg(MSG_MAP_ENTITY);
+	spawn = &ctx->map->spawns[ctx->map->spawn_count];
+	spawn->pos.x = (t_f32)x + 0.5f;
+	spawn->pos.y = (t_f32)y + 0.5f;
+	spawn->type = char_to_entity(c);
+	ctx->map->grid[y][x] = CHAR_EMPTY;
+	ctx->map->spawn_count++;
 }

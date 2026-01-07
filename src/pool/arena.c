@@ -14,16 +14,14 @@
 
 void	arena_init(t_arena *arena, size_t size)
 {
+	*arena = (t_arena){.size = size};
 	arena->data = safe_calloc(size);
-	arena->size = size;
-	arena->offset = 0;
-	arena->peak_usage = 0;
 }
 
 void	arena_destroy(t_arena *arena)
 {
 	free(arena->data);
-	ft_bzero(arena, sizeof(t_arena));
+	*arena = (t_arena){0};
 }
 
 static size_t	align_up(size_t value, size_t alignment)
@@ -56,6 +54,6 @@ void	*arena_calloc(t_arena *arena, size_t count, size_t size)
 	total = count * size;
 	ptr = arena_alloc(arena, total);
 	if (ptr)
-		ft_bzero(ptr, total);
+		ptr = (void *){0};
 	return (ptr);
 }

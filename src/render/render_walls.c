@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 	t_f32	tex_pos;
 	t_i32	y;
 	t_u32	color;
-	t_f32	fog;
+	t_u8	fog;
 
+	fog = lookup_fog(&game->lookup, wall->dist);
+	if (fog == 255)
+		return ((void)fog_fill_column(game, x, wall->start, wall->end));
 	step = (t_f32)tex->height / (t_f32)wall->height;
 	tex_pos = (wall->start - wall->top - wall->offset) * step;
-	fog = fog_factor(wall->dist);
 	y = wall->start;
 	while (y <= wall->end)
 	{
-		color = fog_blend(texture_sample(tex, wall->tex_x,
-				clampi((t_i32)tex_pos, 0, tex->height - 1)), fog);
-		render_pixel(game->render.frame, x, y, color);
+		color = texture_sample(tex, wall->tex_x,
+				clampi((t_i32)tex_pos, 0, tex->height - 1));
+		render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		tex_pos += step;
 		y++;
 	}
@@ -44,6 +46,16 @@ static void	calc_wall_offset(t_game *game, t_wall *wall)
 	wall->end = clampi(wall->bottom + wall->offset, 0, game_height - 1);
 }
 
+static void	calc_tex_x(t_wall *wall, t_hit *hit, t_i32 tex_w)
+{
+	wall->tex_x = (t_i32)(hit->wall_x * (t_f32)tex_w);
+	if (hit->axis == AXIS_X && hit->dir == WALL_EAST)
+		wall->tex_x = tex_w - wall->tex_x - 1;
+	if (hit->axis == AXIS_Y && hit->dir == WALL_SOUTH)
+		wall->tex_x = tex_w - wall->tex_x - 1;
+	wall->tex_x = clampi(wall->tex_x, 0, tex_w - 1);
+}
+
 static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 {
 	t_wall	wall;
@@ -53,12 +65,7 @@ static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 	wall.height = (t_i32)(screen_h / hit->dist);
 	wall.top = -wall.height / 2 + screen_h / 2;
 	wall.bottom = wall.height / 2 + screen_h / 2;
-	wall.tex_x = (t_i32)(hit->wall_x * (t_f32)tex_w);
-	if (hit->axis == AXIS_X && hit->dir == WALL_WEST)
-		wall.tex_x = tex_w - wall.tex_x - 1;
-	if (hit->axis == AXIS_Y && hit->dir == WALL_SOUTH)
-		wall.tex_x = tex_w - wall.tex_x - 1;
-	wall.tex_x = clampi(wall.tex_x, 0, tex_w - 1);
+	calc_tex_x(&wall, hit, tex_w);
 	return (wall);
 }
 

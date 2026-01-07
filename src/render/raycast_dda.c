@@ -21,8 +21,8 @@ static t_dir	get_dir(t_ray *ray, int axis)
 		return (WALL_EAST);
 	}
 	if (ray->step.y > 0)
-		return (WALL_NORTH);
-	return (WALL_SOUTH);
+		return (WALL_SOUTH);
+	return (WALL_NORTH);
 }
 
 static t_f32	calc_wall_x(t_ray *ray, t_f32 dist, int axis)

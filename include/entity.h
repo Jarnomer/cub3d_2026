@@ -81,13 +81,12 @@ typedef struct s_entity
 
 void		entity_load_spawns(t_game *game);
 
-void		entity_apply_entdef(t_entity *ent, const t_entdef *def);
-
-t_entity	*entity_get(t_game *game, t_u32 index);
-t_u32		entity_count(t_game *game);
-
 void		door_init(t_entity *ent);
 bool		entity_is_door(t_entity *ent);
 t_i32		door_get_frame(t_entity *ent, t_assets *assets);
+
+void		entity_apply_def(t_entity *ent, const t_entdef *def);
+t_entity	*entity_get(t_game *game, t_u32 index);
+t_u32		entity_count(t_game *game);
 
 #endif

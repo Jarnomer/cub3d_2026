@@ -12,6 +12,16 @@
 
 #include <game.h>
 
+t_f32	deg_to_rad(t_f32 deg)
+{
+	return (deg * DEG2RAD);
+}
+
+t_f32	rad_to_deg(t_f32 rad)
+{
+	return (rad * RAD2DEG);
+}
+
 t_f32	angle_normalize(t_f32 angle)
 {
 	while (angle < 0)

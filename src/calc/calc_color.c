@@ -6,41 +6,33 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_u32	color_to_u32(t_color c)
+t_u8	color_r(t_u32 c)
 {
-	return ((t_u32)c.r << 24 | (t_u32)c.g << 16 | (t_u32)c.b << 8 | c.a);
+	return (c & 0xFF);
 }
 
-t_color	color_from_u32(t_u32 val)
+t_u8	color_g(t_u32 c)
 {
-	t_color	c;
-
-	c.r = (val >> 24) & 0xFF;
-	c.g = (val >> 16) & 0xFF;
-	c.b = (val >> 8) & 0xFF;
-	c.a = val & 0xFF;
-	return (c);
+	return ((c >> 8) & 0xFF);
 }
 
-static t_u8	lerp_u8(t_u8 a, t_u8 b, t_f32 t)
+t_u8	color_b(t_u32 c)
 {
-	return ((t_u8)(a + (b - a) * t));
+	return ((c >> 16) & 0xFF);
 }
 
-t_color	color_lerp(t_color a, t_color b, t_f32 t)
+t_u8	color_a(t_u32 c)
 {
-	t_color	c;
+	return ((c >> 24) & 0xFF);
+}
 
-	t = clampf(t, 0.0f, 1.0f);
-	c.r = lerp_u8(a.r, b.r, t);
-	c.g = lerp_u8(a.g, b.g, t);
-	c.b = lerp_u8(a.b, b.b, t);
-	c.a = lerp_u8(a.a, b.a, t);
-	return (c);
+t_u32	color_pack(t_u8 r, t_u8 g, t_u8 b, t_u8 a)
+{
+	return ((t_u32)a << 24 | (t_u32)b << 16 | (t_u32)g << 8 | (t_u32)r);
 }

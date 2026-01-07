@@ -24,7 +24,7 @@ void	texture_destroy(t_tex *tex)
 {
 	if (tex->mlx_tex)
 		mlx_delete_texture(tex->mlx_tex);
-	ft_bzero(tex, sizeof(t_tex));
+	*tex = (t_tex){0};
 }
 
 t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y)

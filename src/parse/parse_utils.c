@@ -25,7 +25,7 @@ bool	parse_skip_line(const char *line)
 {
 	if (!line)
 		return (true);
-	while (*line == ' ' || *line == '\t')
+	while (ft_isspace(*line))
 		line++;
 	if (*line == '\0' || *line == '\n' || *line == '#')
 		return (true);
@@ -38,7 +38,7 @@ bool	parse_is_empty_line(const char *line)
 		return (true);
 	while (*line)
 	{
-		if (*line != ' ' && *line != '\t' && *line != '\n')
+		if (!ft_isspace(*line))
 			return (false);
 		line++;
 	}

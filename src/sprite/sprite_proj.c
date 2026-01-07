@@ -29,14 +29,16 @@ static void	calc_screen_pos(t_game *game, t_entity *ent, t_proj *proj)
 {
 	t_i32	pitch_offset;
 	t_i32	z_shift;
+	t_f32	scale;
 
 	pitch_offset = (t_i32)(game->camera.pitch * game->render.height);
 	z_shift = (t_i32)(ent->z_offset * game->render.height / proj->trans.y);
 	proj->screen.x = (t_i32)((game->render.width / 2)
 			* (1.0f + proj->trans.x / proj->trans.y));
 	proj->screen.y = game->render.height / 2 + pitch_offset - z_shift;
-	proj->size.y = absi((t_i32)(game->render.height / proj->trans.y * ent->scale));
-	proj->size.x = absi((t_i32)(game->render.width / proj->trans.y * ent->scale));
+	scale = ent->scale / proj->trans.y;
+	proj->size.x = absi((t_i32)(game->render.width * scale));
+	proj->size.y = absi((t_i32)(game->render.height * scale));
 }
 
 static void	calc_draw_bounds(t_game *game, t_proj *proj)

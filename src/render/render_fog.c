@@ -6,37 +6,59 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static t_color	g_fog_color = {FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, 255};
-
-t_f32	fog_factor(t_f32 dist)
+t_u32	fog_color(t_u8 alpha)
 {
-	t_f32	t;
-
-	if (!FOG_ENABLED || dist <= FOG_START)
-		return (0.0f);
-	if (dist >= FOG_END)
-		return (1.0f);
-	t = (dist - FOG_START) / (FOG_END - FOG_START);
-	t = 1.0f - expf(-FOG_INTENSITY * t * 3.0f);
-	return (clampf(t, 0.0f, 1.0f));
+	return (color_pack(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, alpha));
 }
 
-t_u32	fog_blend(t_u32 color, t_f32 factor)
+t_u32	fog_apply(t_u32 color, t_u8 fog_alpha)
 {
-	t_color	src;
-	t_color	result;
+	t_u32	inv;
+	t_u32	r;
+	t_u32	g;
+	t_u32	b;
 
-	if (factor <= 0.0f)
+	if (fog_alpha == 0)
 		return (color);
-	if (factor >= 1.0f)
-		return (color_to_u32(g_fog_color));
-	src = color_from_u32(color);
-	result = color_lerp(src, g_fog_color, factor);
-	return (color_to_u32(result));
+	if (fog_alpha == 255)
+		return (fog_color(color_a(color)));
+	inv = 255 - fog_alpha;
+	r = (color_r(color) * inv + FOG_COLOR_R * fog_alpha) / 255;
+	g = (color_g(color) * inv + FOG_COLOR_G * fog_alpha) / 255;
+	b = (color_b(color) * inv + FOG_COLOR_B * fog_alpha) / 255;
+	return (color_pack(r, g, b, color_a(color)));
+}
+
+void	fog_fill_row(t_game *game, t_i32 y)
+{
+	t_u32	color;
+	t_i32	x;
+
+	color = fog_color(255);
+	x = 0;
+	while (x < game->render.width)
+	{
+		render_pixel(game->render.frame, x, y, color);
+		x++;
+	}
+}
+
+void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end)
+{
+	t_u32	color;
+	t_i32	y;
+
+	color = fog_color(255);
+	y = start;
+	while (y <= end)
+	{
+		render_pixel(game->render.frame, x, y, color);
+		y++;
+	}
 }

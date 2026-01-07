@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2024/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ typedef struct s_proj	t_proj;
 /* ************************************************************************** */
 /*    RENDER STRUCTURE                                                        */
 /* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
 
 typedef struct s_render
 {
@@ -95,7 +92,7 @@ typedef struct s_hit
 ** Calculated wall slice for a single screen column
 **
 ** - top:   	Top pixel of wall on screen (before pitch)
-** - end:   	Bottom pixel of wall on screen (before pitch)
+** - bottom:	Bottom pixel of wall on screen (before pitch)
 ** - start: 	Actual top pixel after pitch offset
 ** - end:   	Actual bottom pixel after pitch offset
 ** - height:	Total height of wall slice (can exceed screen)
@@ -163,7 +160,9 @@ void	render_wall_column(t_game *game, t_i32 x);
 void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x);
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 
-t_u32	fog_blend(t_u32 color, t_f32 factor);
-t_f32	fog_factor(t_f32 dist);
+t_u32	fog_color(t_u8 alpha);
+t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
+void	fog_fill_row(t_game *game, t_i32 y);
+void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
 
 #endif

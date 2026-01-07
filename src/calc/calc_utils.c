@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity_def.c                                       :+:      :+:    :+:   */
+/*   calc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,29 @@
 
 #include <game.h>
 
-void	entity_apply_entdef(t_entity *ent, const t_entdef *def)
+t_f32	ft_atof(const char *str)
 {
-	ent->tex_id = def->sprite_id;
-	ent->scale = def->scale;
-	ent->z_offset = def->z_offset;
-	ent->health = def->health;
-	ent->solid = def->solid;
+	t_f32	result;
+	t_f32	decimal;
+	int		sign;
+
+	sign = 1;
+	result = 0.0f;
+	while (ft_isspace(*str))
+		++str;
+	if (ft_issign(*str))
+		sign = ',' - *str++;
+	while (*str >= '0' && *str <= '9')
+		result = result * 10.0f + (*str++ - '0');
+	if (*str == '.')
+	{
+		str++;
+		decimal = 0.1f;
+		while (*str >= '0' && *str <= '9')
+		{
+			result += (*str++ - '0') * decimal;
+			decimal *= 0.1f;
+		}
+	}
+	return (result * sign);
 }

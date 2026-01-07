@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		err_exit_msg(ERR_USAGE);
-	ft_bzero(&game, sizeof(t_game));
+	game = (t_game){0};
 	game.map = parse(argv[1]);
 	game_init(&game);
 	game_run(&game);

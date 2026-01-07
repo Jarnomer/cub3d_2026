@@ -25,7 +25,7 @@ static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
 
 	ent = (t_entity){.pos = pos, .type = type, .active = true};
 	def = &assets->entdefs[type];
-	entity_apply_entdef(&ent, def);
+	entity_apply_def(&ent, def);
 	init_entity_ctx(&ent, type);
 	return (ent);
 }

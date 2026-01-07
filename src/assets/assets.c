@@ -29,7 +29,7 @@ static void	load_textures(t_assets *assets, t_map *map)
 
 void	assets_init(t_assets *assets, t_map *map)
 {
-	ft_bzero(assets, sizeof(t_assets));
+	*assets = (t_assets){0};
 	config_load_all(assets);
 	load_textures(assets, map);
 	load_sprites(assets);
@@ -43,16 +43,13 @@ void	assets_destroy(t_assets *assets)
 	if (!assets || !assets->loaded)
 		return ;
 	i = 0;
-	while (i < MAX_TEXTURES)
-	{
-		texture_destroy(&assets->textures[i]);
-		i++;
-	}
+	while (i < TEXTURE_COUNT)
+		texture_destroy(&assets->textures[i++]);
 	i = 0;
-	while (i < MAX_SPRITES)
-	{
-		texture_destroy(&assets->sprites[i]);
-		i++;
-	}
+	while (i < SPRITE_COUNT)
+		texture_destroy(&assets->sprites[i++]);
+	i = 0;
+	while (i < SHEET_COUNT)
+		sheet_destroy(&assets->sheets[i++]);
 	assets->loaded = false;
 }

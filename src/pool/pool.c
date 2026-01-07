@@ -16,13 +16,11 @@ void	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size)
 {
 	t_u32	i;
 
+	*pool = (t_pool){.capacity = capacity, .elem_size = elem_size};
 	pool->data = safe_calloc(capacity * elem_size);
 	pool->free_stack = safe_calloc(capacity * sizeof(t_u32));
 	pool->active_flags = safe_calloc(capacity * sizeof(t_u8));
-	pool->capacity = capacity;
-	pool->elem_size = elem_size;
-	pool->free_count = capacity;
-	pool->active_count = 0;
+	pool->free_count = pool->capacity;
 	i = 0;
 	while (i < capacity)
 	{
@@ -36,7 +34,7 @@ void	pool_destroy(t_pool *pool)
 	free(pool->data);
 	free(pool->free_stack);
 	free(pool->active_flags);
-	ft_bzero(pool, sizeof(t_pool));
+	*pool = (t_pool){0};
 }
 
 t_i32	pool_alloc(t_pool *pool)

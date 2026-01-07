@@ -6,37 +6,54 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static bool	is_exposed(char **grid, int x, int y, t_parse *ctx)
+static bool	is_barrier(char c)
 {
-	int	row_len;
-
-	if (x < 0 || y < 0 || y >= ctx->map->height)
-		return (true);
-	row_len = ft_strlen(grid[y]);
-	if (x >= row_len)
-		return (true);
-	if (grid[y][x] == CHAR_SPACE)
-		return (true);
-	return (false);
+	return (c == CHAR_WALL || c == CHAR_SPACE);
 }
 
-static void	floodfill(char **grid, int x, int y, t_parse *ctx)
+static int	flood_fill(char **grid, int y, int x)
 {
-	if (is_exposed(grid, x, y, ctx))
-		err_exit_msg(MSG_MAP_WALL);
-	if (grid[y][x] == CHAR_WALL || grid[y][x] == 'V')
-		return ;
-	grid[y][x] = 'V';
-	floodfill(grid, x + 1, y, ctx);
-	floodfill(grid, x - 1, y, ctx);
-	floodfill(grid, x, y + 1, ctx);
-	floodfill(grid, x, y - 1, ctx);
+	int	result;
+
+	if (y < 0 || x < 0 || !grid[y] || !grid[y][x])
+		return (1);
+	if (is_barrier(grid[y][x]))
+		return (0);
+	grid[y][x] = CHAR_WALL;
+	result = 0;
+	result += flood_fill(grid, y - 1, x);
+	result += flood_fill(grid, y + 1, x);
+	result += flood_fill(grid, y, x - 1);
+	result += flood_fill(grid, y, x + 1);
+	return (result);
+}
+
+static void	check_walls(char **grid)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (grid[y])
+	{
+		x = 0;
+		while (grid[y][x])
+		{
+			if (!is_barrier(grid[y][x]))
+			{
+				if (flood_fill(grid, y, x))
+					err_exit_msg(MSG_MAP_WALL);
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
 static char	**duplicate_grid(t_parse *ctx)
@@ -57,12 +74,8 @@ static char	**duplicate_grid(t_parse *ctx)
 void	parse_map_walls(t_parse *ctx)
 {
 	char	**dup;
-	int		start_x;
-	int		start_y;
 
 	dup = duplicate_grid(ctx);
-	start_x = (int)ctx->map->spawn_pos.x;
-	start_y = (int)ctx->map->spawn_pos.y;
-	floodfill(dup, start_x, start_y, ctx);
+	check_walls(dup);
 	free_arr(dup);
 }

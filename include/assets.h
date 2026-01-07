@@ -26,21 +26,6 @@
 # define PATH_SHEET_DOOR	"assets/sheets/door.png"
 
 /* ************************************************************************** */
-/*    COLOR STRUCTURE                                                         */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
-typedef struct s_color
-{
-	t_u8	r;
-	t_u8	g;
-	t_u8	b;
-	t_u8	a;
-}	t_color;
-
-/* ************************************************************************** */
 /*    TEXTURE STRUCTURE                                                       */
 /* ************************************************************************** */
 /*
@@ -106,17 +91,15 @@ typedef struct s_assets
 void	assets_init(t_assets *assets, t_map *map);
 void	assets_destroy(t_assets *assets);
 
-t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);
-t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
-t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id);
-
 void	texture_load(t_tex *tex, const char *path);
 void	texture_destroy(t_tex *tex);
 t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
 
 void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows);
 void	sheet_destroy(t_sheet *sheet);
-t_vec2i	sheet_frame_offset(t_sheet *sheet, t_i32 frame);
-t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
+
+t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
+t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);
+t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id);
 
 #endif

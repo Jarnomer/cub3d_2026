@@ -25,9 +25,8 @@ void	render_destroy(t_render *render)
 {
 	if (!render)
 		return ;
-	if (render->z_buffer)
-		free(render->z_buffer);
-	ft_bzero(render, sizeof(t_render));
+	free(render->z_buffer);
+	*render = (t_render){0};
 }
 
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
