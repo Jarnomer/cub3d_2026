@@ -50,9 +50,10 @@
 # include <pool.h>
 # include <calc.h>
 # include <vector.h>
-# include <types.h>
 # include <error.h>
 # include <utils.h>
+# include <types.h>
+# include <defs.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
@@ -137,31 +138,22 @@ struct s_game
 };
 
 /* ************************************************************************** */
-/*    GAME FUNCTIONS                                                          */
+/*    FUNCTION PROTOTYPES                                                     */
 /* ************************************************************************** */
+/*
+** See source files for function details
+*/
 
 void	game_init(t_game *game);
 void	game_destroy(t_game *game);
 void	game_run(t_game *game);
 void	game_loop(void *param);
 
-/* ************************************************************************** */
-/*    PLAYER FUNCTIONS                                                        */
-/* ************************************************************************** */
-
 void	player_update(t_game *game, t_f32 dt);
-
-/* ************************************************************************** */
-/*    TIME FUNCTIONS                                                          */
-/* ************************************************************************** */
 
 void	time_init(t_time *time);
 void	time_update(t_time *time);
 t_f64	time_get_seconds(void);
-
-/* ************************************************************************** */
-/*    CAMERA FUNCTIONS                                                        */
-/* ************************************************************************** */
 
 void	camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov);
 void	camera_update(t_camera *cam);

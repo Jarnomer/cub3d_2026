@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static t_sheet_id	str_to_sheet_id(const char *str)
+static t_sht_id	str_to_sheet_id(const char *str)
 {
 	if (ft_strcmp(str, "SHEET_DOOR") == 0)
 		return (SHEET_DOOR);
@@ -21,7 +21,7 @@ static t_sheet_id	str_to_sheet_id(const char *str)
 
 static void	parse_sheet_line(char **p, t_assets *assets)
 {
-	t_sheet_id	id;
+	t_sht_id	id;
 	const char	*path;
 	t_i32		cols;
 	t_i32		rows;

@@ -17,7 +17,18 @@
 # include <vector.h>
 # include <types.h>
 
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
+
 typedef struct s_game	t_game;
+
+/* ************************************************************************** */
+/*    INPUT  STRUCTURE                                                        */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef struct s_input
 {
@@ -27,6 +38,13 @@ typedef struct s_input
 	t_vec2	mouse_delta;
 	bool	mouse_captured;
 }	t_input;
+
+/* ************************************************************************** */
+/*    FUNCTION PROTOTYPES                                                     */
+/* ************************************************************************** */
+/*
+** See source files for function details
+*/
 
 void	input_init(t_input *input);
 void	input_update(t_game *game);

@@ -19,17 +19,17 @@ void	anim_init(t_anim *anim, t_u16 def_id)
 
 void	anim_play(t_anim *anim, t_u16 def_id)
 {
-	*anim = (t_anim){.def_id = def_id, .playing = true};
+	*anim = (t_anim){.def_id = def_id, .play = true};
 }
 
 void	anim_stop(t_anim *anim)
 {
-	anim->playing = false;
+	anim->play = false;
 }
 
 void	anim_reset(t_anim *anim)
 {
 	anim->frame = 0;
 	anim->timer = 0.0f;
-	anim->finished = false;
+	anim->done = false;
 }

@@ -15,26 +15,20 @@
 
 # include <vector.h>
 # include <types.h>
+# include <defs.h>
+
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
 
 typedef struct s_proj	t_proj;
-
-typedef enum e_axis
-{
-	AXIS_X,
-	AXIS_Y
-}	t_axis;
-
-typedef enum e_dir
-{
-	WALL_NORTH,
-	WALL_SOUTH,
-	WALL_EAST,
-	WALL_WEST
-}	t_dir;
 
 /* ************************************************************************** */
 /*    TEXTURE STRUCTURE                                                       */
 /* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef struct s_texture
 {
@@ -47,6 +41,9 @@ typedef struct s_texture
 /* ************************************************************************** */
 /*    RENDER STRUCTURE                                                        */
 /* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef struct s_render
 {
@@ -59,7 +56,6 @@ typedef struct s_render
 /* ************************************************************************** */
 /*    RAY CALC STRUCTURE                                                      */
 /* ************************************************************************** */
-
 /*
 ** Core ray structure for DDA algorithm
 **
@@ -84,7 +80,6 @@ typedef struct s_ray
 /* ************************************************************************** */
 /*    HIT RESULT STRUCTURE                                                    */
 /* ************************************************************************** */
-
 /*
 ** Result of a ray cast operation
 **
@@ -111,7 +106,6 @@ typedef struct s_hit
 /* ************************************************************************** */
 /*    WALL RENDER STRUCTURE                                                   */
 /* ************************************************************************** */
-
 /*
 ** Calculated wall slice for a single screen column
 **
@@ -142,7 +136,6 @@ typedef struct s_wall
 /* ************************************************************************** */
 /*    FLOOR RENDER STRUCTURE                                                  */
 /* ************************************************************************** */
-
 /*
 ** Context for floor/ceiling rendering using horizontal scanlines
 **
@@ -165,8 +158,11 @@ typedef struct s_floor
 }	t_floor;
 
 /* ************************************************************************** */
-/*    FUNCTIONS                                                               */
+/*    FUNCTION PROTOTYPES                                                     */
 /* ************************************************************************** */
+/*
+** See source files for function details
+*/
 
 void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
 
@@ -175,7 +171,6 @@ bool	hitscan_dda(t_vec2 from, t_vec2 to, t_map *map);
 
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
-void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
 void	render_floor_row(t_game *game, t_i32 y);
@@ -189,6 +184,5 @@ t_f32	fog_factor(t_f32 dist);
 void	texture_load(t_tex *tex, const char *path);
 void	texture_destroy(t_tex *tex);
 t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
-t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y);
 
 #endif

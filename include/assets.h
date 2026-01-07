@@ -17,32 +17,35 @@
 # include <sprite.h>
 # include <entity.h>
 # include <anim.h>
+# include <defs.h>
 
+// NEED TO GET RID OF THIS STYLE...
 # define PATH_FLOOR			"assets/textures/floor.png"
 # define PATH_CEILING		"assets/textures/ceiling.png"
 # define PATH_BARREL		"assets/sprites/barrel.png"
 # define PATH_SHEET_DOOR	"assets/sheets/door.png"
 
-typedef enum e_spr_id
-{
-	SPRITE_BARREL,
-	SPRITE_DOOR,
-	SPRITE_LAMP,
-	SPRITE_PICKUP_HP,
-	SPRITE_PICKUP_AMMO,
-	SPRITE_COUNT
-}	t_spr_id;
+/* ************************************************************************** */
+/*    COLOR STRUCTURE                                                         */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
-typedef enum e_tex_id
+typedef struct s_color
 {
-	TEXTURE_WALL_N,
-	TEXTURE_WALL_S,
-	TEXTURE_WALL_E,
-	TEXTURE_WALL_W,
-	TEXTURE_FLOOR,
-	TEXTURE_CEILING,
-	TEXTURE_COUNT
-}	t_tex_id;
+	t_u8	r;
+	t_u8	g;
+	t_u8	b;
+	t_u8	a;
+}	t_color;
+
+/* ************************************************************************** */
+/*    ASSETS STRUCTURE                                                        */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef struct s_assets
 {
@@ -54,11 +57,18 @@ typedef struct s_assets
 	bool		loaded;
 }	t_assets;
 
+/* ************************************************************************** */
+/*    FUNCTION PROTOTYPES                                                     */
+/* ************************************************************************** */
+/*
+** See source files for function details
+*/
+
 void	assets_init(t_assets *assets, t_map *map);
 void	assets_destroy(t_assets *assets);
 
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);
 t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
-t_sheet	*assets_get_sheet(t_assets *assets, t_sheet_id id);
+t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id);
 
 #endif

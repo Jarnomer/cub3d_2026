@@ -30,18 +30,6 @@ void	render_destroy(t_render *render)
 	ft_bzero(render, sizeof(t_render));
 }
 
-void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_color c)
-{
-	t_u32	color;
-
-	if (x < 0 || x >= (t_i32)img->width)
-		return ;
-	if (y < 0 || y >= (t_i32)img->height)
-		return ;
-	color = color_to_u32(c);
-	mlx_put_pixel(img, x, y, color);
-}
-
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
 {
 	((t_u32 *)img->pixels)[y * img->width + x] = color;

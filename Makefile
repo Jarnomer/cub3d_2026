@@ -125,10 +125,8 @@ SOURCES := main \
            calc_angle \
            calc_scalar \
            calc_scalar_int \
-           calc_scalar_ops \
            vec2 \
            vec2_arith \
-           vec2_prod \
            vec2_trans \
            vec2i \
            map_utils \

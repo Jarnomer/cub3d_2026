@@ -22,6 +22,11 @@ t_vec2	vec2_sub(t_vec2 a, t_vec2 b)
 	return ((t_vec2){a.x - b.x, a.y - b.y});
 }
 
+t_f32	vec2_dot(t_vec2 a, t_vec2 b)
+{
+	return (a.x * b.x + a.y * b.y);
+}
+
 t_vec2	vec2_mul(t_vec2 v, t_f32 scalar)
 {
 	return ((t_vec2){v.x * scalar, v.y * scalar});

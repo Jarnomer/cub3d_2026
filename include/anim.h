@@ -14,17 +14,13 @@
 # define ANIM_H
 
 # include <types.h>
+# include <defs.h>
+
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
 
 typedef struct s_game	t_game;
-
-typedef enum e_anim_id
-{
-	ANIM_NONE,
-	ANIM_DOOR_IDLE,
-	ANIM_DOOR_OPEN,
-	ANIM_DOOR_CLOSE,
-	ANIM_COUNT
-}	t_anim_id;
 
 /* ************************************************************************** */
 /*    ANIMATION DEFINITION                                                    */
@@ -57,8 +53,8 @@ typedef struct s_anidef
 ** - def_id:   Which animation definition to use
 ** - frame:    Current frame within animation (0 to total-1)
 ** - timer:    Time accumulated since last frame change
-** - playing:  Is animation currently playing
-** - finished: Has non-looping animation completed
+** - play:  Is animation currently play
+** - done: Has non-looping animation completed
 */
 
 typedef struct s_anim
@@ -66,15 +62,15 @@ typedef struct s_anim
 	t_u16	def_id;
 	t_u16	frame;
 	t_f32	timer;
-	bool	playing;
-	bool	finished;
+	bool	play;
+	bool	done;
 }	t_anim;
 
 /* ************************************************************************** */
 /*    FUNCTION PROTOTYPES                                                     */
 /* ************************************************************************** */
 /*
-** See source files for function explanations
+** See source files for function details
 */
 
 void	anim_init(t_anim *anim, t_u16 def_id);

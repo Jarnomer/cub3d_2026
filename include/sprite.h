@@ -17,17 +17,16 @@
 # include <vector.h>
 # include <types.h>
 
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
+
 typedef struct s_game	t_game;
 typedef struct s_entity	t_entity;
 
-typedef enum e_sheet_id
-{
-	SHEET_DOOR,
-	SHEET_COUNT
-}	t_sheet_id;
-
 /*
 ** Sprite sheet - single texture with multiple frames
+**
 ** - tex:    The full texture containing all frames
 ** - width:  Width of a single frame in pixels
 ** - height: Height of a single frame in pixels
@@ -35,6 +34,7 @@ typedef enum e_sheet_id
 ** - rows:   Number of rows in the sheet
 ** - count:  Total number of frames (cols * rows)
 */
+
 typedef struct s_sheet
 {
 	t_tex	tex;

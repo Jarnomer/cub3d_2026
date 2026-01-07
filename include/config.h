@@ -13,6 +13,10 @@
 #ifndef CONFIG_H
 # define CONFIG_H
 
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
+
 typedef struct s_assets	t_assets;
 typedef struct s_entdef	t_entdef;
 typedef struct s_anidef	t_anidef;

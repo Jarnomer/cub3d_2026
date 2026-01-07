@@ -16,8 +16,19 @@
 # include <pthread.h>
 # include <types.h>
 
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
+
 typedef struct s_game	t_game;
 typedef struct s_proj	t_proj;
+
+/* ************************************************************************** */
+/*    THREAD STRUCTURE                                                        */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef struct s_thd
 {
@@ -28,6 +39,13 @@ typedef struct s_thd
 	t_i32	end;
 	t_i32	id;
 }	t_thd;
+
+/* ************************************************************************** */
+/*    FUNCTION PROTOTYPES                                                     */
+/* ************************************************************************** */
+/*
+** See source files for function details
+*/
 
 void	render_walls(t_game *game);
 void	render_floor(t_game *game);

@@ -36,16 +36,3 @@ t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y)
 	idx = y * tex->width + x;
 	return (tex->pixels[idx]);
 }
-
-t_color	texture_sample_color(t_tex *tex, t_i32 x, t_i32 y)
-{
-	t_u32	pixel;
-	t_color	c;
-
-	pixel = texture_sample(tex, x, y);
-	c.r = (pixel >> 0) & 0xFF;
-	c.g = (pixel >> 8) & 0xFF;
-	c.b = (pixel >> 16) & 0xFF;
-	c.a = (pixel >> 24) & 0xFF;
-	return (c);
-}

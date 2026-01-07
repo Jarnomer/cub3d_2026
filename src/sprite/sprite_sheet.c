@@ -28,7 +28,7 @@ void	sheet_destroy(t_sheet *sheet)
 	*sheet = (t_sheet){0};
 }
 
-t_sheet	*assets_get_sheet(t_assets *assets, t_sheet_id id)
+t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id)
 {
 	if (id < 0 || id >= SHEET_COUNT)
 		return (NULL);

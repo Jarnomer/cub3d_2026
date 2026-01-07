@@ -32,12 +32,4 @@ typedef mlx_image_t		t_mlxi;
 typedef mlx_texture_t	t_mlxt;
 typedef pthread_mutex_t	t_mtx;
 
-typedef struct s_color
-{
-	t_u8	r;
-	t_u8	g;
-	t_u8	b;
-	t_u8	a;
-}	t_color;
-
 #endif

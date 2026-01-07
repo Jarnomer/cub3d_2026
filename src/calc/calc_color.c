@@ -12,11 +12,6 @@
 
 #include <game.h>
 
-t_color	color_new(t_u8 r, t_u8 g, t_u8 b, t_u8 a)
-{
-	return ((t_color){r, g, b, a});
-}
-
 t_u32	color_to_u32(t_color c)
 {
 	return ((t_u32)c.r << 24 | (t_u32)c.g << 16 | (t_u32)c.b << 8 | c.a);

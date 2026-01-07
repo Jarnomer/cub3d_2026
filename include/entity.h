@@ -15,38 +15,24 @@
 
 # include <anim.h>
 # include <types.h>
+# include <defs.h>
+
+/* ************************************************************************** */
+/*    FORWARD DECLARATIONS                                                    */
+/* ************************************************************************** */
 
 typedef struct s_game	t_game;
 typedef struct s_assets	t_assets;
 typedef struct s_proj	t_proj;
 
-typedef enum e_type
-{
-	ENTITY_NONE,
-	ENTITY_BARREL,
-	ENTITY_DOOR,
-	ENTITY_PICKUP_HP,
-	ENTITY_PICKUP_AMMO,
-	ENTITY_ENEMY,
-	ENTITY_PLAYER,
-	ENTITY_COUNT
-}	t_type;
-
-typedef enum e_state
-{
-	STATE_IDLE,
-	STATE_ACTIVE,
-	STATE_OPENING,
-	STATE_CLOSING,
-	STATE_OPEN,
-	STATE_DYING,
-	STATE_DEAD,
-	STATE_COUNT
-}	t_state;
-
+/* ************************************************************************** */
+/*    ENTITY DEFINITION                                                       */
+/* ************************************************************************** */
 /*
-** Entity definition - static data loaded from config
+** Static entity definition data loaded from config
+** - [ADD EXPLANATIONS HERE LATER]
 */
+
 typedef struct s_entdef
 {
 	t_type		type;
@@ -60,9 +46,14 @@ typedef struct s_entdef
 	bool		use_sheet;
 }	t_entdef;
 
+/* ************************************************************************** */
+/*    ENTITY STRUCTURE                                                        */
+/* ************************************************************************** */
 /*
 ** Entity instance - runtime data
+** - [ADD EXPLANATIONS HERE LATER]
 */
+
 typedef struct s_entity
 {
 	t_vec2		pos;
@@ -80,6 +71,13 @@ typedef struct s_entity
 	bool		has_anim;
 	bool		use_sheet;
 }	t_entity;
+
+/* ************************************************************************** */
+/*    FUNCTION PROTOTYPES                                                     */
+/* ************************************************************************** */
+/*
+** See source files for function details
+*/
 
 void		entity_load_spawns(t_game *game);
 

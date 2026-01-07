@@ -12,6 +12,16 @@
 
 #include <game.h>
 
+static t_f32	vec2_len_sq(t_vec2 v)
+{
+	return (v.x * v.x + v.y * v.y);
+}
+
+t_f32	vec2_len(t_vec2 v)
+{
+	return (sqrtf(vec2_len_sq(v)));
+}
+
 t_vec2	vec2_normalize(t_vec2 v)
 {
 	t_f32	len;
