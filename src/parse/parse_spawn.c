@@ -18,6 +18,12 @@ static t_type	char_to_entity(char c)
 		return (ENTITY_BARREL);
 	if (c == CHAR_DOOR)
 		return (ENTITY_DOOR);
+	if (c == CHAR_HEALTH)
+		return (ENTITY_HEALTH);
+	if (c == CHAR_ARMOR)
+		return (ENTITY_ARMOR);
+	if (c == CHAR_AMMO)
+		return (ENTITY_AMMO);
 	return (ENTITY_NONE);
 }
 

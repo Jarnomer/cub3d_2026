@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config_sheet.c                                     :+:      :+:    :+:   */
+/*   config_sprite.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static t_sht_id	str_to_sheet_id(const char *str)
+static t_spr_id	str_to_spr_id(const char *str)
 {
-	if (ft_strcmp(str, "SHEET_DOOR") == 0)
-		return (SHEET_DOOR);
-	return (SHEET_COUNT);
+	if (ft_strcmp(str, "SPRITE_BARREL") == 0)
+		return (SPRITE_BARREL);
+	if (ft_strcmp(str, "SPRITE_HEALTH") == 0)
+		return (SPRITE_HEALTH);
+	if (ft_strcmp(str, "SPRITE_ARMOR") == 0)
+		return (SPRITE_ARMOR);
+	if (ft_strcmp(str, "SPRITE_AMMO") == 0)
+		return (SPRITE_AMMO);
+	return (SPRITE_COUNT);
 }
 
-static void	parse_sheet_line(char **p, t_assets *assets)
+static void	load_sprite_entry(char **parts, t_assets *assets)
 {
-	t_sht_id	id;
-	const char	*path;
-	t_i32		cols;
-	t_i32		rows;
+	t_spr_id	id;
 
-	id = str_to_sheet_id(p[0]);
-	if (id >= SHEET_COUNT)
-		return ;
-	path = p[1];
-	cols = ft_atoi(p[2]);
-	rows = ft_atoi(p[3]);
-	sheet_load(&assets->sheets[id], path, cols, rows);
+	id = str_to_spr_id(parts[1]);
+	if (id < SPRITE_COUNT)
+		texture_load(&assets->sprites[id], parts[2]);
 }
 
 static void	process_line(char *line, t_assets *assets)
@@ -40,18 +39,20 @@ static void	process_line(char *line, t_assets *assets)
 	char	**parts;
 
 	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < SHEETDEF_FIELD_COUNT)
+	if (parse_count_parts(parts) < TEXDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_FMT);
-	parse_sheet_line(parts, assets);
+	parse_remove_newline(parts[2]);
+	if (ft_strcmp(parts[0], "SPRITE") == 0)
+		load_sprite_entry(parts, assets);
 	free_arr(parts);
 }
 
-void	config_load_sheets(t_assets *assets)
+void	config_load_sprites(t_assets *assets)
 {
 	int		fd;
 	char	*line;
 
-	fd = parse_file_open(PATH_CONFIG_SHEET, ".def");
+	fd = parse_file_open(PATH_CONFIG_TEXTURE, ".def");
 	line = get_next_line(fd);
 	while (line)
 	{

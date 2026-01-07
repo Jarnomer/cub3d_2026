@@ -12,27 +12,19 @@
 
 #include <game.h>
 
-static void	load_sprites(t_assets *assets)
-{
-	texture_load(&assets->sprites[SPRITE_BARREL], PATH_BARREL);
-}
-
-static void	load_textures(t_assets *assets, t_map *map)
+static void	load_wall_textures(t_assets *assets, t_map *map)
 {
 	texture_load(&assets->textures[TEXTURE_WALL_N], map->textures[ELEM_NO]);
 	texture_load(&assets->textures[TEXTURE_WALL_S], map->textures[ELEM_SO]);
 	texture_load(&assets->textures[TEXTURE_WALL_E], map->textures[ELEM_WE]);
 	texture_load(&assets->textures[TEXTURE_WALL_W], map->textures[ELEM_EA]);
-	texture_load(&assets->textures[TEXTURE_FLOOR], PATH_FLOOR);
-	texture_load(&assets->textures[TEXTURE_CEILING], PATH_CEILING);
 }
 
 void	assets_init(t_assets *assets, t_map *map)
 {
 	*assets = (t_assets){0};
 	config_load_all(assets);
-	load_textures(assets, map);
-	load_sprites(assets);
+	load_wall_textures(assets, map);
 	assets->loaded = true;
 }
 

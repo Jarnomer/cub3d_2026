@@ -37,10 +37,13 @@ typedef struct s_map	t_map;
 # define CHAR_PLAYER_W		'W'
 # define CHAR_BARREL		'B'
 # define CHAR_DOOR			'D'
+# define CHAR_HEALTH		'H'
+# define CHAR_ARMOR			'R'
+# define CHAR_AMMO			'X'
 
-# define CHARSET_VALID		"01 NSEWBD"
+# define CHARSET_VALID		"01 NSEWBDHRX"
 # define CHARSET_PLAYER		"NSEW"
-# define CHARSET_SPAWN		"BD"
+# define CHARSET_SPAWN		"BDHRX"
 
 # define ID_NORTH			"NO "
 # define ID_SOUTH			"SO "

@@ -1,5 +1,5 @@
 # Animation Definition
-# Headers:  anim.h / assets.h
+# Headers:  anim.h / assets.h / defs.h
 # Format:   ID START TOTAL TIME LOOP NEXT
 
 # ID:       Animation ID name (must match e_anim_id enum)

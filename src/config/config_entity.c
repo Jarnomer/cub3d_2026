@@ -18,12 +18,12 @@ static t_type	str_to_type(const char *str)
 		return (ENTITY_BARREL);
 	if (ft_strcmp(str, "ENTITY_DOOR") == 0)
 		return (ENTITY_DOOR);
-	if (ft_strcmp(str, "ENTITY_PICKUP_HP") == 0)
-		return (ENTITY_PICKUP_HP);
-	if (ft_strcmp(str, "ENTITY_PICKUP_AMMO") == 0)
-		return (ENTITY_PICKUP_AMMO);
-	if (ft_strcmp(str, "ENTITY_ENEMY") == 0)
-		return (ENTITY_ENEMY);
+	if (ft_strcmp(str, "ENTITY_HEALTH") == 0)
+		return (ENTITY_HEALTH);
+	if (ft_strcmp(str, "ENTITY_ARMOR") == 0)
+		return (ENTITY_ARMOR);
+	if (ft_strcmp(str, "ENTITY_AMMO") == 0)
+		return (ENTITY_AMMO);
 	return (ENTITY_NONE);
 }
 
@@ -33,10 +33,12 @@ static t_spr_id	str_to_sprite_id(const char *str)
 		return (SPRITE_BARREL);
 	if (ft_strcmp(str, "SPRITE_DOOR") == 0)
 		return (SPRITE_DOOR);
-	if (ft_strcmp(str, "SPRITE_PICKUP_HP") == 0)
-		return (SPRITE_PICKUP_HP);
-	if (ft_strcmp(str, "SPRITE_PICKUP_AMMO") == 0)
-		return (SPRITE_PICKUP_AMMO);
+	if (ft_strcmp(str, "SPRITE_HEALTH") == 0)
+		return (SPRITE_HEALTH);
+	if (ft_strcmp(str, "SPRITE_ARMOR") == 0)
+		return (SPRITE_ARMOR);
+	if (ft_strcmp(str, "SPRITE_AMMO") == 0)
+		return (SPRITE_AMMO);
 	return (0);
 }
 
@@ -57,7 +59,7 @@ static void	process_line(char *line, t_entdef *defs)
 
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < ENTDEF_FIELD_COUNT)
-		err_exit_msg(MSG_CONF_ENT);
+		err_exit_msg(MSG_CONF_FMT);
 	ft_bzero(&def, sizeof(t_entdef));
 	parse_def_line(parts, &def);
 	if (def.type != ENTITY_NONE && def.type < ENTITY_COUNT)

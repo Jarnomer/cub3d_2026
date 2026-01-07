@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,14 @@ typedef struct s_anidef	t_anidef;
 /*    CONFIG FILE SETTINGS                                                    */
 /* ************************************************************************** */
 
+# define TEXDEF_FIELD_COUNT		3
 # define ENTDEF_FIELD_COUNT		6
 # define SHEETDEF_FIELD_COUNT	4
 # define ANIMDEF_FIELD_COUNT	6
 # define WPNDEF_FIELD_COUNT		8
 # define ENEDEF_FIELD_COUNT		10
 
+# define PATH_CONFIG_TEXTURE	"config/texture.def"
 # define PATH_CONFIG_ENTITY		"config/entity.def"
 # define PATH_CONFIG_SHEET		"config/sheet.def"
 # define PATH_CONFIG_ANIM		"config/anim.def"
@@ -113,8 +115,10 @@ typedef struct s_anidef	t_anidef;
 /* ************************************************************************** */
 
 void	config_load_all(t_assets *assets);
+void	config_load_textures(t_assets *assets);
+void	config_load_sprites(t_assets *assets);
 void	config_load_entities(t_entdef *defs);
-void	config_load_anims(t_anidef *defs);
 void	config_load_sheets(t_assets *assets);
+void	config_load_anims(t_anidef *defs);
 
 #endif

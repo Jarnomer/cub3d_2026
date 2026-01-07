@@ -1,0 +1,21 @@
+# Texture   Definition
+# Headers:  assets.h / defs.h
+# Format:   TYPE ID PATH
+
+# TYPE:     Asset type (TEXTURE or static SPRITE)
+# ID:       Asset ID name (must match enum in defs.h)
+# PATH:     Path to PNG file
+
+# Wall textures are loaded from .cub file (TEXTURE_WALL_N/S/E/W)
+
+# Textures
+
+TEXTURE     TEXTURE_FLOOR       assets/textures/floor.png
+TEXTURE     TEXTURE_CEILING     assets/textures/ceiling.png
+
+# Sprites
+
+SPRITE      SPRITE_BARREL       assets/sprites/barrel.png
+SPRITE      SPRITE_HEALTH       assets/sprites/health.png
+SPRITE      SPRITE_AMMO         assets/sprites/armor.png
+SPRITE      SPRITE_ARMOR        assets/sprites/ammo.png

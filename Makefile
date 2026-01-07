@@ -80,8 +80,10 @@ SOURCES := main \
            player \
            camera \
            config \
-           config_entity \
+           config_texture \
+           config_sprite \
            config_sheet \
+           config_entity \
            config_anim \
            assets \
            assets_texture \

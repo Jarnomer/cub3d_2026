@@ -40,7 +40,7 @@ static void	process_line(char *line, t_anidef *defs)
 
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < ANIMDEF_FIELD_COUNT)
-		err_exit_msg(MSG_CONF_ENT);
+		err_exit_msg(MSG_CONF_FMT);
 	ft_bzero(&def, sizeof(t_anidef));
 	parse_anim_line(parts, &def);
 	if (def.id != ANIM_NONE && def.id < ANIM_COUNT)

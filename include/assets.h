@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@
 # include <anim.h>
 # include <defs.h>
 
-// NEED TO GET RID OF THIS STYLE...
-# define PATH_FLOOR			"assets/textures/floor.png"
-# define PATH_CEILING		"assets/textures/ceiling.png"
-# define PATH_BARREL		"assets/sprites/barrel.png"
-# define PATH_SHEET_DOOR	"assets/sheets/door.png"
-
 /* ************************************************************************** */
 /*    TEXTURE STRUCTURE                                                       */
 /* ************************************************************************** */
 /*
-** [ADD DETAILS HERE LATER]
+** Texture data loaded from PNG file
+**
+** - mlx_tex: MLX42 texture handle (for cleanup)
+** - pixels:  Raw pixel data pointer (RGBA format)
+** - width:   Texture width in pixels
+** - height:  Texture height in pixels
 */
 
 typedef struct s_texture
@@ -68,7 +67,14 @@ typedef struct s_sheet
 /*    ASSETS STRUCTURE                                                        */
 /* ************************************************************************** */
 /*
-** [ADD DETAILS HERE LATER]
+** Central asset storage for all game resources
+**
+** - textures: Wall, floor, ceiling textures
+** - sprites:  Static sprite images (barrel, pickups)
+** - sheets:   Animated sprite sheets (door, enemies)
+** - anidefs:  Animation definitions
+** - entdefs:  Entity definitions
+** - loaded:   Flag to prevent double-free
 */
 
 typedef struct s_assets

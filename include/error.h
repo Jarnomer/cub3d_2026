@@ -43,7 +43,7 @@
 # define MSG_MAP_CHAR	"Invalid map character"
 # define MSG_MAP_ENTITY	"Too many entities in map"
 
-# define MSG_CONF_ENT	"Invalid config definition format"
+# define MSG_CONF_FMT	"Invalid config definition format"
 # define MSG_MALLOC		"Memory allocation failed"
 # define MSG_MLX		"MLX42 error"
 
