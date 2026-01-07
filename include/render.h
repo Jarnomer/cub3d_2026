@@ -24,21 +24,6 @@
 typedef struct s_proj	t_proj;
 
 /* ************************************************************************** */
-/*    TEXTURE STRUCTURE                                                       */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
-typedef struct s_texture
-{
-	t_mlxt	*mlx_tex;
-	t_u32	*pixels;
-	t_i32	width;
-	t_i32	height;
-}	t_tex;
-
-/* ************************************************************************** */
 /*    RENDER STRUCTURE                                                        */
 /* ************************************************************************** */
 /*
@@ -180,9 +165,5 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 
 t_u32	fog_blend(t_u32 color, t_f32 factor);
 t_f32	fog_factor(t_f32 dist);
-
-void	texture_load(t_tex *tex, const char *path);
-void	texture_destroy(t_tex *tex);
-t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
 
 #endif

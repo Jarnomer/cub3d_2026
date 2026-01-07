@@ -13,7 +13,6 @@
 #ifndef SPRITE_H
 # define SPRITE_H
 
-# include <render.h>
 # include <vector.h>
 # include <types.h>
 
@@ -24,29 +23,12 @@
 typedef struct s_game	t_game;
 typedef struct s_entity	t_entity;
 
-/*
-** Sprite sheet - single texture with multiple frames
-**
-** - tex:    The full texture containing all frames
-** - width:  Width of a single frame in pixels
-** - height: Height of a single frame in pixels
-** - cols:   Number of columns in the sheet
-** - rows:   Number of rows in the sheet
-** - count:  Total number of frames (cols * rows)
-*/
-
-typedef struct s_sheet
-{
-	t_tex	tex;
-	t_i32	width;
-	t_i32	height;
-	t_i32	cols;
-	t_i32	rows;
-	t_i32	count;
-}	t_sheet;
-
+/* ************************************************************************** */
+/*    PROJECTION STRUCTURE                                                    */
+/* ************************************************************************** */
 /*
 ** Sprite projection data for rendering
+**
 ** - trans:     Camera-space coordinates (x = lateral, y = depth)
 ** - screen:    Screen position (center of sprite)
 ** - size:      Rendered size in pixels
@@ -57,6 +39,7 @@ typedef struct s_sheet
 ** - dist:      Distance for z-buffer/fog
 ** - use_sheet: Whether to use sheet or single texture
 */
+
 typedef struct s_proj
 {
 	t_vec2		trans;
@@ -71,13 +54,15 @@ typedef struct s_proj
 	bool		use_sheet;
 }	t_proj;
 
+/* ************************************************************************** */
+/*    FUNCTION PROTOTYPES                                                     */
+/* ************************************************************************** */
+/*
+** See source files for function details
+*/
+
 bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj);
 t_u32	collect_sprites(t_game *game, t_proj *projs);
 void	sort_sprites(t_proj *projs, t_u32 count);
-
-void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows);
-void	sheet_destroy(t_sheet *sheet);
-t_vec2i	sheet_frame_offset(t_sheet *sheet, t_i32 frame);
-t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
 
 #endif

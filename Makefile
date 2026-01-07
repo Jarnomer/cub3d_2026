@@ -85,12 +85,12 @@ SOURCES := main \
            config_anim \
            texture \
            assets \
+           assets_sheet \
            assets_utils \
            entity \
            entity_def \
            entity_door \
            entity_utils \
-           sprite_sheet \
            sprite_proj \
            sprite_utils \
            render \
