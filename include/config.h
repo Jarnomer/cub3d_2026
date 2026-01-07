@@ -78,7 +78,16 @@ typedef struct s_anidef	t_anidef;
 /*    INPUT SETTINGS                                                          */
 /* ************************************************************************** */
 
+# define INTERACT_KEY	MLX_KEY_E
 # define MAX_KEYS		512
+
+/* ************************************************************************** */
+/*    GAMEPLAY SETTINGS                                                       */
+/* ************************************************************************** */
+
+# define INTERACT_RANGE		1.5f
+# define DOOR_TIMER			3.0f
+# define DOOR_AUTO_CLOSE	1
 
 /* ************************************************************************** */
 /*    FOG SETTINGS                                                            */
@@ -98,8 +107,8 @@ typedef struct s_anidef	t_anidef;
 
 # define TEXDEF_FIELD_COUNT		3
 # define ENTDEF_FIELD_COUNT		6
-# define SHEETDEF_FIELD_COUNT	4
-# define ANIMDEF_FIELD_COUNT	6
+# define SHTDEF_FIELD_COUNT		4
+# define ANIMDEF_FIELD_COUNT	7
 # define WPNDEF_FIELD_COUNT		8
 # define ENEDEF_FIELD_COUNT		10
 

@@ -63,6 +63,8 @@ void	game_loop(void *param)
 	if (input_key_pressed(&game->input, MLX_KEY_ESCAPE))
 		return ((void)mlx_close_window(game->mlx));
 	player_update(game, game->time.delta);
+	entity_update_all(game, game->time.delta);
+	anim_update_entities(game, game->time.delta);
 	arena_reset(&game->arena);
 	render_floor(game);
 	render_walls(game);

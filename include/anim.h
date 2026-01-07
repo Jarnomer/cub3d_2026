@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ typedef struct s_game	t_game;
 /* ************************************************************************** */
 /*
 ** Static animation definition (loaded from config)
-** - id:    Animation identifier
-** - start: First frame index in sprite sheet
-** - total: Number of frames in this animation
-** - next:  Animation to chain after completion (0 = none)
-** - time:  Duration in seconds per frame
-** - loop:  Whether animation loops
+**
+** - id:      Animation identifier
+** - start:   First frame index in sprite sheet
+** - total:   Number of frames in this animation
+** - next:    Animation to chain after completion (0 = none)
+** - time:    Duration in seconds per frame
+** - loop:    Whether animation loops
+** - reverse: Play frames in reverse order (start+total-1 down to start)
 */
 
 typedef struct s_anidef
@@ -43,6 +45,7 @@ typedef struct s_anidef
 	t_u16	next;
 	t_f32	time;
 	bool	loop;
+	bool	reverse;
 }	t_anidef;
 
 /* ************************************************************************** */
@@ -50,11 +53,12 @@ typedef struct s_anidef
 /* ************************************************************************** */
 /*
 ** Runtime animation state (per entity)
-** - def_id:   Which animation definition to use
-** - frame:    Current frame within animation (0 to total-1)
-** - timer:    Time accumulated since last frame change
-** - play:  Is animation currently play
-** - done: Has non-looping animation completed
+**
+** - def_id: Which animation definition to use
+** - frame:  Current frame within animation (0 to total-1)
+** - timer:  Time accumulated since last frame change
+** - play:   Is animation currently playing
+** - done:   Has non-looping animation completed
 */
 
 typedef struct s_anim

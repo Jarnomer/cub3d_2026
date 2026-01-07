@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   anim_utils.c                                       :+:      :+:    :+:   */
+/*   entity_door_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
+/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
 /*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_i32	anim_get_frame(t_anim *anim, const t_anidef *def)
+bool	door_can_interact(t_entity *ent)
 {
-	if (!def || def->total == 0)
-		return (0);
-	if (def->reverse)
-		return (def->start + def->total - 1 - anim->frame);
-	return (def->start + anim->frame);
+	if (ent->state == STATE_OPENING || ent->state == STATE_CLOSING)
+		return (false);
+	return (true);
 }
 
-bool	anim_is_playing(t_anim *anim)
+void	door_set_open(t_entity *ent)
 {
-	return (anim->play && !anim->done);
+	ent->state = STATE_OPEN;
+	ent->solid = false;
+	ent->timer = DOOR_TIMER;
+}
+
+void	door_set_closed(t_entity *ent)
+{
+	ent->state = STATE_IDLE;
+	ent->solid = true;
+	anim_init(&ent->anim, ANIM_DOOR_IDLE);
+}
+
+t_i32	door_get_frame(t_entity *ent, t_assets *assets)
+{
+	t_anidef	*def;
+
+	if (!ent->has_anim)
+		return (0);
+	def = &assets->anidefs[ent->anim.def_id];
+	return (anim_get_frame(&ent->anim, def));
 }

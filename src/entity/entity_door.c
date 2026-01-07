@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,41 @@ void	door_init(t_entity *ent)
 	anim_init(&ent->anim, ANIM_DOOR_IDLE);
 }
 
-bool	entity_is_door(t_entity *ent)
+static void	door_start_opening(t_entity *ent)
 {
-	return (ent->type == ENTITY_DOOR);
+	ent->state = STATE_OPENING;
+	anim_play(&ent->anim, ANIM_DOOR_OPEN);
 }
 
-t_i32	door_get_frame(t_entity *ent, t_assets *assets)
+static void	door_start_closing(t_entity *ent)
 {
-	t_anidef	*def;
+	ent->state = STATE_CLOSING;
+	anim_play(&ent->anim, ANIM_DOOR_CLOSE);
+}
 
-	if (!ent->has_anim)
-		return (0);
-	def = &assets->anidefs[ent->anim.def_id];
-	return (anim_get_frame(&ent->anim, def));
+static void	door_update_open(t_entity *ent, t_f32 dt)
+{
+	if (!DOOR_AUTO_CLOSE)
+		return ;
+	ent->timer -= dt;
+	if (ent->timer <= 0.0f)
+		door_start_closing(ent);
+}
+
+void	door_update(t_entity *ent, t_f32 dt)
+{
+	if (ent->state == STATE_OPENING && ent->anim.done)
+		door_set_open(ent);
+	else if (ent->state == STATE_OPEN)
+		door_update_open(ent, dt);
+	else if (ent->state == STATE_CLOSING && ent->anim.done)
+		door_set_closed(ent);
+}
+
+void	door_interact(t_entity *ent)
+{
+	if (ent->state == STATE_IDLE)
+		door_start_opening(ent);
+	else if (ent->state == STATE_OPEN)
+		door_start_closing(ent);
 }

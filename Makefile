@@ -78,6 +78,7 @@ SOURCES := main \
            anim_update \
            anim_utils \
            player \
+           player_act \
            camera \
            config \
            config_texture \
@@ -91,6 +92,8 @@ SOURCES := main \
            assets_utils \
            entity \
            entity_door \
+           entity_door_utils \
+           entity_update \
            entity_utils \
            sprite_proj \
            sprite_utils \

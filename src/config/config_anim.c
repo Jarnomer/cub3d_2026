@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	parse_anim_line(char **p, t_anidef *def)
 	def->time = ft_atof(p[3]);
 	def->loop = (ft_atoi(p[4]) != 0);
 	def->next = (t_u16)ft_atoi(p[5]);
+	def->reverse = (ft_atoi(p[6]) != 0);
 }
 
 static void	process_line(char *line, t_anidef *defs)

@@ -152,6 +152,7 @@ void	game_run(t_game *game);
 void	game_loop(void *param);
 
 void	player_update(t_game *game, t_f32 dt);
+void	player_interact(t_game *game);
 
 void	time_init(t_time *time);
 void	time_update(t_time *time);

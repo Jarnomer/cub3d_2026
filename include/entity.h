@@ -66,6 +66,7 @@ typedef struct s_entity
 	t_f32		scale;
 	t_f32		z_offset;
 	t_i32		health;
+	t_f32		timer;
 	bool		active;
 	bool		solid;
 	bool		has_anim;
@@ -81,12 +82,18 @@ typedef struct s_entity
 
 void		entity_load_spawns(t_game *game);
 
-void		door_init(t_entity *ent);
-bool		entity_is_door(t_entity *ent);
-t_i32		door_get_frame(t_entity *ent, t_assets *assets);
+void		entity_update_all(t_game *game, t_f32 dt);
 
 void		entity_apply_def(t_entity *ent, const t_entdef *def);
 t_entity	*entity_get(t_game *game, t_u32 index);
-t_u32		entity_count(t_game *game);
+
+void		door_init(t_entity *ent);
+void		door_update(t_entity *ent, t_f32 dt);
+void		door_interact(t_entity *ent);
+
+bool		door_can_interact(t_entity *ent);
+void		door_set_open(t_entity *ent);
+void		door_set_closed(t_entity *ent);
+t_i32		door_get_frame(t_entity *ent, t_assets *assets);
 
 #endif
