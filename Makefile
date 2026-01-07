@@ -74,10 +74,37 @@ SOURCES := main \
            input \
            input_keys \
            input_mouse \
-           config \
-           config_ent \
+           anim \
+           anim_update \
+           anim_utils \
            player \
            camera \
+           config \
+           config_entity \
+           config_sheet \
+           config_anim \
+           texture \
+           assets \
+           assets_utils \
+           entity \
+           entity_def \
+           entity_door \
+           entity_utils \
+           sprite_sheet \
+           sprite_proj \
+           sprite_utils \
+           render \
+           render_walls \
+           render_floor \
+           render_sprites \
+           render_sheet \
+           render_fog \
+           raycast \
+           raycast_dda \
+           raycast_utils \
+           thread_floor \
+           thread_walls \
+           thread_sprites \
            parse \
            parse_file \
            parse_elem \
@@ -87,25 +114,6 @@ SOURCES := main \
            parse_map_walls \
            parse_entity \
            parse_utils \
-           render \
-           render_walls \
-           render_floor \
-           render_sprites \
-           render_fog \
-           raycast \
-           raycast_dda \
-           raycast_utils \
-           texture \
-           assets \
-           assets_utils \
-           entity \
-           entity_def \
-           entity_utils \
-           sprite_proj \
-           sprite_utils \
-           thread_floor \
-           thread_walls \
-           thread_sprites \
            pool \
            pool_utils \
            arena \

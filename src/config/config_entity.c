@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config_ent.c                                       :+:      :+:    :+:   */
+/*   config_entity.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,15 +14,15 @@
 
 static t_type	str_to_type(const char *str)
 {
-	if (ft_strcmp(str, "BARREL") == 0)
+	if (ft_strcmp(str, "ENTITY_BARREL") == 0)
 		return (ENTITY_BARREL);
-	if (ft_strcmp(str, "DOOR") == 0)
+	if (ft_strcmp(str, "ENTITY_DOOR") == 0)
 		return (ENTITY_DOOR);
-	if (ft_strcmp(str, "PICKUP_HP") == 0)
+	if (ft_strcmp(str, "ENTITY_PICKUP_HP") == 0)
 		return (ENTITY_PICKUP_HP);
-	if (ft_strcmp(str, "PICKUP_AMMO") == 0)
+	if (ft_strcmp(str, "ENTITY_PICKUP_AMMO") == 0)
 		return (ENTITY_PICKUP_AMMO);
-	if (ft_strcmp(str, "ENEMY") == 0)
+	if (ft_strcmp(str, "ENTITY_ENEMY") == 0)
 		return (ENTITY_ENEMY);
 	return (ENTITY_NONE);
 }
@@ -61,10 +61,7 @@ static void	process_line(char *line, t_entdef *defs)
 		return ;
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < ENTDEF_FIELD_COUNT)
-	{
-		free_arr(parts);
 		err_exit_msg(MSG_CONF_ENT);
-	}
 	ft_bzero(&def, sizeof(t_entdef));
 	parse_def_line(parts, &def);
 	if (def.type != ENTITY_NONE && def.type < ENTITY_COUNT)
@@ -83,7 +80,7 @@ void	config_load_entities(t_entdef *defs)
 	while (line)
 	{
 		process_line(line, defs);
-		free(line);
+		free_str(line);
 		line = get_next_line(fd);
 	}
 	close(fd);

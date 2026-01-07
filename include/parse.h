@@ -27,6 +27,7 @@
 # define CHAR_PLAYER_W		'W'
 # define CHAR_BARREL		'B'
 # define CHAR_DOOR			'D'
+
 # define CHARSET_VALID		"01 NSEWBD"
 # define CHARSET_PLAYER		"NSEW"
 # define CHARSET_SPAWN		"BD"

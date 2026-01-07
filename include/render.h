@@ -181,6 +181,7 @@ void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 void	render_floor_row(t_game *game, t_i32 y);
 void	render_wall_column(t_game *game, t_i32 x);
 void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x);
+void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 
 t_u32	fog_blend(t_u32 color, t_f32 factor);
 t_f32	fog_factor(t_f32 dist);

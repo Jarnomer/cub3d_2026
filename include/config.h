@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct s_assets	t_assets;
 typedef struct s_entdef	t_entdef;
+typedef struct s_anidef	t_anidef;
 
 /* ************************************************************************** */
 /*    WINDOW SETTINGS                                                         */
@@ -87,14 +88,18 @@ typedef struct s_entdef	t_entdef;
 # define FOG_COLOR_B	0
 
 /* ************************************************************************** */
-/*    CONFIG SETTINGS                                                         */
+/*    CONFIG FILE SETTINGS                                                    */
 /* ************************************************************************** */
 
-# define ENTDEF_FIELD_COUNT	6
-# define WPNDEF_FIELD_COUNT	8
-# define ENEDEF_FIELD_COUNT	10
+# define ENTDEF_FIELD_COUNT		6
+# define SHEETDEF_FIELD_COUNT	4
+# define ANIMDEF_FIELD_COUNT	6
+# define WPNDEF_FIELD_COUNT		8
+# define ENEDEF_FIELD_COUNT		10
 
 # define PATH_CONFIG_ENTITY		"config/entity.def"
+# define PATH_CONFIG_SHEET		"config/sheet.def"
+# define PATH_CONFIG_ANIM		"config/anim.def"
 # define PATH_CONFIG_WEAPON		"config/weapon.def"
 # define PATH_CONFIG_ENEMY		"config/enemy.def"
 
@@ -104,5 +109,7 @@ typedef struct s_entdef	t_entdef;
 
 void	config_load_all(t_assets *assets);
 void	config_load_entities(t_entdef *defs);
+void	config_load_anims(t_anidef *defs);
+void	config_load_sheets(t_assets *assets);
 
 #endif

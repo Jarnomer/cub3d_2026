@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include <entity.h>
 # include <anim.h>
 
-# define PATH_FLOOR		"assets/textures/floor.png"
-# define PATH_CEILING	"assets/textures/ceiling.png"
-# define PATH_BARREL	"assets/sprites/barrel.png"
-# define PATH_DOOR		"assets/sprites/door.png"
+# define PATH_FLOOR			"assets/textures/floor.png"
+# define PATH_CEILING		"assets/textures/ceiling.png"
+# define PATH_BARREL		"assets/sprites/barrel.png"
+# define PATH_SHEET_DOOR	"assets/sheets/door.png"
 
 typedef enum e_spr_id
 {
@@ -59,5 +59,6 @@ void	assets_destroy(t_assets *assets);
 
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);
 t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
+t_sheet	*assets_get_sheet(t_assets *assets, t_sheet_id id);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.c                                           :+:      :+:    :+:   */
+/*   anim_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,14 @@
 
 #include <game.h>
 
-void	config_load_all(t_assets *assets)
+t_i32	anim_get_frame(t_anim *anim, const t_anidef *def)
 {
-	config_load_entities(assets->entdefs);
-	config_load_anims(assets->anidefs);
-	config_load_sheets(assets);
+	if (!def)
+		return (0);
+	return (def->start + anim->frame);
+}
+
+bool	anim_is_playing(t_anim *anim)
+{
+	return (anim->playing && !anim->finished);
 }

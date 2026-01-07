@@ -1,0 +1,10 @@
+# Sheet     Definition
+# Headers:  sprite.h / assets.h
+# Format:   ID PATH COLS ROWS
+
+# ID:       Sheet ID name (must match e_sheet_id enum)
+# PATH:     Path to sprite sheet PNG file
+# COLS:     Number of columns (frames horizontally)
+# ROWS:     Number of rows (frames vertically)
+
+SHEET_DOOR  assets/sheets/door.png  9  1

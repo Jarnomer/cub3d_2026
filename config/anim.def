@@ -1,0 +1,14 @@
+# Animation Definition
+# Headers:  anim.h / assets.h
+# Format:   ID START TOTAL TIME LOOP NEXT
+
+# ID:       Animation ID name (must match e_anim_id enum)
+# START:    First frame index in sprite sheet (0-indexed)
+# TOTAL:    Total number of frames in animation
+# TIME:     Duration in seconds per frame
+# LOOP:     Loop animation (0 = no, 1 = yes)
+# NEXT:     Next animation ID to chain (0 = none, use ID for self-loop)
+
+ANIM_DOOR_IDLE      0   1   1.0     1   0
+ANIM_DOOR_OPEN      0   9   0.08    0   0
+ANIM_DOOR_CLOSE     8   9   0.08    0   0

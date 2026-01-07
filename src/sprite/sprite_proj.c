@@ -51,6 +51,17 @@ static void	calc_draw_bounds(t_game *game, t_proj *proj)
 	proj->end.y = mini(proj->end.y, game->render.height - 1);
 }
 
+static void	apply_entity_ctx(t_game *game, t_entity *ent, t_proj *proj)
+{
+	proj->tex_id = ent->tex_id;
+	proj->use_sheet = ent->use_sheet;
+	proj->sheet_id = ent->sheet_id;
+	if (ent->use_sheet && ent->has_anim)
+		proj->frame = door_get_frame(ent, &game->assets);
+	else
+		proj->frame = ANIM_NONE;
+}
+
 bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj)
 {
 	t_vec2	rel;
@@ -60,7 +71,7 @@ bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj)
 	if (proj->trans.y <= EPSILON)
 		return (false);
 	proj->dist = proj->trans.y;
-	proj->tex_id = ent->tex_id;
+	apply_entity_ctx(game, ent, proj);
 	calc_screen_pos(game, ent, proj);
 	calc_draw_bounds(game, proj);
 	if (proj->end.x < 0 || proj->start.x >= game->render.width)

@@ -12,17 +12,21 @@
 
 #include <game.h>
 
+static void	init_entity_ctx(t_entity *ent, t_type type)
+{
+	if (type == ENTITY_DOOR)
+		door_init(ent);
+}
+
 static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
 {
 	const t_entdef	*def;
 	t_entity		ent;
 
-	ft_bzero(&ent, sizeof(t_entity));
-	ent.type = type;
-	ent.pos = pos;
-	ent.active = true;
+	ent = (t_entity){.pos = pos, .type = type, .active = true};
 	def = &assets->entdefs[type];
 	entity_apply_entdef(&ent, def);
+	init_entity_ctx(&ent, type);
 	return (ent);
 }
 

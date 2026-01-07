@@ -48,7 +48,12 @@ static void	*sprite_worker(void *arg)
 		while (x < ctx->projs[i].end.x && x < ctx->end)
 		{
 			if (ctx->projs[i].dist < ctx->game->render.z_buffer[x])
-				render_sprite_column(ctx->game, &ctx->projs[i], x);
+			{
+				if (ctx->projs[i].use_sheet)
+					render_sheet_column(ctx->game, &ctx->projs[i], x);
+				else
+					render_sprite_column(ctx->game, &ctx->projs[i], x);
+			}
 			x++;
 		}
 		i++;
