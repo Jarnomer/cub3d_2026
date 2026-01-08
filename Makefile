@@ -85,6 +85,7 @@ SOURCES := main \
            config_anim \
            grid \
            grid_fill \
+           grid_getset \
            grid_utils \
            anim \
            anim_update \
@@ -132,6 +133,7 @@ SOURCES := main \
            lookup \
            lookup_utils \
            calc_color \
+           calc_color_ops \
            calc_angle \
            calc_scalar \
            calc_scalar_int \

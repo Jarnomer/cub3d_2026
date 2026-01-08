@@ -190,6 +190,7 @@ void	ray_step(t_ray *ray, int *axis);
 
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
+t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door_out);
 
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);

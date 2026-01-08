@@ -54,26 +54,3 @@ t_i32	grid_index(t_grid *grid, t_i32 x, t_i32 y)
 {
 	return (y * grid->width + x);
 }
-
-t_cell	grid_check_cell(t_game *game, t_vec2i grid, t_i32 *entity)
-{
-	t_cell		type;
-	t_entity	*ent;
-
-	*entity = ENTITY_VOID;
-	type = grid_get_type(&game->grid, grid.x, grid.y);
-	if (type == CELL_WALL)
-		return (CELL_WALL);
-	if (type == CELL_DOOR)
-	{
-		*entity = grid_get(&game->grid, grid.x, grid.y);
-		if (*entity >= 0)
-		{
-			ent = darray_get(&game->entities, *entity);
-			if (ent && ent->state == STATE_OPEN)
-				return (CELL_EMPTY);
-		}
-		return (CELL_DOOR);
-	}
-	return (CELL_EMPTY);
-}

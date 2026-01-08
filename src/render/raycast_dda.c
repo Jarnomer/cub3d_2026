@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_f32	calc_wall_x(t_ray *ray, t_f32 dist, int axis)
 	return (wall_x - floorf(wall_x));
 }
 
-static t_f32	calc_dist(t_ray *ray, int axis)
+t_f32	calc_dist(t_ray *ray, int axis)
 {
 	t_f32	dist;
 
@@ -56,6 +56,9 @@ static void	fill_hit_result(t_hit *hit, t_ray *ray, int axis)
 	hit->grid = ray->grid;
 }
 
+/*
+** Standard DDA - stops at first solid cell (wall or closed door)
+*/
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 {
 	t_cell	cell;
@@ -69,9 +72,58 @@ t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 	{
 		ray_step(ray, &axis);
 		cell = grid_check_cell(game, ray->grid, &entity);
-		if (cell != CELL_EMPTY)
-		{
+		if (cell == CELL_WALL)
 			hit.hit = true;
+		else if (cell == CELL_DOOR && grid_door_block(game, entity))
+			hit.hit = true;
+		if (hit.hit)
+		{
+			hit.cell = (t_u8)cell;
+			hit.entity = entity;
+		}
+		if (calc_dist(ray, axis) > max_dist)
+			break ;
+	}
+	fill_hit_result(&hit, ray, axis);
+	return (hit);
+}
+
+/*
+** DDA with door passthrough - continues through non-blocking doors
+** Saves first door hit to door_out for overlay rendering
+** Returns the final solid wall hit
+*/
+t_hit	passthr_dda(t_ray *ray, t_game *game,
+		t_f32 max_dist, t_hit *door_out)
+{
+	t_cell	cell;
+	t_i32	entity;
+	int		axis;
+	t_hit	hit;
+
+	hit = (t_hit){.entity = ENTITY_VOID};
+	*door_out = (t_hit){.entity = ENTITY_VOID};
+	axis = 0;
+	while (!hit.hit)
+	{
+		ray_step(ray, &axis);
+		cell = grid_check_cell(game, ray->grid, &entity);
+		if (cell == CELL_WALL)
+			hit.hit = true;
+		else if (cell == CELL_DOOR)
+		{
+			if (door_out->entity == ENTITY_VOID)
+			{
+				door_out->hit = true;
+				door_out->cell = CELL_DOOR;
+				door_out->entity = entity;
+				fill_hit_result(door_out, ray, axis);
+			}
+			if (grid_door_block(game, entity))
+				hit.hit = true;
+		}
+		if (hit.hit)
+		{
 			hit.cell = (t_u8)cell;
 			hit.entity = entity;
 		}

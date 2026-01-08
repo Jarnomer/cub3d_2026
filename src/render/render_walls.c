@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 
 static void	calc_wall_offset(t_game *game, t_wall *wall)
 {
-	t_i32	game_height;
+	t_i32	h;
 
-	game_height = game->render.height;
-	wall->offset = (t_i32)(game->camera.pitch * game_height);
-	wall->start = clampi(wall->top + wall->offset, 0, game_height - 1);
-	wall->end = clampi(wall->bottom + wall->offset, 0, game_height - 1);
+	h = game->render.height;
+	wall->offset = (t_i32)(game->camera.pitch * h);
+	wall->start = clampi(wall->top + wall->offset, 0, h - 1);
+	wall->end = clampi(wall->bottom + wall->offset, 0, h - 1);
 }
 
 static void	calc_tex_x(t_wall *wall, t_hit *hit, t_i32 tex_w)
@@ -72,23 +72,28 @@ static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 void	render_wall_column(t_game *game, t_i32 x)
 {
 	t_ray	ray;
-	t_hit	hit;
+	t_hit	wall_hit;
+	t_hit	door_hit;
 	t_wall	wall;
-	t_vec2	dir;
 	t_f32	cam_x;
 
 	cam_x = 2.0f * x / (t_f32)game->render.width - 1.0f;
-	dir = vec2_add(game->camera.dir, vec2_mul(game->camera.plane, cam_x));
-	ray_init(&ray, game->camera.pos, dir);
-	hit = perform_dda(&ray, game, RAY_MAX_DIST);
-	if (!hit.hit)
+	ray_init(&ray, game->camera.pos,
+		vec2_add(game->camera.dir, vec2_mul(game->camera.plane, cam_x)));
+	wall_hit = passthr_dda(&ray, game, RAY_MAX_DIST, &door_hit);
+	if (!wall_hit.hit && door_hit.entity == ENTITY_VOID)
 		return ;
-	if (game->render.z_buffer)
-		game->render.z_buffer[x] = hit.dist;
-	if (hit.cell == CELL_DOOR)
-		return ((void)render_door_column(game, &hit, x));
-	wall = calc_wall_slice(&hit, game->render.height,
-			game->assets.textures[hit.dir].width);
-	calc_wall_offset(game, &wall);
-	draw_tex_column(game, x, &wall, &game->assets.textures[hit.dir]);
+	if (wall_hit.hit && wall_hit.cell != CELL_DOOR)
+	{
+		if (game->render.z_buffer)
+			game->render.z_buffer[x] = wall_hit.dist;
+		wall = calc_wall_slice(&wall_hit, game->render.height,
+				game->assets.textures[wall_hit.dir].width);
+		calc_wall_offset(game, &wall);
+		draw_tex_column(game, x, &wall, &game->assets.textures[wall_hit.dir]);
+	}
+	if (door_hit.entity != ENTITY_VOID)
+		render_door_column(game, &door_hit, x);
+	else if (wall_hit.hit && wall_hit.cell == CELL_DOOR)
+		render_door_column(game, &wall_hit, x);
 }

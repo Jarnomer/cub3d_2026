@@ -44,10 +44,12 @@ typedef struct s_anidef	t_anidef;
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
-# define FOV_DEFAULT	66.0f
-# define RAY_MAX_DIST	64.0f
-# define THREAD_COUNT	8
-# define SKYBOX_ENABLED	0
+# define FOV_DEFAULT		66.0f
+# define RAY_MAX_DIST		64.0f
+# define ALPHA_THRESHOLD	128
+# define ALPHA_OPAQUE		250
+# define THREAD_COUNT		8
+# define SKYBOX_ENABLED		0
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */

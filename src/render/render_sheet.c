@@ -50,8 +50,9 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 	{
 		color = sheet_sample(sheet, proj->frame,
 				tex_x, calc_sheet_tex_y(proj, y, sheet->height));
-		if (color_a(color) > 128)
+		if (color_a(color) > ALPHA_THRESHOLD)
 			render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		y++;
 	}
 }
+

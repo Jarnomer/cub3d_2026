@@ -12,6 +12,44 @@
 
 #include <game.h>
 
+static t_i32	find_door(t_game *game, t_vec2i pos)
+{
+	t_entity	*ent;
+	t_vec2i		grid;
+	size_t		i;
+
+	i = 0;
+	while (i < game->entities.size)
+	{
+		ent = darray_get(&game->entities, i);
+		if (ent->active && ent->type == ENTITY_DOOR)
+		{
+			grid.x = (t_i32)ent->pos.x;
+			grid.y = (t_i32)ent->pos.y;
+			if (grid.x == pos.x && grid.y == pos.y)
+				return ((t_i32)i);
+		}
+		i++;
+	}
+	return (ENTITY_VOID);
+}
+
+t_cell	grid_check_cell(t_game *game, t_vec2i pos, t_i32 *entity)
+{
+	t_i32	door;
+
+	*entity = ENTITY_VOID;
+	if (map_is_wall(game->map, pos.x, pos.y))
+		return (CELL_WALL);
+	door = find_door(game, pos);
+	if (door != ENTITY_VOID)
+	{
+		*entity = door;
+		return (CELL_DOOR);
+	}
+	return (CELL_EMPTY);
+}
+
 void	grid_set(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
 {
 	t_i32	idx;
@@ -32,42 +70,14 @@ t_i32	grid_get(t_grid *grid, t_i32 x, t_i32 y)
 	return (grid->cells[idx]);
 }
 
-void	grid_set_type(t_grid *grid, t_i32 x, t_i32 y, t_cell type)
+bool	grid_door_block(t_game *game, t_i32 entity)
 {
-	t_i32	idx;
+	t_entity	*ent;
 
-	if (!grid_valid(grid, x, y))
-		return ;
-	idx = grid_index(grid, x, y);
-	grid->types[idx] = (t_u8)type;
-}
-
-t_cell	grid_get_type(t_grid *grid, t_i32 x, t_i32 y)
-{
-	t_i32	idx;
-
-	if (!grid_valid(grid, x, y))
-		return (CELL_WALL);
-	idx = grid_index(grid, x, y);
-	return ((t_cell)grid->types[idx]);
-}
-
-void	grid_set_axis(t_grid *grid, t_i32 x, t_i32 y, t_axis axis)
-{
-	t_i32	idx;
-
-	if (!grid_valid(grid, x, y))
-		return ;
-	idx = grid_index(grid, x, y);
-	grid->axes[idx] = (t_u8)axis;
-}
-
-t_axis	grid_get_axis(t_grid *grid, t_i32 x, t_i32 y)
-{
-	t_i32	idx;
-
-	if (!grid_valid(grid, x, y))
-		return (AXIS_NS);
-	idx = grid_index(grid, x, y);
-	return ((t_axis)grid->axes[idx]);
+	if (entity == ENTITY_VOID)
+		return (false);
+	ent = darray_get(&game->entities, entity);
+	if (!ent || !ent->active)
+		return (false);
+	return (ent->state == STATE_IDLE);
 }
