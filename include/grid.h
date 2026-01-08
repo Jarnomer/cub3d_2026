@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cellgrid.h                                         :+:      :+:    :+:   */
+/*   grid.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,61 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CELLGRID_H
-# define CELLGRID_H
+#ifndef GRID_H
+# define GRID_H
 
 # include <types.h>
 # include <defs.h>
-
-/* ************************************************************************** */
-/*    CONSTANTS                                                               */
-/* ************************************************************************** */
-
-# define CELL_EMPTY		-1
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
 /* ************************************************************************** */
 
 typedef struct s_game	t_game;
-typedef struct s_map	t_map;
-typedef struct s_entity	t_entity;
-
-/* ************************************************************************** */
-/*    CELL TYPE ENUM                                                          */
-/* ************************************************************************** */
-/*
-** Type of content in a map cell for raycasting
-*/
-
-typedef enum e_cell
-{
-	CELLTYPE_EMPTY,
-	CELLTYPE_WALL,
-	CELLTYPE_DOOR,
-	CELLTYPE_COUNT
-}	t_cell;
 
 /* ************************************************************************** */
 /*    CELL GRID STRUCTURE                                                     */
 /* ************************************************************************** */
 /*
 ** Grid for O(1) entity lookup by map cell
-** - cells:  2D array of entity indices (CELL_EMPTY = -1)
+** - cells:  2D array of entity indices (CELL_VOID = -1)
 ** - types:  2D array of cell types (wall, door, empty)
 ** - axes:   2D array of door orientations (only valid for doors)
 ** - width:  Grid width (matches map width)
 ** - height: Grid height (matches map height)
 */
 
-typedef struct s_cellgrid
+typedef struct s_grid
 {
 	t_i32		*cells;
 	t_u8		*types;
 	t_u8		*axes;
 	t_i32		width;
 	t_i32		height;
-}	t_cellgrid;
+}	t_grid;
 
 /* ************************************************************************** */
 /*    FUNCTION PROTOTYPES                                                     */
@@ -73,19 +50,19 @@ typedef struct s_cellgrid
 ** See source files for function details
 */
 
-void		cellgrid_init(t_cellgrid *grid, t_i32 width, t_i32 height);
-void		cellgrid_destroy(t_cellgrid *grid);
-bool		cellgrid_valid(t_cellgrid *grid, t_i32 x, t_i32 y);
-t_i32		cellgrid_index(t_cellgrid *grid, t_i32 x, t_i32 y);
-t_cell		cellgrid_check_cell(t_game *game, t_vec2i grid, t_i32 *ent_idx);
+void		grid_init(t_grid *grid, t_i32 width, t_i32 height);
+void		grid_destroy(t_grid *grid);
+bool		grid_valid(t_grid *grid, t_i32 x, t_i32 y);
+t_i32		grid_index(t_grid *grid, t_i32 x, t_i32 y);
+t_cell		grid_check_cell(t_game *game, t_vec2i grid, t_i32 *entity);
 
-void		cellgrid_populate(t_game *game);
+void		grid_cell_fill(t_game *game);
 
-void		cellgrid_set(t_cellgrid *grid, t_i32 x, t_i32 y, t_i32 ent_idx);
-t_i32		cellgrid_get(t_cellgrid *grid, t_i32 x, t_i32 y);
-void		cellgrid_set_type(t_cellgrid *grid, t_i32 x, t_i32 y, t_cell type);
-t_cell		cellgrid_get_type(t_cellgrid *grid, t_i32 x, t_i32 y);
-void		cellgrid_set_axis(t_cellgrid *grid, t_i32 x, t_i32 y, t_axis a);
-t_axis		cellgrid_get_axis(t_cellgrid *grid, t_i32 x, t_i32 y);
+void		grid_set(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity);
+t_i32		grid_get(t_grid *grid, t_i32 x, t_i32 y);
+void		grid_set_type(t_grid *grid, t_i32 x, t_i32 y, t_cell type);
+t_cell		grid_get_type(t_grid *grid, t_i32 x, t_i32 y);
+void		grid_set_axis(t_grid *grid, t_i32 x, t_i32 y, t_axis a);
+t_axis		grid_get_axis(t_grid *grid, t_i32 x, t_i32 y);
 
 #endif

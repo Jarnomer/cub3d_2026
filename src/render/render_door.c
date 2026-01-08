@@ -76,9 +76,9 @@ void	render_door_column(t_game *game, t_hit *hit, t_i32 x)
 	t_sheet		*sheet;
 	t_wall		wall;
 
-	if (hit->ent_idx < 0)
+	if (hit->entity < 0)
 		return ;
-	ent = darray_get(&game->entities, hit->ent_idx);
+	ent = darray_get(&game->entities, hit->entity);
 	if (!ent || !ent->active)
 		return ;
 	sheet = assets_get_sheet(&game->assets, ent->sheet_id);

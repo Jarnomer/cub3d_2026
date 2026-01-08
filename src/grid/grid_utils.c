@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cellgrid_access.c                                  :+:      :+:    :+:   */
+/*   grid_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,62 +12,62 @@
 
 #include <game.h>
 
-void	cellgrid_set(t_cellgrid *grid, t_i32 x, t_i32 y, t_i32 ent_idx)
+void	grid_set(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
+	if (!grid_valid(grid, x, y))
 		return ;
-	idx = cellgrid_index(grid, x, y);
-	grid->cells[idx] = ent_idx;
+	idx = grid_index(grid, x, y);
+	grid->cells[idx] = entity;
 }
 
-t_i32	cellgrid_get(t_cellgrid *grid, t_i32 x, t_i32 y)
+t_i32	grid_get(t_grid *grid, t_i32 x, t_i32 y)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
-		return (CELL_EMPTY);
-	idx = cellgrid_index(grid, x, y);
+	if (!grid_valid(grid, x, y))
+		return (CELL_VOID);
+	idx = grid_index(grid, x, y);
 	return (grid->cells[idx]);
 }
 
-void	cellgrid_set_type(t_cellgrid *grid, t_i32 x, t_i32 y, t_cell type)
+void	grid_set_type(t_grid *grid, t_i32 x, t_i32 y, t_cell type)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
+	if (!grid_valid(grid, x, y))
 		return ;
-	idx = cellgrid_index(grid, x, y);
+	idx = grid_index(grid, x, y);
 	grid->types[idx] = (t_u8)type;
 }
 
-t_cell	cellgrid_get_type(t_cellgrid *grid, t_i32 x, t_i32 y)
+t_cell	grid_get_type(t_grid *grid, t_i32 x, t_i32 y)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
-		return (CELLTYPE_WALL);
-	idx = cellgrid_index(grid, x, y);
+	if (!grid_valid(grid, x, y))
+		return (CELL_WALL);
+	idx = grid_index(grid, x, y);
 	return ((t_cell)grid->types[idx]);
 }
 
-void	cellgrid_set_axis(t_cellgrid *grid, t_i32 x, t_i32 y, t_axis axis)
+void	grid_set_axis(t_grid *grid, t_i32 x, t_i32 y, t_axis axis)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
+	if (!grid_valid(grid, x, y))
 		return ;
-	idx = cellgrid_index(grid, x, y);
+	idx = grid_index(grid, x, y);
 	grid->axes[idx] = (t_u8)axis;
 }
 
-t_axis	cellgrid_get_axis(t_cellgrid *grid, t_i32 x, t_i32 y)
+t_axis	grid_get_axis(t_grid *grid, t_i32 x, t_i32 y)
 {
 	t_i32	idx;
 
-	if (!cellgrid_valid(grid, x, y))
+	if (!grid_valid(grid, x, y))
 		return (AXIS_NS);
-	idx = cellgrid_index(grid, x, y);
+	idx = grid_index(grid, x, y);
 	return ((t_axis)grid->axes[idx]);
 }

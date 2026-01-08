@@ -33,24 +33,24 @@ void	game_init(t_game *game, t_map *map)
 	assets_init(&game->assets, game->map);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	darray_init(&game->entities, sizeof(t_entity), 32);
-	cellgrid_init(&game->cellgrid, map->width, map->height);
-	entity_load_spawns(game);
-	cellgrid_populate(game);
+	grid_init(&game->grid, map->width, map->height);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);
+	entity_load_spawns(game);
+	grid_cell_fill(game);
 	game->running = true;
 	mlx_close_hook(game->mlx, handle_close, game);
 }
 
 void	game_destroy(t_game *game)
 {
-	cellgrid_destroy(&game->cellgrid);
 	assets_destroy(&game->assets);
 	render_destroy(&game->render);
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	darray_destroy(&game->entities);
 	arena_destroy(&game->arena);
+	grid_destroy(&game->grid);
 	map_destroy(game->map);
 }
 

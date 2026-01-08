@@ -21,10 +21,8 @@
 /*    FORWARD DECLARATIONS                                                    */
 /* ************************************************************************** */
 
-typedef struct s_proj		t_proj;
 typedef struct s_game		t_game;
 typedef struct s_entity		t_entity;
-typedef struct s_cellgrid	t_cellgrid;
 
 /* ************************************************************************** */
 /*    RENDER STRUCTURE                                                        */
@@ -79,7 +77,7 @@ typedef struct s_ray
 ** - dir:     Cardinal direction wall faces (texture selection)
 ** - grid:    Grid cell that was hit
 ** - cell:    Type of cell hit (wall, door, empty)
-** - ent_idx: Entity index if door (-1 if wall)
+** - entity:  Entity index if door (-1 if wall)
 */
 
 typedef struct s_hit
@@ -92,7 +90,7 @@ typedef struct s_hit
 	t_dir	dir;
 	t_vec2i	grid;
 	t_u8	cell;
-	t_i32	ent_idx;
+	t_i32	entity;
 }	t_hit;
 
 /* ************************************************************************** */

@@ -58,22 +58,22 @@ static void	fill_hit_result(t_hit *hit, t_ray *ray, int axis)
 
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 {
-	t_cell	cell_type;
-	t_i32	ent_idx;
+	t_cell	cell;
+	t_i32	entity;
 	int		axis;
 	t_hit	hit;
 
-	hit = (t_hit){.ent_idx = CELL_EMPTY};
+	hit = (t_hit){.entity = ENTITY_VOID};
 	axis = 0;
 	while (!hit.hit)
 	{
 		ray_step(ray, &axis);
-		cell_type = cellgrid_check_cell(game, ray->grid, &ent_idx);
-		if (cell_type != CELLTYPE_EMPTY)
+		cell = grid_check_cell(game, ray->grid, &entity);
+		if (cell != CELL_EMPTY)
 		{
 			hit.hit = true;
-			hit.cell = (t_u8)cell_type;
-			hit.ent_idx = ent_idx;
+			hit.cell = (t_u8)cell;
+			hit.entity = entity;
 		}
 		if (calc_dist(ray, axis) > max_dist)
 			break ;

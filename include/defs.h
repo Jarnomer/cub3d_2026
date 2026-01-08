@@ -33,6 +33,13 @@ typedef enum e_axis
 	AXIS_EW
 }	t_axis;
 
+/* ************************************************************************** */
+/*    DIRECTION ENUM                                                          */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
+
 typedef enum e_dir
 {
 	WALL_NORTH,
@@ -41,8 +48,31 @@ typedef enum e_dir
 	WALL_WEST
 }	t_dir;
 
+/* ************************************************************************** */
+/*    CELL ENUM                                                               */
+/* ************************************************************************** */
+/*
+** Type of content in a map cell for raycasting
+*/
+
+typedef enum e_cell
+{
+	CELL_VOID = -1,
+	CELL_EMPTY,
+	CELL_WALL,
+	CELL_DOOR
+}	t_cell;
+
+/* ************************************************************************** */
+/*    ENTITY TYPE ENUM                                                        */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
+
 typedef enum e_type
 {
+	ENTITY_VOID = -1,
 	ENTITY_NONE,
 	ENTITY_BARREL,
 	ENTITY_DOOR,
@@ -53,6 +83,13 @@ typedef enum e_type
 	ENTITY_PLAYER,
 	ENTITY_COUNT
 }	t_type;
+
+/* ************************************************************************** */
+/*    STATE ENUM                                                              */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef enum e_state
 {
@@ -66,6 +103,13 @@ typedef enum e_state
 	STATE_COUNT
 }	t_state;
 
+/* ************************************************************************** */
+/*    TEXTURE ENUM                                                            */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
+
 typedef enum e_tex_id
 {
 	TEXTURE_WALL_N,
@@ -77,6 +121,13 @@ typedef enum e_tex_id
 	TEXTURE_COUNT
 }	t_tex_id;
 
+/* ************************************************************************** */
+/*    SPRITE ENUM                                                             */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
+
 typedef enum e_spr_id
 {
 	SPRITE_BARREL,
@@ -87,11 +138,25 @@ typedef enum e_spr_id
 	SPRITE_COUNT
 }	t_spr_id;
 
+/* ************************************************************************** */
+/*    SHEET ENUM                                                              */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
+
 typedef enum e_sht_id
 {
 	SHEET_DOOR,
 	SHEET_COUNT
 }	t_sht_id;
+
+/* ************************************************************************** */
+/*    ANIMATION ENUM                                                          */
+/* ************************************************************************** */
+/*
+** [ADD DETAILS HERE LATER]
+*/
 
 typedef enum e_anim_id
 {

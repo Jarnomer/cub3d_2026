@@ -71,30 +71,33 @@ MODULES := MODULES := $(notdir $(wildcard src/*))
 SOURCES := main \
            game \
            time \
+           camera \
            input \
            input_keys \
            input_mouse \
-           anim \
-           anim_update \
-           anim_utils \
            player \
            player_act \
-           camera \
            config \
            config_texture \
            config_sprite \
            config_sheet \
            config_entity \
            config_anim \
-           assets \
-           assets_texture \
-           assets_sheet \
-           assets_utils \
+           grid \
+           grid_fill \
+           grid_utils \
+           anim \
+           anim_update \
+           anim_utils \
            entity \
            entity_door \
            entity_door_utils \
            entity_update \
            entity_utils \
+           assets \
+           assets_texture \
+           assets_sheet \
+           assets_utils \
            sprite_proj \
            sprite_utils \
            render \
@@ -132,20 +135,17 @@ SOURCES := main \
            calc_angle \
            calc_scalar \
            calc_scalar_int \
+           calc_utils \
            vec2 \
            vec2_arith \
            vec2_trans \
            vec2i \
            map_utils \
            free_utils \
-           calc_utils \
            err_exit \
            err_print \
            safe_mlx \
-           safe_str \
-           cellgrid \
-           cellgrid_access \
-           cellgrid_populate \
+           safe_str
 
 SOURCES := $(addsuffix .c, $(SOURCES))
 

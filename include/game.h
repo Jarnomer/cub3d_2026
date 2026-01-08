@@ -45,6 +45,7 @@
 # include <entity.h>
 # include <render.h>
 # include <thread.h>
+# include <grid.h>
 # include <anim.h>
 # include <pool.h>
 # include <calc.h>
@@ -54,7 +55,6 @@
 # include <utils.h>
 # include <types.h>
 # include <defs.h>
-# include <cellgrid.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
@@ -134,9 +134,9 @@ struct s_game
 	t_render	render;
 	t_assets	assets;
 	t_darray	entities;
+	t_grid		grid;
 	t_arena		arena;
 	t_lookup	lookup;
-	t_cellgrid	cellgrid;
 	bool		running;
 };
 

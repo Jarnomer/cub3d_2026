@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cellgrid_populate.c                                :+:      :+:    :+:   */
+/*   grid_fill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -32,7 +32,7 @@ static t_axis	detect_axis(t_map *map, t_i32 x, t_i32 y)
 	return (AXIS_EW);
 }
 
-static void	populate_entity(t_game *game, t_entity *ent, t_i32 ent_idx)
+static void	fill_entity(t_game *game, t_entity *ent, t_i32 entity)
 {
 	t_i32	cell_x;
 	t_i32	cell_y;
@@ -43,13 +43,13 @@ static void	populate_entity(t_game *game, t_entity *ent, t_i32 ent_idx)
 	if (ent->type == ENTITY_DOOR)
 	{
 		axis = detect_axis(game->map, cell_x, cell_y);
-		cellgrid_set_type(&game->cellgrid, cell_x, cell_y, CELLTYPE_DOOR);
-		cellgrid_set_axis(&game->cellgrid, cell_x, cell_y, axis);
-		cellgrid_set(&game->cellgrid, cell_x, cell_y, ent_idx);
+		grid_set_type(&game->grid, cell_x, cell_y, CELL_DOOR);
+		grid_set_axis(&game->grid, cell_x, cell_y, axis);
+		grid_set(&game->grid, cell_x, cell_y, entity);
 	}
 }
 
-static void	populate_entities(t_game *game)
+static void	fill_entities(t_game *game)
 {
 	t_entity	*ent;
 	size_t		i;
@@ -59,12 +59,12 @@ static void	populate_entities(t_game *game)
 	{
 		ent = darray_get(&game->entities, i);
 		if (ent->active)
-			populate_entity(game, ent, (t_i32)i);
+			fill_entity(game, ent, (t_i32)i);
 		i++;
 	}
 }
 
-static void	populate_walls(t_game *game)
+static void	fill_walls(t_game *game)
 {
 	t_i32	x;
 	t_i32	y;
@@ -76,15 +76,15 @@ static void	populate_walls(t_game *game)
 		while (x < game->map->width)
 		{
 			if (map_is_wall(game->map, x, y))
-				cellgrid_set_type(&game->cellgrid, x, y, CELLTYPE_WALL);
+				grid_set_type(&game->grid, x, y, CELL_WALL);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	cellgrid_populate(t_game *game)
+void	grid_cell_fill(t_game *game)
 {
-	populate_walls(game);
-	populate_entities(game);
+	fill_walls(game);
+	fill_entities(game);
 }

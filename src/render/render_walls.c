@@ -85,7 +85,7 @@ void	render_wall_column(t_game *game, t_i32 x)
 		return ;
 	if (game->render.z_buffer)
 		game->render.z_buffer[x] = hit.dist;
-	if (hit.cell == CELLTYPE_DOOR)
+	if (hit.cell == CELL_DOOR)
 		return ((void)render_door_column(game, &hit, x));
 	wall = calc_wall_slice(&hit, game->render.height,
 			game->assets.textures[hit.dir].width);

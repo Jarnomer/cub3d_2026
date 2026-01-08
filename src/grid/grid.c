@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cellgrid.c                                         :+:      :+:    :+:   */
+/*   grid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,36 +12,36 @@
 
 #include <game.h>
 
-void	cellgrid_init(t_cellgrid *grid, t_i32 width, t_i32 height)
+void	grid_init(t_grid *grid, t_i32 width, t_i32 height)
 {
 	t_i32	total;
 	t_i32	i;
 
 	total = width * height;
-	*grid = (t_cellgrid){.width = width, .height = height};
+	*grid = (t_grid){.width = width, .height = height};
 	grid->cells = safe_calloc(sizeof(t_i32) * total);
 	grid->types = safe_calloc(sizeof(t_u8) * total);
 	grid->axes = safe_calloc(sizeof(t_u8) * total);
 	i = 0;
 	while (i < total)
 	{
-		grid->cells[i] = CELL_EMPTY;
-		grid->types[i] = CELLTYPE_EMPTY;
+		grid->cells[i] = CELL_VOID;
+		grid->types[i] = CELL_EMPTY;
 		i++;
 	}
 }
 
-void	cellgrid_destroy(t_cellgrid *grid)
+void	grid_destroy(t_grid *grid)
 {
 	if (!grid)
 		return ;
 	free(grid->cells);
 	free(grid->types);
 	free(grid->axes);
-	*grid = (t_cellgrid){0};
+	*grid = (t_grid){0};
 }
 
-bool	cellgrid_valid(t_cellgrid *grid, t_i32 x, t_i32 y)
+bool	grid_valid(t_grid *grid, t_i32 x, t_i32 y)
 {
 	if (x < 0 || x >= grid->width)
 		return (false);
@@ -50,30 +50,30 @@ bool	cellgrid_valid(t_cellgrid *grid, t_i32 x, t_i32 y)
 	return (true);
 }
 
-t_i32	cellgrid_index(t_cellgrid *grid, t_i32 x, t_i32 y)
+t_i32	grid_index(t_grid *grid, t_i32 x, t_i32 y)
 {
 	return (y * grid->width + x);
 }
 
-t_cell	cellgrid_check_cell(t_game *game, t_vec2i grid, t_i32 *ent_idx)
+t_cell	grid_check_cell(t_game *game, t_vec2i grid, t_i32 *entity)
 {
 	t_cell		type;
 	t_entity	*ent;
 
-	*ent_idx = CELL_EMPTY;
-	if (map_is_wall(game->map, grid.x, grid.y))
-		return (CELLTYPE_WALL);
-	type = cellgrid_get_type(&game->cellgrid, grid.x, grid.y);
-	if (type == CELLTYPE_DOOR)
+	*entity = ENTITY_VOID;
+	type = grid_get_type(&game->grid, grid.x, grid.y);
+	if (type == CELL_WALL)
+		return (CELL_WALL);
+	if (type == CELL_DOOR)
 	{
-		*ent_idx = cellgrid_get(&game->cellgrid, grid.x, grid.y);
-		if (*ent_idx >= 0)
+		*entity = grid_get(&game->grid, grid.x, grid.y);
+		if (*entity >= 0)
 		{
-			ent = darray_get(&game->entities, *ent_idx);
+			ent = darray_get(&game->entities, *entity);
 			if (ent && ent->state == STATE_OPEN)
-				return (CELLTYPE_EMPTY);
+				return (CELL_EMPTY);
 		}
-		return (CELLTYPE_DOOR);
+		return (CELL_DOOR);
 	}
-	return (CELLTYPE_EMPTY);
+	return (CELL_EMPTY);
 }
