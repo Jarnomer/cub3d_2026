@@ -38,11 +38,11 @@ typedef struct s_sheet
 
 typedef struct s_assets
 {
-	t_tex		textures[MAX_TEXTURES];
-	t_tex		sprites[MAX_SPRITES];
-	t_sheet		sheets[MAX_SHEETS];
-	t_anidef	anidefs[MAX_ANIMS];
-	t_entdef	entdefs[MAX_ENTITIES];
+	t_tex		textures[TEXTURE_COUNT];
+	t_tex		sprites[SPRITE_COUNT];
+	t_sheet		sheets[SHEET_COUNT];
+	t_anidef	anidefs[ANIM_COUNT];
+	t_entdef	entdefs[ENTITY_COUNT];
 	bool		loaded;
 }	t_assets;
 

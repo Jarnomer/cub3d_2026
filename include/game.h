@@ -56,10 +56,6 @@
 # include <types.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    FORWARD DECLARATIONS                                                    */
-/* ************************************************************************** */
-
 typedef struct s_game	t_game;
 
 /* ************************************************************************** */
@@ -86,7 +82,7 @@ typedef struct s_map
 	char	*textures[4];
 	t_u32	floor_col;
 	t_u32	ceil_col;
-	t_spawn	spawns[MAX_ENTITIES];
+	t_spawn	spawns[ENTITY_COUNT];
 	t_u32	spawn_count;
 	t_u32	player_count;
 }	t_map;
@@ -139,13 +135,6 @@ struct s_game
 	t_lookup	lookup;
 	bool		running;
 };
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void	game_init(t_game *game, t_map *map);
 void	game_destroy(t_game *game);

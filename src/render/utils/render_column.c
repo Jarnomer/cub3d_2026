@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_column_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,26 +12,44 @@
 
 #include <game.h>
 
-void	render_init(t_game *game)
+bool	column_is_visible(t_i32 x, t_i32 width)
 {
-	game->render.width = WIN_WIDTH;
-	game->render.height = WIN_HEIGHT;
-	game->render.frame = safe_image(game->mlx, WIN_WIDTH, WIN_HEIGHT);
-	game->render.z_buffer = safe_calloc(sizeof(t_f32) * WIN_WIDTH);
-	game->render.occlude = safe_calloc(sizeof(t_occlude) * WIN_WIDTH);
-	safe_image_to_window(game->mlx, game->render.frame, 0, 0);
+	return (x >= 0 && x < width);
 }
 
-void	render_destroy(t_render *render)
+void	column_clamp_bounds(t_i32 height, t_i32 *start, t_i32 *end)
 {
-	if (!render)
-		return ;
-	free(render->z_buffer);
-	free(render->occlude);
-	*render = (t_render){0};
+	if (*start < 0)
+		*start = 0;
+	if (*end >= height)
+		*end = height - 1;
 }
 
-void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
+void	column_fill(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2, t_u32 color)
 {
-	((t_u32 *)img->pixels)[y * img->width + x] = color;
+	t_i32	y;
+
+	y = y1;
+	while (y <= y2)
+	{
+		((t_u32 *)frame->pixels)[y * frame->width + x] = color;
+		y++;
+	}
+}
+
+void	column_fill_fog(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2)
+{
+	column_fill(frame, x, y1, y2, fog_color(ALPHA_OPAQUE));
+}
+
+void	column_clear(t_mlxi *frame, t_i32 x, t_i32 height)
+{
+	t_i32	y;
+
+	y = 0;
+	while (y < height)
+	{
+		((t_u32 *)frame->pixels)[y * frame->width + x] = 0;
+		y++;
+	}
 }

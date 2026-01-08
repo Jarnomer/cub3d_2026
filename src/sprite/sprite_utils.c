@@ -41,7 +41,7 @@ t_u32	collect_sprites(t_game *game, t_proj *projs)
 
 	count = 0;
 	i = 0;
-	while (i < game->entities.size && count < MAX_ENTITIES)
+	while (i < game->entities.size && count < ENTITY_COUNT)
 	{
 		ent = darray_get(&game->entities, i);
 		if (!ent->active || ent->type == ENTITY_DOOR)

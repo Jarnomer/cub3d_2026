@@ -25,30 +25,7 @@ typedef struct s_game		t_game;
 typedef struct s_entity		t_entity;
 typedef struct s_camera		t_camera;
 typedef struct s_sheet		t_sheet;
-
-/* ************************************************************************** */
-/*    RAY STRUCTURE                                                           */
-/* ************************************************************************** */
-/*
-** Core ray structure for DDA (Digital Differential Analysis) algorithm
-**
-**                      delta.y
-**                    +---+
-**                    |   |     Ray marches through grid cells
-**            +-------+   +---->  step by step until hitting wall
-**            |       |  /
-**   delta.x  |  cell | / ray_dir
-**            |       |/
-**            +-------+
-**
-** - origin:  Ray starting position (player location)
-** - dir:     Normalized ray direction vector
-** - delta:   Distance to cross one full grid cell in each axis
-**            delta.x = |1 / dir.x|, delta.y = |1 / dir.y|
-** - dist:    Accumulated distance to next grid line in each axis
-** - grid:    Current grid cell coordinates being checked
-** - step:    Direction to step in grid (-1 or +1 for each axis)
-*/
+typedef struct s_texture	t_tex;
 
 typedef struct s_ray
 {
@@ -59,34 +36,6 @@ typedef struct s_ray
 	t_vec2i	grid;
 	t_vec2i	step;
 }	t_ray;
-
-/* ************************************************************************** */
-/*    HIT RESULT STRUCTURE                                                    */
-/* ************************************************************************** */
-/*
-** Result of a ray cast operation
-**
-**            wall_x = 0.3
-**                |
-**                v
-**       +--------*-----------+
-**       |        ^           |  <- Grid cell that was hit
-**       |        | dist      |
-**       |        |           |
-**       +--------+-----------+
-**                ^
-**                |
-**            ray origin
-**
-** - hit:     True if ray hit a solid surface
-** - dist:    Perpendicular distance (avoids fisheye distortion)
-** - wall_x:  Fractional position along wall [0.0, 1.0) for texture mapping
-** - axis:    Which axis boundary was crossed (AXIS_X or AXIS_Y)
-** - dir:     Cardinal direction of hit surface (for texture selection)
-** - grid:    Grid cell coordinates of the hit
-** - cell:    Type of cell hit (CELL_WALL, CELL_DOOR, CELL_EMPTY, ... )
-** - entity:  Entity index if door was hit, ENTITY_VOID otherwise
-*/
 
 typedef struct s_hit
 {
@@ -101,31 +50,6 @@ typedef struct s_hit
 	t_i32	entity;
 }	t_hit;
 
-/* ************************************************************************** */
-/*    SLICE STRUCTURE                                                         */
-/* ************************************************************************** */
-/*
-** Vertical slice data for wall/door rendering
-**
-**       screen_height
-**       +------------+
-**       |            |  <- top (may be off-screen)
-**       |============|  <- start (clamped to screen)
-**       |   SLICE    |  <- visible portion
-**       |============|  <- end (clamped to screen)  
-**       |            |  <- bottom (may be off-screen)
-**       +------------+
-**
-** - top/bottom:  Unclamped slice bounds (can exceed screen)
-** - start/end:   Clamped bounds for actual rendering
-** - height:      Total slice height (for texture scaling)
-** - tex_x:       Texture X coordinate (0 to tex_width - 1)
-** - tex_step:    Texture Y increment per screen pixel
-** - tex_pos:     Current texture Y position (accumulator)
-** - dist:        Distance for fog calculation
-** - offset:      Vertical pixel shift from camera pitch
-*/
-
 typedef struct s_slice
 {
 	t_i32	top;
@@ -137,33 +61,9 @@ typedef struct s_slice
 	t_f32	tex_step;
 	t_f32	tex_pos;
 	t_f32	dist;
+	t_dir	dir;
 	t_i32	offset;
 }	t_slice;
-
-/* ************************************************************************** */
-/*    FLOOR RENDER STRUCTURE                                                  */
-/* ************************************************************************** */
-/*
-** Context for floor/ceiling rendering using horizontal scanlines
-**
-**       Camera looking forward:
-**
-**                left_ray           right_ray
-**                     \                /
-**                      \      ^       /
-**                       \     |dir   /
-**                        \    |     /
-**                         \   |    /
-**                          \  |   /
-**           -plane <--------\-+-/--------> +plane
-**                             pos
-**
-** - left/right: Ray directions at screen edges
-** - step:       World coordinate increment per pixel horizontally
-** - grid:       Current world position being sampled
-** - dist:       Distance from camera to floor at current row
-** - horizon:    Screen Y coordinate of horizon line
-*/
 
 typedef struct s_floor
 {
@@ -175,50 +75,12 @@ typedef struct s_floor
 	t_i32	horizon;
 }	t_floor;
 
-/* ************************************************************************** */
-/*    DOOR RENDER CONTEXT                                                     */
-/* ************************************************************************** */
-/*
-** Temporary context for door rendering
-**
-** - sheet:       Sprite sheet containing door animation frames
-** - frame:       Current animation frame index
-** - is_blocking: True if door should write to z-buffer
-**                (closed doors block, open/opening doors don't)
-*/
-
 typedef struct s_door
 {
 	t_sheet	*sheet;
 	t_i32	frame;
 	bool	is_blocking;
 }	t_door;
-
-/* ************************************************************************** */
-/*    SPRITE PROJECTION STRUCTURE                                             */
-/* ************************************************************************** */
-/*
-** Sprite projection data for billboard rendering
-**
-**       World space:           Screen space:
-**
-**         sprite                  +--------+
-**           *                     |        |
-**          /|\         ==>        | sprite |
-**         / | \                   |  img   |
-**        camera                   +--------+
-**
-** - trans:     Camera-space coordinates
-**              trans.x = horizontal offset, trans.y = depth
-** - screen:    Screen center position of sprite
-** - size:      Rendered size in pixels (scaled by distance)
-** - start/end: Clipped draw bounds (clamped to screen)
-** - tex_id:    Texture ID for static sprites
-** - sheet_id:  Sheet ID for animated sprites
-** - frame:     Current animation frame
-** - dist:      Distance for z-buffer and fog
-** - use_sheet: True to use sprite sheet
-*/
 
 typedef struct s_proj
 {
@@ -234,28 +96,6 @@ typedef struct s_proj
 	bool		use_sheet;
 }	t_proj;
 
-/* ************************************************************************** */
-/*    DOOR OCCLUSION STRUCTURE                                                */
-/* ************************************************************************** */
-/*
-** Per-column door occlusion data for sprite rendering
-**
-** When a non-blocking door (open/opening) is in front of a wall,
-** we store its hit info so sprites can check per-pixel visibility
-** against the door's current animation frame.
-**
-**     Without occlusion:           With occlusion:
-**     Door opens -> sprite         Door opens -> sprite fades in
-**     instantly visible            through transparent door pixels
-**
-** - has_door:   True if non-blocking door exists in this column
-** - door_dist:  Distance to door (for depth comparison with sprites)
-** - entity_idx: Entity index to get animation frame
-** - wall_x:     Texture U coordinate (0.0 - 1.0)
-** - axis:       Hit axis for texture flip logic
-** - dir:        Hit direction for texture flip logic
-*/
-
 typedef struct s_occlude
 {
 	bool	has_door;
@@ -265,30 +105,6 @@ typedef struct s_occlude
 	int		axis;
 	t_dir	dir;
 }	t_occlude;
-
-/* ************************************************************************** */
-/*    UPDATED RENDER STRUCTURE                                                */
-/* ************************************************************************** */
-/*
-** Core rendering context for the raycasting engine
-**
-**     Screen (1280 x 720 example)
-**     +------------------------------------------+
-**     |  frame[0]  frame[1]  ...  frame[1279]    |  <- row 0
-**     |  frame[1280] ...                         |  <- row 1
-**     |  ...                                     |
-**     +------------------------------------------+
-**
-**     Per-column buffers:
-**     [z_buffer[0]] [z_buffer[1]] ... [z_buffer[width-1]]
-**     [occlude[0]]  [occlude[1]]  ... [occlude[width-1]]
-**
-** - frame:    Pixel buffer (RGBA, row-major)
-** - z_buffer: Depth per column for wall/sprite occlusion
-** - occlude:  Door occlusion data per column for animated visibility
-** - width:    Screen width in pixels
-** - height:   Screen height in pixels
-*/
 
 typedef struct s_render
 {
@@ -326,7 +142,7 @@ void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
 t_slice	slice_from_hit(t_hit *hit, t_i32 screen_h, t_i32 tex_width);
 void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 screen_h);
-void	slice_calc_texstep(t_slice *slice, t_i32 tex_height);
+void	slice_calc_tex_step(t_slice *slice, t_i32 tex_height);
 t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_width);
 
 /* ************************************************************************** */
@@ -363,5 +179,86 @@ void	sort_sprites(t_proj *projs, t_u32 count);
 void	occlude_store_door(t_game *game, t_hit *door_hit, t_i32 x);
 void	occlude_clear_column(t_game *game, t_i32 x);
 bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
+
+/* ************************************************************************** */
+/*    PIXEL UTILS (render_pixel_utils.c)                                      */
+/* ************************************************************************** */
+
+bool	pixel_in_bounds(t_mlxi *frame, t_i32 x, t_i32 y);
+void	pixel_put_safe(t_mlxi *frame, t_i32 x, t_i32 y, t_u32 color);
+t_u32	pixel_get(t_mlxi *frame, t_i32 x, t_i32 y);
+void	pixel_blend(t_mlxi *frame, t_i32 x, t_i32 y, t_u32 color);
+void	pixel_fill_rect(t_mlxi *frame, t_vec2i pos, t_vec2i size, t_u32 color);
+
+/* ************************************************************************** */
+/*    COLUMN UTILS (render_column_utils.c)                                    */
+/* ************************************************************************** */
+
+bool	column_is_visible(t_i32 x, t_i32 width);
+void	column_clamp_bounds(t_i32 height, t_i32 *start, t_i32 *end);
+void	column_fill(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2, t_u32 color);
+void	column_fill_fog(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2);
+void	column_clear(t_mlxi *frame, t_i32 x, t_i32 height);
+
+/* ************************************************************************** */
+/*    SAMPLING (render_sample.c)                                              */
+/* ************************************************************************** */
+
+t_u32	sample_texture_uv(t_tex *tex, t_f32 u, t_f32 v);
+t_u32	sample_sheet_frame(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
+bool	sample_is_transparent(t_u32 color);
+bool	sample_is_opaque(t_u32 color);
+t_u32	sample_texture_wrap(t_tex *tex, t_f32 u, t_f32 v);
+
+/* ************************************************************************** */
+/*    PROJECTION (render_project.c)                                           */
+/* ************************************************************************** */
+
+t_i32	project_wall_height(t_f32 dist, t_i32 screen_h);
+t_i32	project_screen_x(t_f32 trans_x, t_f32 trans_y, t_i32 screen_w);
+t_i32	project_z_offset(t_f32 z_offset, t_f32 dist, t_i32 screen_h);
+t_vec2i	project_sprite_size(t_f32 scale, t_f32 dist, t_i32 w, t_i32 h);
+t_i32	project_apply_pitch(t_i32 y, t_f32 pitch, t_i32 screen_h);
+
+/* ************************************************************************** */
+/*    Z-BUFFER (render_zbuffer.c)                                             */
+/* ************************************************************************** */
+
+void	zbuf_write(t_render *render, t_i32 x, t_f32 dist);
+t_f32	zbuf_read(t_render *render, t_i32 x);
+bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist);
+void	zbuf_clear(t_render *render);
+void	zbuf_clear_column(t_render *render, t_i32 x);
+
+/* ************************************************************************** */
+/*    TRANSFORM (render_transform.c)                                          */
+/* ************************************************************************** */
+
+t_vec2	trans_world_to_cam(t_camera *cam, t_vec2 world_pos);
+t_vec2	trans_ray_dir(t_camera *cam, t_i32 x, t_i32 screen_w);
+t_i32	trans_screen_to_tex(t_i32 screen, t_i32 sprite_start,
+			t_i32 sprite_size, t_i32 tex_size);
+bool	trans_behind_camera(t_f32 trans_y);
+t_f32	trans_inv_det(t_camera *cam);
+
+/* ************************************************************************** */
+/*    BOUNDS (render_bounds.c)                                                */
+/* ************************************************************************** */
+
+bool	bounds_sprite_visible(t_proj *proj, t_i32 width);
+void	bounds_calc_sprite(t_proj *proj, t_i32 w, t_i32 h);
+bool	bounds_rect_visible(t_vec2i start, t_vec2i end, t_i32 w, t_i32 h);
+t_i32	bounds_clamp_x(t_i32 x, t_i32 width);
+t_i32	bounds_clamp_y(t_i32 y, t_i32 height);
+
+/* ************************************************************************** */
+/*    SLICE (render_slice.c)                                                  */
+/* ************************************************************************** */
+
+t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_w);
+t_slice	slice_from_hit(t_hit *hit, t_i32 screen_h, t_i32 tex_w);
+void	slice_apply_pitch(t_slice *s, t_camera *cam, t_i32 screen_h);
+void	slice_calc_tex_step(t_slice *s, t_i32 tex_h);
+bool	slice_is_visible(t_slice *s, t_i32 screen_h);
 
 #endif

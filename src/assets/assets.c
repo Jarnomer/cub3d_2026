@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	load_wall_textures(t_assets *assets, t_map *map)
+static void	load_walls(t_assets *assets, t_map *map)
 {
 	texture_load(&assets->textures[TEXTURE_WALL_N], map->textures[ELEM_NO]);
 	texture_load(&assets->textures[TEXTURE_WALL_S], map->textures[ELEM_SO]);
@@ -24,7 +24,7 @@ void	assets_init(t_assets *assets, t_map *map)
 {
 	*assets = (t_assets){0};
 	config_load_all(assets);
-	load_wall_textures(assets, map);
+	load_walls(assets, map);
 	assets->loaded = true;
 }
 

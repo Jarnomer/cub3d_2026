@@ -12,32 +12,6 @@
 
 #include <game.h>
 
-/*
-** Door-aware occlusion for sprite rendering
-**
-** Problem: When door opens, sprites behind it should gradually appear
-** as the door texture becomes transparent, not instantly when state changes.
-**
-**     Door animation frames:
-**     Frame 0 (closed)    Frame 4 (half)     Frame 8 (open)
-**     +------------+      +------------+      +------------+
-**     |############|      |####    ####|      |            |
-**     |############|  ->  |####    ####|  ->  |            |
-**     |############|      |####    ####|      |            |
-**     +------------+      +------------+      +------------+
-**          ^                   ^                   ^
-**     sprite hidden      sprite partial      sprite visible
-**
-** Solution: Store door hit info per column, then when rendering sprites,
-** sample the door texture to check if that specific pixel is occluded.
-*/
-
-/*
-** Stores door occlusion data for a screen column
-**
-** Called during wall rendering when a non-blocking door is encountered.
-** The data is used later by sprite rendering to check per-pixel occlusion.
-*/
 void	occlude_store_door(t_game *game, t_hit *door_hit, t_i32 x)
 {
 	t_occlude	*occ;
@@ -53,11 +27,6 @@ void	occlude_store_door(t_game *game, t_hit *door_hit, t_i32 x)
 	occ->dir = door_hit->dir;
 }
 
-/*
-** Clears occlusion data for a screen column
-**
-** Called at start of wall rendering or when no door in column
-*/
 void	occlude_clear_column(t_game *game, t_i32 x)
 {
 	if (!game->render.occlude || x < 0 || x >= game->render.width)
@@ -65,12 +34,6 @@ void	occlude_clear_column(t_game *game, t_i32 x)
 	game->render.occlude[x] = (t_occlude){0};
 }
 
-/*
-** Calculates door texture Y coordinate for a given screen Y
-**
-** Uses same projection math as door rendering to find where
-** on the door texture this screen pixel maps to.
-*/
 static t_i32	calc_door_tex_y(t_game *game, t_occlude *occ, t_i32 y, t_i32 th)
 {
 	t_i32	wall_h;
@@ -85,9 +48,6 @@ static t_i32	calc_door_tex_y(t_game *game, t_occlude *occ, t_i32 y, t_i32 th)
 	return (clampi(tex_y, 0, th - 1));
 }
 
-/*
-** Calculates door texture X coordinate from stored wall_x
-*/
 static t_i32	calc_door_tex_x(t_occlude *occ, t_i32 tex_w)
 {
 	t_i32	tex_x;
@@ -101,17 +61,6 @@ static t_i32	calc_door_tex_x(t_occlude *occ, t_i32 tex_w)
 	return (clampi(tex_x, 0, tex_w - 1));
 }
 
-/*
-** Checks if a sprite pixel is occluded by the door at this column
-**
-** Returns true if:
-**   1. There's a door in this column
-**   2. The sprite is behind the door
-**   3. The door pixel at this location is opaque
-**
-** This allows sprites to "show through" transparent parts of the door
-** texture as the door opens.
-*/
 bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 {
 	t_occlude	*occ;
@@ -137,5 +86,5 @@ bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 	color = sheet_sample(sheet, frame,
 			calc_door_tex_x(occ, sheet->width),
 			calc_door_tex_y(game, occ, y, sheet->height));
-	return (color_a(color) > ALPHA_THRESHOLD);
+	return (sample_is_opaque(color));
 }

@@ -12,10 +12,6 @@
 
 #include <game.h>
 
-/*
-** Calculates texture Y for animated sprite from sprite sheet
-*/
-
 static t_i32	calc_sheet_tex_y(t_proj *proj, t_i32 screen_y, t_i32 frame_h)
 {
 	t_i32	sprite_y;
@@ -24,10 +20,6 @@ static t_i32	calc_sheet_tex_y(t_proj *proj, t_i32 screen_y, t_i32 frame_h)
 	return (clampi(sprite_y * frame_h / proj->size.y, 0, frame_h - 1));
 }
 
-/*
-** Calculates texture X for animated sprite from sprite sheet
-*/
-
 static t_i32	calc_sheet_tex_x(t_proj *proj, t_i32 screen_x, t_i32 frame_w)
 {
 	t_i32	sprite_x;
@@ -35,14 +27,6 @@ static t_i32	calc_sheet_tex_x(t_proj *proj, t_i32 screen_x, t_i32 frame_w)
 	sprite_x = screen_x - (proj->screen.x - proj->size.x / 2);
 	return (clampi(sprite_x * frame_w / proj->size.x, 0, frame_w - 1));
 }
-
-/*
-** Renders a single vertical column of an animated sprite
-**
-** Same as static sprite but with:
-**   - Sprite sheet sampling (frame-aware)
-**   - Door occlusion checking per pixel
-*/
 
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 {

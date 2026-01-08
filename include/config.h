@@ -31,16 +31,6 @@ typedef struct s_anidef	t_anidef;
 # define WIN_RESIZABLE	1
 
 /* ************************************************************************** */
-/*    ASSETS SETTINGS                                                         */
-/* ************************************************************************** */
-
-# define MAX_TEXTURES	32
-# define MAX_SPRITES	32
-# define MAX_SHEETS		32
-# define MAX_ANIMS		32
-# define MAX_ENTITIES	128
-
-/* ************************************************************************** */
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
@@ -48,6 +38,7 @@ typedef struct s_anidef	t_anidef;
 # define RAY_MAX_DIST		64.0f
 # define ALPHA_THRESHOLD	128
 # define ALPHA_OPAQUE		250
+# define MAX_ENTITIES		128
 # define THREAD_COUNT		8
 # define SKYBOX_ENABLED		0
 
@@ -96,7 +87,7 @@ typedef struct s_anidef	t_anidef;
 # define DARRAY_INITIAL_CAP		8
 # define DARRAY_GROWTH_FACTOR	2
 # define ARENA_ALIGNMENT		8
-# define FRAME_ARENA_SIZE   	65536
+# define FRAME_ARENA_SIZE		65536
 
 /* ************************************************************************** */
 /*    FOG SETTINGS                                                            */
@@ -117,8 +108,8 @@ typedef struct s_anidef	t_anidef;
 /* ************************************************************************** */
 
 # define TEXDEF_FIELD_COUNT		3
-# define ENTDEF_FIELD_COUNT		6
 # define SHTDEF_FIELD_COUNT		4
+# define ENTDEF_FIELD_COUNT		6
 # define ANIMDEF_FIELD_COUNT	7
 # define WPNDEF_FIELD_COUNT		8
 # define ENEDEF_FIELD_COUNT		10

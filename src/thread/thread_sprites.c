@@ -44,7 +44,7 @@ static void	*sprite_worker(void *arg)
 		x = maxi(ctx->projs[i].start.x, ctx->start);
 		while (x < ctx->projs[i].end.x && x < ctx->end)
 		{
-			if (ctx->projs[i].dist < ctx->game->render.z_buffer[x])
+			if (zbuf_test(&ctx->game->render, x, ctx->projs[i].dist))
 			{
 				if (ctx->projs[i].use_sheet)
 					render_sheet_column(ctx->game, &ctx->projs[i], x);

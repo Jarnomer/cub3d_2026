@@ -32,3 +32,19 @@ bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game)
 		return (true);
 	return (false);
 }
+
+void	ray_step(t_ray *ray, int *axis)
+{
+	if (ray->dist.x < ray->dist.y)
+	{
+		ray->dist.x += ray->delta.x;
+		ray->grid.x += ray->step.x;
+		*axis = AXIS_X;
+	}
+	else
+	{
+		ray->dist.y += ray->delta.y;
+		ray->grid.y += ray->step.y;
+		*axis = AXIS_Y;
+	}
+}

@@ -60,23 +60,16 @@ void		entity_update_all(t_game *game, t_f32 dt);
 void		entity_apply_def(t_entity *ent, const t_entdef *def);
 t_entity	*entity_get(t_game *game, t_u32 index);
 
-/* ************************************************************************** */
-/*    DOOR FUNCTIONS                                                          */
-/* ************************************************************************** */
-
-/*		entity_door.c - Core door logic */
 void	door_init(t_entity *ent);
 void	door_update(t_entity *ent, t_f32 dt);
 void	door_interact(t_entity *ent);
 
-/*		entity_door_state.c - State transitions */
 void	door_start_opening(t_entity *ent);
 void	door_start_closing(t_entity *ent);
 void	door_update_open(t_entity *ent, t_f32 dt);
 void	door_set_open(t_entity *ent);
 void	door_set_closed(t_entity *ent);
 
-/*		entity_door_utils.c - Queries and utilities */
 bool	door_can_interact(t_entity *ent);
 bool	door_is_animating(t_entity *ent);
 bool	door_is_blocking(t_entity *ent);

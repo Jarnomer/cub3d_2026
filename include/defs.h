@@ -16,18 +16,6 @@
 # define CELL_VOID		-1
 # define ENTITY_VOID	-1
 
-/* ************************************************************************** */
-/*    AXIS ENUM                                                               */
-/* ************************************************************************** */
-/*
-** Orientation of a door in the map
-**
-** - AXIS_X: Ray crossed a vertical (X) grid line
-** - AXIS_Y: Ray crossed a horizontal (Y) grid line
-** - AXIS_NS: Door faces North/South (wall segments to N and S)
-** - AXIS_EW: Door faces East/West (wall segments to E and W)
-*/
-
 typedef enum e_axis
 {
 	AXIS_X,
@@ -35,13 +23,6 @@ typedef enum e_axis
 	AXIS_NS,
 	AXIS_EW
 }	t_axis;
-
-/* ************************************************************************** */
-/*    DIRECTION ENUM                                                          */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
 
 typedef enum e_dir
 {
@@ -51,26 +32,12 @@ typedef enum e_dir
 	WALL_WEST
 }	t_dir;
 
-/* ************************************************************************** */
-/*    CELL ENUM                                                               */
-/* ************************************************************************** */
-/*
-** Type of content in a map cell for raycasting
-*/
-
 typedef enum e_cell
 {
 	CELL_EMPTY,
 	CELL_WALL,
 	CELL_DOOR
 }	t_cell;
-
-/* ************************************************************************** */
-/*    ENTITY TYPE ENUM                                                        */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
 
 typedef enum e_type
 {
@@ -85,13 +52,6 @@ typedef enum e_type
 	ENTITY_COUNT
 }	t_type;
 
-/* ************************************************************************** */
-/*    STATE ENUM                                                              */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
 typedef enum e_state
 {
 	STATE_IDLE,
@@ -104,13 +64,6 @@ typedef enum e_state
 	STATE_COUNT
 }	t_state;
 
-/* ************************************************************************** */
-/*    TEXTURE ENUM                                                            */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
 typedef enum e_tex_id
 {
 	TEXTURE_WALL_N,
@@ -122,13 +75,6 @@ typedef enum e_tex_id
 	TEXTURE_COUNT
 }	t_tex_id;
 
-/* ************************************************************************** */
-/*    SPRITE ENUM                                                             */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
 typedef enum e_spr_id
 {
 	SPRITE_BARREL,
@@ -139,25 +85,11 @@ typedef enum e_spr_id
 	SPRITE_COUNT
 }	t_spr_id;
 
-/* ************************************************************************** */
-/*    SHEET ENUM                                                              */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
-
 typedef enum e_sht_id
 {
 	SHEET_DOOR,
 	SHEET_COUNT
 }	t_sht_id;
-
-/* ************************************************************************** */
-/*    ANIMATION ENUM                                                          */
-/* ************************************************************************** */
-/*
-** [ADD DETAILS HERE LATER]
-*/
 
 typedef enum e_anim_id
 {

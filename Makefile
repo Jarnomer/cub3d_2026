@@ -66,8 +66,6 @@ VLGFLAGS := --leak-check=full \
 #    SOURCES
 # **************************************************************************** #
 
-MODULES := MODULES := $(notdir $(wildcard src/*))
-
 SOURCES := main \
            game \
            time \
@@ -111,6 +109,14 @@ SOURCES := main \
            render_sheet \
            render_fog \
            render_occlude \
+           render_pixel \
+           render_column \
+           render_sample \
+           render_project \
+           render_zbuffer \
+           render_trans \
+           render_bounds \
+           render_slice \
            raycast \
            raycast_dda \
            raycast_utils \
@@ -156,7 +162,7 @@ SOURCES := $(addsuffix .c, $(SOURCES))
 
 OBJECTS := $(addprefix $(BUILDDIR)/, $(SOURCES:.c=.o))
 
-SOURCEDIR += $(addprefix $(SOURCEDIR)/, $(MODULES))
+SOURCEDIR := $(shell find $(SOURCEDIR) -type d)
 
 INCS := $(addprefix -I, $(HEADERDIR) $(LIBFTDIR)/$(HEADERDIR))
 INCS += $(addprefix -I, $(MLXDIR)/$(HEADERDIR)/MLX42)
@@ -203,6 +209,7 @@ debug: CFLAGS += $(DEBUGFLAGS)
 debug: re
 
 nm:
+	echo $(SOURCEDIR)
 	$(foreach d, $(HEADERDIR), $(foreach h, $(wildcard $(d)/*), \
 		norminette -R CheckDefine $(h);))
 	$(foreach d, $(SOURCEDIR), $(foreach s, $(wildcard $(d)/**/*), \

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_zbuffer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,26 +12,40 @@
 
 #include <game.h>
 
-void	render_init(t_game *game)
+void	zbuf_write(t_render *render, t_i32 x, t_f32 dist)
 {
-	game->render.width = WIN_WIDTH;
-	game->render.height = WIN_HEIGHT;
-	game->render.frame = safe_image(game->mlx, WIN_WIDTH, WIN_HEIGHT);
-	game->render.z_buffer = safe_calloc(sizeof(t_f32) * WIN_WIDTH);
-	game->render.occlude = safe_calloc(sizeof(t_occlude) * WIN_WIDTH);
-	safe_image_to_window(game->mlx, game->render.frame, 0, 0);
+	if (x >= 0 && x < render->width)
+		render->z_buffer[x] = dist;
 }
 
-void	render_destroy(t_render *render)
+t_f32	zbuf_read(t_render *render, t_i32 x)
 {
-	if (!render)
-		return ;
-	free(render->z_buffer);
-	free(render->occlude);
-	*render = (t_render){0};
+	if (x < 0 || x >= render->width)
+		return (INFINITE);
+	return (render->z_buffer[x]);
 }
 
-void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
+bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist)
 {
-	((t_u32 *)img->pixels)[y * img->width + x] = color;
+	if (x < 0 || x >= render->width)
+		return (false);
+	return (dist < render->z_buffer[x]);
+}
+
+void	zbuf_clear(t_render *render)
+{
+	t_i32	i;
+
+	i = 0;
+	while (i < render->width)
+	{
+		render->z_buffer[i] = INFINITE;
+		i++;
+	}
+}
+
+void	zbuf_clear_column(t_render *render, t_i32 x)
+{
+	if (x >= 0 && x < render->width)
+		render->z_buffer[x] = INFINITE;
 }
