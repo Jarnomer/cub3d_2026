@@ -14,7 +14,6 @@
 # define ASSETS_H
 
 # include <render.h>
-# include <sprite.h>
 # include <entity.h>
 # include <anim.h>
 # include <defs.h>
@@ -103,6 +102,7 @@ t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
 
 void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows);
 void	sheet_destroy(t_sheet *sheet);
+t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
 
 t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);

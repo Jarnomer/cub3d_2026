@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,37 @@ static t_f32	calc_dist(t_ray *ray, int axis)
 	return (maxf(dist, EPSILON));
 }
 
-static t_hit	update_ray_ctx(t_hit *hit, t_ray *ray, int axis)
+static void	fill_hit_result(t_hit *hit, t_ray *ray, int axis)
 {
 	hit->axis = axis;
 	hit->dist = calc_dist(ray, axis);
 	hit->wall_x = calc_wall_x(ray, hit->dist, axis);
 	hit->dir = get_dir(ray, axis);
 	hit->grid = ray->grid;
-	return (*hit);
 }
 
-t_hit	perform_dda(t_ray *ray, t_map *map, t_f32 max_dist)
+t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 {
+	t_cell	cell_type;
+	t_i32	ent_idx;
 	int		axis;
 	t_hit	hit;
 
-	ft_bzero(&hit, sizeof(t_hit));
+	hit = (t_hit){.ent_idx = CELL_EMPTY};
 	axis = 0;
 	while (!hit.hit)
 	{
-		if (ray->dist.x < ray->dist.y)
+		ray_step(ray, &axis);
+		cell_type = cellgrid_check_cell(game, ray->grid, &ent_idx);
+		if (cell_type != CELLTYPE_EMPTY)
 		{
-			ray->dist.x += ray->delta.x;
-			ray->grid.x += ray->step.x;
-			axis = AXIS_X;
-		}
-		else
-		{
-			ray->dist.y += ray->delta.y;
-			ray->grid.y += ray->step.y;
-			axis = AXIS_Y;
-		}
-		if (map_is_wall(map, ray->grid.x, ray->grid.y))
 			hit.hit = true;
+			hit.cell = (t_u8)cell_type;
+			hit.ent_idx = ent_idx;
+		}
 		if (calc_dist(ray, axis) > max_dist)
 			break ;
 	}
-	return (update_ray_ctx(&hit, ray, axis));
+	fill_hit_result(&hit, ray, axis);
+	return (hit);
 }

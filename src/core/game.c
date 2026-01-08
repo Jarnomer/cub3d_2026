@@ -21,21 +21,21 @@ static void	handle_close(void *param)
 	mlx_close_window(game->mlx);
 }
 
-void	game_init(t_game *game)
+void	game_init(t_game *game, t_map *map)
 {
-	game->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, WIN_RESIZABLE);
-	if (!game->mlx)
-		err_exit_mlx();
+	safe_mlx_init(game);
 	render_init(game);
 	time_init(&game->time);
 	input_init(&game->input);
 	input_mouse_init(game);
 	input_mouse_capture(game);
-	assets_init(&game->assets, game->map);
-	darray_init(&game->entities, sizeof(t_entity), 32);
-	entity_load_spawns(game);
 	lookup_init(&game->lookup);
+	assets_init(&game->assets, game->map);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
+	darray_init(&game->entities, sizeof(t_entity), 32);
+	cellgrid_init(&game->cellgrid, map->width, map->height);
+	entity_load_spawns(game);
+	cellgrid_populate(game);
 	camera_init(&game->camera, game->map->spawn_pos,
 		game->map->spawn_angle, FOV_DEFAULT);
 	game->running = true;
@@ -44,6 +44,7 @@ void	game_init(t_game *game)
 
 void	game_destroy(t_game *game)
 {
+	cellgrid_destroy(&game->cellgrid);
 	assets_destroy(&game->assets);
 	render_destroy(&game->render);
 	if (game->mlx)
@@ -53,7 +54,7 @@ void	game_destroy(t_game *game)
 	map_destroy(game->map);
 }
 
-void	game_loop(void *param)
+static void	game_loop(void *param)
 {
 	t_game	*game;
 

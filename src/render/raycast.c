@@ -50,3 +50,19 @@ void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir)
 	init_dir_x(ray, origin, dir);
 	init_dir_y(ray, origin, dir);
 }
+
+void	ray_step(t_ray *ray, int *axis)
+{
+	if (ray->dist.x < ray->dist.y)
+	{
+		ray->dist.x += ray->delta.x;
+		ray->grid.x += ray->step.x;
+		*axis = AXIS_X;
+	}
+	else
+	{
+		ray->dist.y += ray->delta.y;
+		ray->grid.y += ray->step.y;
+		*axis = AXIS_Y;
+	}
+}

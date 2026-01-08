@@ -99,6 +99,7 @@ SOURCES := main \
            sprite_utils \
            render \
            render_walls \
+           render_door \
            render_floor \
            render_sprites \
            render_sheet \
@@ -141,7 +142,10 @@ SOURCES := main \
            err_exit \
            err_print \
            safe_mlx \
-           safe_str
+           safe_str \
+           cellgrid \
+           cellgrid_access \
+           cellgrid_populate \
 
 SOURCES := $(addsuffix .c, $(SOURCES))
 

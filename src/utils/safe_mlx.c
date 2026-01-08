@@ -12,6 +12,13 @@
 
 #include <game.h>
 
+void	safe_mlx_init(t_game *game)
+{
+	game->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, WIN_RESIZABLE);
+	if (!game->mlx)
+		err_exit_mlx();
+}
+
 void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y)
 {
 	if (mlx_image_to_window(mlx, img, x, y) == -1)

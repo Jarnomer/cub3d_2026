@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 		err_exit_msg(ERR_USAGE);
 	game = (t_game){0};
 	game.map = parse(argv[1]);
-	game_init(&game);
+	game_init(&game, game.map);
 	game_run(&game);
 	game_destroy(&game);
 	return (EXIT_SUCCESS);

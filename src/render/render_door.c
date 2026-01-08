@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_walls.c                                     :+:      :+:    :+:   */
+/*   render_door.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
+/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
 /*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
+static void	draw_door_column(t_game *game, t_i32 x, t_wall *wall, t_sheet *sht)
 {
 	t_f32	step;
 	t_f32	tex_pos;
@@ -23,30 +23,31 @@ static void	draw_tex_column(t_game *game, t_i32 x, t_wall *wall, t_tex *tex)
 	fog = lookup_fog(&game->lookup, wall->dist);
 	if (fog == 255)
 		return ((void)fog_fill_column(game, x, wall->start, wall->end));
-	step = (t_f32)tex->height / (t_f32)wall->height;
+	step = (t_f32)sht->height / (t_f32)wall->height;
 	tex_pos = (wall->start - wall->top - wall->offset) * step;
 	y = wall->start;
 	while (y <= wall->end)
 	{
-		color = texture_sample(tex, wall->tex_x,
-				clampi((t_i32)tex_pos, 0, tex->height - 1));
-		render_pixel(game->render.frame, x, y, fog_apply(color, fog));
+		color = sheet_sample(sht, wall->dir, wall->tex_x,
+				clampi((t_i32)tex_pos, 0, sht->height - 1));
+		if (color_a(color) > 128)
+			render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		tex_pos += step;
 		y++;
 	}
 }
 
-static void	calc_wall_offset(t_game *game, t_wall *wall)
+static void	calc_door_offset(t_game *game, t_wall *wall)
 {
-	t_i32	game_height;
+	t_i32	h;
 
-	game_height = game->render.height;
-	wall->offset = (t_i32)(game->camera.pitch * game_height);
-	wall->start = clampi(wall->top + wall->offset, 0, game_height - 1);
-	wall->end = clampi(wall->bottom + wall->offset, 0, game_height - 1);
+	h = game->render.height;
+	wall->offset = (t_i32)(game->camera.pitch * h);
+	wall->start = clampi(wall->top + wall->offset, 0, h - 1);
+	wall->end = clampi(wall->bottom + wall->offset, 0, h - 1);
 }
 
-static void	calc_tex_x(t_wall *wall, t_hit *hit, t_i32 tex_w)
+static void	calc_door_tex_x(t_wall *wall, t_hit *hit, t_i32 tex_w)
 {
 	wall->tex_x = (t_i32)(hit->wall_x * (t_f32)tex_w);
 	if (hit->axis == AXIS_X && hit->dir == WALL_EAST)
@@ -56,7 +57,7 @@ static void	calc_tex_x(t_wall *wall, t_hit *hit, t_i32 tex_w)
 	wall->tex_x = clampi(wall->tex_x, 0, tex_w - 1);
 }
 
-static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
+static t_wall	calc_door_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 {
 	t_wall	wall;
 
@@ -65,30 +66,26 @@ static t_wall	calc_wall_slice(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
 	wall.height = (t_i32)(screen_h / hit->dist);
 	wall.top = -wall.height / 2 + screen_h / 2;
 	wall.bottom = wall.height / 2 + screen_h / 2;
-	calc_tex_x(&wall, hit, tex_w);
+	calc_door_tex_x(&wall, hit, tex_w);
 	return (wall);
 }
 
-void	render_wall_column(t_game *game, t_i32 x)
+void	render_door_column(t_game *game, t_hit *hit, t_i32 x)
 {
-	t_ray	ray;
-	t_hit	hit;
-	t_wall	wall;
-	t_vec2	dir;
-	t_f32	cam_x;
+	t_entity	*ent;
+	t_sheet		*sheet;
+	t_wall		wall;
 
-	cam_x = 2.0f * x / (t_f32)game->render.width - 1.0f;
-	dir = vec2_add(game->camera.dir, vec2_mul(game->camera.plane, cam_x));
-	ray_init(&ray, game->camera.pos, dir);
-	hit = perform_dda(&ray, game, RAY_MAX_DIST);
-	if (!hit.hit)
+	if (hit->ent_idx < 0)
 		return ;
-	if (game->render.z_buffer)
-		game->render.z_buffer[x] = hit.dist;
-	if (hit.cell == CELLTYPE_DOOR)
-		return ((void)render_door_column(game, &hit, x));
-	wall = calc_wall_slice(&hit, game->render.height,
-			game->assets.textures[hit.dir].width);
-	calc_wall_offset(game, &wall);
-	draw_tex_column(game, x, &wall, &game->assets.textures[hit.dir]);
+	ent = darray_get(&game->entities, hit->ent_idx);
+	if (!ent || !ent->active)
+		return ;
+	sheet = assets_get_sheet(&game->assets, ent->sheet_id);
+	if (!sheet || !sheet->tex.pixels)
+		return ;
+	wall = calc_door_slice(hit, game->render.height, sheet->width);
+	calc_door_offset(game, &wall);
+	wall.dir = door_get_frame(ent, &game->assets);
+	draw_door_column(game, x, &wall, sheet);
 }

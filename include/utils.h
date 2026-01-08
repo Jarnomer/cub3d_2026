@@ -36,6 +36,7 @@ char	*safe_strjoin(char *s1, char *s2);
 char	*safe_strdup(char *s1);
 char	**safe_split(char *str, char c);
 
+void	safe_mlx_init(t_game *game);
 void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y);
 t_mlxi	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
 t_mlxt	*safe_load_png(const char *path);

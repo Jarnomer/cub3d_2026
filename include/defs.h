@@ -13,10 +13,24 @@
 #ifndef DEFS_H
 # define DEFS_H
 
+/* ************************************************************************** */
+/*    AXIS ENUM                                                               */
+/* ************************************************************************** */
+/*
+** Orientation of a door in the map
+**
+** - AXIS_X: Ray crossed a vertical (X) grid line
+** - AXIS_Y: Ray crossed a horizontal (Y) grid line
+** - AXIS_NS: Door faces North/South (wall segments to N and S)
+** - AXIS_EW: Door faces East/West (wall segments to E and W)
+*/
+
 typedef enum e_axis
 {
 	AXIS_X,
-	AXIS_Y
+	AXIS_Y,
+	AXIS_NS,
+	AXIS_EW
 }	t_axis;
 
 typedef enum e_dir

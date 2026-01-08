@@ -44,7 +44,6 @@
 # include <assets.h>
 # include <entity.h>
 # include <render.h>
-# include <sprite.h>
 # include <thread.h>
 # include <anim.h>
 # include <pool.h>
@@ -55,6 +54,7 @@
 # include <utils.h>
 # include <types.h>
 # include <defs.h>
+# include <cellgrid.h>
 
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
@@ -136,6 +136,7 @@ struct s_game
 	t_darray	entities;
 	t_arena		arena;
 	t_lookup	lookup;
+	t_cellgrid	cellgrid;
 	bool		running;
 };
 
@@ -146,10 +147,9 @@ struct s_game
 ** See source files for function details
 */
 
-void	game_init(t_game *game);
+void	game_init(t_game *game, t_map *map);
 void	game_destroy(t_game *game);
 void	game_run(t_game *game);
-void	game_loop(void *param);
 
 void	player_update(t_game *game, t_f32 dt);
 void	player_interact(t_game *game);

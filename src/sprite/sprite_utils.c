@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_sort.c                                      :+:      :+:    :+:   */
+/*   sprite_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -44,7 +44,7 @@ t_u32	collect_sprites(t_game *game, t_proj *projs)
 	while (i < game->entities.size && count < MAX_ENTITIES)
 	{
 		ent = darray_get(&game->entities, i);
-		if (!ent->active)
+		if (!ent->active || ent->type == ENTITY_DOOR)
 		{
 			i++;
 			continue ;
