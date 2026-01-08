@@ -27,7 +27,7 @@ static t_type	str_to_type(const char *str)
 	return (ENTITY_NONE);
 }
 
-static t_spr_id	str_to_sprite_id(const char *str)
+static t_spr_id	str_to_spr_id(const char *str)
 {
 	if (ft_strcmp(str, "SPRITE_BARREL") == 0)
 		return (SPRITE_BARREL);
@@ -45,7 +45,7 @@ static t_spr_id	str_to_sprite_id(const char *str)
 static void	parse_def_line(char **p, t_entdef *def)
 {
 	def->type = str_to_type(p[0]);
-	def->sprite_id = str_to_sprite_id(p[1]);
+	def->spr_id = str_to_spr_id(p[1]);
 	def->scale = ft_atof(p[2]);
 	def->z_offset = ft_atof(p[3]);
 	def->health = ft_atoi(p[4]);

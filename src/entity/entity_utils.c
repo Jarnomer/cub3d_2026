@@ -14,7 +14,7 @@
 
 void	entity_apply_def(t_entity *ent, const t_entdef *def)
 {
-	ent->tex_id = def->sprite_id;
+	ent->tex_id = def->spr_id;
 	ent->scale = def->scale;
 	ent->z_offset = def->z_offset;
 	ent->health = def->health;

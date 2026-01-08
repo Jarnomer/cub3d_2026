@@ -17,26 +17,14 @@
 # include <types.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    FORWARD DECLARATIONS                                                    */
-/* ************************************************************************** */
-
 typedef struct s_game	t_game;
 typedef struct s_assets	t_assets;
 typedef struct s_proj	t_proj;
 
-/* ************************************************************************** */
-/*    ENTITY DEFINITION                                                       */
-/* ************************************************************************** */
-/*
-** Static entity definition data loaded from config
-** - [ADD EXPLANATIONS HERE LATER]
-*/
-
 typedef struct s_entdef
 {
 	t_type		type;
-	t_u32		sprite_id;
+	t_u32		spr_id;
 	t_u32		sheet_id;
 	t_u32		anim_id;
 	t_f32		scale;
@@ -45,14 +33,6 @@ typedef struct s_entdef
 	bool		solid;
 	bool		use_sheet;
 }	t_entdef;
-
-/* ************************************************************************** */
-/*    ENTITY STRUCTURE                                                        */
-/* ************************************************************************** */
-/*
-** Entity instance - runtime data
-** - [ADD EXPLANATIONS HERE LATER]
-*/
 
 typedef struct s_entity
 {
