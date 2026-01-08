@@ -58,13 +58,19 @@ typedef struct s_anidef	t_anidef;
 # define MAX_DELTA		0.1f
 
 /* ************************************************************************** */
-/*    POOL SETTINGS                                                           */
+/*    GAMEPLAY SETTINGS                                                       */
 /* ************************************************************************** */
 
-# define DARRAY_INITIAL_CAP		8
-# define DARRAY_GROWTH_FACTOR	2
-# define ARENA_ALIGNMENT		8
-# define FRAME_ARENA_SIZE   	65536
+# define INTERACT_RANGE		1.5f
+# define DOOR_TIMER			3.0f
+# define DOOR_AUTO_CLOSE	1
+
+/* ************************************************************************** */
+/*    CAMERA SETTINGS                                                         */
+/* ************************************************************************** */
+
+# define CAMERA_HEIGHT	0.5f
+# define CAM_X_SCALE	2.0f
 
 /* ************************************************************************** */
 /*    PLAYER SETTINGS                                                         */
@@ -84,12 +90,13 @@ typedef struct s_anidef	t_anidef;
 # define MAX_KEYS		512
 
 /* ************************************************************************** */
-/*    GAMEPLAY SETTINGS                                                       */
+/*    POOL SETTINGS                                                           */
 /* ************************************************************************** */
 
-# define INTERACT_RANGE		1.5f
-# define DOOR_TIMER			3.0f
-# define DOOR_AUTO_CLOSE	1
+# define DARRAY_INITIAL_CAP		8
+# define DARRAY_GROWTH_FACTOR	2
+# define ARENA_ALIGNMENT		8
+# define FRAME_ARENA_SIZE   	65536
 
 /* ************************************************************************** */
 /*    FOG SETTINGS                                                            */
@@ -102,6 +109,8 @@ typedef struct s_anidef	t_anidef;
 # define FOG_COLOR_R	0
 # define FOG_COLOR_G	0
 # define FOG_COLOR_B	0
+# define FOG_NONE		0
+# define FOG_FULL		255
 
 /* ************************************************************************** */
 /*    CONFIG FILE SETTINGS                                                    */

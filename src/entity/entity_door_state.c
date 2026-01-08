@@ -1,44 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity_door_utils.c                                :+:      :+:    :+:   */
+/*   entity_door_state.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
+/*   Created: 2026/01/08 00:00:00 by jmertane          #+#    #+#             */
 /*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-bool	door_can_interact(t_entity *ent)
+void	door_start_opening(t_entity *ent)
 {
-	if (ent->state == STATE_OPENING || ent->state == STATE_CLOSING)
-		return (false);
-	return (true);
+	ent->state = STATE_OPENING;
+	anim_play(&ent->anim, ANIM_DOOR_OPEN);
 }
 
-bool	door_is_animating(t_entity *ent)
+void	door_start_closing(t_entity *ent)
 {
-	return (ent->state == STATE_OPENING || ent->state == STATE_CLOSING);
+	ent->state = STATE_CLOSING;
+	anim_play(&ent->anim, ANIM_DOOR_CLOSE);
 }
 
-bool	door_is_blocking(t_entity *ent)
+void	door_update_open(t_entity *ent, t_f32 dt)
 {
-	if (ent->state == STATE_IDLE)
-		return (true);
-	if (ent->state == STATE_CLOSING)
-		return (true);
-	return (false);
+	if (!DOOR_AUTO_CLOSE)
+		return ;
+	ent->timer -= dt;
+	if (ent->timer <= 0.0f)
+		door_start_closing(ent);
 }
 
-t_i32	door_get_frame(t_entity *ent, t_assets *assets)
+void	door_set_open(t_entity *ent)
 {
-	t_anidef	*def;
+	ent->state = STATE_OPEN;
+	ent->solid = false;
+	ent->timer = DOOR_TIMER;
+}
 
-	if (!ent->has_anim)
-		return (0);
-	def = &assets->anidefs[ent->anim.def_id];
-	return (anim_get_frame(&ent->anim, def));
+void	door_set_closed(t_entity *ent)
+{
+	ent->state = STATE_IDLE;
+	ent->solid = true;
+	anim_init(&ent->anim, ANIM_DOOR_IDLE);
 }

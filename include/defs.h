@@ -13,6 +13,9 @@
 #ifndef DEFS_H
 # define DEFS_H
 
+# define CELL_VOID		-1
+# define ENTITY_VOID	-1
+
 /* ************************************************************************** */
 /*    AXIS ENUM                                                               */
 /* ************************************************************************** */
@@ -57,7 +60,6 @@ typedef enum e_dir
 
 typedef enum e_cell
 {
-	CELL_VOID = -1,
 	CELL_EMPTY,
 	CELL_WALL,
 	CELL_DOOR
@@ -72,7 +74,6 @@ typedef enum e_cell
 
 typedef enum e_type
 {
-	ENTITY_VOID = -1,
 	ENTITY_NONE,
 	ENTITY_BARREL,
 	ENTITY_DOOR,

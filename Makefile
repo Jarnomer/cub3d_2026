@@ -92,22 +92,25 @@ SOURCES := main \
            anim_utils \
            entity \
            entity_door \
+           entity_door_state \
            entity_door_utils \
            entity_update \
            entity_utils \
            assets \
            assets_texture \
            assets_sheet \
-           assets_utils \
+           assets_getset \
            sprite_proj \
            sprite_utils \
            render \
+           render_slice \
            render_walls \
            render_door \
            render_floor \
            render_sprites \
            render_sheet \
            render_fog \
+           render_occlude \
            raycast \
            raycast_dda \
            raycast_utils \

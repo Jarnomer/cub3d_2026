@@ -12,6 +12,17 @@
 
 #include <game.h>
 
+/*
+** Draws a pixel with alpha blending for door transparency
+**
+** Door textures may have semi-transparent pixels for smooth edges
+** or opening animations. This function handles three cases:
+**
+**   alpha < ALPHA_THRESHOLD  -> fully transparent, skip
+**   alpha >= ALPHA_OPAQUE    -> fully opaque, overwrite
+**   otherwise                -> blend with existing pixel
+*/
+
 static void	draw_door_pixel(t_game *game, t_i32 x, t_i32 y, t_u32 color)
 {
 	t_u32	existing;
@@ -30,74 +41,99 @@ static void	draw_door_pixel(t_game *game, t_i32 x, t_i32 y, t_u32 color)
 	render_pixel(game->render.frame, x, y, color_blend(color, existing, alpha));
 }
 
-static void	draw_door_column(t_game *game, t_i32 x, t_wall *wall, t_sheet *sht)
+/*
+** Draws a single vertical strip of door texture
+**
+** Similar to wall rendering but uses sprite sheet sampling
+** and supports alpha blending for transparent door pixels
+*/
+static void	draw_door_column(t_game *game, t_i32 x, t_slice *s, t_door *ctx)
 {
-	t_f32	step;
-	t_f32	tex_pos;
 	t_i32	y;
+	t_i32	tex_y;
 	t_u32	color;
 	t_u8	fog;
 
-	fog = lookup_fog(&game->lookup, wall->dist);
-	step = (t_f32)sht->height / (t_f32)wall->height;
-	tex_pos = (wall->start - wall->top - wall->offset) * step;
-	y = wall->start;
-	while (y <= wall->end)
+	fog = lookup_fog(&game->lookup, s->dist);
+	slice_calc_texstep(s, ctx->sheet->height);
+	y = s->start;
+	while (y <= s->end)
 	{
-		color = sheet_sample(sht, wall->dir, wall->tex_x,
-				clampi((t_i32)tex_pos, 0, sht->height - 1));
+		tex_y = clampi((t_i32)s->tex_pos, 0, ctx->sheet->height - 1);
+		color = sheet_sample(ctx->sheet, ctx->frame, s->tex_x, tex_y);
 		color = fog_apply(color, fog);
 		draw_door_pixel(game, x, y, color);
-		tex_pos += step;
+		s->tex_pos += s->tex_step;
 		y++;
 	}
 }
 
-static void	calc_door_offset(t_game *game, t_wall *wall)
-{
-	t_i32	h;
+/*
+** Prepares door rendering context from entity data
+**
+** Returns false if door entity is invalid or missing required assets
+*/
 
-	h = game->render.height;
-	wall->offset = (t_i32)(game->camera.pitch * h);
-	wall->start = clampi(wall->top + wall->offset, 0, h - 1);
-	wall->end = clampi(wall->bottom + wall->offset, 0, h - 1);
+static bool	door_prepare_ctx(t_game *game, t_hit *hit, t_door *ctx)
+{
+	t_entity	*ent;
+
+	if (hit->entity < 0)
+		return (false);
+	ent = darray_get(&game->entities, hit->entity);
+	if (!ent || !ent->active)
+		return (false);
+	ctx->sheet = assets_get_sheet(&game->assets, ent->sheet_id);
+	if (!ctx->sheet || !ctx->sheet->tex.pixels)
+		return (false);
+	ctx->frame = door_get_frame(ent, &game->assets);
+	ctx->is_blocking = door_is_blocking(ent);
+	return (true);
 }
 
-static t_wall	calc_door_slice(t_hit *hit, t_i32 screen_h, t_sheet *sheet)
-{
-	t_wall	wall;
-
-	wall.dist = hit->dist;
-	wall.tex_x = (t_i32)(hit->wall_x * (t_f32)sheet->width);
-	if (hit->axis == AXIS_X && hit->dir == WALL_EAST)
-		wall.tex_x = sheet->width - wall.tex_x - 1;
-	if (hit->axis == AXIS_Y && hit->dir == WALL_SOUTH)
-		wall.tex_x = sheet->width - wall.tex_x - 1;
-	wall.tex_x = clampi(wall.tex_x, 0, sheet->width - 1);
-	wall.height = (t_i32)(screen_h / hit->dist);
-	wall.top = -wall.height / 2 + screen_h / 2;
-	wall.bottom = wall.height / 2 + screen_h / 2;
-	return (wall);
-}
+/*
+** Renders a door column as wall-aligned sprite
+** Multithreaded function call with column width restriction
+**
+** Z-BUFFER RULES (critical for correct sprite occlusion):
+**
+**   BLOCKING door (closed):
+**     - Acts as solid wall
+**     - WRITES to z-buffer (sprites behind door are hidden)
+**
+**   NON-BLOCKING door (open/opening):
+**     - Rendered as overlay on top of wall behind
+**     - Does NOT write z-buffer
+**     - Wall behind already set correct occlusion distance
+**     - Sprites between camera and wall render correctly
+**
+**   Visual example (top-down view):
+**
+**     Camera ---> [Barrel] ---> |Door| ---> |Wall|
+**
+**   When door is CLOSED:
+**     z_buffer = door_dist
+**     Barrel (dist < door_dist) -> RENDERS (in front of door)
+**
+**   When door is OPEN:
+**     z_buffer = wall_dist (set by wall render, door skipped)
+**     Barrel (dist < wall_dist) -> RENDERS (in front of wall)
+**
+**   BUG if door always writes z-buffer when open:
+**     z_buffer = door_dist (incorrectly set)
+**     Barrel (dist > door_dist but < wall_dist) -> CULLED (wrong!)
+*/
 
 void	render_door_column(t_game *game, t_hit *hit, t_i32 x)
 {
-	t_entity	*ent;
-	t_sheet		*sheet;
-	t_wall		wall;
+	t_door	ctx;
+	t_slice	slice;
 
-	if (hit->entity < 0)
+	if (!door_prepare_ctx(game, hit, &ctx))
 		return ;
-	ent = darray_get(&game->entities, hit->entity);
-	if (!ent || !ent->active)
-		return ;
-	sheet = assets_get_sheet(&game->assets, ent->sheet_id);
-	if (!sheet || !sheet->tex.pixels)
-		return ;
-	wall = calc_door_slice(hit, game->render.height, sheet);
-	calc_door_offset(game, &wall);
-	wall.dir = door_get_frame(ent, &game->assets);
-	if (hit->dist < game->render.z_buffer[x])
+	slice = slice_from_hit(hit, game->render.height, ctx.sheet->width);
+	slice_apply_pitch(&slice, &game->camera, game->render.height);
+	if (ctx.is_blocking)
 		game->render.z_buffer[x] = hit->dist;
-	draw_door_column(game, x, &wall, sheet);
+	draw_door_column(game, x, &slice, &ctx);
 }

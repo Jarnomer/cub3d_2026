@@ -16,26 +16,7 @@
 # include <types.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    FORWARD DECLARATIONS                                                    */
-/* ************************************************************************** */
-
 typedef struct s_game	t_game;
-
-/* ************************************************************************** */
-/*    ANIMATION DEFINITION                                                    */
-/* ************************************************************************** */
-/*
-** Static animation definition (loaded from config)
-**
-** - id:      Animation identifier
-** - start:   First frame index in sprite sheet
-** - total:   Number of frames in this animation
-** - next:    Animation to chain after completion (0 = none)
-** - time:    Duration in seconds per frame
-** - loop:    Whether animation loops
-** - reverse: Play frames in reverse order (start+total-1 down to start)
-*/
 
 typedef struct s_anidef
 {
@@ -48,19 +29,6 @@ typedef struct s_anidef
 	bool	reverse;
 }	t_anidef;
 
-/* ************************************************************************** */
-/*    ANIMATION STRUCTURE                                                     */
-/* ************************************************************************** */
-/*
-** Runtime animation state (per entity)
-**
-** - def_id: Which animation definition to use
-** - frame:  Current frame within animation (0 to total-1)
-** - timer:  Time accumulated since last frame change
-** - play:   Is animation currently playing
-** - done:   Has non-looping animation completed
-*/
-
 typedef struct s_anim
 {
 	t_u16	def_id;
@@ -69,13 +37,6 @@ typedef struct s_anim
 	bool	play;
 	bool	done;
 }	t_anim;
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void	anim_init(t_anim *anim, t_u16 def_id);
 void	anim_play(t_anim *anim, t_u16 def_id);

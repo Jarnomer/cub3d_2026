@@ -18,18 +18,6 @@
 # include <anim.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    TEXTURE STRUCTURE                                                       */
-/* ************************************************************************** */
-/*
-** Texture data loaded from PNG file
-**
-** - mlx_tex: MLX42 texture handle (for cleanup)
-** - pixels:  Raw pixel data pointer (RGBA format)
-** - width:   Texture width in pixels
-** - height:  Texture height in pixels
-*/
-
 typedef struct s_texture
 {
 	t_mlxt	*mlx_tex;
@@ -37,20 +25,6 @@ typedef struct s_texture
 	t_i32	width;
 	t_i32	height;
 }	t_tex;
-
-/* ************************************************************************** */
-/*    SHEET STRUCTURE                                                         */
-/* ************************************************************************** */
-/*
-** Sprite sheet - single texture with multiple frames
-**
-** - tex:    The full texture containing all frames
-** - width:  Width of a single frame in pixels
-** - height: Height of a single frame in pixels
-** - cols:   Number of columns in the sheet
-** - rows:   Number of rows in the sheet
-** - count:  Total number of frames (cols * rows)
-*/
 
 typedef struct s_sheet
 {
@@ -62,20 +36,6 @@ typedef struct s_sheet
 	t_i32	count;
 }	t_sheet;
 
-/* ************************************************************************** */
-/*    ASSETS STRUCTURE                                                        */
-/* ************************************************************************** */
-/*
-** Central asset storage for all game resources
-**
-** - textures: Wall, floor, ceiling textures
-** - sprites:  Static sprite images (barrel, pickups)
-** - sheets:   Animated sprite sheets (door, enemies)
-** - anidefs:  Animation definitions
-** - entdefs:  Entity definitions
-** - loaded:   Flag to prevent double-free
-*/
-
 typedef struct s_assets
 {
 	t_tex		textures[MAX_TEXTURES];
@@ -85,13 +45,6 @@ typedef struct s_assets
 	t_entdef	entdefs[MAX_ENTITIES];
 	bool		loaded;
 }	t_assets;
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void	assets_init(t_assets *assets, t_map *map);
 void	assets_destroy(t_assets *assets);

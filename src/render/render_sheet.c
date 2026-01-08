@@ -5,32 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/08 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
+/*
+** Calculates texture Y for animated sprite from sprite sheet
+*/
+
 static t_i32	calc_sheet_tex_y(t_proj *proj, t_i32 screen_y, t_i32 frame_h)
 {
 	t_i32	sprite_y;
-	t_i32	tex_y;
 
 	sprite_y = screen_y - (proj->screen.y - proj->size.y / 2);
-	tex_y = sprite_y * frame_h / proj->size.y;
-	return (clampi(tex_y, 0, frame_h - 1));
+	return (clampi(sprite_y * frame_h / proj->size.y, 0, frame_h - 1));
 }
+
+/*
+** Calculates texture X for animated sprite from sprite sheet
+*/
 
 static t_i32	calc_sheet_tex_x(t_proj *proj, t_i32 screen_x, t_i32 frame_w)
 {
 	t_i32	sprite_x;
-	t_i32	tex_x;
 
 	sprite_x = screen_x - (proj->screen.x - proj->size.x / 2);
-	tex_x = sprite_x * frame_w / proj->size.x;
-	return (clampi(tex_x, 0, frame_w - 1));
+	return (clampi(sprite_x * frame_w / proj->size.x, 0, frame_w - 1));
 }
+
+/*
+** Renders a single vertical column of an animated sprite
+**
+** Same as static sprite but with:
+**   - Sprite sheet sampling (frame-aware)
+**   - Door occlusion checking per pixel
+*/
 
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 {
@@ -51,8 +63,10 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 		color = sheet_sample(sheet, proj->frame,
 				tex_x, calc_sheet_tex_y(proj, y, sheet->height));
 		if (color_a(color) > ALPHA_THRESHOLD)
-			render_pixel(game->render.frame, x, y, fog_apply(color, fog));
+		{
+			if (!occlude_check_door(game, x, y, proj->dist))
+				render_pixel(game->render.frame, x, y, fog_apply(color, fog));
+		}
 		y++;
 	}
 }
-

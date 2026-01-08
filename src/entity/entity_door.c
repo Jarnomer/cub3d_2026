@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,6 @@ void	door_init(t_entity *ent)
 	ent->use_sheet = true;
 	ent->sheet_id = SHEET_DOOR;
 	anim_init(&ent->anim, ANIM_DOOR_IDLE);
-}
-
-static void	door_start_opening(t_entity *ent)
-{
-	ent->state = STATE_OPENING;
-	anim_play(&ent->anim, ANIM_DOOR_OPEN);
-}
-
-static void	door_start_closing(t_entity *ent)
-{
-	ent->state = STATE_CLOSING;
-	anim_play(&ent->anim, ANIM_DOOR_CLOSE);
-}
-
-static void	door_update_open(t_entity *ent, t_f32 dt)
-{
-	if (!DOOR_AUTO_CLOSE)
-		return ;
-	ent->timer -= dt;
-	if (ent->timer <= 0.0f)
-		door_start_closing(ent);
 }
 
 void	door_update(t_entity *ent, t_f32 dt)
