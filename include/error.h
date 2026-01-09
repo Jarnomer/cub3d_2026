@@ -45,6 +45,7 @@
 
 # define MSG_CONF_FMT	"Invalid config definition format"
 # define MSG_MALLOC		"Memory allocation failed"
+# define MSG_THREAD		"Cannot create thread"
 # define MSG_MLX		"MLX42 error"
 
 typedef enum e_err

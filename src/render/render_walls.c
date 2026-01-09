@@ -20,7 +20,7 @@ static void	draw_wall_column(t_game *game, t_i32 x, t_slice *s, t_tex *tex)
 	t_u8	fog;
 
 	fog = lookup_fog(&game->lookup, s->dist);
-	if (fog == FOG_FULL)
+	if (fog >= ALPHA_OPAQUE)
 	{
 		fog_fill_column(game, x, s->start, s->end);
 		return ;
@@ -59,8 +59,8 @@ static void	handle_door(t_game *game, t_hit *hit, t_i32 x)
 	if (!ent || !ent->active)
 		return ;
 	if (door_is_animating(ent))
-		occlude_store_door(game, hit, x);
-	if (door_is_blocking(ent))
+		occlude_store(game, hit, x);
+	else if (door_is_blocking(ent))
 		zbuf_write(&game->render, x, hit->dist);
 	render_door_column(game, hit, x);
 }
@@ -69,20 +69,19 @@ void	render_wall_column(t_game *game, t_i32 x)
 {
 	t_ray	ray;
 	t_vec2	dir;
-	t_hit	wall_hit;
-	t_hit	door_hit;
+	t_hit	wall;
+	t_hit	door;
 
-	occlude_clear_column(game, x);
+	occlude_clear(game, x);
 	dir = trans_ray_dir(&game->camera, x, game->render.width);
 	ray_init(&ray, game->camera.pos, dir);
-	wall_hit = passthr_dda(&ray, game, RAY_MAX_DIST, &door_hit);
-	if (!wall_hit.hit && door_hit.entity == ENTITY_VOID)
+	wall = passthr_dda(&ray, game, RAY_MAX_DIST, &door);
+	if (!wall.hit && door.entity == ENTITY_VOID)
 		return ;
-	if (wall_hit.hit && wall_hit.cell != CELL_DOOR)
-		render_wall(game, &wall_hit, x);
-	if (door_hit.entity != ENTITY_VOID)
-		handle_door(game, &door_hit, x);
-	else if (wall_hit.hit && wall_hit.cell == CELL_DOOR)
-		handle_door(game, &wall_hit, x);
+	if (wall.hit && wall.cell != CELL_DOOR)
+		render_wall(game, &wall, x);
+	if (door.entity != ENTITY_VOID)
+		handle_door(game, &door, x);
+	else if (wall.hit && wall.cell == CELL_DOOR)
+		handle_door(game, &wall, x);
 }
-

@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	init_wall_ctx(t_thd *ctx, t_game *game, t_i32 count)
+static void	init_wall_ctx(t_thd *thd, t_game *game, t_i32 count)
 {
 	t_i32	cols_per_thread;
 	t_i32	i;
@@ -21,26 +21,26 @@ static void	init_wall_ctx(t_thd *ctx, t_game *game, t_i32 count)
 	i = 0;
 	while (i < count)
 	{
-		ctx[i] = (t_thd){.game = game, .id = i};
-		ctx[i].start = i * cols_per_thread;
+		thd[i] = (t_thd){.game = game, .id = i};
+		thd[i].start = i * cols_per_thread;
 		if (i == count - 1)
-			ctx[i].end = game->render.width;
+			thd[i].end = game->render.width;
 		else
-			ctx[i].end = (i + 1) * cols_per_thread;
+			thd[i].end = (i + 1) * cols_per_thread;
 		i++;
 	}
 }
 
 static void	*wall_worker(void *arg)
 {
-	t_thd	*ctx;
+	t_thd	*thd;
 	t_i32	x;
 
-	ctx = (t_thd *)arg;
-	x = ctx->start;
-	while (x < ctx->end)
+	thd = (t_thd *)arg;
+	x = thd->start;
+	while (x < thd->end)
 	{
-		render_wall_column(ctx->game, x);
+		render_wall_column(thd->game, x);
 		x++;
 	}
 	return (NULL);
@@ -49,17 +49,17 @@ static void	*wall_worker(void *arg)
 void	render_walls(t_game *game)
 {
 	pthread_t	threads[THREAD_COUNT];
-	t_thd		ctx[THREAD_COUNT];
+	t_thd		thd[THREAD_COUNT];
 	int			err;
 	t_i32		i;
 
-	init_wall_ctx(ctx, game, THREAD_COUNT);
+	init_wall_ctx(thd, game, THREAD_COUNT);
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		err = pthread_create(&threads[i], NULL, wall_worker, &ctx[i]);
+		err = pthread_create(&threads[i], NULL, wall_worker, &thd[i]);
 		if (err != 0)
-			err_exit_context("pthread_create", strerror(err));
+			err_exit_context(MSG_THREAD, strerror(err));
 		i++;
 	}
 	i = 0;

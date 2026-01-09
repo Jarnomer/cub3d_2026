@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	init_sprite_ctx(t_thd *ctx, t_game *game, t_proj *projs, t_u32 cnt)
+static void	init_sprite_ctx(t_thd *thd, t_game *game, t_proj *projs, t_u32 cnt)
 {
 	t_i32	cols_per_thread;
 	t_i32	i;
@@ -21,35 +21,35 @@ static void	init_sprite_ctx(t_thd *ctx, t_game *game, t_proj *projs, t_u32 cnt)
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		ctx[i] = (t_thd){.game = game, .projs = projs, .id = i, .count = cnt};
-		ctx[i].start = i * cols_per_thread;
+		thd[i] = (t_thd){.game = game, .projs = projs, .id = i, .count = cnt};
+		thd[i].start = i * cols_per_thread;
 		if (i == THREAD_COUNT - 1)
-			ctx[i].end = game->render.width;
+			thd[i].end = game->render.width;
 		else
-			ctx[i].end = (i + 1) * cols_per_thread;
+			thd[i].end = (i + 1) * cols_per_thread;
 		i++;
 	}
 }
 
 static void	*sprite_worker(void *arg)
 {
-	t_thd	*ctx;
+	t_thd	*thd;
 	t_i32	x;
 	t_u32	i;
 
-	ctx = (t_thd *)arg;
+	thd = (t_thd *)arg;
 	i = 0;
-	while (i < ctx->count)
+	while (i < thd->count)
 	{
-		x = maxi(ctx->projs[i].start.x, ctx->start);
-		while (x < ctx->projs[i].end.x && x < ctx->end)
+		x = maxi(thd->projs[i].start.x, thd->start);
+		while (x < thd->projs[i].end.x && x < thd->end)
 		{
-			if (zbuf_test(&ctx->game->render, x, ctx->projs[i].dist))
+			if (zbuf_test(&thd->game->render, x, thd->projs[i].dist))
 			{
-				if (ctx->projs[i].use_sheet)
-					render_sheet_column(ctx->game, &ctx->projs[i], x);
+				if (thd->projs[i].use_sheet)
+					render_sheet_column(thd->game, &thd->projs[i], x);
 				else
-					render_sprite_column(ctx->game, &ctx->projs[i], x);
+					render_sprite_column(thd->game, &thd->projs[i], x);
 			}
 			x++;
 		}
@@ -61,17 +61,17 @@ static void	*sprite_worker(void *arg)
 static void	thread_sprites(t_game *game, t_proj *projs, t_u32 count)
 {
 	pthread_t	threads[THREAD_COUNT];
-	t_thd		ctx[THREAD_COUNT];
+	t_thd		thd[THREAD_COUNT];
 	int			err;
 	t_i32		i;
 
-	init_sprite_ctx(ctx, game, projs, count);
+	init_sprite_ctx(thd, game, projs, count);
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		err = pthread_create(&threads[i], NULL, sprite_worker, &ctx[i]);
+		err = pthread_create(&threads[i], NULL, sprite_worker, &thd[i]);
 		if (err != 0)
-			err_exit_context("pthread_create", strerror(err));
+			err_exit_context(MSG_THREAD, strerror(err));
 		i++;
 	}
 	i = 0;

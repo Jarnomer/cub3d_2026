@@ -81,7 +81,6 @@ typedef struct s_door
 {
 	t_sheet	*sheet;
 	t_i32	frame;
-	bool	is_blocking;
 }	t_door;
 
 typedef struct s_proj
@@ -133,8 +132,10 @@ typedef struct s_thd
 
 /*      raycast_dda.c */
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
-t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door_out);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
+
+/*      raycast_dda_pass.c */
+t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door);
 
 /*      raycast_init.c */
 void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
@@ -176,9 +177,17 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 /*    OCCLUSION FUNCTIONS                                                     */
 /* ************************************************************************** */
 
-void	occlude_store_door(t_game *game, t_hit *door_hit, t_i32 x);
-void	occlude_clear_column(t_game *game, t_i32 x);
-bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
+bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
+void	occlude_clear(t_game *game, t_i32 x);
+void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
+
+/* ************************************************************************** */
+/*    FOG FUNCTIONS                                                           */
+/* ************************************************************************** */
+
+t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
+void	fog_fill_row(t_game *game, t_i32 y);
+void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
 
 /* ************************************************************************** */
 /*    SPRITE FUNCTIONS                                                        */
@@ -196,14 +205,6 @@ t_i32	proj_screen_x(t_proj *proj, t_render *render);
 t_i32	proj_z_offset(t_entity *ent, t_proj *proj, t_render *render);
 t_vec2i	proj_sprite_size(t_entity *ent, t_proj *proj, t_render *render);
 t_i32	proj_apply_pitch(t_proj *proj, t_camera *cam, t_render *render);
-
-/* ************************************************************************** */
-/*    FOG FUNCTIONS                                                           */
-/* ************************************************************************** */
-
-t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
-void	fog_fill_row(t_game *game, t_i32 y);
-void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
 
 /* ************************************************************************** */
 /*    UTILITY FUNCTIONS                                                       */

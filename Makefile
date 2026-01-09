@@ -99,16 +99,15 @@ SOURCES := main \
            assets_sheet \
            assets_utils \
            raycast_dda \
+           raycast_dda_pass \
            raycast_init \
            raycast_hit \
            raycast_utils \
            render \
-           render_slice \
+           render_floor \
            render_walls \
            render_door \
-           render_floor \
            render_sprites \
-           render_sheet \
            render_fog \
            render_occlude \
            render_slice \
