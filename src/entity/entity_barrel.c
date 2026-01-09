@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity_update.c                                    :+:      :+:    :+:   */
+/*   entity_barrel.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/09 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/09 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static void	update_entity(t_entity *ent, t_f32 dt)
+void	barrel_init(t_entity *ent)
 {
-	if (ent->type == ENTITY_DOOR)
-		door_update(ent, dt);
-	entity_death(ent);
+	ent->state = STATE_IDLE;
+	ent->has_anim = true;
+	ent->use_sheet = true;
+	ent->sheet_id = SHEET_BARREL;
+	anim_init(&ent->anim, ANIM_BARREL_IDLE);
+	anim_play(&ent->anim, ANIM_BARREL_IDLE);
 }
 
-void	entity_update_all(t_game *game, t_f32 dt)
+void	barrel_explode(t_entity *ent)
 {
-	t_entity	*ent;
-	size_t		i;
+	ent->state = STATE_DYING;
+	ent->solid = false;
+	anim_play(&ent->anim, ANIM_BARREL_EXPLODE);
+}
 
-	i = 0;
-	while (i < game->entities.size)
-	{
-		ent = darray_get(&game->entities, i);
-		if (ent->active)
-			update_entity(ent, dt);
-		i++;
-	}
+void	barrel_death(t_entity *ent)
+{
+	ent->state = STATE_DEAD;
+	ent->solid = false;
 }

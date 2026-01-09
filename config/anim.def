@@ -10,6 +10,21 @@
 # NEXT:     Next animation ID to chain (0 = none, use ID for self-loop)
 # REVERSE:  Play frames in reverse order (0 = no, 1 = yes)
 
-ANIM_DOOR_IDLE      0   1   1.0    1   0   0
-ANIM_DOOR_OPEN      0   9   0.08   0   0   0
-ANIM_DOOR_CLOSE     0   9   0.08   0   0   1
+# DOOR
+# ID                START TOTAL TIME LOOP NEXT REVERSE
+ANIM_DOOR_IDLE      0     1     1.0  1    0    0
+ANIM_DOOR_OPEN      0     9     0.08 0    0    0
+ANIM_DOOR_CLOSE     0     9     0.08 0    0    1
+
+# BARREL
+# ID                START TOTAL TIME LOOP NEXT REVERSE
+ANIM_BARREL_IDLE    0     2     0.4  1    0    0
+ANIM_BARREL_EXPLODE 2     4     0.06 0    0    0
+
+# SHOTGUN
+# FRAMES:           0=IDLE,     1-4=FIRE, 5-14=RELOAD
+# ID                START TOTAL TIME LOOP NEXT REVERSE
+ANIM_SHOTGUN_IDLE   0     1     1.0  1    0    0
+ANIM_SHOTGUN_FIRE   1     4     0.12 0    0    0
+ANIM_SHOTGUN_RELOAD 5     10    0.12 0    0    0
+

@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity_update.c                                    :+:      :+:    :+:   */
+/*   render_overlay.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/09 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/09 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static void	update_entity(t_entity *ent, t_f32 dt)
+void	overlay_clear(t_render *render)
 {
-	if (ent->type == ENTITY_DOOR)
-		door_update(ent, dt);
-	entity_death(ent);
-}
+	t_u32	*pixels;
+	t_i32	total;
+	t_i32	i;
 
-void	entity_update_all(t_game *game, t_f32 dt)
-{
-	t_entity	*ent;
-	size_t		i;
-
+	if (!render->overlay)
+		return ;
+	pixels = (t_u32 *)render->overlay->pixels;
+	total = render->width * render->height;
 	i = 0;
-	while (i < game->entities.size)
+	while (i < total)
 	{
-		ent = darray_get(&game->entities, i);
-		if (ent->active)
-			update_entity(ent, dt);
+		pixels[i] = 0x00000000;
 		i++;
 	}
 }

@@ -106,6 +106,7 @@ typedef struct s_occlude
 typedef struct s_render
 {
 	t_mlxi		*frame;
+	t_mlxi		*overlay;
 	t_f32		*z_buffer;
 	t_occlude	*occlude;
 	t_i32		width;
@@ -150,6 +151,7 @@ t_f32	ray_dist(t_ray *ray, int axis);
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
+void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
 /* ************************************************************************** */
 /*    RENDER MAIN FUNCTIONS                                                   */
@@ -158,6 +160,13 @@ void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 void	render_walls(t_game *game);
 void	render_floor(t_game *game);
 void	render_sprites(t_game *game);
+void	render_weapon(t_game *game);
+
+/* ************************************************************************** */
+/*    OVERLAY FUNCTIONS                                                       */
+/* ************************************************************************** */
+
+void	overlay_clear(t_render *render);
 
 /* ************************************************************************** */
 /*    RENDER PASS FUNCTIONS                                                   */

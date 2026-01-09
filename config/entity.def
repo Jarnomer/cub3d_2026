@@ -9,8 +9,8 @@
 # HEALTH:   Hit points (0 = invulnerable)
 # SOLID:    Collision (0 = passable, 1 = solid)
 
-ENTITY_BARREL      SPRITE_BARREL       0.7  -0.2  20   1
-ENTITY_DOOR        SPRITE_DOOR         1.0   0.0   0   1
-ENTITY_HEALTH      SPRITE_HEALTH       0.2  -0.4   0   0
-ENTITY_ARMOR       SPRITE_ARMOR        0.2  -0.4   0   0
-ENTITY_AMMO        SPRITE_AMMO         0.2  -0.4   0   0
+# TYPE             SPRITE              SCALE  Z_OFFSET HEALTH SOLID
+ENTITY_BARREL      SPRITE_BARREL       0.7    -0.2     20     1
+ENTITY_HEALTH      SPRITE_HEALTH       0.2    -0.4      0     0
+ENTITY_ARMOR       SPRITE_ARMOR        0.2    -0.4      0     0
+ENTITY_AMMO        SPRITE_AMMO         0.2    -0.4      0     0

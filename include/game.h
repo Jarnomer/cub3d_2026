@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/09 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # include <config.h>
 # include <assets.h>
 # include <entity.h>
+# include <player.h>
+# include <weapon.h>
 # include <render.h>
 # include <grid.h>
 # include <anim.h>
@@ -127,6 +129,7 @@ struct s_game
 	t_camera	camera;
 	t_render	render;
 	t_assets	assets;
+	t_pstats	player;
 	t_darray	entities;
 	t_grid		grid;
 	t_arena		arena;

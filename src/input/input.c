@@ -43,6 +43,13 @@ void	input_update(t_game *game)
 		game->input.keys[i] = mlx_is_key_down(game->mlx, i);
 		i++;
 	}
+	i = 0;
+	while (i < MAX_MOUSE_KEYS)
+	{
+		game->input.mouse_prev[i] = game->input.mouse[i];
+		game->input.mouse[i] = mlx_is_mouse_down(game->mlx, i);
+		i++;
+	}
 	update_mouse_delta(game);
 }
 

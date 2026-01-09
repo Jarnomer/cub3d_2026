@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static t_tex_id	str_to_tex_id(const char *str)
+t_tex_id	str_to_tex_id(const char *str)
 {
 	if (ft_strcmp(str, "TEXTURE_FLOOR") == 0)
 		return (TEXTURE_FLOOR);
@@ -21,25 +21,21 @@ static t_tex_id	str_to_tex_id(const char *str)
 	return (TEXTURE_COUNT);
 }
 
-static void	load_texture_entry(char **parts, t_assets *assets)
-{
-	t_tex_id	id;
-
-	id = str_to_tex_id(parts[1]);
-	if (id < TEXTURE_COUNT)
-		texture_load(&assets->textures[id], parts[2]);
-}
-
 static void	process_line(char *line, t_assets *assets)
 {
-	char	**parts;
+	char		**parts;
+	t_tex_id	id;
 
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < TEXDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_FMT);
 	parse_remove_newline(parts[2]);
 	if (ft_strcmp(parts[0], "TEXTURE") == 0)
-		load_texture_entry(parts, assets);
+	{
+		id = str_to_tex_id(parts[1]);
+		if (id < TEXTURE_COUNT)
+			texture_load(&assets->textures[id], parts[2]);
+	}
 	free_arr(parts);
 }
 

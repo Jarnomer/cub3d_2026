@@ -15,6 +15,7 @@
 
 # include <render.h>
 # include <entity.h>
+# include <weapon.h>
 # include <anim.h>
 # include <defs.h>
 
@@ -43,6 +44,7 @@ typedef struct s_assets
 	t_sheet		sheets[SHEET_COUNT];
 	t_anidef	anidefs[ANIM_COUNT];
 	t_entdef	entdefs[ENTITY_COUNT];
+	t_wpndef	wpndefs[WEAPON_COUNT];
 	bool		loaded;
 }	t_assets;
 

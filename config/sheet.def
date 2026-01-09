@@ -7,4 +7,7 @@
 # COLS:     Number of columns (frames horizontally)
 # ROWS:     Number of rows (frames vertically)
 
-SHEET_DOOR  assets/sheets/door.png  9  1
+# ID            PATH                        COLS ROWS
+SHEET_DOOR      assets/sheets/door.png      9    1
+SHEET_BARREL    assets/sheets/barrel.png    6    1
+SHEET_SHOTGUN   assets/sheets/shotgun.png   15   1

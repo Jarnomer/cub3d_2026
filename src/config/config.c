@@ -14,9 +14,10 @@
 
 void	config_load_all(t_assets *assets)
 {
-	config_load_entities(assets->entdefs);
-	config_load_anims(assets->anidefs);
-	config_load_sheets(assets);
 	config_load_textures(assets);
 	config_load_sprites(assets);
+	config_load_sheets(assets);
+	config_load_entities(assets->entdefs);
+	config_load_anims(assets->anidefs);
+	config_load_weapons(assets->wpndefs);
 }

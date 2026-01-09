@@ -61,6 +61,13 @@ void		entity_apply_def(t_entity *ent, const t_entdef *def);
 t_entity	*entity_get(t_game *game, t_u32 index);
 
 /* ************************************************************************** */
+/*    ENTITY DAMAGE FUNCTIONS                                                 */
+/* ************************************************************************** */
+
+void		entity_damage(t_game *game, t_i32 entity_idx, t_i32 amount);
+void		entity_death(t_entity *ent);
+
+/* ************************************************************************** */
 /*    DOOR ENTITY FUNCTIONS                                                   */
 /* ************************************************************************** */
 
@@ -81,5 +88,13 @@ bool		door_can_interact(t_entity *ent);
 bool		door_is_animating(t_entity *ent);
 bool		door_is_blocking(t_entity *ent);
 t_i32		door_get_frame(t_entity *ent, t_assets *assets);
+
+/* ************************************************************************** */
+/*    BARREL ENTITY FUNCTIONS                                                 */
+/* ************************************************************************** */
+
+void		barrel_init(t_entity *ent);
+void		barrel_explode(t_entity *ent);
+void		barrel_death(t_entity *ent);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static t_spr_id	str_to_spr_id(const char *str)
+t_spr_id	str_to_spr_id(const char *str)
 {
 	if (ft_strcmp(str, "SPRITE_BARREL") == 0)
 		return (SPRITE_BARREL);
@@ -25,25 +25,21 @@ static t_spr_id	str_to_spr_id(const char *str)
 	return (SPRITE_COUNT);
 }
 
-static void	load_sprite_entry(char **parts, t_assets *assets)
-{
-	t_spr_id	id;
-
-	id = str_to_spr_id(parts[1]);
-	if (id < SPRITE_COUNT)
-		texture_load(&assets->sprites[id], parts[2]);
-}
-
 static void	process_line(char *line, t_assets *assets)
 {
-	char	**parts;
+	char		**parts;
+	t_spr_id	id;
 
 	parts = safe_split(line, ' ');
 	if (parse_count_parts(parts) < TEXDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_FMT);
 	parse_remove_newline(parts[2]);
 	if (ft_strcmp(parts[0], "SPRITE") == 0)
-		load_sprite_entry(parts, assets);
+	{
+		id = str_to_spr_id(parts[1]);
+		if (id < SPRITE_COUNT)
+			texture_load(&assets->sprites[id], parts[2]);
+	}
 	free_arr(parts);
 }
 

@@ -16,6 +16,8 @@ static void	init_entity_ctx(t_entity *ent, t_type type)
 {
 	if (type == ENTITY_DOOR)
 		door_init(ent);
+	else if (type == ENTITY_BARREL)
+		barrel_init(ent);
 }
 
 static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)

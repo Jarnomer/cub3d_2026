@@ -13,6 +13,8 @@
 #ifndef CONFIG_H
 # define CONFIG_H
 
+# include <defs.h>
+
 /* ************************************************************************** */
 /*    FORWARD DECLARATIONS                                                    */
 /* ************************************************************************** */
@@ -20,65 +22,100 @@
 typedef struct s_assets	t_assets;
 typedef struct s_entdef	t_entdef;
 typedef struct s_anidef	t_anidef;
+typedef struct s_wpndef	t_wpndef;
 
 /* ************************************************************************** */
 /*    WINDOW SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define WIN_TITLE		"cub3D"
-# define WIN_WIDTH		1280
-# define WIN_HEIGHT		720
-# define WIN_RESIZABLE	1
+# define WIN_TITLE				"cub3D"
+# define WIN_WIDTH				1280
+# define WIN_HEIGHT				720
+# define WIN_RESIZABLE			1
 
 /* ************************************************************************** */
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
-# define FOV_DEFAULT		66.0f
-# define RAY_MAX_DIST		64.0f
-# define ALPHA_THRESHOLD	128
-# define ALPHA_OPAQUE		250
-# define MAX_ENTITIES		128
-# define THREAD_COUNT		8
-# define SKYBOX_ENABLED		0
+# define FOV_DEFAULT			66.0f
+# define RAY_MAX_DIST			64.0f
+# define ALPHA_THRESHOLD		128
+# define ALPHA_OPAQUE			250
+# define MAX_ENTITIES			128
+# define THREAD_COUNT			8
+# define SKYBOX_ENABLED			0
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */
 /* ************************************************************************** */
 
-# define MAX_DELTA		0.1f
+# define MAX_DELTA				0.1f
 
 /* ************************************************************************** */
 /*    GAMEPLAY SETTINGS                                                       */
 /* ************************************************************************** */
 
-# define INTERACT_RANGE		1.5f
-# define DOOR_TIMER			3.0f
-# define DOOR_AUTO_CLOSE	1
+# define INTERACT_RANGE			1.5f
+# define DOOR_TIMER				3.0f
+# define DOOR_AUTO_CLOSE		1
 
 /* ************************************************************************** */
 /*    CAMERA SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define CAMERA_HEIGHT	0.5f
-# define CAM_X_SCALE	2.0f
+# define CAMERA_HEIGHT			0.5f
+# define CAM_X_SCALE			2.0f
 
 /* ************************************************************************** */
 /*    PLAYER SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define PLAYER_SPEED		4.0f
-# define PLAYER_LOOK_SPEED	2.0f
-# define PLAYER_MOUSE_SENS	0.001f
-# define PLAYER_MAX_PITCH	1.2f
-# define PLAYER_RADIUS		0.2f
+# define PLAYER_SPEED			4.0f
+# define PLAYER_LOOK_SPEED		2.0f
+# define PLAYER_MOUSE_SENS		0.001f
+# define PLAYER_MAX_PITCH		1.2f
+# define PLAYER_RADIUS			0.2f
+
+# define PLAYER_MAX_HEALTH		100
+# define PLAYER_MAX_ARMOR		100
+# define PLAYER_START_HEALTH	100
+# define PLAYER_START_ARMOR		0
+
+# define AMMO_MAX_SHELL			50
+# define AMMO_MAX_BULLET		200
+# define AMMO_MAX_CELL			100
+# define AMMO_MAX_EXPLOSIVE		25
+
+# define AMMO_START_SHELL		12
+# define AMMO_START_BULLET		50
+# define AMMO_START_CELL		0
+# define AMMO_START_EXPLOSIVE	0
+
+/* ************************************************************************** */
+/*    WEAPON SETTINGS                                                         */
+/* ************************************************************************** */
+
+# define WEAPON_BOB_SPEED		8.0f
+# define WEAPON_BOB_AMOUNT		4.0f
+# define WEAPON_SWAY_AMOUNT		0.002f
+# define WEAPON_SWAY_SMOOTH		0.1f
+# define WEAPON_RECOIL_MAX		8.0f
+# define WEAPON_RECOIL_DECAY	12.0f
+
+# define WEAPON_OFFSET_X		125
+# define WEAPON_OFFSET_Y		0
+# define WEAPON_SCALE			3.0f
 
 /* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */
 /* ************************************************************************** */
 
-# define INTERACT_KEY	MLX_KEY_E
-# define MAX_KEYS		512
+# define KEY_INTERACT			MLX_KEY_E
+# define KEY_RELOAD				MLX_KEY_R
+# define KEY_FIRE				MLX_KEY_SPACE
+# define KEY_FIRE_MOUSE			MLX_MOUSE_BUTTON_LEFT
+# define MAX_KEYS				512
+# define MAX_MOUSE_KEYS			8
 
 /* ************************************************************************** */
 /*    POOL SETTINGS                                                           */
@@ -93,13 +130,13 @@ typedef struct s_anidef	t_anidef;
 /*    FOG SETTINGS                                                            */
 /* ************************************************************************** */
 
-# define FOG_ENABLED	1
-# define FOG_START		1.2f
-# define FOG_END		15.0f
-# define FOG_INTENSITY	2.0f
-# define FOG_COLOR_R	0
-# define FOG_COLOR_G	0
-# define FOG_COLOR_B	0
+# define FOG_ENABLED			1
+# define FOG_START				1.2f
+# define FOG_END				15.0f
+# define FOG_INTENSITY			2.0f
+# define FOG_COLOR_R			0
+# define FOG_COLOR_G			0
+# define FOG_COLOR_B			0
 
 /* ************************************************************************** */
 /*    CONFIG FILE SETTINGS                                                    */
@@ -108,26 +145,31 @@ typedef struct s_anidef	t_anidef;
 # define TEXDEF_FIELD_COUNT		3
 # define SHTDEF_FIELD_COUNT		4
 # define ENTDEF_FIELD_COUNT		6
-# define ANIDEF_FIELD_COUNT	    7
-# define WPNDEF_FIELD_COUNT		8
-# define ENEDEF_FIELD_COUNT		10
+# define ANIDEF_FIELD_COUNT		7
+# define WPNDEF_FIELD_COUNT		10
 
 # define PATH_CONFIG_TEXTURE	"config/texture.def"
 # define PATH_CONFIG_ENTITY		"config/entity.def"
 # define PATH_CONFIG_SHEET		"config/sheet.def"
 # define PATH_CONFIG_ANIM		"config/anim.def"
 # define PATH_CONFIG_WEAPON		"config/weapon.def"
-# define PATH_CONFIG_ENEMY		"config/enemy.def"
 
 /* ************************************************************************** */
 /*    CONFIG FUNCTIONS                                                        */
 /* ************************************************************************** */
 
-void	config_load_all(t_assets *assets);
-void	config_load_textures(t_assets *assets);
-void	config_load_sprites(t_assets *assets);
-void	config_load_entities(t_entdef *defs);
-void	config_load_sheets(t_assets *assets);
-void	config_load_anims(t_anidef *defs);
+void		config_load_all(t_assets *assets);
+
+void		config_load_textures(t_assets *assets);
+void		config_load_sprites(t_assets *assets);
+void		config_load_sheets(t_assets *assets);
+void		config_load_entities(t_entdef *defs);
+void		config_load_anims(t_anidef *defs);
+void		config_load_weapons(t_wpndef *defs);
+
+t_tex_id	str_to_tex_id(const char *str);
+t_spr_id	str_to_spr_id(const char *str);
+t_sht_id	str_to_sht_id(const char *str);
+t_anim_id	str_to_anim_id(const char *str);
 
 #endif

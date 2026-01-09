@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static t_anim_id	str_to_anim_id(const char *str)
+t_anim_id	str_to_anim_id(const char *str)
 {
 	if (ft_strcmp(str, "ANIM_DOOR_IDLE") == 0)
 		return (ANIM_DOOR_IDLE);
@@ -20,6 +20,16 @@ static t_anim_id	str_to_anim_id(const char *str)
 		return (ANIM_DOOR_OPEN);
 	if (ft_strcmp(str, "ANIM_DOOR_CLOSE") == 0)
 		return (ANIM_DOOR_CLOSE);
+	if (ft_strcmp(str, "ANIM_BARREL_IDLE") == 0)
+		return (ANIM_BARREL_IDLE);
+	if (ft_strcmp(str, "ANIM_BARREL_EXPLODE") == 0)
+		return (ANIM_BARREL_EXPLODE);
+	if (ft_strcmp(str, "ANIM_SHOTGUN_IDLE") == 0)
+		return (ANIM_SHOTGUN_IDLE);
+	if (ft_strcmp(str, "ANIM_SHOTGUN_FIRE") == 0)
+		return (ANIM_SHOTGUN_FIRE);
+	if (ft_strcmp(str, "ANIM_SHOTGUN_RELOAD") == 0)
+		return (ANIM_SHOTGUN_RELOAD);
 	return (ANIM_NONE);
 }
 

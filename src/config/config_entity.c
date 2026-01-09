@@ -27,21 +27,6 @@ static t_type	str_to_type(const char *str)
 	return (ENTITY_NONE);
 }
 
-static t_spr_id	str_to_spr_id(const char *str)
-{
-	if (ft_strcmp(str, "SPRITE_BARREL") == 0)
-		return (SPRITE_BARREL);
-	if (ft_strcmp(str, "SPRITE_DOOR") == 0)
-		return (SPRITE_DOOR);
-	if (ft_strcmp(str, "SPRITE_HEALTH") == 0)
-		return (SPRITE_HEALTH);
-	if (ft_strcmp(str, "SPRITE_ARMOR") == 0)
-		return (SPRITE_ARMOR);
-	if (ft_strcmp(str, "SPRITE_AMMO") == 0)
-		return (SPRITE_AMMO);
-	return (0);
-}
-
 static void	parse_def_line(char **p, t_entdef *def)
 {
 	def->type = str_to_type(p[0]);

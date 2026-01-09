@@ -61,6 +61,8 @@ typedef enum e_state
 	STATE_OPEN,
 	STATE_DYING,
 	STATE_DEAD,
+	STATE_FIRING,
+	STATE_RELOADING,
 	STATE_COUNT
 }	t_state;
 
@@ -88,6 +90,8 @@ typedef enum e_spr_id
 typedef enum e_sht_id
 {
 	SHEET_DOOR,
+	SHEET_BARREL,
+	SHEET_SHOTGUN,
 	SHEET_COUNT
 }	t_sht_id;
 
@@ -97,7 +101,29 @@ typedef enum e_anim_id
 	ANIM_DOOR_IDLE,
 	ANIM_DOOR_OPEN,
 	ANIM_DOOR_CLOSE,
+	ANIM_BARREL_IDLE,
+	ANIM_BARREL_EXPLODE,
+	ANIM_SHOTGUN_IDLE,
+	ANIM_SHOTGUN_FIRE,
+	ANIM_SHOTGUN_RELOAD,
 	ANIM_COUNT
 }	t_anim_id;
+
+typedef enum e_wpn_id
+{
+	WEAPON_NONE,
+	WEAPON_SHOTGUN,
+	WEAPON_PISTOL,
+	WEAPON_COUNT
+}	t_wpn_id;
+
+typedef enum e_ammo
+{
+	AMMO_SHELL,
+	AMMO_BULLET,
+	AMMO_CELL,
+	AMMO_EXPLOSIVE,
+	AMMO_COUNT
+}	t_ammo;
 
 #endif

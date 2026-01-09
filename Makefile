@@ -73,14 +73,22 @@ SOURCES := main \
            input \
            input_keys \
            input_mouse \
+           input_mouse_keys \
            player \
            player_act \
+           player_stats \
+           player_ammo \
+           weapon \
+           weapon_update \
+           weapon_action \
+           weapon_state \
            config \
            config_texture \
            config_sprite \
            config_sheet \
            config_entity \
            config_anim \
+           config_weapon \
            grid \
            grid_fill \
            grid_getset \
@@ -89,11 +97,13 @@ SOURCES := main \
            anim_update \
            anim_utils \
            entity \
+           entity_update \
+           entity_utils \
+           entity_damage \
            entity_door \
            entity_door_state \
            entity_door_utils \
-           entity_update \
-           entity_utils \
+           entity_barrel \
            assets \
            assets_texture \
            assets_sheet \
@@ -110,6 +120,8 @@ SOURCES := main \
            render_sprites \
            render_fog \
            render_occlude \
+           render_overlay \
+           render_weapon \
            render_slice \
            render_trans \
            render_zbuf \

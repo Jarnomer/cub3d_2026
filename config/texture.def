@@ -8,13 +8,11 @@
 
 # Wall textures are loaded from .cub file (TEXTURE_WALL_N/S/E/W)
 
-# Textures
-
+# TYPE      ID                  PATH
 TEXTURE     TEXTURE_FLOOR       assets/textures/floor.png
 TEXTURE     TEXTURE_CEILING     assets/textures/ceiling.png
 
-# Sprites
-
+# TYPE      ID                  PATH
 SPRITE      SPRITE_BARREL       assets/sprites/barrel.png
 SPRITE      SPRITE_HEALTH       assets/sprites/health.png
 SPRITE      SPRITE_AMMO         assets/sprites/armor.png

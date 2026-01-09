@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/09 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_input
 {
 	bool	keys[MAX_KEYS];
 	bool	keys_prev[MAX_KEYS];
+	bool	mouse[MAX_MOUSE_KEYS];
+	bool	mouse_prev[MAX_MOUSE_KEYS];
 	t_vec2	mouse_pos;
 	t_vec2	mouse_delta;
 	bool	mouse_captured;
@@ -39,5 +41,9 @@ void	input_mouse_center(t_game *game);
 bool	input_key_down(t_input *input, int key);
 bool	input_key_pressed(t_input *input, int key);
 bool	input_key_released(t_input *input, int key);
+
+bool	input_mouse_down(t_input *input, int button);
+bool	input_mouse_pressed(t_input *input, int button);
+bool	input_mouse_released(t_input *input, int button);
 
 #endif

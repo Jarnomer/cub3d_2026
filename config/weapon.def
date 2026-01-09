@@ -1,0 +1,17 @@
+# Weapon       Definition
+# Headers:     weapon.h / assets.h / defs.h
+# Format:      ID SHEET ANIM_IDLE ANIM_FIRE ANIM_RELOAD AMMO DAMAGE PELLETS MAG FIRE_RATE
+
+# ID:          Weapon ID name (must match e_wpn_id enum)
+# SHEET:       Sprite sheet ID (must match e_sht_id enum)
+# ANIM_IDLE:   Idle animation ID
+# ANIM_FIRE:   Firing animation ID
+# ANIM_RELOAD: Reload animation ID
+# AMMO:        Ammo type (AMMO_SHELL, AMMO_BULLET, AMMO_CELL, AMMO_EXPLOSIVE)
+# DAMAGE:      Damage per pellet/bullet
+# PELLETS:     Number of pellets per shot (1 for single projectile)
+# MAG:         Magazine size
+# FIRE_RATE:   Seconds between shots
+
+# ID            SHEET          ANIM_IDLE          ANIM_FIRE          ANIM_RELOAD          AMMO        DAMAGE PELLETS MAG FIRE_RATE
+WEAPON_SHOTGUN  SHEET_SHOTGUN  ANIM_SHOTGUN_IDLE  ANIM_SHOTGUN_FIRE  ANIM_SHOTGUN_RELOAD  AMMO_SHELL  8      6       2   0.8
