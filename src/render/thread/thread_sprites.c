@@ -92,9 +92,9 @@ void	render_sprites(t_game *game)
 	projs = arena_alloc(&game->arena, sizeof(t_proj) * game->entities.size);
 	if (!projs)
 		return ;
-	count = collect_sprites(game, projs);
+	count = sprites_collect(game, projs);
 	if (count == 0)
 		return ;
-	sort_sprites(projs, count);
+	sprites_sort(projs, count);
 	thread_sprites(game, projs, count);
 }

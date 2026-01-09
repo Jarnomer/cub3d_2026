@@ -13,6 +13,8 @@
 #ifndef RENDER_H
 # define RENDER_H
 
+# include <pthread.h>
+
 # include <vector.h>
 # include <types.h>
 # include <defs.h>
@@ -52,16 +54,16 @@ typedef struct s_hit
 
 typedef struct s_slice
 {
+	t_dir	dir;
 	t_i32	top;
 	t_i32	bottom;
 	t_i32	start;
 	t_i32	end;
 	t_i32	height;
 	t_i32	tex_x;
-	t_f32	tex_step;
-	t_f32	tex_pos;
+	t_f32	tex_y;
+	t_f32	step;
 	t_f32	dist;
-	t_dir	dir;
 	t_i32	offset;
 }	t_slice;
 
@@ -115,18 +117,34 @@ typedef struct s_render
 	t_i32		height;
 }	t_render;
 
+typedef struct s_thd
+{
+	t_game	*game;
+	t_proj	*projs;
+	t_u32	count;
+	t_i32	start;
+	t_i32	end;
+	t_i32	id;
+}	t_thd;
+
 /* ************************************************************************** */
 /*    RAYCAST FUNCTIONS                                                       */
 /* ************************************************************************** */
 
-void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
-void	ray_step(t_ray *ray, int *axis);
-
+/*      raycast_dda.c */
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
 t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door_out);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
 
-t_f32	calc_dist(t_ray *ray, int axis);
+/*      raycast_init.c */
+void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
+
+/*      raycast_hit.c */
+void	ray_hit(t_hit *hit, t_ray *ray, int axis);
+
+/*      raycast_utils.c */
+void	ray_step(t_ray *ray, int *axis);
+t_f32	ray_dist(t_ray *ray, int axis);
 
 /* ************************************************************************** */
 /*    RENDER CORE FUNCTIONS                                                   */
@@ -137,13 +155,12 @@ void	render_destroy(t_render *render);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
 /* ************************************************************************** */
-/*    SLICE CALCULATION FUNCTIONS                                             */
+/*    RENDER MAIN FUNCTIONS                                                   */
 /* ************************************************************************** */
 
-t_slice	slice_from_hit(t_hit *hit, t_i32 screen_h, t_i32 tex_width);
-void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 screen_h);
-void	slice_calc_tex_step(t_slice *slice, t_i32 tex_height);
-t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_width);
+void	render_walls(t_game *game);
+void	render_floor(t_game *game);
+void	render_sprites(t_game *game);
 
 /* ************************************************************************** */
 /*    RENDER PASS FUNCTIONS                                                   */
@@ -156,24 +173,7 @@ void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x);
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 
 /* ************************************************************************** */
-/*    FOG FUNCTIONS                                                           */
-/* ************************************************************************** */
-
-t_u32	fog_color(t_u8 alpha);
-t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
-void	fog_fill_row(t_game *game, t_i32 y);
-void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
-
-/* ************************************************************************** */
-/*    SPRITE FUNCTIONS                                                        */
-/* ************************************************************************** */
-
-bool	project_sprite(t_game *game, t_entity *ent, t_proj *proj);
-t_u32	collect_sprites(t_game *game, t_proj *projs);
-void	sort_sprites(t_proj *projs, t_u32 count);
-
-/* ************************************************************************** */
-/*    OCCLUSION FUNCTION PROTOTYPES                                           */
+/*    OCCLUSION FUNCTIONS                                                     */
 /* ************************************************************************** */
 
 void	occlude_store_door(t_game *game, t_hit *door_hit, t_i32 x);
@@ -181,84 +181,49 @@ void	occlude_clear_column(t_game *game, t_i32 x);
 bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
 
 /* ************************************************************************** */
-/*    PIXEL UTILS (render_pixel_utils.c)                                      */
+/*    SPRITE FUNCTIONS                                                        */
 /* ************************************************************************** */
 
-bool	pixel_in_bounds(t_mlxi *frame, t_i32 x, t_i32 y);
-void	pixel_put_safe(t_mlxi *frame, t_i32 x, t_i32 y, t_u32 color);
-t_u32	pixel_get(t_mlxi *frame, t_i32 x, t_i32 y);
-void	pixel_blend(t_mlxi *frame, t_i32 x, t_i32 y, t_u32 color);
-void	pixel_fill_rect(t_mlxi *frame, t_vec2i pos, t_vec2i size, t_u32 color);
+/*      render_proj.c */
+bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj);
+
+/*      render_sort.c */
+void	sprites_sort(t_proj *projs, t_u32 count);
+t_u32	sprites_collect(t_game *game, t_proj *projs);
+
+/*      render_proj.c */
+t_i32	proj_screen_x(t_proj *proj, t_render *render);
+t_i32	proj_z_offset(t_entity *ent, t_proj *proj, t_render *render);
+t_vec2i	proj_sprite_size(t_entity *ent, t_proj *proj, t_render *render);
+t_i32	proj_apply_pitch(t_proj *proj, t_camera *cam, t_render *render);
 
 /* ************************************************************************** */
-/*    COLUMN UTILS (render_column_utils.c)                                    */
+/*    FOG FUNCTIONS                                                           */
 /* ************************************************************************** */
 
-bool	column_is_visible(t_i32 x, t_i32 width);
-void	column_clamp_bounds(t_i32 height, t_i32 *start, t_i32 *end);
-void	column_fill(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2, t_u32 color);
-void	column_fill_fog(t_mlxi *frame, t_i32 x, t_i32 y1, t_i32 y2);
-void	column_clear(t_mlxi *frame, t_i32 x, t_i32 height);
+t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
+void	fog_fill_row(t_game *game, t_i32 y);
+void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
 
 /* ************************************************************************** */
-/*    SAMPLING (render_sample.c)                                              */
+/*    UTILITY FUNCTIONS                                                       */
 /* ************************************************************************** */
 
-t_u32	sample_texture_uv(t_tex *tex, t_f32 u, t_f32 v);
-t_u32	sample_sheet_frame(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
-bool	sample_is_transparent(t_u32 color);
-bool	sample_is_opaque(t_u32 color);
-t_u32	sample_texture_wrap(t_tex *tex, t_f32 u, t_f32 v);
+/*      render_slice.c */
+t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w);
+void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 scr_h);
+void	slice_calc_tex_step(t_slice *slice, t_i32 tex_h);
 
-/* ************************************************************************** */
-/*    PROJECTION (render_project.c)                                           */
-/* ************************************************************************** */
-
-t_i32	project_wall_height(t_f32 dist, t_i32 screen_h);
-t_i32	project_screen_x(t_f32 trans_x, t_f32 trans_y, t_i32 screen_w);
-t_i32	project_z_offset(t_f32 z_offset, t_f32 dist, t_i32 screen_h);
-t_vec2i	project_sprite_size(t_f32 scale, t_f32 dist, t_i32 w, t_i32 h);
-t_i32	project_apply_pitch(t_i32 y, t_f32 pitch, t_i32 screen_h);
-
-/* ************************************************************************** */
-/*    Z-BUFFER (render_zbuffer.c)                                             */
-/* ************************************************************************** */
-
-void	zbuf_write(t_render *render, t_i32 x, t_f32 dist);
-t_f32	zbuf_read(t_render *render, t_i32 x);
-bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist);
-void	zbuf_clear(t_render *render);
-void	zbuf_clear_column(t_render *render, t_i32 x);
-
-/* ************************************************************************** */
-/*    TRANSFORM (render_transform.c)                                          */
-/* ************************************************************************** */
-
-t_vec2	trans_world_to_cam(t_camera *cam, t_vec2 world_pos);
-t_vec2	trans_ray_dir(t_camera *cam, t_i32 x, t_i32 screen_w);
-t_i32	trans_screen_to_tex(t_i32 screen, t_i32 sprite_start,
-			t_i32 sprite_size, t_i32 tex_size);
+/*      render_trans.c */
+t_vec2	trans_world_to_cam(t_camera *cam, t_vec2 pos);
 bool	trans_behind_camera(t_f32 trans_y);
-t_f32	trans_inv_det(t_camera *cam);
+t_vec2	trans_ray_dir(t_camera *cam, t_i32 x, t_i32 scr_w);
+t_i32	trans_sprite_tex_x(t_proj *proj, t_i32 scr_x, t_i32 tex_w);
+t_i32	trans_sprite_tex_y(t_proj *proj, t_i32 scr_y, t_i32 tex_h);
 
-/* ************************************************************************** */
-/*    BOUNDS (render_bounds.c)                                                */
-/* ************************************************************************** */
-
-bool	bounds_sprite_visible(t_proj *proj, t_i32 width);
-void	bounds_calc_sprite(t_proj *proj, t_i32 w, t_i32 h);
-bool	bounds_rect_visible(t_vec2i start, t_vec2i end, t_i32 w, t_i32 h);
-t_i32	bounds_clamp_x(t_i32 x, t_i32 width);
-t_i32	bounds_clamp_y(t_i32 y, t_i32 height);
-
-/* ************************************************************************** */
-/*    SLICE (render_slice.c)                                                  */
-/* ************************************************************************** */
-
-t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_w);
-t_slice	slice_from_hit(t_hit *hit, t_i32 screen_h, t_i32 tex_w);
-void	slice_apply_pitch(t_slice *s, t_camera *cam, t_i32 screen_h);
-void	slice_calc_tex_step(t_slice *s, t_i32 tex_h);
-bool	slice_is_visible(t_slice *s, t_i32 screen_h);
+/*      render_zbuf.c */
+t_f32	zbuf_read(t_render *render, t_i32 x);
+void	zbuf_write(t_render *render, t_i32 x, t_f32 dist);
+bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist);
 
 #endif

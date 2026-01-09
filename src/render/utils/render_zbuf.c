@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asset_getset.c                                     :+:      :+:    :+:   */
+/*   render_zbuf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/08 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_tex	*assets_get_texture(t_assets *assets, t_tex_id id)
+t_f32	zbuf_read(t_render *render, t_i32 x)
 {
-	if (id < 0 || id >= TEXTURE_COUNT)
-		return (NULL);
-	return (&assets->textures[id]);
+	if (x < 0 || x >= render->width)
+		return (INFINITE);
+	return (render->z_buffer[x]);
 }
 
-t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
+void	zbuf_write(t_render *render, t_i32 x, t_f32 dist)
 {
-	if (id < 0 || id >= SPRITE_COUNT)
-		return (NULL);
-	return (&assets->sprites[id]);
+	if (x >= 0 && x < render->width)
+		render->z_buffer[x] = dist;
 }
 
-t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id)
+bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist)
 {
-	if (id < 0 || id >= SHEET_COUNT)
-		return (NULL);
-	return (&assets->sheets[id]);
+	if (x < 0 || x >= render->width)
+		return (false);
+	return (dist < render->z_buffer[x]);
 }

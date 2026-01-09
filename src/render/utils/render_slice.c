@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_w)
+static t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_w)
 {
 	t_i32	tex_x;
 
@@ -24,39 +24,37 @@ t_i32	slice_calc_tex_x(t_hit *hit, t_i32 tex_w)
 	return (clampi(tex_x, 0, tex_w - 1));
 }
 
-t_slice	slice_from_hit(t_hit *hit, t_i32 screen_h, t_i32 tex_w)
+t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w)
 {
-	t_slice	s;
+	t_slice	slice;
 
-	s = (t_slice){0};
-	s.dist = hit->dist;
-	s.dir = hit->dir;
-	s.height = project_wall_height(hit->dist, screen_h);
-	s.top = -s.height / 2 + screen_h / 2;
-	s.bottom = s.height / 2 + screen_h / 2;
-	s.tex_x = slice_calc_tex_x(hit, tex_w);
-	return (s);
+	slice = (t_slice){.dist = hit->dist, .dir = hit->dir};
+	slice.tex_x = slice_calc_tex_x(hit, tex_w);
+	if (hit->dist < EPSILON)
+		slice.height = scr_h;
+	else
+		slice.height = scr_h / hit->dist;
+	slice.top = -slice.height / 2 + scr_h / 2;
+	slice.bottom = slice.height / 2 + scr_h / 2;
+	return (slice);
 }
 
-void	slice_apply_pitch(t_slice *s, t_camera *cam, t_i32 screen_h)
+void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 scr_h)
 {
-	s->offset = (t_i32)(cam->pitch * screen_h);
-	s->start = s->top + s->offset;
-	s->end = s->bottom + s->offset;
-	column_clamp_bounds(screen_h, &s->start, &s->end);
+	slice->offset = (t_i32)(cam->pitch * scr_h);
+	slice->start = slice->top + slice->offset;
+	slice->end = slice->bottom + slice->offset;
+	if (slice->start < 0)
+		slice->start = 0;
+	if (slice->end >= scr_h)
+		slice->end = scr_h - 1;
 }
 
-void	slice_calc_tex_step(t_slice *s, t_i32 tex_h)
+void	slice_calc_tex_step(t_slice *slice, t_i32 tex_h)
 {
-	s->tex_step = (t_f32)tex_h / (t_f32)s->height;
-	s->tex_pos = (s->start - s->top - s->offset) * s->tex_step;
-}
+	t_i32	offset;
 
-bool	slice_is_visible(t_slice *s, t_i32 screen_h)
-{
-	if (s->end < 0)
-		return (false);
-	if (s->start >= screen_h)
-		return (false);
-	return (true);
+	slice->step = (t_f32)tex_h / (t_f32)slice->height;
+	offset = slice->start - slice->top - slice->offset;
+	slice->tex_y = offset * slice->step;
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_zbuffer.c                                   :+:      :+:    :+:   */
+/*   raycast_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,40 +12,41 @@
 
 #include <game.h>
 
-void	zbuf_write(t_render *render, t_i32 x, t_f32 dist)
+static void	init_step_y(t_ray *ray, t_vec2 origin, t_vec2 dir)
 {
-	if (x >= 0 && x < render->width)
-		render->z_buffer[x] = dist;
-}
-
-t_f32	zbuf_read(t_render *render, t_i32 x)
-{
-	if (x < 0 || x >= render->width)
-		return (INFINITE);
-	return (render->z_buffer[x]);
-}
-
-bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist)
-{
-	if (x < 0 || x >= render->width)
-		return (false);
-	return (dist < render->z_buffer[x]);
-}
-
-void	zbuf_clear(t_render *render)
-{
-	t_i32	i;
-
-	i = 0;
-	while (i < render->width)
+	if (dir.y < 0)
 	{
-		render->z_buffer[i] = INFINITE;
-		i++;
+		ray->step.y = -1;
+		ray->dist.y = (origin.y - ray->grid.y) * ray->delta.y;
+	}
+	else
+	{
+		ray->step.y = 1;
+		ray->dist.y = (ray->grid.y + 1.0f - origin.y) * ray->delta.y;
 	}
 }
 
-void	zbuf_clear_column(t_render *render, t_i32 x)
+static void	init_step_x(t_ray *ray, t_vec2 origin, t_vec2 dir)
 {
-	if (x >= 0 && x < render->width)
-		render->z_buffer[x] = INFINITE;
+	if (dir.x < 0)
+	{
+		ray->step.x = -1;
+		ray->dist.x = (origin.x - ray->grid.x) * ray->delta.x;
+	}
+	else
+	{
+		ray->step.x = 1;
+		ray->dist.x = (ray->grid.x + 1.0f - origin.x) * ray->delta.x;
+	}
+}
+
+void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir)
+{
+	ray->origin = origin;
+	ray->dir = dir;
+	ray->grid = vec2i_from_vec2(origin);
+	ray->delta.x = iabsf(dir.x);
+	ray->delta.y = iabsf(dir.y);
+	init_step_x(ray, origin, dir);
+	init_step_y(ray, origin, dir);
 }

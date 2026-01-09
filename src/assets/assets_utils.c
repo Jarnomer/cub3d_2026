@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_utils.c                                    :+:      :+:    :+:   */
+/*   asset_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_f32	ray_dist(t_ray *ray, int axis)
+t_tex	*assets_get_texture(t_assets *assets, t_tex_id id)
 {
-	t_f32	dist;
-
-	if (axis == AXIS_X)
-		dist = ray->dist.x - ray->delta.x;
-	else
-		dist = ray->dist.y - ray->delta.y;
-	return (maxf(dist, EPSILON));
+	if (id < 0 || id >= TEXTURE_COUNT)
+		return (NULL);
+	return (&assets->textures[id]);
 }
 
-void	ray_step(t_ray *ray, int *axis)
+t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
 {
-	if (ray->dist.x < ray->dist.y)
-	{
-		ray->dist.x += ray->delta.x;
-		ray->grid.x += ray->step.x;
-		*axis = AXIS_X;
-	}
-	else
-	{
-		ray->dist.y += ray->delta.y;
-		ray->grid.y += ray->step.y;
-		*axis = AXIS_Y;
-	}
+	if (id < 0 || id >= SPRITE_COUNT)
+		return (NULL);
+	return (&assets->sprites[id]);
+}
+
+t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id)
+{
+	if (id < 0 || id >= SHEET_COUNT)
+		return (NULL);
+	return (&assets->sheets[id]);
 }

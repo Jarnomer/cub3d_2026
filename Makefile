@@ -97,9 +97,11 @@ SOURCES := main \
            assets \
            assets_texture \
            assets_sheet \
-           assets_getset \
-           sprite_proj \
-           sprite_utils \
+           assets_utils \
+           raycast_dda \
+           raycast_init \
+           raycast_hit \
+           raycast_utils \
            render \
            render_slice \
            render_walls \
@@ -109,17 +111,12 @@ SOURCES := main \
            render_sheet \
            render_fog \
            render_occlude \
-           render_pixel \
-           render_column \
-           render_sample \
-           render_project \
-           render_zbuffer \
-           render_trans \
-           render_bounds \
            render_slice \
-           raycast \
-           raycast_dda \
-           raycast_utils \
+           render_trans \
+           render_zbuf \
+           sprite_proj \
+           sprite_sort \
+           sprite_utils \
            thread_floor \
            thread_walls \
            thread_sprites \

@@ -12,22 +12,18 @@
 
 #include <game.h>
 
-t_u32	fog_color(t_u8 alpha)
+static t_u32	fog_color(void)
 {
-	return (color_pack(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, alpha));
+	return (color_pack(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, 255));
 }
 
 t_u32	fog_apply(t_u32 color, t_u8 fog_alpha)
 {
-	t_u32	inv;
 	t_u32	r;
 	t_u32	g;
 	t_u32	b;
+	t_u32	inv;
 
-	if (fog_alpha == 0)
-		return (color);
-	if (fog_alpha == 255)
-		return (fog_color(color_a(color)));
 	inv = 255 - fog_alpha;
 	r = (color_r(color) * inv + FOG_COLOR_R * fog_alpha) / 255;
 	g = (color_g(color) * inv + FOG_COLOR_G * fog_alpha) / 255;
@@ -40,7 +36,7 @@ void	fog_fill_row(t_game *game, t_i32 y)
 	t_u32	color;
 	t_i32	x;
 
-	color = fog_color(255);
+	color = fog_color();
 	x = 0;
 	while (x < game->render.width)
 	{
@@ -54,7 +50,7 @@ void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end)
 	t_u32	color;
 	t_i32	y;
 
-	color = fog_color(255);
+	color = fog_color();
 	y = start;
 	while (y <= end)
 	{

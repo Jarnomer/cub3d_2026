@@ -86,5 +86,5 @@ bool	occlude_check_door(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 	color = sheet_sample(sheet, frame,
 			calc_door_tex_x(occ, sheet->width),
 			calc_door_tex_y(game, occ, y, sheet->height));
-	return (sample_is_opaque(color));
+	return (color_a(color) >= ALPHA_THRESHOLD);
 }

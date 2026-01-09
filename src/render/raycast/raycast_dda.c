@@ -12,48 +12,25 @@
 
 #include <game.h>
 
-static t_dir	get_wall_direction(t_ray *ray, int axis)
+bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game)
 {
-	if (axis == AXIS_X)
-	{
-		if (ray->step.x > 0)
-			return (WALL_WEST);
-		return (WALL_EAST);
-	}
-	if (ray->step.y > 0)
-		return (WALL_SOUTH);
-	return (WALL_NORTH);
-}
-
-static t_f32	calc_wall_hit_x(t_ray *ray, t_f32 dist, int axis)
-{
-	t_f32	wall_x;
-
-	if (axis == AXIS_X)
-		wall_x = ray->origin.y + dist * ray->dir.y;
-	else
-		wall_x = ray->origin.x + dist * ray->dir.x;
-	return (wall_x - floorf(wall_x));
-}
-
-t_f32	calc_dist(t_ray *ray, int axis)
-{
+	t_ray	ray;
+	t_vec2	dir;
 	t_f32	dist;
+	t_hit	hit;
 
-	if (axis == AXIS_X)
-		dist = ray->dist.x - ray->delta.x;
-	else
-		dist = ray->dist.y - ray->delta.y;
-	return (maxf(dist, EPSILON));
-}
-
-static void	fill_hit(t_hit *hit, t_ray *ray, int axis)
-{
-	hit->axis = axis;
-	hit->dist = calc_dist(ray, axis);
-	hit->wall_x = calc_wall_hit_x(ray, hit->dist, axis);
-	hit->dir = get_wall_direction(ray, axis);
-	hit->grid = ray->grid;
+	dir = vec2_sub(to, from);
+	dist = vec2_len(dir);
+	if (dist < EPSILON)
+		return (true);
+	dir = vec2_normalize(dir);
+	ray_init(&ray, from, dir);
+	hit = perform_dda(&ray, game, dist);
+	if (!hit.hit)
+		return (true);
+	if (hit.dist >= dist - EPSILON)
+		return (true);
+	return (false);
 }
 
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
@@ -78,10 +55,10 @@ t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 			hit.cell = (t_u8)cell;
 			hit.entity = entity;
 		}
-		if (calc_dist(ray, axis) > max_dist)
+		if (ray_dist(ray, axis) > max_dist)
 			break ;
 	}
-	fill_hit(&hit, ray, axis);
+	ray_hit(&hit, ray, axis);
 	return (hit);
 }
 
@@ -92,7 +69,7 @@ static void	record_door_hit(t_hit *door_out, t_ray *ray, int axis, t_i32 entity)
 	door_out->hit = true;
 	door_out->cell = CELL_DOOR;
 	door_out->entity = entity;
-	fill_hit(door_out, ray, axis);
+	ray_hit(door_out, ray, axis);
 }
 
 t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door_out)
@@ -122,9 +99,9 @@ t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door_out)
 			hit.cell = (t_u8)cell;
 			hit.entity = entity;
 		}
-		if (calc_dist(ray, axis) > max_dist)
+		if (ray_dist(ray, axis) > max_dist)
 			break ;
 	}
-	fill_hit(&hit, ray, axis);
+	ray_hit(&hit, ray, axis);
 	return (hit);
 }

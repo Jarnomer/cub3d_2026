@@ -44,7 +44,6 @@
 # include <assets.h>
 # include <entity.h>
 # include <render.h>
-# include <thread.h>
 # include <grid.h>
 # include <anim.h>
 # include <pool.h>

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   raycast_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,35 @@
 
 #include <game.h>
 
-static void	init_step_y(t_ray *ray, t_vec2 origin, t_vec2 dir)
+static t_dir	get_wall_direction(t_ray *ray, int axis)
 {
-	if (dir.y < 0)
+	if (axis == AXIS_X)
 	{
-		ray->step.y = -1;
-		ray->dist.y = (origin.y - ray->grid.y) * ray->delta.y;
+		if (ray->step.x > 0)
+			return (WALL_WEST);
+		return (WALL_EAST);
 	}
-	else
-	{
-		ray->step.y = 1;
-		ray->dist.y = (ray->grid.y + 1.0f - origin.y) * ray->delta.y;
-	}
+	if (ray->step.y > 0)
+		return (WALL_SOUTH);
+	return (WALL_NORTH);
 }
 
-static void	init_step_x(t_ray *ray, t_vec2 origin, t_vec2 dir)
+static t_f32	calc_wall_hit_x(t_ray *ray, t_f32 dist, int axis)
 {
-	if (dir.x < 0)
-	{
-		ray->step.x = -1;
-		ray->dist.x = (origin.x - ray->grid.x) * ray->delta.x;
-	}
+	t_f32	wall_x;
+
+	if (axis == AXIS_X)
+		wall_x = ray->origin.y + dist * ray->dir.y;
 	else
-	{
-		ray->step.x = 1;
-		ray->dist.x = (ray->grid.x + 1.0f - origin.x) * ray->delta.x;
-	}
+		wall_x = ray->origin.x + dist * ray->dir.x;
+	return (wall_x - floorf(wall_x));
 }
 
-void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir)
+void	ray_hit(t_hit *hit, t_ray *ray, int axis)
 {
-	ray->origin = origin;
-	ray->dir = dir;
-	ray->grid = vec2i_from_vec2(origin);
-	ray->delta.x = iabsf(dir.x);
-	ray->delta.y = iabsf(dir.y);
-	init_step_x(ray, origin, dir);
-	init_step_y(ray, origin, dir);
+	hit->dist = ray_dist(ray, axis);
+	hit->wall_x = calc_wall_hit_x(ray, hit->dist, axis);
+	hit->dir = get_wall_direction(ray, axis);
+	hit->grid = ray->grid;
+	hit->axis = axis;
 }

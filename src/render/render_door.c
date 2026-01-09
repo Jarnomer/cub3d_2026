@@ -43,11 +43,11 @@ static void	draw_door_column(t_game *game, t_i32 x, t_slice *s, t_door *door)
 	y = s->start;
 	while (y <= s->end)
 	{
-		tex_y = clampi((t_i32)s->tex_pos, 0, door->sheet->height - 1);
+		tex_y = clampi((t_i32)s->tex_y, 0, door->sheet->height - 1);
 		color = sheet_sample(door->sheet, door->frame, s->tex_x, tex_y);
 		color = fog_apply(color, fog);
 		draw_door_pixel(game, x, y, color);
-		s->tex_pos += s->tex_step;
+		s->tex_y += s->step;
 		y++;
 	}
 }

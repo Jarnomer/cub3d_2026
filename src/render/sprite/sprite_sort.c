@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_utils.c                                     :+:      :+:    :+:   */
+/*   sprite_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-void	sort_sprites(t_proj *projs, t_u32 count)
+void	sprites_sort(t_proj *projs, t_u32 count)
 {
 	t_proj	temp;
 	t_u32	i;
@@ -33,7 +33,7 @@ void	sort_sprites(t_proj *projs, t_u32 count)
 	}
 }
 
-t_u32	collect_sprites(t_game *game, t_proj *projs)
+t_u32	sprites_collect(t_game *game, t_proj *projs)
 {
 	t_entity	*ent;
 	t_u32		count;
@@ -49,7 +49,7 @@ t_u32	collect_sprites(t_game *game, t_proj *projs)
 			i++;
 			continue ;
 		}
-		if (project_sprite(game, ent, &projs[count]))
+		if (sprite_project(game, ent, &projs[count]))
 			count++;
 		i++;
 	}

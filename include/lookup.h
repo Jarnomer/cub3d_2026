@@ -51,8 +51,6 @@ void	lookup_init(t_lookup *lut);
 
 t_f32	lookup_sin(t_lookup *lut, t_f32 angle);
 t_f32	lookup_cos(t_lookup *lut, t_f32 angle);
-
 t_u8	lookup_fog(t_lookup *lut, t_f32 dist);
-t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
 
 #endif

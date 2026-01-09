@@ -29,10 +29,10 @@ static void	draw_wall_column(t_game *game, t_i32 x, t_slice *s, t_tex *tex)
 	y = s->start;
 	while (y <= s->end)
 	{
-		tex_y = clampi((t_i32)s->tex_pos, 0, tex->height - 1);
+		tex_y = clampi((t_i32)s->tex_y, 0, tex->height - 1);
 		color = texture_sample(tex, s->tex_x, tex_y);
 		render_pixel(game->render.frame, x, y, fog_apply(color, fog));
-		s->tex_pos += s->tex_step;
+		s->tex_y += s->step;
 		y++;
 	}
 }
@@ -85,3 +85,4 @@ void	render_wall_column(t_game *game, t_i32 x)
 	else if (wall_hit.hit && wall_hit.cell == CELL_DOOR)
 		handle_door(game, &wall_hit, x);
 }
+

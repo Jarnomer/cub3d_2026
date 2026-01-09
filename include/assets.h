@@ -52,6 +52,7 @@ void	assets_destroy(t_assets *assets);
 void	texture_load(t_tex *tex, const char *path);
 void	texture_destroy(t_tex *tex);
 t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
+t_u32	texture_sample_wrap(t_tex *tex, t_f32 u, t_f32 v);
 
 void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows);
 void	sheet_destroy(t_sheet *sheet);

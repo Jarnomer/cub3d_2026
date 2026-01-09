@@ -36,3 +36,19 @@ t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y)
 	idx = y * tex->width + x;
 	return (tex->pixels[idx]);
 }
+
+t_u32	texture_sample_wrap(t_tex *tex, t_f32 u, t_f32 v)
+{
+	t_i32	idx;
+	t_i32	x;
+	t_i32	y;
+
+	x = (t_i32)(u * tex->width) % tex->width;
+	y = (t_i32)(v * tex->height) % tex->height;
+	if (x < 0)
+		x += tex->width;
+	if (y < 0)
+		y += tex->height;
+	idx = y * tex->width + x;
+	return (tex->pixels[idx]);
+}
