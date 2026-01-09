@@ -16,21 +16,9 @@
 # include <types.h>
 # include <config.h>
 
-/* ************************************************************************** */
-/*    CONSTANTS                                                               */
-/* ************************************************************************** */
-
 # define TRIG_TABLE_SIZE	3600
 # define TRIG_TABLE_SCALE	10.0f
 # define FOG_TABLE_SIZE		256
-
-/* ************************************************************************** */
-/*    LOOKUP STRUCTURE                                                        */
-/* ************************************************************************** */
-/*
-** Unified lookup tables for precomputed values
-** Eliminates expensive math operations on render
-*/
 
 typedef struct s_lookup
 {
@@ -39,13 +27,6 @@ typedef struct s_lookup
 	t_u8	fog_table[FOG_TABLE_SIZE];
 	bool	initialized;
 }	t_lookup;
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void	lookup_init(t_lookup *lut);
 

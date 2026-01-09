@@ -100,8 +100,6 @@ typedef struct s_anidef	t_anidef;
 # define FOG_COLOR_R	0
 # define FOG_COLOR_G	0
 # define FOG_COLOR_B	0
-# define FOG_NONE		0
-# define FOG_FULL		255
 
 /* ************************************************************************** */
 /*    CONFIG FILE SETTINGS                                                    */
@@ -110,7 +108,7 @@ typedef struct s_anidef	t_anidef;
 # define TEXDEF_FIELD_COUNT		3
 # define SHTDEF_FIELD_COUNT		4
 # define ENTDEF_FIELD_COUNT		6
-# define ANIMDEF_FIELD_COUNT	7
+# define ANIDEF_FIELD_COUNT	    7
 # define WPNDEF_FIELD_COUNT		8
 # define ENEDEF_FIELD_COUNT		10
 

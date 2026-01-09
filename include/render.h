@@ -19,10 +19,6 @@
 # include <types.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    FORWARD DECLARATIONS                                                    */
-/* ************************************************************************** */
-
 typedef struct s_game		t_game;
 typedef struct s_entity		t_entity;
 typedef struct s_camera		t_camera;

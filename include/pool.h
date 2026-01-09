@@ -17,18 +17,6 @@
 # include <error.h>
 # include <types.h>
 
-/* ************************************************************************** */
-/*    OBJECT POOL                                                             */
-/* ************************************************************************** */
-/*
-** Generic object pool for zero-allocation entities
-** - Pre-allocates fixed capacity at startup
-** - No memory allocation during gameplay
-** - Used for particles and projectiles
-**
-** - [ADD EXPLANATIONS HERE LATER]
-*/
-
 typedef struct s_pool
 {
 	void		*data;
@@ -40,19 +28,6 @@ typedef struct s_pool
 	size_t		elem_size;
 }	t_pool;
 
-/* ************************************************************************** */
-/*    MEMORY ARENA                                                            */
-/* ************************************************************************** */
-/*
-** Linear allocator for per-frame render lists
-** - Single allocation at startup
-** - O(1) allocation (pointer bump)
-** - O(1) reset (just reset offset)
-** - No free calls needed
-**
-** - [ADD EXPLANATIONS HERE LATER]
-*/
-
 typedef struct s_arena
 {
 	t_u8		*data;
@@ -61,18 +36,6 @@ typedef struct s_arena
 	size_t		peak_usage;
 }	t_arena;
 
-/* ************************************************************************** */
-/*    DYNAMIC ARRAY                                                           */
-/* ************************************************************************** */
-/*
-** Generic growable array for world entities
-** - Automatic capacity growth (factor of 2)
-** - Type-agnostic via void* and element size
-** - Used for assets and entities
-**
-** - [ADD EXPLANATIONS HERE LATER]
-*/
-
 typedef struct s_darray
 {
 	void		*data;
@@ -80,13 +43,6 @@ typedef struct s_darray
 	size_t		capacity;
 	size_t		elem_size;
 }	t_darray;
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void	pool_init(t_pool *pool, t_u32 capacity, size_t elem_size);
 void	pool_destroy(t_pool *pool);

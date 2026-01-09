@@ -16,23 +16,7 @@
 # include <types.h>
 # include <defs.h>
 
-/* ************************************************************************** */
-/*    FORWARD DECLARATIONS                                                    */
-/* ************************************************************************** */
-
 typedef struct s_game	t_game;
-
-/* ************************************************************************** */
-/*    CELL GRID STRUCTURE                                                     */
-/* ************************************************************************** */
-/*
-** Grid for O(1) entity lookup by map cell
-** - cells:  2D array of entity indices (CELL_VOID = -1)
-** - types:  2D array of cell types (wall, door, empty)
-** - axes:   2D array of door orientations (only valid for doors)
-** - width:  Grid width (matches map width)
-** - height: Grid height (matches map height)
-*/
 
 typedef struct s_grid
 {
@@ -42,13 +26,6 @@ typedef struct s_grid
 	t_i32		width;
 	t_i32		height;
 }	t_grid;
-
-/* ************************************************************************** */
-/*    FUNCTION PROTOTYPES                                                     */
-/* ************************************************************************** */
-/*
-** See source files for function details
-*/
 
 void		grid_init(t_grid *grid, t_i32 width, t_i32 height);
 void		grid_destroy(t_grid *grid);

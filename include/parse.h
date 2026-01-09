@@ -13,6 +13,10 @@
 #ifndef PARSE_H
 # define PARSE_H
 
+/* ************************************************************************** */
+/*    PROJECT HEADERS                                                         */
+/* ************************************************************************** */
+
 # include <types.h>
 
 /* ************************************************************************** */
@@ -53,7 +57,7 @@ typedef struct s_map	t_map;
 # define ID_CEILING			"C "
 
 /* ************************************************************************** */
-/*    ELEMENT  ENUMS                                                          */
+/*    ELEMENT ENUMS                                                           */
 /* ************************************************************************** */
 /*
 ** Used to index parse elements
@@ -71,7 +75,7 @@ typedef enum e_elem
 }	t_elem;
 
 /* ************************************************************************** */
-/*    PARSE  STRUCTURE                                                        */
+/*    PARSE STRUCTURE                                                         */
 /* ************************************************************************** */
 /*
 ** [ADD DETAILS HERE LATER]
@@ -93,25 +97,37 @@ typedef struct s_parse
 ** See source files for function details
 */
 
+/*		parse.c */
 t_map	*parse(const char *filepath);
 
+/*		parse_file.c */
 int		parse_file_open(const char *filepath, const char *ext);
 void	parse_file_validate(const char *filepath, const char *ext);
 
+/*		parse_elem.c */
 void	parse_elements(t_parse *ctx);
+
+/*		parse_asset.c */
 void	parse_texture(t_parse *ctx, t_elem type);
 void	parse_color(t_parse *ctx, t_elem type);
 
+/*		parse_map.c */
 void	parse_map(t_parse *ctx);
+
+/*		parse_map_valid.c */
 void	parse_map_validate(t_parse *ctx);
+
+/*		parse_map_walls.c */
 void	parse_map_walls(t_parse *ctx);
 
+/*		parse_map_utils.c */
 char	*parse_skip_spaces(char *str);
 bool	parse_skip_line(const char *line);
 bool	parse_is_empty_line(const char *line);
 void	parse_remove_newline(char *str);
 t_i32	parse_count_parts(char **parts);
 
+/*		parse_map_spawn.c */
 void	parse_save_spawn(t_parse *ctx, int x, int y, char c);
 
 #endif
