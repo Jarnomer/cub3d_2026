@@ -84,12 +84,12 @@ typedef struct s_wpndef	t_wpndef;
 # define AMMO_MAX_SHELL			50
 # define AMMO_MAX_BULLET		200
 # define AMMO_MAX_CELL			100
-# define AMMO_MAX_EXPLOSIVE		25
+# define AMMO_MAX_EXP		25
 
 # define AMMO_START_SHELL		12
 # define AMMO_START_BULLET		50
 # define AMMO_START_CELL		0
-# define AMMO_START_EXPLOSIVE	0
+# define AMMO_START_EXP	0
 
 /* ************************************************************************** */
 /*    WEAPON SETTINGS                                                         */

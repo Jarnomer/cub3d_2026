@@ -76,7 +76,7 @@ SOURCES := main \
            input_mouse_keys \
            player \
            player_act \
-           player_stats \
+           player_health \
            player_ammo \
            weapon \
            weapon_update \

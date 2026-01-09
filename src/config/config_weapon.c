@@ -29,8 +29,8 @@ static t_ammo	str_to_ammo(const char *str)
 		return (AMMO_BULLET);
 	if (ft_strcmp(str, "AMMO_CELL") == 0)
 		return (AMMO_CELL);
-	if (ft_strcmp(str, "AMMO_EXPLOSIVE") == 0)
-		return (AMMO_EXPLOSIVE);
+	if (ft_strcmp(str, "AMMO_EXP") == 0)
+		return (AMMO_EXP);
 	return (AMMO_SHELL);
 }
 

@@ -129,7 +129,7 @@ struct s_game
 	t_camera	camera;
 	t_render	render;
 	t_assets	assets;
-	t_pstats	player;
+	t_player	player;
 	t_darray	entities;
 	t_grid		grid;
 	t_arena		arena;

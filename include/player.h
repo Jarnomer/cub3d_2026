@@ -19,7 +19,7 @@
 
 typedef struct s_game	t_game;
 
-typedef struct s_player_stats
+typedef struct s_player_player
 {
 	t_i32		health;
 	t_i32		armor;
@@ -28,17 +28,17 @@ typedef struct s_player_stats
 	t_u32		kills;
 	t_u32		secrets;
 	bool		alive;
-}	t_pstats;
+}	t_player;
 
-void	pstats_init(t_pstats *stats, t_game *game);
+void	player_init(t_player *player, t_game *game);
 
-void	pstats_damage(t_pstats *stats, t_i32 amount);
-void	pstats_heal(t_pstats *stats, t_i32 amount);
-void	pstats_add_armor(t_pstats *stats, t_i32 amount);
+void	player_take_damage(t_player *player, t_i32 amount);
+void	player_add_health(t_player *player, t_i32 amount);
+void	player_add_armor(t_player *player, t_i32 amount);
 
-bool	pstats_use_ammo(t_pstats *stats, t_ammo type, t_i32 amount);
-void	pstats_add_ammo(t_pstats *stats, t_ammo type, t_i32 amount);
-t_i32	pstats_get_ammo(t_pstats *stats, t_ammo type);
-t_i32	pstats_max_ammo(t_ammo type);
+bool	player_use_ammo(t_player *player, t_ammo type, t_i32 amount);
+void	player_add_ammo(t_player *player, t_ammo type, t_i32 amount);
+t_i32	player_get_ammo(t_player *player, t_ammo type);
+t_i32	player_max_ammo(t_ammo type);
 
 #endif

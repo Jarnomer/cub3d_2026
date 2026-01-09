@@ -122,7 +122,7 @@ typedef enum e_ammo
 	AMMO_SHELL,
 	AMMO_BULLET,
 	AMMO_CELL,
-	AMMO_EXPLOSIVE,
+	AMMO_EXP,
 	AMMO_COUNT
 }	t_ammo;
 

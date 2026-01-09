@@ -7,7 +7,7 @@
 # ANIM_IDLE:   Idle animation ID
 # ANIM_FIRE:   Firing animation ID
 # ANIM_RELOAD: Reload animation ID
-# AMMO:        Ammo type (AMMO_SHELL, AMMO_BULLET, AMMO_CELL, AMMO_EXPLOSIVE)
+# AMMO:        Ammo type (AMMO_SHELL, AMMO_BULLET, AMMO_CELL, AMMO_EXP)
 # DAMAGE:      Damage per pellet/bullet
 # PELLETS:     Number of pellets per shot (1 for single projectile)
 # MAG:         Magazine size

@@ -52,13 +52,13 @@ static void	fire_all_pellets(t_game *game, t_wpndef *def)
 void	weapon_fire(t_weapon *wpn, t_game *game)
 {
 	t_wpndef	*def;
-	t_pstats	*stats;
+	t_player	*player;
 
 	if (!weapon_can_fire(wpn, game))
 		return ;
 	def = weapon_get_def(game, wpn->id);
-	stats = &game->player;
-	if (!pstats_use_ammo(stats, def->ammo_type, 1))
+	player = &game->player;
+	if (!player_use_ammo(player, def->ammo_type, 1))
 		return ;
 	weapon_set_state(wpn, STATE_FIRING, game);
 	wpn->ready = false;

@@ -31,27 +31,27 @@ void	weapon_set_state(t_weapon *wpn, t_state state, t_game *game)
 bool	weapon_can_fire(t_weapon *wpn, t_game *game)
 {
 	t_wpndef	*def;
-	t_pstats	*stats;
+	t_player	*player;
 
 	if (wpn->state != STATE_IDLE || !wpn->ready)
 		return (false);
 	def = weapon_get_def(game, wpn->id);
 	if (!def)
 		return (false);
-	stats = &game->player;
-	return (pstats_get_ammo(stats, def->ammo_type) > 0);
+	player = &game->player;
+	return (player_get_ammo(player, def->ammo_type) > 0);
 }
 
 bool	weapon_can_reload(t_weapon *wpn, t_game *game)
 {
 	t_wpndef	*def;
-	t_pstats	*stats;
+	t_player	*player;
 
 	if (wpn->state != STATE_IDLE)
 		return (false);
 	def = weapon_get_def(game, wpn->id);
 	if (!def)
 		return (false);
-	stats = &game->player;
-	return (pstats_get_ammo(stats, def->ammo_type) > 0);
+	player = &game->player;
+	return (player_get_ammo(player, def->ammo_type) > 0);
 }

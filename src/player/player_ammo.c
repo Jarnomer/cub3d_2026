@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-t_i32	pstats_max_ammo(t_ammo type)
+t_i32	player_max_ammo(t_ammo type)
 {
 	if (type == AMMO_SHELL)
 		return (AMMO_MAX_SHELL);
@@ -20,36 +20,36 @@ t_i32	pstats_max_ammo(t_ammo type)
 		return (AMMO_MAX_BULLET);
 	if (type == AMMO_CELL)
 		return (AMMO_MAX_CELL);
-	if (type == AMMO_EXPLOSIVE)
-		return (AMMO_MAX_EXPLOSIVE);
+	if (type == AMMO_EXP)
+		return (AMMO_MAX_EXP);
 	return (0);
 }
 
-t_i32	pstats_get_ammo(t_pstats *stats, t_ammo type)
+t_i32	player_get_ammo(t_player *player, t_ammo type)
 {
 	if (type < 0 || type >= AMMO_COUNT)
 		return (0);
-	return (stats->ammo[type]);
+	return (player->ammo[type]);
 }
 
-void	pstats_add_ammo(t_pstats *stats, t_ammo type, t_i32 amount)
+void	player_add_ammo(t_player *player, t_ammo type, t_i32 amount)
 {
 	t_i32	max;
 
 	if (type < 0 || type >= AMMO_COUNT || amount <= 0)
 		return ;
-	max = pstats_max_ammo(type);
-	stats->ammo[type] += amount;
-	if (stats->ammo[type] > max)
-		stats->ammo[type] = max;
+	max = player_max_ammo(type);
+	player->ammo[type] += amount;
+	if (player->ammo[type] > max)
+		player->ammo[type] = max;
 }
 
-bool	pstats_use_ammo(t_pstats *stats, t_ammo type, t_i32 amount)
+bool	player_use_ammo(t_player *player, t_ammo type, t_i32 amount)
 {
 	if (type < 0 || type >= AMMO_COUNT)
 		return (false);
-	if (stats->ammo[type] < amount)
+	if (player->ammo[type] < amount)
 		return (false);
-	stats->ammo[type] -= amount;
+	player->ammo[type] -= amount;
 	return (true);
 }
