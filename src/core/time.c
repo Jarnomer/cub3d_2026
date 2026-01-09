@@ -12,30 +12,19 @@
 
 #include <game.h>
 
-t_f64	time_get_seconds(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((t_f64)tv.tv_sec + (t_f64)tv.tv_usec / 1000000.0);
-}
-
 void	time_init(t_time *time)
 {
-	ft_bzero(time, sizeof(t_time));
-	time->current = time_get_seconds();
-	time->previous = time->current;
+	*time = (t_time){0};
 }
 
-void	time_update(t_time *time)
+void	time_update(t_time *time, mlx_t *mlx)
 {
-	time->previous = time->current;
-	time->current = time_get_seconds();
-	time->delta = time->current - time->previous;
+	time->delta = mlx->delta_time;
 	if (time->delta > MAX_DELTA)
 		time->delta = MAX_DELTA;
-	time->frame_count++;
+	time->current += time->delta;
 	time->fps_timer += time->delta;
+	time->frame_count++;
 	time->fps_frames++;
 	if (time->fps_timer >= 1.0)
 	{

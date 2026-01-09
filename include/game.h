@@ -93,7 +93,6 @@ typedef struct s_map
 typedef struct s_time
 {
 	t_f64	current;
-	t_f64	previous;
 	t_f64	delta;
 	t_u64	frame_count;
 	t_f32	fps;
@@ -143,10 +142,9 @@ void	player_update(t_game *game, t_f32 dt);
 void	player_interact(t_game *game);
 
 void	time_init(t_time *time);
-void	time_update(t_time *time);
-t_f64	time_get_seconds(void);
+void	time_update(t_time *time, mlx_t *mlx);
 
-void	camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov);
+void	camera_init(t_camera *cam, t_map *map, t_f32 fov);
 void	camera_update(t_camera *cam);
 
 #endif

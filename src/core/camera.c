@@ -12,13 +12,12 @@
 
 #include <game.h>
 
-void	camera_init(t_camera *cam, t_vec2 pos, t_f32 angle, t_f32 fov)
+void	camera_init(t_camera *cam, t_map *map, t_f32 fov)
 {
-	ft_bzero(cam, sizeof(t_camera));
-	cam->pos = pos;
-	cam->angle = angle;
+	*cam = (t_camera){0};
+	cam->pos = map->spawn_pos;
+	cam->angle = map->spawn_angle;
 	cam->fov = fov * DEG2RAD;
-	cam->pitch = 0.0f;
 	camera_update(cam);
 }
 
