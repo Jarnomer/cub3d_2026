@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-t_i32	player_max_ammo(t_ammo type)
+static t_i32	player_max_ammo(t_ammo type)
 {
 	if (type == AMMO_SHELL)
 		return (AMMO_MAX_SHELL);
@@ -20,16 +20,9 @@ t_i32	player_max_ammo(t_ammo type)
 		return (AMMO_MAX_BULLET);
 	if (type == AMMO_CELL)
 		return (AMMO_MAX_CELL);
-	if (type == AMMO_EXP)
-		return (AMMO_MAX_EXP);
+	if (type == AMMO_EXPLOSIVE)
+		return (AMMO_MAX_EXPLOSIVE);
 	return (0);
-}
-
-t_i32	player_get_ammo(t_player *player, t_ammo type)
-{
-	if (type < 0 || type >= AMMO_COUNT)
-		return (0);
-	return (player->ammo[type]);
 }
 
 void	player_add_ammo(t_player *player, t_ammo type, t_i32 amount)
@@ -52,4 +45,16 @@ bool	player_use_ammo(t_player *player, t_ammo type, t_i32 amount)
 		return (false);
 	player->ammo[type] -= amount;
 	return (true);
+}
+
+t_i32	player_get_ammo(t_player *player, t_ammo type)
+{
+	if (type < 0 || type >= AMMO_COUNT)
+		return (0);
+	return (player->ammo[type]);
+}
+
+bool	player_has_ammo(t_player *player, t_ammo type)
+{
+	return (player_get_ammo(player, type) > 0);
 }

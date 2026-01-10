@@ -87,13 +87,13 @@ typedef enum e_spr_id
 	SPRITE_COUNT
 }	t_spr_id;
 
-typedef enum e_sht_id
+typedef enum e_sheet_id
 {
 	SHEET_DOOR,
 	SHEET_BARREL,
 	SHEET_SHOTGUN,
 	SHEET_COUNT
-}	t_sht_id;
+}	t_sheet_id;
 
 typedef enum e_anim_id
 {
@@ -122,7 +122,7 @@ typedef enum e_ammo
 	AMMO_SHELL,
 	AMMO_BULLET,
 	AMMO_CELL,
-	AMMO_EXP,
+	AMMO_EXPLOSIVE,
 	AMMO_COUNT
 }	t_ammo;
 

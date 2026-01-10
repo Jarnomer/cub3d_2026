@@ -46,7 +46,7 @@ typedef struct s_wpndef	t_wpndef;
 # define SKYBOX_ENABLED			0
 # define FLASH_DURATION			0.05f
 # define FLASH_MAX_ALPHA		80.0f
-# define FLASH_COLOR_MUZZLE		0x00FFAA44
+# define FLASH_COLOR_MUZZLE		0xFFFFFF44
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */
@@ -80,12 +80,12 @@ typedef struct s_wpndef	t_wpndef;
 # define AMMO_MAX_SHELL			50
 # define AMMO_MAX_BULLET		200
 # define AMMO_MAX_CELL			100
-# define AMMO_MAX_EXP		25
+# define AMMO_MAX_EXPLOSIVE		25
 
 # define AMMO_START_SHELL		12
 # define AMMO_START_BULLET		50
 # define AMMO_START_CELL		0
-# define AMMO_START_EXP	0
+# define AMMO_START_EXPLOSIVE	0
 
 /* ************************************************************************** */
 /*    WEAPON SETTINGS                                                         */
@@ -151,7 +151,7 @@ typedef struct s_wpndef	t_wpndef;
 # define KEY_RELOAD				MLX_KEY_R
 # define KEY_JUMP				MLX_KEY_SPACE
 # define KEY_CROUCH				MLX_KEY_LEFT_CONTROL
-# define KEY_FIRE				MLX_MOUSE_BUTTON_LEFT
+# define KEY_MOUSE_FIRE			MLX_MOUSE_BUTTON_LEFT
 # define MAX_KEYS				512
 # define MAX_MOUSE_KEYS			8
 
@@ -207,7 +207,7 @@ void		config_load_weapons(t_wpndef *defs);
 
 t_tex_id	str_to_tex_id(const char *str);
 t_spr_id	str_to_spr_id(const char *str);
-t_sht_id	str_to_sht_id(const char *str);
+t_sheet_id	str_to_sheet_id(const char *str);
 t_anim_id	str_to_anim_id(const char *str);
 
 #endif

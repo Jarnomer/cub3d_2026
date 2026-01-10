@@ -12,31 +12,25 @@
 
 #include <game.h>
 
-static void	draw_weapon_pixel(t_game *game, t_vec2i dst, t_vec2i src, t_sheet *s)
+static void	draw_weapon_row(t_game *game, t_sheet *sheet, t_vec2i pos, t_i32 y)
 {
 	t_i32	frame;
 	t_u32	color;
-
-	frame = weapon_get_frame(&game->player.weapon, game);
-	color = sheet_sample(s, frame, src.x, src.y);
-	if (color_a(color) >= ALPHA_THRESHOLD)
-		render_pixel_safe(game->render.overlay, dst.x, dst.y, color);
-}
-
-static void	draw_weapon_row(t_game *game, t_sheet *s, t_vec2i pos, t_i32 y)
-{
 	t_vec2i	dst;
 	t_vec2i	src;
 	t_i32	x;
 
-	dst.y = pos.y - (t_i32)(s->height * WEAPON_SCALE) + y;
+	frame = weapon_get_frame(&game->player.weapon, game);
+	dst.y = pos.y - (t_i32)(sheet->height * WEAPON_SCALE) + y;
 	src.y = y / (t_i32)WEAPON_SCALE;
 	x = 0;
-	while (x < (t_i32)(s->width * WEAPON_SCALE))
+	while (x < (t_i32)(sheet->width * WEAPON_SCALE))
 	{
-		dst.x = pos.x - (t_i32)(s->width * WEAPON_SCALE) / 2 + x;
+		dst.x = pos.x - (t_i32)(sheet->width * WEAPON_SCALE) / 2 + x;
 		src.x = x / (t_i32)WEAPON_SCALE;
-		draw_weapon_pixel(game, dst, src, s);
+		color = sheet_sample(sheet, frame, src.x, src.y);
+		if (color_a(color) >= ALPHA_THRESHOLD)
+			render_pixel_safe(game->render.overlay, dst.x, dst.y, color);
 		x++;
 	}
 }
@@ -48,8 +42,8 @@ static void	calc_weapon_pos(t_game *game, t_weapon *wpn, t_vec2i *pos)
 
 	base_x = game->render.width / 2 + WEAPON_OFFSET_X;
 	base_y = game->render.height + WEAPON_OFFSET_Y;
-	pos->x = base_x + (t_i32)(wpn->sway_x);
-	pos->y = base_y + (t_i32)(wpn->sway_y - wpn->bob - wpn->recoil);
+	pos->x = base_x + (t_i32)(wpn->sway.x);
+	pos->y = base_y + (t_i32)(wpn->sway.y - wpn->bob - wpn->recoil);
 	pos->y -= (t_i32)bob_get_weapon_offset(&game->player.motion);
 }
 

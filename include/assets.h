@@ -62,6 +62,6 @@ t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
 
 t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);
-t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id);
+t_sheet	*assets_get_sheet(t_assets *assets, t_sheet_id id);
 
 #endif

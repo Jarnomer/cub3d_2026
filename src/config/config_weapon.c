@@ -29,15 +29,15 @@ static t_ammo	str_to_ammo(const char *str)
 		return (AMMO_BULLET);
 	if (ft_strcmp(str, "AMMO_CELL") == 0)
 		return (AMMO_CELL);
-	if (ft_strcmp(str, "AMMO_EXP") == 0)
-		return (AMMO_EXP);
+	if (ft_strcmp(str, "AMMO_EXPLOSIVE") == 0)
+		return (AMMO_EXPLOSIVE);
 	return (AMMO_SHELL);
 }
 
 static void	parse_wpn_line(char **p, t_wpndef *def)
 {
 	def->id = str_to_wpn_id(p[0]);
-	def->sheet_id = str_to_sht_id(p[1]);
+	def->sheet_id = str_to_sheet_id(p[1]);
 	def->anim_idle = str_to_anim_id(p[2]);
 	def->anim_fire = str_to_anim_id(p[3]);
 	def->anim_reload = str_to_anim_id(p[4]);

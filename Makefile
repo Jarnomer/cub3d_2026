@@ -90,13 +90,16 @@ SOURCES := main \
            entity_door_utils \
            entity_barrel \
            player \
-           player_act \
+           player_move \
+           player_rotate \
+           player_interact \
            player_health \
            player_ammo \
            weapon \
-           weapon_update \
            weapon_action \
+           weapon_update \
            weapon_state \
+           weapon_utils \
            motion \
            motion_update \
            motion_bob \

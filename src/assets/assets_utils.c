@@ -26,7 +26,7 @@ t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id)
 	return (&assets->sprites[id]);
 }
 
-t_sheet	*assets_get_sheet(t_assets *assets, t_sht_id id)
+t_sheet	*assets_get_sheet(t_assets *assets, t_sheet_id id)
 {
 	if (id < 0 || id >= SHEET_COUNT)
 		return (NULL);

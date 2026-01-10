@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_act.c                                       :+:      :+:    :+:   */
+/*   player_interact.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,16 +25,16 @@ static bool	is_interactable(t_entity *ent)
 	return (false);
 }
 
-static t_entity	*find_nearest_interactable(t_game *game)
+static t_entity	*find_interactable(t_game *game)
 {
 	t_entity	*ent;
-	t_entity	*nearest;
+	t_entity	*object;
 	t_f32		dist;
-	t_f32		nearest_dist;
+	t_f32		nearest;
 	size_t		i;
 
-	nearest = NULL;
-	nearest_dist = INTERACT_RANGE + 1.0f;
+	object = NULL;
+	nearest = INTERACT_RANGE + 1.0f;
 	i = 0;
 	while (i < game->entities.size)
 	{
@@ -42,22 +42,22 @@ static t_entity	*find_nearest_interactable(t_game *game)
 		if (ent->active && is_interactable(ent))
 		{
 			dist = vec2_len(vec2_sub(ent->pos, game->camera.pos));
-			if (dist < nearest_dist && dist <= INTERACT_RANGE)
+			if (dist < nearest && dist <= INTERACT_RANGE)
 			{
-				nearest = ent;
-				nearest_dist = dist;
+				object = ent;
+				nearest = dist;
 			}
 		}
 		i++;
 	}
-	return (nearest);
+	return (object);
 }
 
 void	player_interact(t_game *game)
 {
 	t_entity	*target;
 
-	target = find_nearest_interactable(game);
+	target = find_interactable(game);
 	if (target)
 		interact_with_target(target);
 }

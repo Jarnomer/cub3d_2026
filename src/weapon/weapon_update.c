@@ -38,7 +38,7 @@ static void	update_firing(t_weapon *wpn, t_game *game, t_f32 dt)
 	def = weapon_get_def(game, wpn->id);
 	if (!def)
 		return ;
-	wpn->fire_timer -= dt;
+	wpn->timer -= dt;
 	if (wpn->anim.done)
 	{
 		wpn->ready = true;

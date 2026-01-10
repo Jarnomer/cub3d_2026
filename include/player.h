@@ -35,13 +35,16 @@ typedef struct s_player_player
 
 void	player_init(t_player *player, t_game *game);
 
+void	player_move(t_game *game, t_f32 dt);
+void	player_rotate(t_game *game, t_f32 dt);
+
 void	player_take_damage(t_player *player, t_i32 amount);
 void	player_add_health(t_player *player, t_i32 amount);
 void	player_add_armor(t_player *player, t_i32 amount);
 
-bool	player_use_ammo(t_player *player, t_ammo type, t_i32 amount);
 void	player_add_ammo(t_player *player, t_ammo type, t_i32 amount);
+bool	player_use_ammo(t_player *player, t_ammo type, t_i32 amount);
 t_i32	player_get_ammo(t_player *player, t_ammo type);
-t_i32	player_max_ammo(t_ammo type);
+bool	player_has_ammo(t_player *player, t_ammo type);
 
 #endif
