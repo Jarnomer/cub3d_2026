@@ -20,6 +20,7 @@
 # define TAU		6.28318530717958647692f
 # define DEG2RAD	0.01745329251994329577f
 # define RAD2DEG	57.2957795130823208768f
+# define U32_MAX	4294967295U
 # define INFINITE	1e30f
 # define EPSILON	0.0001f
 
@@ -46,5 +47,11 @@ t_i32	mini(t_i32 a, t_i32 b);
 t_i32	maxi(t_i32 a, t_i32 b);
 t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi);
 t_i32	absi(t_i32 val);
+
+void	rand_seed(t_u32 seed);
+t_u32	rand_next(void);
+t_f32	rand_float(void);
+t_f32	rand_range(t_f32 lo, t_f32 hi);
+t_i32	rand_rangei(t_i32 lo, t_i32 hi);
 
 #endif

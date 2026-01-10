@@ -88,8 +88,7 @@ void	player_update(t_game *game, t_f32 dt)
 	player_move(game, get_move_input(game, dt));
 	if (input_key_pressed(&game->input, KEY_INTERACT))
 		player_interact(game);
-	if (input_key_pressed(&game->input, KEY_FIRE)
-		|| input_mouse_pressed(&game->input, KEY_FIRE_MOUSE))
+	if (input_mouse_pressed(&game->input, KEY_FIRE))
 		weapon_fire(&game->player.weapon, game);
 	if (input_key_pressed(&game->input, KEY_RELOAD))
 		weapon_reload(&game->player.weapon, game);

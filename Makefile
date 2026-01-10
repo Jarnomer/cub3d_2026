@@ -70,18 +70,6 @@ SOURCES := main \
            game \
            time \
            camera \
-           input \
-           input_keys \
-           input_mouse \
-           input_mouse_keys \
-           player \
-           player_act \
-           player_health \
-           player_ammo \
-           weapon \
-           weapon_update \
-           weapon_action \
-           weapon_state \
            config \
            config_texture \
            config_sprite \
@@ -89,13 +77,10 @@ SOURCES := main \
            config_entity \
            config_anim \
            config_weapon \
-           grid \
-           grid_fill \
-           grid_getset \
-           grid_utils \
-           anim \
-           anim_update \
-           anim_utils \
+           assets \
+           assets_texture \
+           assets_sheet \
+           assets_utils \
            entity \
            entity_update \
            entity_utils \
@@ -104,10 +89,25 @@ SOURCES := main \
            entity_door_state \
            entity_door_utils \
            entity_barrel \
-           assets \
-           assets_texture \
-           assets_sheet \
-           assets_utils \
+           player \
+           player_act \
+           player_health \
+           player_ammo \
+           weapon \
+           weapon_update \
+           weapon_action \
+           weapon_state \
+           motion \
+           motion_update \
+           motion_bob \
+           shake \
+           input \
+           input_keys \
+           input_mouse \
+           input_mouse_keys \
+           anim \
+           anim_update \
+           anim_utils \
            raycast_dda \
            raycast_dda_pass \
            raycast_init \
@@ -121,6 +121,7 @@ SOURCES := main \
            render_fog \
            render_occlude \
            render_overlay \
+           render_flash \
            render_weapon \
            render_slice \
            render_trans \
@@ -140,6 +141,10 @@ SOURCES := main \
            parse_map_walls \
            parse_spawn \
            parse_utils \
+           grid \
+           grid_fill \
+           grid_getset \
+           grid_utils \
            pool \
            pool_utils \
            arena \
@@ -154,6 +159,7 @@ SOURCES := main \
            calc_angle \
            calc_scalar \
            calc_scalar_int \
+           calc_rand \
            calc_utils \
            vec2 \
            vec2_arith \

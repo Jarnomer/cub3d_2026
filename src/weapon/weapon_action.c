@@ -19,7 +19,7 @@ static t_vec2	apply_spread(t_vec2 dir, t_f32 spread)
 
 	if (spread <= 0.0f)
 		return (dir);
-	offset = ((t_f32)(rand() % 1000) / 1000.0f - 0.5f) * spread;
+	offset = (rand_float() - 0.5f) * spread;
 	angle = atan2f(dir.y, dir.x) + offset;
 	return (vec2_from_angle(angle));
 }
@@ -64,6 +64,8 @@ void	weapon_fire(t_weapon *wpn, t_game *game)
 	wpn->ready = false;
 	wpn->fire_timer = def->fire_rate;
 	wpn->recoil = minf(wpn->recoil + WEAPON_RECOIL_MAX, WEAPON_RECOIL_MAX);
+	shake_add(&game->player.shake, SHAKE_FIRE_INTENSITY, SHAKE_FIRE_DURATION);
+	flash_trigger(&game->player.flash, FLASH_COLOR_MUZZLE, FLASH_DURATION);
 	fire_all_pellets(game, def);
 }
 

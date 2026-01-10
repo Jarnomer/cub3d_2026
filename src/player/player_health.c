@@ -14,14 +14,17 @@
 
 void	player_init(t_player *player, t_game *game)
 {
-    *player = (t_player){.alive = true};
+	*player = (t_player){.alive = true};
 	player->health = PLAYER_START_HEALTH;
 	player->armor = PLAYER_START_ARMOR;
-    player->ammo[AMMO_SHELL] = AMMO_START_SHELL;
+	player->ammo[AMMO_SHELL] = AMMO_START_SHELL;
 	player->ammo[AMMO_BULLET] = AMMO_START_BULLET;
 	player->ammo[AMMO_CELL] = AMMO_START_CELL;
 	player->ammo[AMMO_EXP] = AMMO_START_EXP;
 	weapon_init(&player->weapon, WEAPON_SHOTGUN, game);
+	motion_init(&player->motion);
+	shake_init(&player->shake);
+	flash_init(&player->flash);
 }
 
 void	player_take_damage(t_player *player, t_i32 amount)

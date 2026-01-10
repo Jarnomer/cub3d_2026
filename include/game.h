@@ -45,6 +45,7 @@
 # include <entity.h>
 # include <player.h>
 # include <weapon.h>
+# include <motion.h>
 # include <render.h>
 # include <grid.h>
 # include <anim.h>

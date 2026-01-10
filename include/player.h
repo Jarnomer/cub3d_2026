@@ -13,6 +13,8 @@
 #ifndef PLAYER_H
 # define PLAYER_H
 
+# include <render.h>
+# include <motion.h>
 # include <weapon.h>
 # include <types.h>
 # include <defs.h>
@@ -25,8 +27,9 @@ typedef struct s_player_player
 	t_i32		armor;
 	t_i32		ammo[AMMO_COUNT];
 	t_weapon	weapon;
-	t_u32		kills;
-	t_u32		secrets;
+	t_motion	motion;
+	t_shake		shake;
+	t_flash		flash;
 	bool		alive;
 }	t_player;
 

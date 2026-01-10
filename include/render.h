@@ -93,6 +93,14 @@ typedef struct s_proj
 	bool		use_sheet;
 }	t_proj;
 
+typedef struct s_flash
+{
+	t_u32	color;
+	t_f32	duration;
+	t_f32	timer;
+	bool	active;
+}	t_flash;
+
 typedef struct s_occlude
 {
 	bool	has_door;
@@ -167,6 +175,8 @@ void	render_weapon(t_game *game);
 /* ************************************************************************** */
 
 void	overlay_clear(t_render *render);
+void	overlay_fill_color(t_render *render, t_u32 color);
+void	overlay_apply(t_render *render);
 
 /* ************************************************************************** */
 /*    RENDER PASS FUNCTIONS                                                   */
@@ -193,6 +203,15 @@ void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
 t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
 void	fog_fill_row(t_game *game, t_i32 y);
 void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
+
+/* ************************************************************************** */
+/*    FLASH FUNCTIONS                                                         */
+/* ************************************************************************** */
+
+void	flash_init(t_flash *flash);
+void	flash_trigger(t_flash *flash, t_u32 color, t_f32 duration);
+void	flash_update(t_flash *flash, t_f32 dt);
+void	render_flash(t_game *game, t_flash *flash);
 
 /* ************************************************************************** */
 /*    SPRITE FUNCTIONS                                                        */

@@ -39,6 +39,7 @@ void	game_init(t_game *game, t_map *map)
 	entity_load_spawns(game);
 	grid_cell_fill(game);
 	game->running = true;
+	rand_seed((t_u32)time(NULL));
 	mlx_close_hook(game->mlx, handle_close, game);
 }
 
@@ -67,12 +68,17 @@ static void	game_loop(void *param)
 	weapon_update(&game->player.weapon, game, game->time.delta);
 	entity_update_all(game, game->time.delta);
 	anim_update_entities(game, game->time.delta);
+	motion_update(&game->player.motion, game, game->time.delta);
+	shake_update(&game->player.shake, game->time.delta);
+	flash_update(&game->player.flash, game->time.delta);
+	overlay_clear(&game->render);
 	arena_reset(&game->arena);
 	render_floor(game);
 	render_walls(game);
 	render_sprites(game);
-	overlay_clear(&game->render);
 	render_weapon(game);
+	render_flash(game, &game->player.flash);
+	overlay_apply(&game->render);
 }
 
 void	game_run(t_game *game)

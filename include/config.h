@@ -44,20 +44,16 @@ typedef struct s_wpndef	t_wpndef;
 # define MAX_ENTITIES			128
 # define THREAD_COUNT			8
 # define SKYBOX_ENABLED			0
+# define FLASH_DURATION			0.05f
+# define FLASH_MAX_ALPHA		80.0f
+# define FLASH_COLOR_MUZZLE		0x00FFAA44
 
 /* ************************************************************************** */
 /*    PHYSICS SETTINGS                                                        */
 /* ************************************************************************** */
 
 # define MAX_DELTA				0.1f
-
-/* ************************************************************************** */
-/*    GAMEPLAY SETTINGS                                                       */
-/* ************************************************************************** */
-
-# define INTERACT_RANGE			1.5f
-# define DOOR_TIMER				3.0f
-# define DOOR_AUTO_CLOSE		1
+# define GRAVITY				12.0f
 
 /* ************************************************************************** */
 /*    CAMERA SETTINGS                                                         */
@@ -107,13 +103,55 @@ typedef struct s_wpndef	t_wpndef;
 # define WEAPON_SCALE			3.0f
 
 /* ************************************************************************** */
+/*    GAMEPLAY SETTINGS                                                       */
+/* ************************************************************************** */
+
+# define INTERACT_RANGE			1.5f
+# define DOOR_TIMER				3.0f
+# define DOOR_AUTO_CLOSE		1
+
+# define MOVE_ACCEL				12.0f
+# define MOVE_DECEL				8.0f
+# define MOVE_FRICTION			6.0f
+
+# define JUMP_VELOCITY			4.0f
+# define JUMP_SPEED_MULT		0.8f
+# define JUMP_STAMINA_COST		15.0f
+
+# define CROUCH_HEIGHT			0.3f
+# define CROUCH_SPEED_MULT		0.5f
+# define CROUCH_LERP_SPEED		8.0f
+
+# define STAMINA_MAX			100.0f
+# define STAMINA_REGEN			20.0f
+
+/* ************************************************************************** */
+/*    EFFECT SETTINGS                                                         */
+/* ************************************************************************** */
+
+# define HEAD_BOB_SPEED			10.0f
+# define HEAD_BOB_AMOUNT		0.015f
+# define BOB_LERP				10.0f
+
+# define IDLE_SPEED				1.5f
+# define IDLE_AMOUNT			0.003f
+# define WEAPON_IDLE_AMOUNT		2.0f
+
+# define SHAKE_DECAY			0.9f
+# define SHAKE_FIRE_INTENSITY	3.0f
+# define SHAKE_FIRE_DURATION	0.1f
+# define SHAKE_DAMAGE_INTENSITY	8.0f
+# define SHAKE_DAMAGE_DURATION	0.2f
+
+/* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */
 /* ************************************************************************** */
 
 # define KEY_INTERACT			MLX_KEY_E
 # define KEY_RELOAD				MLX_KEY_R
-# define KEY_FIRE				MLX_KEY_SPACE
-# define KEY_FIRE_MOUSE			MLX_MOUSE_BUTTON_LEFT
+# define KEY_JUMP				MLX_KEY_SPACE
+# define KEY_CROUCH				MLX_KEY_LEFT_CONTROL
+# define KEY_FIRE				MLX_MOUSE_BUTTON_LEFT
 # define MAX_KEYS				512
 # define MAX_MOUSE_KEYS			8
 
