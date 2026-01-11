@@ -20,7 +20,7 @@ static void	draw_wall_column(t_game *game, t_i32 x, t_slice *s, t_tex *tex)
 	t_u8	fog;
 
 	fog = lookup_fog(&game->lookup, s->dist);
-	if (fog >= ALPHA_OPAQUE)
+	if (color_is_solid(fog))
 	{
 		fog_fill_column(game, x, s->start, s->end);
 		return ;

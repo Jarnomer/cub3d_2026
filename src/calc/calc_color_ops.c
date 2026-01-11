@@ -12,22 +12,22 @@
 
 #include <game.h>
 
-t_u32	color_lerp(t_u32 a, t_u32 b, t_u8 t)
+t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor)
 {
 	t_u32	inv;
 	t_u32	r;
 	t_u32	g;
-	t_u32	bl;
+	t_u32	b;
 
-	if (t == 0)
-		return (a);
-	if (t == 255)
-		return (b);
-	inv = 255 - t;
-	r = (color_r(a) * inv + color_r(b) * t) / 255;
-	g = (color_g(a) * inv + color_g(b) * t) / 255;
-	bl = (color_b(a) * inv + color_b(b) * t) / 255;
-	return (color_pack(r, g, bl, color_a(a)));
+	if (factor == 0)
+		return (c1);
+	if (factor == COLOR_MAX)
+		return (c2);
+	inv = COLOR_MAX - factor;
+	r = (color_r(c1) * inv + color_r(c2) * factor) / COLOR_MAX;
+	g = (color_g(c1) * inv + color_g(c2) * factor) / COLOR_MAX;
+	b = (color_b(c1) * inv + color_b(c2) * factor) / COLOR_MAX;
+	return (color_rgba(r, g, b, color_a(c1)));
 }
 
 t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha)
@@ -39,11 +39,21 @@ t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha)
 
 	if (alpha == 0)
 		return (dst);
-	if (alpha == 255)
+	if (alpha == COLOR_MAX)
 		return (src);
-	inv = 255 - alpha;
-	r = (color_r(src) * alpha + color_r(dst) * inv) / 255;
-	g = (color_g(src) * alpha + color_g(dst) * inv) / 255;
-	b = (color_b(src) * alpha + color_b(dst) * inv) / 255;
-	return (color_pack(r, g, b, 255));
+	inv = COLOR_MAX - alpha;
+	r = (color_r(src) * alpha + color_r(dst) * inv) / COLOR_MAX;
+	g = (color_g(src) * alpha + color_g(dst) * inv) / COLOR_MAX;
+	b = (color_b(src) * alpha + color_b(dst) * inv) / COLOR_MAX;
+	return (color_rgba(r, g, b, COLOR_MAX));
+}
+
+bool	color_is_opaque(t_u32 color)
+{
+	return (color_a(color) >= ALPHA_THRESHOLD);
+}
+
+bool	color_is_solid(t_u8 alpha)
+{
+	return (alpha >= ALPHA_OPAQUE);
 }

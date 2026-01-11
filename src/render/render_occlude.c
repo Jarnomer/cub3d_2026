@@ -80,5 +80,5 @@ bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 	color = sheet_sample(sheet, door_get_frame(ent, &game->assets),
 			calc_tex_x(occ, sheet->width),
 			calc_tex_y(game, occ, y, sheet->height));
-	return (color_a(color) >= ALPHA_THRESHOLD);
+	return (color_is_opaque(color));
 }

@@ -29,7 +29,7 @@ static void	draw_weapon_row(t_game *game, t_sheet *sheet, t_vec2i pos, t_i32 y)
 		dst.x = pos.x - (t_i32)(sheet->width * WEAPON_SCALE) / 2 + x;
 		src.x = x / (t_i32)WEAPON_SCALE;
 		color = sheet_sample(sheet, frame, src.x, src.y);
-		if (color_a(color) >= ALPHA_THRESHOLD)
+		if (color_is_opaque(color))
 			render_pixel_safe(game->render.overlay, dst.x, dst.y, color);
 		x++;
 	}

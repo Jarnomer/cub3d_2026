@@ -27,7 +27,7 @@ static void	blend_pixel(t_u32 *dst, t_u32 src)
 	r = (color_r(src) * src_a + color_r(*dst) * inv_a) / 255;
 	g = (color_g(src) * src_a + color_g(*dst) * inv_a) / 255;
 	b = (color_b(src) * src_a + color_b(*dst) * inv_a) / 255;
-	*dst = color_pack(r, g, b, 255);
+	*dst = color_rgba(r, g, b, 255);
 }
 
 void	overlay_fill_color(t_render *render, t_u32 color)

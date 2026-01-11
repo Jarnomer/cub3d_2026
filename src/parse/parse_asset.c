@@ -40,7 +40,7 @@ static t_u32	extract_rgb(char **parts)
 	r = parse_color_value(parts[0]);
 	g = parse_color_value(parts[1]);
 	b = parse_color_value(parts[2]);
-	return (color_pack(r, g, b, 255));
+	return (color_rgba(r, g, b, 255));
 }
 
 static void	validate_color_format(char *str)

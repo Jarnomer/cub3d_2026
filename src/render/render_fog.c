@@ -14,7 +14,7 @@
 
 static t_u32	fog_color(void)
 {
-	return (color_pack(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, 255));
+	return (color_rgba(FOG_COLOR_R, FOG_COLOR_G, FOG_COLOR_B, 255));
 }
 
 t_u32	fog_apply(t_u32 color, t_u8 fog_alpha)
@@ -28,7 +28,7 @@ t_u32	fog_apply(t_u32 color, t_u8 fog_alpha)
 	r = (color_r(color) * inv + FOG_COLOR_R * fog_alpha) / 255;
 	g = (color_g(color) * inv + FOG_COLOR_G * fog_alpha) / 255;
 	b = (color_b(color) * inv + FOG_COLOR_B * fog_alpha) / 255;
-	return (color_pack(r, g, b, color_a(color)));
+	return (color_rgba(r, g, b, color_a(color)));
 }
 
 void	fog_fill_row(t_game *game, t_i32 y)

@@ -32,7 +32,7 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 		{
 			tex_uv.y = trans_sprite_tex_y(proj, y, sheet->height);
 			color = sheet_sample(sheet, proj->frame, tex_uv.x, tex_uv.y);
-			if (color_a(color) >= ALPHA_THRESHOLD)
+			if (color_is_opaque(color))
 				render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		}
 		y++;
@@ -59,7 +59,7 @@ void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x)
 		{
 			tex_uv.y = trans_sprite_tex_y(proj, y, tex->height);
 			color = texture_sample(tex, tex_uv.x, tex_uv.y);
-			if (color_a(color) >= ALPHA_THRESHOLD)
+			if (color_is_opaque(color))
 				render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		}
 		y++;

@@ -12,21 +12,21 @@
 
 #include <game.h>
 
-static t_u32	g_rand_state = 1;
+static t_u32	g_prng_state = 1;
 
 void	rand_seed(t_u32 seed)
 {
 	if (seed == 0)
 		seed = 1;
-	g_rand_state = seed;
+	g_prng_state = seed;
 }
 
 t_u32	rand_next(void)
 {
-	g_rand_state ^= g_rand_state << 13;
-	g_rand_state ^= g_rand_state >> 17;
-	g_rand_state ^= g_rand_state << 5;
-	return (g_rand_state);
+	g_prng_state ^= g_prng_state << 13;
+	g_prng_state ^= g_prng_state >> 17;
+	g_prng_state ^= g_prng_state << 5;
+	return (g_prng_state);
 }
 
 t_f32	rand_float(void)

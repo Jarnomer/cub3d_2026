@@ -12,29 +12,63 @@
 
 #include <game.h>
 
+static t_f32	parse_integer(const char **str)
+{
+	t_f32	result;
+
+	result = 0.0f;
+	while (ft_isdigit(**str))
+	{
+		result = result * 10.0f + (**str - '0');
+		(*str)++;
+	}
+	return (result);
+}
+
+static t_f32	parse_decimal(const char **str)
+{
+	t_f32	result;
+	t_f32	factor;
+
+	result = 0.0f;
+	factor = 0.1f;
+	while (ft_isdigit(**str))
+	{
+		result += (**str - '0') * factor;
+		factor *= 0.1f;
+		(*str)++;
+	}
+	return (result);
+}
+
+static int	parse_sign(const char **str)
+{
+	int	sign;
+
+	sign = 1;
+	if (**str == '-')
+	{
+		sign = -1;
+		(*str)++;
+	}
+	else if (**str == '+')
+		(*str)++;
+	return (sign);
+}
+
 t_f32	ft_atof(const char *str)
 {
 	t_f32	result;
-	t_f32	decimal;
 	int		sign;
 
-	sign = 1;
-	result = 0.0f;
 	while (ft_isspace(*str))
-		++str;
-	if (ft_issign(*str))
-		sign = ',' - *str++;
-	while (*str >= '0' && *str <= '9')
-		result = result * 10.0f + (*str++ - '0');
+		str++;
+	sign = parse_sign(&str);
+	result = parse_integer(&str);
 	if (*str == '.')
 	{
 		str++;
-		decimal = 0.1f;
-		while (*str >= '0' && *str <= '9')
-		{
-			result += (*str++ - '0') * decimal;
-			decimal *= 0.1f;
-		}
+		result += parse_decimal(&str);
 	}
 	return (result * sign);
 }

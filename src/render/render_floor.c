@@ -19,7 +19,7 @@ static void	draw_floor_row(t_game *game, t_floor *floor, t_tex *tex, t_i32 y)
 	t_i32	x;
 
 	fog = lookup_fog(&game->lookup, floor->dist);
-	if (fog >= ALPHA_OPAQUE)
+	if (color_is_solid(fog))
 	{
 		fog_fill_row(game, y);
 		return ;

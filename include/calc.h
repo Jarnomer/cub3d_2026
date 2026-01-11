@@ -23,15 +23,18 @@
 # define U32_MAX	4294967295U
 # define INFINITE	1e30f
 # define EPSILON	0.0001f
+# define COLOR_MAX	255
 
 t_u8	color_r(t_u32 c);
 t_u8	color_g(t_u32 c);
 t_u8	color_b(t_u32 c);
 t_u8	color_a(t_u32 c);
-t_u32	color_pack(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
+t_u32	color_rgba(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
 
-t_u32	color_lerp(t_u32 a, t_u32 b, t_u8 t);
+t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor);
 t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha);
+bool	color_is_opaque(t_u32 color);
+bool	color_is_solid(t_u8 fog);
 
 t_f32	rad_to_deg(t_f32 rad);
 t_f32	deg_to_rad(t_f32 deg);

@@ -26,7 +26,7 @@ static void	draw_door_column(t_game *game, t_i32 x, t_slice *s, t_door *door)
 	{
 		tex_y = clampi((t_i32)s->tex_y, 0, door->sheet->height - 1);
 		color = sheet_sample(door->sheet, door->frame, s->tex_x, tex_y);
-		if (color_a(color) >= ALPHA_THRESHOLD)
+		if (color_is_opaque(color))
 			render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		s->tex_y += s->step;
 		y++;
