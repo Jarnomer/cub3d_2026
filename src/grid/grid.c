@@ -25,7 +25,7 @@ void	grid_init(t_grid *grid, t_i32 width, t_i32 height)
 	i = 0;
 	while (i < total)
 	{
-		grid->cells[i] = CELL_VOID;
+		grid->cells[i] = INVALID_ID;
 		grid->types[i] = CELL_EMPTY;
 		i++;
 	}

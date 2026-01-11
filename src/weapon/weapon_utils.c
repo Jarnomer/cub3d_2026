@@ -33,7 +33,7 @@ static void	fire_pellet(t_game *game, t_wpndef *def)
 	dir = apply_spread(game->camera.dir, def->spread);
 	ray_init(&ray, game->camera.pos, dir);
 	hit = perform_dda(&ray, game, def->range);
-	if (hit.hit && hit.entity != ENTITY_VOID)
+	if (hit.hit && hit.entity != INVALID_ID)
 		entity_damage(game, hit.entity, def->damage);
 }
 

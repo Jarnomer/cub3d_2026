@@ -38,6 +38,7 @@
 /*    PROJECT HEADERS                                                         */
 /* ************************************************************************** */
 
+# include <settings.h>
 # include <parse.h>
 # include <input.h>
 # include <config.h>

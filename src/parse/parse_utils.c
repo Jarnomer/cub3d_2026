@@ -56,7 +56,7 @@ void	parse_remove_newline(char *str)
 		str[len - 1] = '\0';
 }
 
-t_i32	parse_count_parts(char **parts)
+t_i32	parse_count_fields(char **parts)
 {
 	t_i32	count;
 

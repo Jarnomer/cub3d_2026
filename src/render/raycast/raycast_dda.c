@@ -35,7 +35,7 @@ t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist)
 	int		axis;
 	t_hit	hit;
 
-	hit = (t_hit){.entity = ENTITY_VOID};
+	hit = (t_hit){.entity = INVALID_ID};
 	axis = 0;
 	while (!hit.hit)
 	{

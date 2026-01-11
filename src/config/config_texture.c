@@ -6,52 +6,35 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/10 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_tex_id	str_to_tex_id(const char *str)
+static void	process_texture(char **fields, void *ctx)
 {
-	if (ft_strcmp(str, "TEXTURE_FLOOR") == 0)
-		return (TEXTURE_FLOOR);
-	if (ft_strcmp(str, "TEXTURE_CEILING") == 0)
-		return (TEXTURE_CEILING);
-	return (TEXTURE_COUNT);
-}
+	t_assets	*assets;
+	t_i32		id;
 
-static void	process_line(char *line, t_assets *assets)
-{
-	char		**parts;
-	t_tex_id	id;
-
-	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < TEXDEF_FIELD_COUNT)
-		err_exit_msg(MSG_CONF_FMT);
-	parse_remove_newline(parts[2]);
-	if (ft_strcmp(parts[0], "TEXTURE") == 0)
-	{
-		id = str_to_tex_id(parts[1]);
-		if (id < TEXTURE_COUNT)
-			texture_load(&assets->textures[id], parts[2]);
-	}
-	free_arr(parts);
+	assets = (t_assets *)ctx;
+	parse_remove_newline(fields[2]);
+	id = config_str_to_id(fields[1]);
+	if (ft_strcmp(fields[0], "TEXTURE") == 0 && id >= 0 && id < TEXTURE_COUNT)
+		texture_load(&assets->textures[id], fields[2]);
+	if (ft_strcmp(fields[0], "SPRITE") == 0 && id >= 0 && id < SPRITE_COUNT)
+		texture_load(&assets->sprites[id], fields[2]);
 }
 
 void	config_load_textures(t_assets *assets)
 {
-	int		fd;
-	char	*line;
+	t_cfgload	cfg;
 
-	fd = parse_file_open(PATH_CONFIG_TEXTURE, ".def");
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!parse_skip_line(line))
-			process_line(line, assets);
-		free_str(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
+	cfg = (t_cfgload){
+		.path = PATH_CONFIG_TEXTURE,
+		.fields = TEXDEF_FIELD_COUNT,
+		.process = process_texture,
+		.ctx = assets
+	};
+	config_parse_file(&cfg);
 }

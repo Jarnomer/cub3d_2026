@@ -17,6 +17,11 @@
 # include <error.h>
 # include <types.h>
 
+# define DARRAY_INITIAL_CAP		8
+# define DARRAY_GROWTH_FACTOR	2
+# define ARENA_ALIGNMENT		8
+# define FRAME_ARENA_SIZE		65536
+
 typedef struct s_pool
 {
 	void		*data;

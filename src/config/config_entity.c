@@ -6,66 +6,40 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/10 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static t_type	str_to_type(const char *str)
+static void	process_entity(char **fields, void *ctx)
 {
-	if (ft_strcmp(str, "ENTITY_BARREL") == 0)
-		return (ENTITY_BARREL);
-	if (ft_strcmp(str, "ENTITY_DOOR") == 0)
-		return (ENTITY_DOOR);
-	if (ft_strcmp(str, "ENTITY_HEALTH") == 0)
-		return (ENTITY_HEALTH);
-	if (ft_strcmp(str, "ENTITY_ARMOR") == 0)
-		return (ENTITY_ARMOR);
-	if (ft_strcmp(str, "ENTITY_AMMO") == 0)
-		return (ENTITY_AMMO);
-	return (ENTITY_NONE);
-}
-
-static void	parse_def_line(char **p, t_entdef *def)
-{
-	def->type = str_to_type(p[0]);
-	def->spr_id = str_to_spr_id(p[1]);
-	def->scale = ft_atof(p[2]);
-	def->z_offset = ft_atof(p[3]);
-	def->health = ft_atoi(p[4]);
-	def->solid = (ft_atoi(p[5]) != 0);
-}
-
-static void	process_line(char *line, t_entdef *defs)
-{
-	char		**parts;
+	t_entdef	*defs;
 	t_entdef	def;
+	t_i32		type;
 
-	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < ENTDEF_FIELD_COUNT)
-		err_exit_msg(MSG_CONF_FMT);
-	ft_bzero(&def, sizeof(t_entdef));
-	parse_def_line(parts, &def);
-	if (def.type != ENTITY_NONE && def.type < ENTITY_COUNT)
-		defs[def.type] = def;
-	free_arr(parts);
+	defs = (t_entdef *)ctx;
+	type = config_str_to_id(fields[0]);
+	if (type <= ENTITY_NONE || type >= ENTITY_COUNT)
+		return ;
+	def = (t_entdef){.type = type};
+	def.spr_id = config_str_to_id(fields[1]);
+	def.scale = ft_atof(fields[2]);
+	def.z_offset = ft_atof(fields[3]);
+	def.health = ft_atoi(fields[4]);
+	def.solid = (ft_atoi(fields[5]) != 0);
+	defs[type] = def;
 }
 
 void	config_load_entities(t_entdef *defs)
 {
-	int		fd;
-	char	*line;
+	t_cfgload	cfg;
 
-	ft_bzero(defs, sizeof(t_entdef) * ENTITY_COUNT);
-	fd = parse_file_open(PATH_CONFIG_ENTITY, ".def");
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!parse_skip_line(line))
-			process_line(line, defs);
-		free_str(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
+	cfg = (t_cfgload){
+		.path = PATH_CONFIG_ENTITY,
+		.fields = ENTDEF_FIELD_COUNT,
+		.process = process_entity,
+		.ctx = defs
+	};
+	config_parse_file(&cfg);
 }

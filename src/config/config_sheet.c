@@ -6,63 +6,37 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/10 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_sheet_id	str_to_sheet_id(const char *str)
+static void	process_sheet(char **fields, void *ctx)
 {
-	if (ft_strcmp(str, "SHEET_SHOTGUN") == 0)
-		return (SHEET_SHOTGUN);
-	if (ft_strcmp(str, "SHEET_BARREL") == 0)
-		return (SHEET_BARREL);
-	if (ft_strcmp(str, "SHEET_DOOR") == 0)
-		return (SHEET_DOOR);
-	return (SHEET_COUNT);
-}
-
-static void	parse_sheet_line(char **p, t_assets *assets)
-{
-	t_sheet_id	id;
-	const char	*path;
+	t_assets	*assets;
 	t_i32		cols;
 	t_i32		rows;
+	t_i32		id;
 
-	id = str_to_sheet_id(p[0]);
-	if (id >= SHEET_COUNT)
+	assets = (t_assets *)ctx;
+	id = config_str_to_id(fields[0]);
+	if (id < 0 || id >= SHEET_COUNT)
 		return ;
-	path = p[1];
-	cols = ft_atoi(p[2]);
-	rows = ft_atoi(p[3]);
-	sheet_load(&assets->sheets[id], path, cols, rows);
-}
-
-static void	process_line(char *line, t_assets *assets)
-{
-	char	**parts;
-
-	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < SHEETDEF_FIELD_COUNT)
-		err_exit_msg(MSG_CONF_FMT);
-	parse_sheet_line(parts, assets);
-	free_arr(parts);
+	cols = ft_atoi(fields[2]);
+	rows = ft_atoi(fields[3]);
+	sheet_load(&assets->sheets[id], fields[1], cols, rows);
 }
 
 void	config_load_sheets(t_assets *assets)
 {
-	int		fd;
-	char	*line;
+	t_cfgload	cfg;
 
-	fd = parse_file_open(PATH_CONFIG_SHEET, ".def");
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!parse_skip_line(line))
-			process_line(line, assets);
-		free_str(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
+	cfg = (t_cfgload){
+		.path = PATH_CONFIG_SHEET,
+		.fields = SHEETDEF_FIELD_COUNT,
+		.process = process_sheet,
+		.ctx = assets
+	};
+	config_parse_file(&cfg);
 }

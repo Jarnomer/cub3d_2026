@@ -125,7 +125,7 @@ char	*parse_skip_spaces(char *str);
 bool	parse_skip_line(const char *line);
 bool	parse_is_empty_line(const char *line);
 void	parse_remove_newline(char *str);
-t_i32	parse_count_parts(char **parts);
+t_i32	parse_count_fields(char **parts);
 
 /*		parse_map_spawn.c */
 void	parse_save_spawn(t_parse *ctx, int x, int y, char c);

@@ -76,11 +76,11 @@ void	render_wall_column(t_game *game, t_i32 x)
 	dir = trans_ray_dir(&game->camera, x, game->render.width);
 	ray_init(&ray, game->camera.pos, dir);
 	wall = passthr_dda(&ray, game, RAY_MAX_DIST, &door);
-	if (!wall.hit && door.entity == ENTITY_VOID)
+	if (!wall.hit && door.entity == INVALID_ID)
 		return ;
 	if (wall.hit && wall.cell != CELL_DOOR)
 		render_wall(game, &wall, x);
-	if (door.entity != ENTITY_VOID)
+	if (door.entity != INVALID_ID)
 		handle_door(game, &door, x);
 	else if (wall.hit && wall.cell == CELL_DOOR)
 		handle_door(game, &wall, x);

@@ -14,7 +14,7 @@
 
 static void	record_door(t_hit *door, t_ray *ray, int axis, t_i32 entity)
 {
-	if (door->entity != ENTITY_VOID)
+	if (door->entity != INVALID_ID)
 		return ;
 	door->hit = true;
 	door->cell = CELL_DOOR;
@@ -65,8 +65,8 @@ t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door)
 	int		axis;
 	t_hit	hit;
 
-	hit = (t_hit){.entity = ENTITY_VOID};
-	*door = (t_hit){.entity = ENTITY_VOID};
+	hit = (t_hit){.entity = INVALID_ID};
+	*door = (t_hit){.entity = INVALID_ID};
 	axis = 0;
 	while (!hit.hit)
 	{

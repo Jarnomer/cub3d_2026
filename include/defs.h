@@ -13,8 +13,7 @@
 #ifndef DEFS_H
 # define DEFS_H
 
-# define CELL_VOID		-1
-# define ENTITY_VOID	-1
+# define INVALID_ID	-1
 
 typedef enum e_axis
 {
