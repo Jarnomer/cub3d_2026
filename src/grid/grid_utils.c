@@ -15,7 +15,7 @@
 static t_i32	find_door(t_game *game, t_vec2i pos)
 {
 	t_entity	*ent;
-	t_vec2i		grid;
+	t_vec2i		cell;
 	size_t		i;
 
 	i = 0;
@@ -24,9 +24,9 @@ static t_i32	find_door(t_game *game, t_vec2i pos)
 		ent = darray_get(&game->entities, i);
 		if (ent->is_active && ent->type == ENTITY_DOOR)
 		{
-			grid.x = (t_i32)ent->pos.x;
-			grid.y = (t_i32)ent->pos.y;
-			if (grid.x == pos.x && grid.y == pos.y)
+			cell.x = (t_i32)ent->pos.x;
+			cell.y = (t_i32)ent->pos.y;
+			if (cell.x == pos.x && cell.y == pos.y)
 				return ((t_i32)i);
 		}
 		i++;
@@ -50,23 +50,23 @@ t_cell	grid_check_cell(t_game *game, t_vec2i pos, t_i32 *entity)
 	return (CELL_EMPTY);
 }
 
-void	grid_set(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
+void	grid_set_entity(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
 {
 	t_i32	idx;
 
 	if (!grid_valid(grid, x, y))
 		return ;
-	idx = grid_index(grid, x, y);
+	idx = grid_index(grid->width, x, y);
 	grid->cells[idx] = entity;
 }
 
-t_i32	grid_get(t_grid *grid, t_i32 x, t_i32 y)
+t_i32	grid_get_entity(t_grid *grid, t_i32 x, t_i32 y)
 {
 	t_i32	idx;
 
 	if (!grid_valid(grid, x, y))
 		return (INVALID_ID);
-	idx = grid_index(grid, x, y);
+	idx = grid_index(grid->width, x, y);
 	return (grid->cells[idx]);
 }
 

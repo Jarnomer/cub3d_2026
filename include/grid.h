@@ -30,7 +30,7 @@ typedef struct s_grid
 void		grid_init(t_grid *grid, t_i32 width, t_i32 height);
 void		grid_destroy(t_grid *grid);
 bool		grid_valid(t_grid *grid, t_i32 x, t_i32 y);
-t_i32		grid_index(t_grid *grid, t_i32 x, t_i32 y);
+t_i32		grid_index(t_i32 width, t_i32 x, t_i32 y);
 
 void		grid_cell_fill(t_game *game);
 
@@ -41,7 +41,7 @@ void		grid_set_axis(t_grid *grid, t_i32 x, t_i32 y, t_axis a);
 
 t_cell		grid_check_cell(t_game *game, t_vec2i pos, t_i32 *entity);
 bool		grid_door_block(t_game *game, t_i32 entity);
-t_i32		grid_get(t_grid *grid, t_i32 x, t_i32 y);
-void		grid_set(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity);
+t_i32		grid_get_entity(t_grid *grid, t_i32 x, t_i32 y);
+void		grid_set_entity(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity);
 
 #endif

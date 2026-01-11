@@ -15,20 +15,13 @@
 void	grid_init(t_grid *grid, t_i32 width, t_i32 height)
 {
 	t_i32	total;
-	t_i32	i;
 
 	total = width * height;
 	*grid = (t_grid){.width = width, .height = height};
 	grid->cells = safe_calloc(sizeof(t_i32) * total);
 	grid->types = safe_calloc(sizeof(t_u8) * total);
 	grid->axes = safe_calloc(sizeof(t_u8) * total);
-	i = 0;
-	while (i < total)
-	{
-		grid->cells[i] = INVALID_ID;
-		grid->types[i] = CELL_EMPTY;
-		i++;
-	}
+	ft_memset(grid->cells, 0xFF, sizeof(t_i32) * total);
 }
 
 void	grid_destroy(t_grid *grid)
@@ -43,14 +36,10 @@ void	grid_destroy(t_grid *grid)
 
 bool	grid_valid(t_grid *grid, t_i32 x, t_i32 y)
 {
-	if (x < 0 || x >= grid->width)
-		return (false);
-	if (y < 0 || y >= grid->height)
-		return (false);
-	return (true);
+	return ((x < 0 || x >= grid->width || y < 0 || y >= grid->height));
 }
 
-t_i32	grid_index(t_grid *grid, t_i32 x, t_i32 y)
+t_i32	grid_index(t_i32 width, t_i32 x, t_i32 y)
 {
-	return (y * grid->width + x);
+	return (y * width + x);
 }

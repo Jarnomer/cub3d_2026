@@ -14,38 +14,34 @@
 
 static t_axis	detect_axis(t_map *map, t_i32 x, t_i32 y)
 {
-	bool	wall_north;
-	bool	wall_south;
-	bool	wall_east;
-	bool	wall_west;
+	bool	walls[4];
 
-	wall_north = map_is_wall(map, x, y - 1);
-	wall_south = map_is_wall(map, x, y + 1);
-	wall_east = map_is_wall(map, x + 1, y);
-	wall_west = map_is_wall(map, x - 1, y);
-	if (wall_north && wall_south)
+	walls[WALL_NORTH] = map_is_wall(map, x, y - 1);
+	walls[WALL_SOUTH] = map_is_wall(map, x, y + 1);
+	walls[WALL_EAST] = map_is_wall(map, x + 1, y);
+	walls[WALL_WEST] = map_is_wall(map, x - 1, y);
+	if (walls[WALL_NORTH] && walls[WALL_SOUTH])
 		return (AXIS_NS);
-	if (wall_east && wall_west)
+	if (walls[WALL_EAST] && walls[WALL_WEST])
 		return (AXIS_EW);
-	if (wall_north || wall_south)
+	if (walls[WALL_NORTH] || walls[WALL_SOUTH])
 		return (AXIS_NS);
 	return (AXIS_EW);
 }
 
 static void	fill_entity(t_game *game, t_entity *ent, t_i32 entity)
 {
-	t_i32	cell_x;
-	t_i32	cell_y;
+	t_vec2i	cell;
 	t_axis	axis;
 
-	cell_x = (t_i32)ent->pos.x;
-	cell_y = (t_i32)ent->pos.y;
+	cell.x = (t_i32)ent->pos.x;
+	cell.y = (t_i32)ent->pos.y;
 	if (ent->type == ENTITY_DOOR)
 	{
-		axis = detect_axis(game->map, cell_x, cell_y);
-		grid_set_type(&game->grid, cell_x, cell_y, CELL_DOOR);
-		grid_set_axis(&game->grid, cell_x, cell_y, axis);
-		grid_set(&game->grid, cell_x, cell_y, entity);
+		axis = detect_axis(game->map, cell.x, cell.y);
+		grid_set_type(&game->grid, cell.x, cell.y, CELL_DOOR);
+		grid_set_axis(&game->grid, cell.x, cell.y, axis);
+		grid_set_entity(&game->grid, cell.x, cell.y, entity);
 	}
 }
 
