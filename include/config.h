@@ -181,9 +181,9 @@ typedef struct s_wpndef	t_wpndef;
 /* ************************************************************************** */
 
 # define TEXDEF_FIELD_COUNT		3
-# define SHTDEF_FIELD_COUNT		4
+# define SHEETDEF_FIELD_COUNT	4
 # define ENTDEF_FIELD_COUNT		6
-# define ANIDEF_FIELD_COUNT		7
+# define ANIMDEF_FIELD_COUNT	7
 # define WPNDEF_FIELD_COUNT		10
 
 # define PATH_CONFIG_TEXTURE	"config/texture.def"

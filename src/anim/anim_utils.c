@@ -16,7 +16,7 @@ t_i32	anim_get_frame(t_anim *anim, const t_anidef *def)
 {
 	if (!def || def->total == 0)
 		return (0);
-	if (def->reverse)
+	if (def->is_reversed)
 		return (def->start + def->total - 1 - anim->frame);
 	return (def->start + anim->frame);
 }

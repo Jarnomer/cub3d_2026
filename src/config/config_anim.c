@@ -38,10 +38,10 @@ static void	parse_anim_line(char **p, t_anidef *def)
 	def->id = str_to_anim_id(p[0]);
 	def->start = (t_u16)ft_atoi(p[1]);
 	def->total = (t_u16)ft_atoi(p[2]);
-	def->time = ft_atof(p[3]);
-	def->loop = (ft_atoi(p[4]) != 0);
-	def->next = (t_u16)ft_atoi(p[5]);
-	def->reverse = (ft_atoi(p[6]) != 0);
+	def->duration = ft_atof(p[3]);
+	def->next = (t_u16)ft_atoi(p[4]);
+	def->is_looping = (ft_atoi(p[5]) != 0);
+	def->is_reversed = (ft_atoi(p[6]) != 0);
 }
 
 static void	process_line(char *line, t_anidef *defs)
@@ -50,7 +50,7 @@ static void	process_line(char *line, t_anidef *defs)
 	t_anidef	def;
 
 	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < ANIDEF_FIELD_COUNT)
+	if (parse_count_parts(parts) < ANIMDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_FMT);
 	ft_bzero(&def, sizeof(t_anidef));
 	parse_anim_line(parts, &def);

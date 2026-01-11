@@ -17,7 +17,7 @@ static void	advance_frame(t_anim *anim, const t_anidef *def)
 	anim->frame++;
 	if (anim->frame >= def->total)
 	{
-		if (def->loop)
+		if (def->is_looping)
 			anim->frame = 0;
 		else
 		{
@@ -32,12 +32,12 @@ void	anim_update(t_anim *anim, const t_anidef *def, t_f32 dt)
 {
 	if (!anim->is_playing || anim->is_finished)
 		return ;
-	if (!def || def->time <= 0.0f)
+	if (!def || def->duration <= 0.0f)
 		return ;
 	anim->timer += dt;
-	while (anim->timer >= def->time)
+	while (anim->timer >= def->duration)
 	{
-		anim->timer -= def->time;
+		anim->timer -= def->duration;
 		advance_frame(anim, def);
 		if (anim->is_finished)
 			break ;

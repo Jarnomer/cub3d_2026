@@ -12,12 +12,12 @@
 
 #include <game.h>
 
-void	anim_init(t_anim *anim, t_u16 def_id)
+void	anim_init(t_anim *anim, t_anim_id def_id)
 {
 	*anim = (t_anim){.def_id = def_id};
 }
 
-void	anim_play(t_anim *anim, t_u16 def_id)
+void	anim_play(t_anim *anim, t_anim_id def_id)
 {
 	*anim = (t_anim){.def_id = def_id, .is_playing = true};
 }

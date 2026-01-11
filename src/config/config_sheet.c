@@ -44,7 +44,7 @@ static void	process_line(char *line, t_assets *assets)
 	char	**parts;
 
 	parts = safe_split(line, ' ');
-	if (parse_count_parts(parts) < SHTDEF_FIELD_COUNT)
+	if (parse_count_parts(parts) < SHEETDEF_FIELD_COUNT)
 		err_exit_msg(MSG_CONF_FMT);
 	parse_sheet_line(parts, assets);
 	free_arr(parts);

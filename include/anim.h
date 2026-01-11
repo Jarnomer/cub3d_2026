@@ -20,26 +20,26 @@ typedef struct s_game	t_game;
 
 typedef struct s_anidef
 {
-	t_u16	id;
-	t_u16	start;
-	t_u16	total;
-	t_u16	next;
-	t_f32	time;
-	bool	loop;
-	bool	reverse;
+	t_anim_id	id;
+	t_u16		start;
+	t_u16		total;
+	t_u16		next;
+	t_f32		duration;
+	bool		is_looping;
+	bool		is_reversed;
 }	t_anidef;
 
 typedef struct s_anim
 {
-	t_u16	def_id;
-	t_u16	frame;
-	t_f32	timer;
-	bool	is_playing;
-	bool	is_finished;
+	t_anim_id	def_id;
+	t_u16		frame;
+	t_f32		timer;
+	bool		is_playing;
+	bool		is_finished;
 }	t_anim;
 
-void	anim_init(t_anim *anim, t_u16 def_id);
-void	anim_play(t_anim *anim, t_u16 def_id);
+void	anim_init(t_anim *anim, t_anim_id def_id);
+void	anim_play(t_anim *anim, t_anim_id def_id);
 void	anim_stop(t_anim *anim);
 void	anim_reset(t_anim *anim);
 
