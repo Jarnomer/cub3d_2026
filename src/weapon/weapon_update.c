@@ -24,7 +24,7 @@ static void	update_recoil(t_weapon *wpn, t_f32 dt)
 
 static void	update_reloading(t_weapon *wpn, t_game *game)
 {
-	if (wpn->anim.done)
+	if (wpn->anim.is_finished)
 	{
 		wpn->ready = true;
 		weapon_set_state(wpn, STATE_IDLE, game);
@@ -39,7 +39,7 @@ static void	update_firing(t_weapon *wpn, t_game *game, t_f32 dt)
 	if (!def)
 		return ;
 	wpn->timer -= dt;
-	if (wpn->anim.done)
+	if (wpn->anim.is_finished)
 	{
 		wpn->ready = true;
 		weapon_set_state(wpn, STATE_IDLE, game);

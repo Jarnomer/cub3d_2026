@@ -54,6 +54,6 @@ void	*arena_calloc(t_arena *arena, size_t count, size_t size)
 	total = count * size;
 	ptr = arena_alloc(arena, total);
 	if (ptr)
-		ptr = (void *){0};
+		ft_bzero(ptr, total);
 	return (ptr);
 }

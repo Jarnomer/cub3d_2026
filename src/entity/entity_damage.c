@@ -38,7 +38,7 @@ void	entity_death(t_entity *ent)
 {
 	if (ent->state != STATE_DYING)
 		return ;
-	if (!ent->anim.done)
+	if (!ent->anim.is_finished)
 		return ;
 	if (ent->type == ENTITY_BARREL)
 		barrel_death(ent);

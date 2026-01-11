@@ -22,15 +22,15 @@ static void	advance_frame(t_anim *anim, const t_anidef *def)
 		else
 		{
 			anim->frame = def->total - 1;
-			anim->done = true;
-			anim->play = false;
+			anim->is_finished = true;
+			anim->is_playing = false;
 		}
 	}
 }
 
 void	anim_update(t_anim *anim, const t_anidef *def, t_f32 dt)
 {
-	if (!anim->play || anim->done)
+	if (!anim->is_playing || anim->is_finished)
 		return ;
 	if (!def || def->time <= 0.0f)
 		return ;
@@ -39,7 +39,7 @@ void	anim_update(t_anim *anim, const t_anidef *def, t_f32 dt)
 	{
 		anim->timer -= def->time;
 		advance_frame(anim, def);
-		if (anim->done)
+		if (anim->is_finished)
 			break ;
 	}
 }

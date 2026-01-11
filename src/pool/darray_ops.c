@@ -60,14 +60,16 @@ t_err	darray_pop(t_darray *arr, void *out)
 void	darray_shrink(t_darray *arr)
 {
 	void	*new_data;
+	void	*old_data;
 
 	if (arr->size == arr->capacity || arr->size == 0)
 		return ;
 	new_data = safe_calloc(arr->size * arr->elem_size);
 	ft_memcpy(new_data, arr->data, arr->size * arr->elem_size);
 	arr->capacity = arr->size;
+	old_data = arr->data;
 	arr->data = new_data;
-	free(arr->data);
+	free(old_data);
 }
 
 void	darray_reserve(t_darray *arr, size_t capacity)

@@ -23,11 +23,11 @@ void	door_init(t_entity *ent)
 
 void	door_update(t_entity *ent, t_f32 dt)
 {
-	if (ent->state == STATE_OPENING && ent->anim.done)
+	if (ent->state == STATE_OPENING && ent->anim.is_finished)
 		door_set_open(ent);
 	else if (ent->state == STATE_OPEN)
 		door_update_open(ent, dt);
-	else if (ent->state == STATE_CLOSING && ent->anim.done)
+	else if (ent->state == STATE_CLOSING && ent->anim.is_finished)
 		door_set_closed(ent);
 }
 

@@ -34,8 +34,8 @@ typedef struct s_anim
 	t_u16	def_id;
 	t_u16	frame;
 	t_f32	timer;
-	bool	play;
-	bool	done;
+	bool	is_playing;
+	bool	is_finished;
 }	t_anim;
 
 void	anim_init(t_anim *anim, t_u16 def_id);

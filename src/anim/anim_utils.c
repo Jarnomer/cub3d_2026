@@ -23,5 +23,5 @@ t_i32	anim_get_frame(t_anim *anim, const t_anidef *def)
 
 bool	anim_is_playing(t_anim *anim)
 {
-	return (anim->play && !anim->done);
+	return (anim->is_playing && !anim->is_finished);
 }

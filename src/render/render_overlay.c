@@ -70,18 +70,10 @@ void	overlay_apply(t_render *render)
 
 void	overlay_clear(t_render *render)
 {
-	t_u32	*pixels;
-	t_i32	total;
-	t_i32	i;
+	size_t	bytes;
 
 	if (!render->overlay)
 		return ;
-	pixels = (t_u32 *)render->overlay->pixels;
-	total = render->width * render->height;
-	i = 0;
-	while (i < total)
-	{
-		pixels[i] = 0x00000000;
-		i++;
-	}
+	bytes = render->width * render->height * sizeof(t_u32);
+	ft_bzero(render->overlay->pixels, bytes);
 }
