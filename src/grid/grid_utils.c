@@ -22,7 +22,7 @@ static t_i32	find_door(t_game *game, t_vec2i pos)
 	while (i < game->entities.size)
 	{
 		ent = darray_get(&game->entities, i);
-		if (ent->active && ent->type == ENTITY_DOOR)
+		if (ent->is_active && ent->type == ENTITY_DOOR)
 		{
 			grid.x = (t_i32)ent->pos.x;
 			grid.y = (t_i32)ent->pos.y;
@@ -77,7 +77,7 @@ bool	grid_door_block(t_game *game, t_i32 entity)
 	if (entity == INVALID_ID)
 		return (false);
 	ent = darray_get(&game->entities, entity);
-	if (!ent || !ent->active)
+	if (!ent || !ent->is_active)
 		return (false);
 	return (ent->state == STATE_IDLE);
 }

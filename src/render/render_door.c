@@ -40,7 +40,7 @@ static bool	init_door_ctx(t_game *game, t_hit *hit, t_door *door)
 	if (hit->entity < 0)
 		return (false);
 	ent = darray_get(&game->entities, hit->entity);
-	if (!ent || !ent->active)
+	if (!ent || !ent->is_active)
 		return (false);
 	door->sheet = assets_get_sheet(&game->assets, ent->sheet_id);
 	if (!door->sheet || !door->sheet->tex.pixels)

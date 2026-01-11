@@ -56,7 +56,7 @@ static void	handle_door(t_game *game, t_hit *hit, t_i32 x)
 	if (hit->entity < 0)
 		return ;
 	ent = darray_get(&game->entities, hit->entity);
-	if (!ent || !ent->active)
+	if (!ent || !ent->is_active)
 		return ;
 	if (door_is_animating(ent))
 		occlude_store(game, hit, x);

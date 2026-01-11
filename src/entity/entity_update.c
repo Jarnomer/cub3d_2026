@@ -28,7 +28,7 @@ void	entity_update_all(t_game *game, t_f32 dt)
 	while (i < game->entities.size)
 	{
 		ent = darray_get(&game->entities, i);
-		if (ent->active)
+		if (ent->is_active)
 			update_entity(ent, dt);
 		i++;
 	}

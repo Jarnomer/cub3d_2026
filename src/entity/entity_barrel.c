@@ -25,12 +25,12 @@ void	barrel_init(t_entity *ent)
 void	barrel_explode(t_entity *ent)
 {
 	ent->state = STATE_DYING;
-	ent->solid = false;
+	ent->is_solid = false;
 	anim_play(&ent->anim, ANIM_BARREL_EXPLODE);
 }
 
 void	barrel_death(t_entity *ent)
 {
 	ent->state = STATE_DEAD;
-	ent->solid = false;
+	ent->is_solid = false;
 }

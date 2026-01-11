@@ -72,7 +72,7 @@ bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 	if (!occ->has_door || sprite_dist < occ->door_dist)
 		return (false);
 	ent = darray_get(&game->entities, occ->entity_idx);
-	if (!ent || !ent->active)
+	if (!ent || !ent->is_active)
 		return (false);
 	sheet = assets_get_sheet(&game->assets, ent->sheet_id);
 	if (!sheet || !sheet->tex.pixels)

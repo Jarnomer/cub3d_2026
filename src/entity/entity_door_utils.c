@@ -14,9 +14,7 @@
 
 bool	door_can_interact(t_entity *ent)
 {
-	if (ent->state == STATE_OPENING || ent->state == STATE_CLOSING)
-		return (false);
-	return (true);
+	return (!door_is_animating(ent));
 }
 
 bool	door_is_animating(t_entity *ent)
@@ -26,11 +24,7 @@ bool	door_is_animating(t_entity *ent)
 
 bool	door_is_blocking(t_entity *ent)
 {
-	if (ent->state == STATE_IDLE)
-		return (true);
-	if (ent->state == STATE_CLOSING)
-		return (true);
-	return (false);
+	return (ent->state == STATE_IDLE || ent->state == STATE_CLOSING);
 }
 
 t_i32	door_get_frame(t_entity *ent, t_assets *assets)

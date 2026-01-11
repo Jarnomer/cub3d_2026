@@ -28,21 +28,21 @@ void	door_update_open(t_entity *ent, t_f32 dt)
 {
 	if (!DOOR_AUTO_CLOSE)
 		return ;
-	ent->timer -= dt;
-	if (ent->timer <= 0.0f)
+	ent->cooldown -= dt;
+	if (ent->cooldown <= 0.0f)
 		door_start_closing(ent);
 }
 
 void	door_set_open(t_entity *ent)
 {
 	ent->state = STATE_OPEN;
-	ent->solid = false;
-	ent->timer = DOOR_TIMER;
+	ent->is_solid = false;
+	ent->cooldown = DOOR_TIMER;
 }
 
 void	door_set_closed(t_entity *ent)
 {
 	ent->state = STATE_IDLE;
-	ent->solid = true;
+	ent->is_solid = true;
 	anim_init(&ent->anim, ANIM_DOOR_IDLE);
 }

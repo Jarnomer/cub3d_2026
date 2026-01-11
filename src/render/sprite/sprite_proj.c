@@ -39,7 +39,7 @@ static void	calc_screen_pos(t_game *game, t_entity *ent, t_proj *proj)
 static void	init_sprite_ent_ctx(t_entity *ent, t_proj *proj)
 {
 	proj->dist = proj->trans.y;
-	proj->tex_id = ent->tex_id;
+	proj->tex_id = ent->spr_id;
 	proj->use_sheet = ent->use_sheet;
 	proj->sheet_id = ent->sheet_id;
 	proj->frame = 0;

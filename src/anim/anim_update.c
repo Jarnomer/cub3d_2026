@@ -54,7 +54,7 @@ void	anim_update_entities(t_game *game, t_f32 dt)
 	while (i < game->entities.size)
 	{
 		ent = darray_get(&game->entities, i);
-		if (ent->active && ent->has_anim)
+		if (ent->is_active && ent->has_anim)
 		{
 			def = &game->assets.anidefs[ent->anim.def_id];
 			anim_update(&ent->anim, def, dt);

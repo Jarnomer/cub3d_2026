@@ -39,7 +39,7 @@ static t_entity	*find_interactable(t_game *game)
 	while (i < game->entities.size)
 	{
 		ent = darray_get(&game->entities, i);
-		if (ent->active && is_interactable(ent))
+		if (ent->is_active && is_interactable(ent))
 		{
 			dist = vec2_len(vec2_sub(ent->pos, game->camera.pos));
 			if (dist < nearest && dist <= INTERACT_RANGE)

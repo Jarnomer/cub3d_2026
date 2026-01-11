@@ -44,7 +44,7 @@ t_u32	sprites_collect(t_game *game, t_proj *projs)
 	while (i < game->entities.size && count < ENTITY_COUNT)
 	{
 		ent = darray_get(&game->entities, i);
-		if (!ent->active || ent->type == ENTITY_DOOR)
+		if (!ent->is_active || ent->type == ENTITY_DOOR)
 		{
 			i++;
 			continue ;

@@ -19,7 +19,7 @@ void	entity_damage(t_game *game, t_i32 entity_idx, t_i32 amount)
 	if (entity_idx < 0 || (size_t)entity_idx >= game->entities.size)
 		return ;
 	ent = darray_get(&game->entities, entity_idx);
-	if (!ent || !ent->active)
+	if (!ent || !ent->is_active)
 		return ;
 	if (ent->health <= 0)
 		return ;

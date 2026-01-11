@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entity_utils.c                                     :+:      :+:    :+:   */
+/*   entity_load.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,16 +12,47 @@
 
 #include <game.h>
 
-void	entity_apply_def(t_entity *ent, const t_entdef *def)
+static void	init_entity_ctx(t_entity *ent, t_type type)
 {
-	ent->tex_id = def->spr_id;
+	if (type == ENTITY_DOOR)
+		door_init(ent);
+	else if (type == ENTITY_BARREL)
+		barrel_init(ent);
+}
+
+static void	apply_entity_def(t_entity *ent, const t_entdef *def)
+{
+	ent->spr_id = def->spr_id;
 	ent->scale = def->scale;
 	ent->z_offset = def->z_offset;
 	ent->health = def->health;
-	ent->solid = def->solid;
+	ent->is_solid = def->is_solid;
 }
 
-t_entity	*entity_get(t_game *game, t_u32 index)
+static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
 {
-	return ((t_entity *)darray_get(&game->entities, index));
+	const t_entdef	*def;
+	t_entity		ent;
+
+	ent = (t_entity){.pos = pos, .type = type, .is_active = true};
+	def = &assets->entdefs[type];
+	apply_entity_def(&ent, def);
+	init_entity_ctx(&ent, type);
+	return (ent);
+}
+
+void	entity_load_spawns(t_game *game)
+{
+	t_spawn		*spawn;
+	t_entity	ent;
+	t_u32		i;
+
+	i = 0;
+	while (i < game->map->spawn_count)
+	{
+		spawn = &game->map->spawns[i];
+		ent = entity_create(&game->assets, spawn->type, spawn->pos);
+		darray_push(&game->entities, &ent);
+		i++;
+	}
 }

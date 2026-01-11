@@ -14,10 +14,9 @@
 
 void	camera_init(t_camera *cam, t_map *map, t_f32 fov)
 {
-	*cam = (t_camera){0};
-	cam->pos = map->spawn_pos;
+	*cam = (t_camera){.fov = fov * DEG2RAD};
 	cam->angle = map->spawn_angle;
-	cam->fov = fov * DEG2RAD;
+	cam->pos = map->spawn_pos;
 	camera_update(cam);
 }
 

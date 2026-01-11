@@ -27,7 +27,7 @@ static void	process_entity(char **fields, void *ctx)
 	def.scale = ft_atof(fields[2]);
 	def.z_offset = ft_atof(fields[3]);
 	def.health = ft_atoi(fields[4]);
-	def.solid = (ft_atoi(fields[5]) != 0);
+	def.is_solid = (ft_atoi(fields[5]) != 0);
 	defs[type] = def;
 }
 

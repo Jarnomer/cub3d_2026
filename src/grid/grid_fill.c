@@ -58,7 +58,7 @@ static void	fill_entities(t_game *game)
 	while (i < game->entities.size)
 	{
 		ent = darray_get(&game->entities, i);
-		if (ent->active)
+		if (ent->is_active)
 			fill_entity(game, ent, (t_i32)i);
 		i++;
 	}

@@ -19,79 +19,58 @@
 
 typedef struct s_game	t_game;
 typedef struct s_assets	t_assets;
-typedef struct s_proj	t_proj;
 
 typedef struct s_entdef
 {
 	t_type		type;
-	t_u32		spr_id;
-	t_u32		sheet_id;
-	t_u32		anim_id;
+	t_spr_id	spr_id;
+	t_sheet_id	sheet_id;
+	t_anim_id	anim_id;
 	t_f32		scale;
 	t_f32		z_offset;
 	t_i32		health;
-	bool		solid;
+	bool		is_solid;
 	bool		use_sheet;
 }	t_entdef;
 
 typedef struct s_entity
 {
 	t_vec2		pos;
-	t_f32		z;
 	t_type		type;
 	t_state		state;
 	t_anim		anim;
-	t_u32		tex_id;
-	t_u32		sheet_id;
+	t_spr_id	spr_id;
+	t_sheet_id	sheet_id;
 	t_f32		scale;
 	t_f32		z_offset;
 	t_i32		health;
-	t_f32		timer;
-	bool		active;
-	bool		solid;
+	t_f32		cooldown;
+	bool		is_active;
+	bool		is_solid;
 	bool		has_anim;
 	bool		use_sheet;
 }	t_entity;
 
 void		entity_load_spawns(t_game *game);
-
 void		entity_update_all(t_game *game, t_f32 dt);
-
-void		entity_apply_def(t_entity *ent, const t_entdef *def);
-t_entity	*entity_get(t_game *game, t_u32 index);
-
-/* ************************************************************************** */
-/*    ENTITY DAMAGE FUNCTIONS                                                 */
-/* ************************************************************************** */
 
 void		entity_damage(t_game *game, t_i32 entity_idx, t_i32 amount);
 void		entity_death(t_entity *ent);
 
-/* ************************************************************************** */
-/*    DOOR ENTITY FUNCTIONS                                                   */
-/* ************************************************************************** */
-
-/*			entity_door.c */
 void		door_init(t_entity *ent);
 void		door_update(t_entity *ent, t_f32 dt);
 void		door_interact(t_entity *ent);
 
-/*			entity_door_state.c */
 void		door_start_opening(t_entity *ent);
 void		door_start_closing(t_entity *ent);
 void		door_update_open(t_entity *ent, t_f32 dt);
 void		door_set_open(t_entity *ent);
 void		door_set_closed(t_entity *ent);
 
-/*			entity_door_utils.c */
 bool		door_can_interact(t_entity *ent);
 bool		door_is_animating(t_entity *ent);
 bool		door_is_blocking(t_entity *ent);
 t_i32		door_get_frame(t_entity *ent, t_assets *assets);
-
-/* ************************************************************************** */
-/*    BARREL ENTITY FUNCTIONS                                                 */
-/* ************************************************************************** */
 
 void		barrel_init(t_entity *ent);
 void		barrel_explode(t_entity *ent);

@@ -80,9 +80,8 @@ SOURCES := main \
            assets_texture \
            assets_sheet \
            assets_utils \
-           entity \
+           entity_load \
            entity_update \
-           entity_utils \
            entity_damage \
            entity_door \
            entity_door_state \
