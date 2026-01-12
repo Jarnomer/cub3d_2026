@@ -14,10 +14,10 @@
 
 static void	draw_wall_column(t_game *game, t_i32 x, t_slice *s, t_tex *tex)
 {
-	t_i32	y;
-	t_i32	tex_y;
 	t_u32	color;
 	t_u8	fog;
+	t_i32	tex_y;
+	t_i32	y;
 
 	fog = lookup_fog(&game->lookup, s->dist);
 	if (color_is_solid(fog))
@@ -76,12 +76,10 @@ void	render_wall_column(t_game *game, t_i32 x)
 	dir = trans_ray_dir(&game->camera, x, game->render.width);
 	ray_init(&ray, game->camera.pos, dir);
 	wall = passthr_dda(&ray, game, RAY_MAX_DIST, &door);
-	if (!wall.hit && door.entity == INVALID_ID)
-		return ;
 	if (wall.hit && wall.cell != CELL_DOOR)
 		render_wall(game, &wall, x);
 	if (door.entity != INVALID_ID)
 		handle_door(game, &door, x);
-	else if (wall.hit && wall.cell == CELL_DOOR)
+	else if (wall.cell == CELL_DOOR)
 		handle_door(game, &wall, x);
 }

@@ -76,8 +76,6 @@ static void	game_loop(void *param)
 	render_walls(game);
 	render_sprites(game);
 	render_weapon(game);
-	render_flash(game, &game->player.flash);
-	overlay_apply(&game->render);
 }
 
 void	game_run(t_game *game)

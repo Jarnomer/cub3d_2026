@@ -16,7 +16,9 @@ void	occlude_store(t_game *game, t_hit *hit, t_i32 x)
 {
 	t_occlude	*occ;
 
-	if (!game->render.occlude || x < 0 || x >= game->render.width)
+	if (!game->render.occlude)
+		return ;
+	if (x < 0 || x >= game->render.width)
 		return ;
 	occ = &game->render.occlude[x];
 	occ->has_door = true;
@@ -29,7 +31,9 @@ void	occlude_store(t_game *game, t_hit *hit, t_i32 x)
 
 void	occlude_clear(t_game *game, t_i32 x)
 {
-	if (!game->render.occlude || x < 0 || x >= game->render.width)
+	if (!game->render.occlude)
+		return ;
+	if (x < 0 || x >= game->render.width)
 		return ;
 	game->render.occlude[x] = (t_occlude){0};
 }
@@ -66,8 +70,6 @@ bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
 	t_sheet		*sheet;
 	t_u32		color;
 
-	if (!game->render.occlude || x < 0 || x >= game->render.width)
-		return (false);
 	occ = &game->render.occlude[x];
 	if (!occ->has_door || sprite_dist < occ->door_dist)
 		return (false);

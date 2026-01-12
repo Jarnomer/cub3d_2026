@@ -37,13 +37,12 @@ static void	draw_weapon_row(t_game *game, t_sheet *sheet, t_vec2i pos, t_i32 y)
 
 static void	calc_weapon_pos(t_game *game, t_weapon *wpn, t_vec2i *pos)
 {
-	t_i32	base_x;
-	t_i32	base_y;
+	t_vec2i	base;
 
-	base_x = game->render.width / 2 + WEAPON_OFFSET_X;
-	base_y = game->render.height + WEAPON_OFFSET_Y;
-	pos->x = base_x + (t_i32)(wpn->sway.x);
-	pos->y = base_y + (t_i32)(wpn->sway.y - wpn->bob - wpn->recoil);
+	base.x = game->render.width / 2 + WEAPON_OFFSET_X;
+	base.y = game->render.height + WEAPON_OFFSET_Y;
+	pos->x = base.x + (t_i32)(wpn->sway.x);
+	pos->y = base.y + (t_i32)(wpn->sway.y - wpn->bob - wpn->recoil);
 	pos->y -= (t_i32)bob_get_weapon_offset(&game->player.motion);
 }
 

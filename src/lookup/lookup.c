@@ -31,7 +31,7 @@ static void	init_fog_table(t_lookup *lut)
 		else
 		{
 			t = (dist - FOG_START) / (FOG_END - FOG_START);
-			t = 1.0f - expf(-FOG_INTENSITY * t * 3.0f);
+			t = 1.0f - expf(-FOG_INTENSITY * t * 3.5f);
 		}
 		lut->fog_table[i] = (t_u8)(clampf(t, 0.0f, 1.0f) * 255.0f);
 		i++;
