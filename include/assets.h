@@ -21,10 +21,10 @@
 
 typedef struct s_texture
 {
-	t_mlxt	*mlx_tex;
-	t_u32	*pixels;
-	t_i32	width;
-	t_i32	height;
+	t_mlxt		*mlx_tex;
+	t_pixels	pixels;
+	t_i32		width;
+	t_i32		height;
 }	t_tex;
 
 typedef struct s_sheet

@@ -58,7 +58,7 @@ static void	handle_door(t_game *game, t_hit *hit, t_i32 x)
 	ent = darray_get(&game->entities, hit->entity);
 	if (!ent || !ent->is_active)
 		return ;
-	if (door_is_animating(ent))
+	if (door_is_animating(ent) || ent->state == STATE_OPEN)
 		occlude_store(game, hit, x);
 	else if (door_is_blocking(ent))
 		zbuf_write(&game->render, x, hit->dist);

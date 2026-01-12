@@ -12,7 +12,8 @@
 
 #include <game.h>
 
-static void	init_sprite_ctx(t_thd *thd, t_game *game, t_proj *projs, t_u32 cnt)
+static void	init_sprite_ctx(t_thread *thread, t_game *game, t_proj *projs,
+	t_u32 count)
 {
 	t_i32	cols_per_thread;
 	t_i32	i;
@@ -21,35 +22,36 @@ static void	init_sprite_ctx(t_thd *thd, t_game *game, t_proj *projs, t_u32 cnt)
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		thd[i] = (t_thd){.game = game, .projs = projs, .id = i, .count = cnt};
-		thd[i].start = i * cols_per_thread;
+		thread[i] = (t_thread){.game = game, .projs = projs, .id = i};
+		thread[i].count = count;
+		thread[i].start = i * cols_per_thread;
 		if (i == THREAD_COUNT - 1)
-			thd[i].end = game->render.width;
+			thread[i].end = game->render.width;
 		else
-			thd[i].end = (i + 1) * cols_per_thread;
+			thread[i].end = (i + 1) * cols_per_thread;
 		i++;
 	}
 }
 
 static void	*sprite_worker(void *arg)
 {
-	t_thd	*thd;
-	t_i32	x;
-	t_u32	i;
+	t_thread	*thread;
+	t_i32		x;
+	t_u32		i;
 
-	thd = (t_thd *)arg;
+	thread = (t_thread *)arg;
 	i = 0;
-	while (i < thd->count)
+	while (i < thread->count)
 	{
-		x = maxi(thd->projs[i].start.x, thd->start);
-		while (x < thd->projs[i].end.x && x < thd->end)
+		x = maxi(thread->projs[i].start.x, thread->start);
+		while (x < thread->projs[i].end.x && x < thread->end)
 		{
-			if (zbuf_test(&thd->game->render, x, thd->projs[i].dist))
+			if (zbuf_test(&thread->game->render, x, thread->projs[i].dist))
 			{
-				if (thd->projs[i].use_sheet)
-					render_sheet_column(thd->game, &thd->projs[i], x);
+				if (thread->projs[i].use_sheet)
+					render_sheet_column(thread->game, &thread->projs[i], x);
 				else
-					render_sprite_column(thd->game, &thd->projs[i], x);
+					render_sprite_column(thread->game, &thread->projs[i], x);
 			}
 			x++;
 		}
@@ -61,15 +63,15 @@ static void	*sprite_worker(void *arg)
 static void	thread_sprites(t_game *game, t_proj *projs, t_u32 count)
 {
 	pthread_t	threads[THREAD_COUNT];
-	t_thd		thd[THREAD_COUNT];
+	t_thread	thread[THREAD_COUNT];
 	int			err;
 	t_i32		i;
 
-	init_sprite_ctx(thd, game, projs, count);
+	init_sprite_ctx(thread, game, projs, count);
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		err = pthread_create(&threads[i], NULL, sprite_worker, &thd[i]);
+		err = pthread_create(&threads[i], NULL, sprite_worker, &thread[i]);
 		if (err != 0)
 			err_exit_context(MSG_THREAD, strerror(err));
 		i++;
@@ -86,10 +88,12 @@ void	render_sprites(t_game *game)
 {
 	t_proj	*projs;
 	t_u32	count;
+	size_t	bytes;
 
 	if (game->entities.size == 0)
 		return ;
-	projs = arena_alloc(&game->arena, sizeof(t_proj) * game->entities.size);
+	bytes = sizeof(t_proj) * game->entities.size;
+	projs = arena_alloc(&game->arena, bytes);
 	if (!projs)
 		return ;
 	count = sprites_collect(game, projs);

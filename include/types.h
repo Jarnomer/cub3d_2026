@@ -32,4 +32,6 @@ typedef mlx_image_t		t_mlxi;
 typedef mlx_texture_t	t_mlxt;
 typedef pthread_mutex_t	t_mtx;
 
+typedef t_u32*			t_pixels;
+
 #endif

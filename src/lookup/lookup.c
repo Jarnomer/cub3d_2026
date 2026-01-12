@@ -20,7 +20,7 @@ static t_u32	fog_gradient_color(t_f32 t)
 
 	start = color_rgba(FOG_START_R, FOG_START_G, FOG_START_B, 0);
 	end = color_rgba(FOG_END_R, FOG_END_G, FOG_END_B, COLOR_MAX);
-	alpha = (t_u8)(clampf(t, 0.0f, 1.0f) * 255.0f);
+	alpha = (t_u8)(clampf(t, 0.0f, 1.0f) * COLOR_MAX);
 	return (color_lerp(start, end, alpha));
 }
 

@@ -35,7 +35,7 @@ void	render_destroy(t_render *render)
 
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
 {
-	((t_u32 *)img->pixels)[y * img->width + x] = color;
+	((t_pixels)img->pixels)[y * img->width + x] = color;
 }
 
 void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
@@ -44,5 +44,5 @@ void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color)
 		return ;
 	if (y < 0 || y >= (t_i32)img->height)
 		return ;
-	((t_u32 *)img->pixels)[y * img->width + x] = color;
+	((t_pixels)img->pixels)[y * img->width + x] = color;
 }

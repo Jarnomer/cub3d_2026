@@ -12,15 +12,15 @@
 
 #include <game.h>
 
-void	overlay_fill_color(t_render *render, t_u32 color)
+void	overlay_fill(t_render *render, t_u32 color)
 {
-	t_u32	*pixels;
-	t_i32	total;
-	t_i32	i;
+	t_pixels	pixels;
+	t_i32		total;
+	t_i32		i;
 
 	if (!render->overlay || color_a(color) == 0)
 		return ;
-	pixels = (t_u32 *)render->overlay->pixels;
+	pixels = (t_pixels)render->overlay->pixels;
 	total = render->width * render->height;
 	i = 0;
 	while (i < total)
@@ -32,16 +32,16 @@ void	overlay_fill_color(t_render *render, t_u32 color)
 
 void	overlay_apply(t_render *render)
 {
-	t_u32	*frame;
-	t_u32	*overlay;
-	t_i32	total;
-	t_u8	alpha;
-	t_i32	i;
+	t_pixels	frame;
+	t_pixels	overlay;
+	t_i32		total;
+	t_u8		alpha;
+	t_i32		i;
 
 	if (!render->frame || !render->overlay)
 		return ;
-	frame = (t_u32 *)render->frame->pixels;
-	overlay = (t_u32 *)render->overlay->pixels;
+	frame = (t_pixels)render->frame->pixels;
+	overlay = (t_pixels)render->overlay->pixels;
 	total = render->width * render->height;
 	i = 0;
 	while (i < total)

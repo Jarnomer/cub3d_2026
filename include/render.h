@@ -121,7 +121,7 @@ typedef struct s_render
 	t_i32		height;
 }	t_render;
 
-typedef struct s_thd
+typedef struct s_thread
 {
 	t_game	*game;
 	t_proj	*projs;
@@ -129,58 +129,34 @@ typedef struct s_thd
 	t_i32	start;
 	t_i32	end;
 	t_i32	id;
-}	t_thd;
+}	t_thread;
 
-/* ************************************************************************** */
-/*    RAYCAST FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-/*      raycast_dda.c */
 t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
 bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
-
-/*      raycast_dda_pass.c */
 t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door);
 
-/*      raycast_init.c */
 void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
-
-/*      raycast_hit.c */
 void	ray_hit(t_hit *hit, t_ray *ray, int axis);
-
-/*      raycast_utils.c */
 void	ray_step(t_ray *ray, int *axis);
 t_f32	ray_dist(t_ray *ray, int axis);
-
-/* ************************************************************************** */
-/*    RENDER CORE FUNCTIONS                                                   */
-/* ************************************************************************** */
 
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
 void	render_pixel(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 void	render_pixel_safe(t_mlxi *img, t_i32 x, t_i32 y, t_u32 color);
 
-/* ************************************************************************** */
-/*    RENDER MAIN FUNCTIONS                                                   */
-/* ************************************************************************** */
+void	overlay_clear(t_render *render);
+void	overlay_fill(t_render *render, t_u32 color);
+void	overlay_apply(t_render *render);
+
+bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
+void	occlude_clear(t_game *game, t_i32 x);
+void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
 
 void	render_walls(t_game *game);
 void	render_floor(t_game *game);
 void	render_sprites(t_game *game);
 void	render_weapon(t_game *game);
-
-/* ************************************************************************** */
-/*    OVERLAY FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-void	overlay_clear(t_render *render);
-void	overlay_fill_color(t_render *render, t_u32 color);
-void	overlay_apply(t_render *render);
-
-/* ************************************************************************** */
-/*    RENDER PASS FUNCTIONS                                                   */
-/* ************************************************************************** */
 
 void	render_floor_row(t_game *game, t_i32 y);
 void	render_wall_column(t_game *game, t_i32 x);
@@ -188,65 +164,34 @@ void	render_door_column(t_game *game, t_hit *hit, t_i32 x);
 void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x);
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x);
 
-/* ************************************************************************** */
-/*    OCCLUSION FUNCTIONS                                                     */
-/* ************************************************************************** */
-
-bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
-void	occlude_clear(t_game *game, t_i32 x);
-void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
-
-/* ************************************************************************** */
-/*    FOG FUNCTIONS                                                           */
-/* ************************************************************************** */
-
 t_u32	fog_apply(t_u32 color, t_u32 fog);
 void	fog_fill_row(t_game *game, t_i32 y);
 void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
-
-/* ************************************************************************** */
-/*    FLASH FUNCTIONS                                                         */
-/* ************************************************************************** */
 
 void	flash_init(t_flash *flash);
 void	flash_trigger(t_flash *flash, t_u32 color, t_f32 duration);
 void	flash_update(t_flash *flash, t_f32 dt);
 void	render_flash(t_game *game, t_flash *flash);
 
-/* ************************************************************************** */
-/*    SPRITE FUNCTIONS                                                        */
-/* ************************************************************************** */
-
-/*      render_proj.c */
 bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj);
-
-/*      render_sort.c */
 void	sprites_sort(t_proj *projs, t_u32 count);
 t_u32	sprites_collect(t_game *game, t_proj *projs);
 
-/*      render_proj.c */
 t_i32	proj_screen_x(t_proj *proj, t_render *render);
 t_i32	proj_z_offset(t_entity *ent, t_proj *proj, t_render *render);
 t_vec2i	proj_sprite_size(t_entity *ent, t_proj *proj, t_render *render);
 t_i32	proj_apply_pitch(t_proj *proj, t_camera *cam, t_render *render);
 
-/* ************************************************************************** */
-/*    UTILITY FUNCTIONS                                                       */
-/* ************************************************************************** */
-
-/*      render_slice.c */
 t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w);
 void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 scr_h);
 void	slice_calc_tex_step(t_slice *slice, t_i32 tex_h);
 
-/*      render_trans.c */
 t_vec2	trans_world_to_cam(t_camera *cam, t_vec2 pos);
 bool	trans_behind_camera(t_f32 trans_y);
 t_vec2	trans_ray_dir(t_camera *cam, t_i32 x, t_i32 scr_w);
 t_i32	trans_sprite_tex_x(t_proj *proj, t_i32 scr_x, t_i32 tex_w);
 t_i32	trans_sprite_tex_y(t_proj *proj, t_i32 scr_y, t_i32 tex_h);
 
-/*      render_zbuf.c */
 t_f32	zbuf_read(t_render *render, t_i32 x);
 void	zbuf_write(t_render *render, t_i32 x, t_f32 dist);
 bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist);
