@@ -73,7 +73,7 @@ void	parse_color(t_parse *ctx, t_elem type)
 	char	**parts;
 	t_u32	color;
 
-	value = parse_skip_spaces(ctx->line + 2);
+	value = parse_skip_spaces(ctx->line + ID_LEN_COLOR);
 	parse_remove_newline(value);
 	validate_color_format(value);
 	parts = safe_split(value, ',');
@@ -90,7 +90,7 @@ void	parse_texture(t_parse *ctx, t_elem type)
 	char	*value;
 	char	*path;
 
-	value = parse_skip_spaces(ctx->line + 3);
+	value = parse_skip_spaces(ctx->line + ID_LEN_TEXTURE);
 	path = safe_strdup(value);
 	parse_remove_newline(path);
 	parse_file_validate(path, ".png");

@@ -140,7 +140,7 @@ SOURCES := main \
            parse_map \
            parse_map_valid \
            parse_map_walls \
-           parse_spawn \
+           parse_charmap \
            parse_utils \
            grid \
            grid_fill \

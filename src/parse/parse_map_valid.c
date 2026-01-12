@@ -12,23 +12,34 @@
 
 #include <game.h>
 
-static float	get_spawn_angle(char c)
+static void	save_spawn(t_parse *ctx, int x, int y, char c)
 {
-	if (c == CHAR_PLAYER_N)
-		return (3.0f * PI / 2.0f);
-	if (c == CHAR_PLAYER_S)
-		return (PI / 2.0f);
-	if (c == CHAR_PLAYER_E)
-		return (0.0f);
-	return (PI);
+	t_spawn	*spawn;
+
+	if (ctx->map->spawn_count >= MAX_ENTITIES)
+		err_exit_msg(MSG_MAP_ENTITY);
+	spawn = &ctx->map->spawns[ctx->map->spawn_count];
+	spawn->pos.x = (t_f32)x + CELL_CENTER;
+	spawn->pos.y = (t_f32)y + CELL_CENTER;
+	spawn->type = charmap_to_entity(c);
+	ctx->map->grid[y][x] = CHAR_EMPTY;
+	ctx->map->spawn_count++;
 }
 
 static void	save_player(t_parse *ctx, int x, int y, char c)
 {
-	ctx->map->spawn_pos.x = (float)x + 0.5f;
-	ctx->map->spawn_pos.y = (float)y + 0.5f;
-	ctx->map->spawn_angle = get_spawn_angle(c);
+	ctx->map->spawn_pos.x = (t_f32)x + CELL_CENTER;
+	ctx->map->spawn_pos.y = (t_f32)y + CELL_CENTER;
+	if (c == PLAYER_DIR_N)
+		ctx->map->spawn_angle = 3.0f * PI / 2.0f;
+	if (c == PLAYER_DIR_S)
+		ctx->map->spawn_angle = PI / 2.0f;
+	if (c == PLAYER_DIR_E)
+		ctx->map->spawn_angle = 0.0f;
+	else
+		ctx->map->spawn_angle = PI;
 	ctx->map->grid[y][x] = CHAR_EMPTY;
+	ctx->map->player_count++;
 }
 
 static void	validate_characters(t_parse *ctx)
@@ -44,15 +55,12 @@ static void	validate_characters(t_parse *ctx)
 		while (ctx->map->grid[y][x])
 		{
 			c = ctx->map->grid[y][x];
-			if (!ft_strchr(CHARSET_VALID, c))
+			if (!charmap_is_valid(c))
 				err_exit_msg(MSG_MAP_CHAR);
-			if (ft_strchr(CHARSET_PLAYER, c))
-			{
+			else if (charmap_is_player(c))
 				save_player(ctx, x, y, c);
-				ctx->map->player_count++;
-			}
-			else if (ft_strchr(CHARSET_SPAWN, c))
-				parse_save_spawn(ctx, x, y, c);
+			else if (charmap_is_spawn(c))
+				save_spawn(ctx, x, y, c);
 			x++;
 		}
 		y++;
@@ -75,9 +83,11 @@ static void	calculate_dimensions(t_parse *ctx)
 		ctx->map->height++;
 		i++;
 	}
-	if (ctx->map->height < MAP_MIN_SIZE || ctx->map->width < MAP_MIN_SIZE)
+	if (ctx->map->height < MAP_MIN_SIZE
+		|| ctx->map->width < MAP_MIN_SIZE)
 		err_exit_msg(MSG_MAP_SIZE);
-	if (ctx->map->height > MAP_MAX_SIZE || ctx->map->width > MAP_MAX_SIZE)
+	if (ctx->map->height > MAP_MAX_SIZE
+		|| ctx->map->width > MAP_MAX_SIZE)
 		err_exit_msg(MSG_MAP_SIZE);
 }
 
