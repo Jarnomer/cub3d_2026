@@ -70,6 +70,8 @@ SOURCES := main \
            game \
            time \
            camera \
+           $(call expand, config, texture sheet entity anim weapon) \
+           config \
            config \
            config_texture \
            config_sheet \
@@ -167,11 +169,14 @@ SOURCES := main \
            vec2_trans \
            vec2i \
            map_utils \
-           free_utils \
            err_exit \
            err_print \
            safe_mlx \
-           safe_str
+           safe_mem
+
+define expand
+	$(1) $(foreach suffix, $(2), $(1)_$(suffix))
+endef
 
 SOURCES := $(addsuffix .c, $(SOURCES))
 
@@ -195,6 +200,7 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCS) $^ $(LIBFTDIR)/$(LIBFTBIN) \
 	$(MLXFLAGS) $(MLXDIR)/$(BUILDDIR)/$(MLXBIN) -o $(NAME)
+	echo \'$(call expand, config, texture sheet entity anim weapon)\'
 	printf "$(V)$(B)Binary:$(T)$(Y) $(NAME) $(T)\n"
 
 $(OBJECTS): $(LIBFTDIR)/$(LIBFTBIN)

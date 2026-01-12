@@ -28,7 +28,8 @@ typedef enum e_dir
 	WALL_NORTH,
 	WALL_SOUTH,
 	WALL_EAST,
-	WALL_WEST
+	WALL_WEST,
+	WALL_COUNT
 }	t_dir;
 
 typedef enum e_cell
