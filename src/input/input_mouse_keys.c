@@ -32,3 +32,11 @@ bool	input_mouse_released(t_input *input, int button)
 		return (false);
 	return (!input->mouse[button] && input->mouse_prev[button]);
 }
+
+// void	input_mouse_visible(t_game *game)
+// {
+// 	if (!game->input.mouse_captured)
+// 		return ;
+// 	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+// 	game->input.mouse_captured = false;
+// }

@@ -28,7 +28,6 @@ void	game_init(t_game *game, t_map *map)
 	time_init(&game->time);
 	input_init(&game->input);
 	input_mouse_init(game);
-	input_mouse_capture(game);
 	lookup_init(&game->lookup);
 	assets_init(&game->assets, game->map);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);

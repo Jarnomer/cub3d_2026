@@ -12,7 +12,20 @@
 
 #include <game.h>
 
-void	input_mouse_capture(t_game *game)
+static void	input_mouse_center(t_game *game)
+{
+	t_vec2i	center;
+
+	if (!game->input.mouse_captured)
+		return ;
+	center.x = game->render.width / 2;
+	center.y = game->render.height / 2;
+	mlx_set_mouse_pos(game->mlx, center.x, center.y);
+	game->input.mouse_pos.x = (t_f32)center.x;
+	game->input.mouse_pos.y = (t_f32)center.y;
+}
+
+static void	input_mouse_capture(t_game *game)
 {
 	if (game->input.mouse_captured)
 		return ;
@@ -22,24 +35,38 @@ void	input_mouse_capture(t_game *game)
 	game->input.mouse_delta = vec2_zero();
 }
 
-void	input_mouse_release(t_game *game)
+static void	cursor_callback(double x, double y, void *param)
 {
-	if (!game->input.mouse_captured)
-		return ;
-	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
-	game->input.mouse_captured = false;
+	t_game	*game;
+
+	game = (t_game *)param;
+	game->input.mouse_pos.x = (t_f32)x;
+	game->input.mouse_pos.y = (t_f32)y;
 }
 
-void	input_mouse_center(t_game *game)
+void	input_mouse_init(t_game *game)
 {
-	t_i32	center_x;
-	t_i32	center_y;
+	t_vec2i	pos;
+
+	mlx_get_mouse_pos(game->mlx, &pos.x, &pos.y);
+	game->input.mouse_pos.x = (t_f32)pos.x;
+	game->input.mouse_pos.y = (t_f32)pos.y;
+	game->input.mouse_captured = false;
+	mlx_cursor_hook(game->mlx, cursor_callback, game);
+	input_mouse_capture(game);
+}
+
+void	input_mouse_update(t_game *game)
+{
+	t_vec2	center;
 
 	if (!game->input.mouse_captured)
+	{
+		game->input.mouse_delta = vec2_zero();
 		return ;
-	center_x = game->render.width / 2;
-	center_y = game->render.height / 2;
-	mlx_set_mouse_pos(game->mlx, center_x, center_y);
-	game->input.mouse_pos.x = (t_f32)center_x;
-	game->input.mouse_pos.y = (t_f32)center_y;
+	}
+	center.x = (t_f32)(game->render.width / 2);
+	center.y = (t_f32)(game->render.height / 2);
+	game->input.mouse_delta = vec2_sub(game->input.mouse_pos, center);
+	input_mouse_center(game);
 }

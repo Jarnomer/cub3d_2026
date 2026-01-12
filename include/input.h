@@ -32,11 +32,9 @@ typedef struct s_input
 
 void	input_init(t_input *input);
 void	input_update(t_game *game);
-void	input_mouse_init(t_game *game);
 
-void	input_mouse_capture(t_game *game);
-void	input_mouse_release(t_game *game);
-void	input_mouse_center(t_game *game);
+void	input_mouse_init(t_game *game);
+void	input_mouse_update(t_game *game);
 
 bool	input_key_down(t_input *input, int key);
 bool	input_key_pressed(t_input *input, int key);
