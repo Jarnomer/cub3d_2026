@@ -34,7 +34,7 @@ t_u32	color_rgba(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
 t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor);
 t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha);
 bool	color_is_opaque(t_u32 color);
-bool	color_is_solid(t_u8 fog);
+bool	color_is_solid(t_u32 color);
 
 t_f32	rad_to_deg(t_f32 rad);
 t_f32	deg_to_rad(t_f32 deg);

@@ -151,9 +151,12 @@
 # define FOG_ENABLED			1
 # define FOG_START				1.2f
 # define FOG_END				15.0f
-# define FOG_INTENSITY			2.0f
-# define FOG_COLOR_R			0
-# define FOG_COLOR_G			0
-# define FOG_COLOR_B			0
+# define FOG_INTENSITY			2.5f
+# define FOG_START_R			10
+# define FOG_START_G			15
+# define FOG_START_B			30
+# define FOG_END_R				0
+# define FOG_END_G				0
+# define FOG_END_B				0
 
 #endif

@@ -24,7 +24,7 @@ typedef struct s_lookup
 {
 	t_f32	sin_table[TRIG_TABLE_SIZE];
 	t_f32	cos_table[TRIG_TABLE_SIZE];
-	t_u8	fog_table[FOG_TABLE_SIZE];
+	t_u32	fog_table[FOG_TABLE_SIZE];
 	bool	initialized;
 }	t_lookup;
 
@@ -32,6 +32,6 @@ void	lookup_init(t_lookup *lut);
 
 t_f32	lookup_sin(t_lookup *lut, t_f32 angle);
 t_f32	lookup_cos(t_lookup *lut, t_f32 angle);
-t_u8	lookup_fog(t_lookup *lut, t_f32 dist);
+t_u32	lookup_fog(t_lookup *lut, t_f32 dist);
 
 #endif

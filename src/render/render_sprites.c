@@ -17,7 +17,7 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 	t_sheet	*sheet;
 	t_vec2i	tex_uv;
 	t_u32	color;
-	t_u8	fog;
+	t_u32	fog;
 	t_i32	y;
 
 	sheet = assets_get_sheet(&game->assets, proj->sheet_id);
@@ -44,7 +44,7 @@ void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x)
 	t_tex	*tex;
 	t_vec2i	tex_uv;
 	t_u32	color;
-	t_u8	fog;
+	t_u32	fog;
 	t_i32	y;
 
 	tex = assets_get_sprite(&game->assets, proj->tex_id);

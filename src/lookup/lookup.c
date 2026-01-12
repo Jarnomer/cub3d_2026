@@ -12,8 +12,21 @@
 
 #include <game.h>
 
+static t_u32	fog_gradient_color(t_f32 t)
+{
+	t_u32	start;
+	t_u32	end;
+	t_u8	alpha;
+
+	start = color_rgba(FOG_START_R, FOG_START_G, FOG_START_B, 0);
+	end = color_rgba(FOG_END_R, FOG_END_G, FOG_END_B, COLOR_MAX);
+	alpha = (t_u8)(clampf(t, 0.0f, 1.0f) * 255.0f);
+	return (color_lerp(start, end, alpha));
+}
+
 static void	init_fog_table(t_lookup *lut)
 {
+	t_u32	color;
 	t_f32	dist;
 	t_f32	base;
 	t_f32	t;
@@ -31,9 +44,10 @@ static void	init_fog_table(t_lookup *lut)
 		else
 		{
 			t = (dist - FOG_START) / (FOG_END - FOG_START);
-			t = 1.0f - expf(-FOG_INTENSITY * t * 3.5f);
+			t = 1.0f - expf(-FOG_INTENSITY * t * 3.0f);
 		}
-		lut->fog_table[i] = (t_u8)(clampf(t, 0.0f, 1.0f) * 255.0f);
+		color = fog_gradient_color(t);
+		lut->fog_table[i] = color;
 		i++;
 	}
 }

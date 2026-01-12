@@ -40,22 +40,19 @@ t_f32	lookup_cos(t_lookup *lut, t_f32 angle)
 	return (lut->cos_table[angle_to_index(angle)]);
 }
 
-t_u8	lookup_fog(t_lookup *lut, t_f32 dist)
+t_u32	lookup_fog(t_lookup *lut, t_f32 dist)
 {
 	t_i32	idx;
 	t_f32	val;
 
 	if (!FOG_ENABLED || !lut->initialized)
-		return (0);
+		return (color_rgba(0, 0, 0, 0));
 	if (dist <= FOG_START)
-		return (0);
+		return (color_rgba(0, 0, 0, 0));
 	if (dist >= FOG_END)
-		return (255);
+		return (lut->fog_table[FOG_TABLE_SIZE - 1]);
 	val = (dist - FOG_START) / (FOG_END - FOG_START);
 	idx = (t_i32)(val * (FOG_TABLE_SIZE - 1));
-	if (idx < 0)
-		idx = 0;
-	if (idx >= FOG_TABLE_SIZE)
-		idx = FOG_TABLE_SIZE - 1;
+	idx = clampi(idx, 0, FOG_TABLE_SIZE - 1);
 	return (lut->fog_table[idx]);
 }

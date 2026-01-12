@@ -18,6 +18,7 @@ t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor)
 	t_u32	r;
 	t_u32	g;
 	t_u32	b;
+	t_u32	a;
 
 	if (factor == 0)
 		return (c1);
@@ -27,7 +28,8 @@ t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor)
 	r = (color_r(c1) * inv + color_r(c2) * factor) / COLOR_MAX;
 	g = (color_g(c1) * inv + color_g(c2) * factor) / COLOR_MAX;
 	b = (color_b(c1) * inv + color_b(c2) * factor) / COLOR_MAX;
-	return (color_rgba(r, g, b, color_a(c1)));
+	a = (color_a(c1) * inv + color_a(c2) * factor) / COLOR_MAX;
+	return (color_rgba(r, g, b, a));
 }
 
 t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha)
@@ -53,7 +55,7 @@ bool	color_is_opaque(t_u32 color)
 	return (color_a(color) >= ALPHA_THRESHOLD);
 }
 
-bool	color_is_solid(t_u8 alpha)
+bool	color_is_solid(t_u32 color)
 {
-	return (alpha >= ALPHA_OPAQUE);
+	return (color_a(color) >= ALPHA_OPAQUE);
 }

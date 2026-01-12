@@ -200,7 +200,7 @@ void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
 /*    FOG FUNCTIONS                                                           */
 /* ************************************************************************** */
 
-t_u32	fog_apply(t_u32 color, t_u8 fog_alpha);
+t_u32	fog_apply(t_u32 color, t_u32 fog);
 void	fog_fill_row(t_game *game, t_i32 y);
 void	fog_fill_column(t_game *game, t_i32 x, t_i32 start, t_i32 end);
 

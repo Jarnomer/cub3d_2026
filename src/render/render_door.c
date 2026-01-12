@@ -14,10 +14,10 @@
 
 static void	draw_door_column(t_game *game, t_i32 x, t_slice *s, t_door *door)
 {
-	t_i32	y;
-	t_i32	tex_y;
 	t_u32	color;
-	t_u8	fog;
+	t_u32	fog;
+	t_i32	tex_y;
+	t_i32	y;
 
 	slice_calc_tex_step(s, door->sheet->height);
 	fog = lookup_fog(&game->lookup, s->dist);
