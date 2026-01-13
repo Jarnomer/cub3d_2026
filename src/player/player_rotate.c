@@ -35,5 +35,5 @@ void	player_rotate(t_game *game, t_f32 dt)
 	cam->angle = angle_normalize(cam->angle);
 	pitch = clampf(cam->pitch, -PLAYER_MAX_PITCH, PLAYER_MAX_PITCH);
 	cam->pitch = pitch;
-	camera_update(&game->camera);
+	camera_update(game);
 }

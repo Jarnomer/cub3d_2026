@@ -201,5 +201,6 @@ t_f32	camera_floor_offset(t_game *game, t_i32 y);
 t_i32	camera_wall_offset(t_game *game, t_f32 dist);
 t_i32	camera_sprite_offset(t_game *game, t_f32 dist);
 t_f32	camera_get_height(t_game *game);
+t_f32	camera_get_bob_x(t_game *game);
 
 #endif

@@ -45,6 +45,7 @@ t_f32	maxf(t_f32 a, t_f32 b);
 t_f32	clampf(t_f32 val, t_f32 lo, t_f32 hi);
 t_f32	absf(t_f32 val);
 t_f32	iabsf(t_f32 val);
+t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t);
 
 t_i32	mini(t_i32 a, t_i32 b);
 t_i32	maxi(t_i32 a, t_i32 b);

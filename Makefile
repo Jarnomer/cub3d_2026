@@ -103,6 +103,8 @@ SOURCES := main \
            weapon_utils \
            motion \
            motion_move \
+           motion_fov \
+           motion_bob \
            motion_crouch \
            motion_jump \
            motion_sprint \

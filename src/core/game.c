@@ -33,7 +33,7 @@ void	game_init(t_game *game, t_map *map)
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	darray_init(&game->entities, sizeof(t_entity), 32);
 	grid_init(&game->grid, map->width, map->height);
-	camera_init(&game->camera, game->map, FOV_DEFAULT);
+	camera_init(game, BASE_FOV);
 	player_init(&game->player, game);
 	entity_load_spawns(game);
 	grid_cell_fill(game);

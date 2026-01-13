@@ -12,19 +12,24 @@
 
 #include <game.h>
 
-void	camera_init(t_camera *cam, t_map *map, t_f32 fov)
+void	camera_init(t_game *game, t_f32 fov)
 {
-	*cam = (t_camera){.fov = fov * DEG2RAD};
-	cam->angle = map->spawn_angle;
-	cam->pos = map->spawn_pos;
-	camera_update(cam);
+	game->camera = (t_camera){.fov = fov * DEG2RAD};
+	game->camera.angle = game->map->spawn_angle;
+	game->camera.pos = game->map->spawn_pos;
+	game->camera.dir.x = cosf(game->camera.angle);
+	game->camera.dir.y = sinf(game->camera.angle);
+	camera_update(game);
 }
 
-void	camera_update(t_camera *cam)
+void	camera_update(t_game *game)
 {
-	t_f32	plane_len;
+	t_f32	fov;
+	t_f32	plane;
 
-	cam->dir = vec2_from_angle(cam->angle);
-	plane_len = tanf(cam->fov / 2.0f);
-	cam->plane = vec2_mul(vec2_perp(cam->dir), plane_len);
+	fov = deg_to_rad(fov_get_current(&game->player.motion.fov));
+	plane = tanf(fov * CAMERA_HEIGHT);
+	game->camera.dir.x = cosf(game->camera.angle);
+	game->camera.dir.y = sinf(game->camera.angle);
+	game->camera.plane = vec2_mul(vec2_perp(game->camera.dir), plane);
 }

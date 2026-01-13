@@ -48,3 +48,8 @@ t_f32	iabsf(t_f32 val)
 		return (INFINITE);
 	return (absf(1.0f / val));
 }
+
+t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t)
+{
+	return (a + (b - a) * t);
+}

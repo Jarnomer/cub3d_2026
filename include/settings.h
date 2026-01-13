@@ -26,7 +26,7 @@
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
-# define FOV_DEFAULT			66.0f
+# define BASE_FOV			66.0f
 # define RAY_MAX_DIST			64.0f
 # define ALPHA_THRESHOLD		128
 # define ALPHA_OPAQUE			250
@@ -120,6 +120,29 @@
 # define SPRINT_STAMINA_DRAIN	25.0f
 # define SPRINT_ALLOW_JUMP		0
 # define SPRINT_ALLOW_STRAFE	0
+
+/* ************************************************************************** */
+/*    HEAD BOB SETTINGS                                                       */
+/* ************************************************************************** */
+
+# define BOB_IDLE_FREQ			0.0f
+# define BOB_IDLE_AMP			0.0f
+# define BOB_WALK_FREQ			10.0f
+# define BOB_WALK_AMP_Y			0.05f
+# define BOB_WALK_AMP_X			0.03f
+# define BOB_CROUCH_MULT		0.6f
+# define BOB_SPRINT_FREQ		14.5f
+# define BOB_SPRINT_AMP_Y		0.05f
+# define BOB_SPRINT_AMP_X		0.04f
+# define BOB_SPRINT_ASYM		0.6f
+# define BOB_LERP_SPEED			8.0f
+
+/* ************************************************************************** */
+/*    FOV SETTINGS                                                            */
+/* ************************************************************************** */
+
+# define FOV_SPRINT_OFFSET		4.0f
+# define FOV_LERP_SPEED			6.0f
 
 /* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */
