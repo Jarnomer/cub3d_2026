@@ -24,8 +24,12 @@ typedef struct s_motion
 	t_f32	stamina;
 	t_f32	crouch_amount;
 	t_f32	crouch_target;
+	t_f32	jump_offset;
+	t_f32	jump_velocity;
 	bool	is_grounded;
+	bool	is_jumping;
 	bool	is_crouching;
+	bool	is_sprinting;
 }	t_motion;
 
 void	motion_init(t_motion *motion);
@@ -36,5 +40,16 @@ void	crouch_end(t_motion *motion);
 void	crouch_update(t_motion *motion, t_f32 dt);
 t_f32	crouch_height(t_motion *motion);
 t_f32	crouch_get_mult(t_motion *motion);
+
+bool	jump_can_start(t_motion *motion);
+void	jump_start(t_motion *motion);
+void	jump_update(t_motion *motion, t_f32 dt);
+t_f32	jump_height(t_motion *motion);
+
+bool	sprint_can_start(t_motion *motion);
+void	sprint_start(t_motion *motion);
+void	sprint_stop(t_motion *motion);
+void	sprint_update(t_motion *motion, t_f32 dt);
+t_f32	sprint_get_mult(t_motion *motion);
 
 #endif

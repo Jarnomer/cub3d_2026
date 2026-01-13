@@ -42,7 +42,7 @@
 /* ************************************************************************** */
 
 # define MAX_DELTA				0.1f
-# define GRAVITY				12.0f
+# define GRAVITY				8.0f
 
 /* ************************************************************************** */
 /*    CAMERA SETTINGS                                                         */
@@ -106,7 +106,7 @@
 # define MOVE_DECEL				8.0f
 # define MOVE_FRICTION			6.0f
 
-# define JUMP_VELOCITY			4.0f
+# define JUMP_VELOCITY			2.8f
 # define JUMP_SPEED_MULT		0.8f
 # define JUMP_STAMINA_COST		15.0f
 
@@ -116,6 +116,11 @@
 # define CROUCH_HEIGHT_OFFSET	0.25f
 # define CROUCH_THRESHOLD		0.01f
 
+# define SPRINT_SPEED_MULT		1.6f
+# define SPRINT_STAMINA_DRAIN	25.0f
+# define SPRINT_ALLOW_JUMP		0
+# define SPRINT_ALLOW_STRAFE	0
+
 /* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */
 /* ************************************************************************** */
@@ -123,6 +128,7 @@
 # define KEY_INTERACT			MLX_KEY_E
 # define KEY_RELOAD				MLX_KEY_R
 # define KEY_JUMP				MLX_KEY_SPACE
+# define KEY_SPRINT				MLX_KEY_LEFT_SHIFT
 # define KEY_CROUCH				MLX_KEY_LEFT_CONTROL
 # define KEY_MOUSE_FIRE			MLX_MOUSE_BUTTON_LEFT
 # define MAX_KEYS				512

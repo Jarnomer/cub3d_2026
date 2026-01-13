@@ -65,6 +65,7 @@ static t_vec2	get_direction(t_game *game, t_f32 dt)
 	move = vec2_add(vec2_mul(game->camera.dir, input.y),
 			vec2_mul(vec2_perp(game->camera.dir), input.x));
 	base = crouch_get_mult(&game->player.motion);
+	base *= sprint_get_mult(&game->player.motion);
 	speed = base * PLAYER_SPEED * dt;
 	return (vec2_mul(vec2_normalize(move), speed));
 }

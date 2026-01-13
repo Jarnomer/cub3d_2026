@@ -103,6 +103,8 @@ SOURCES := main \
            weapon_utils \
            motion \
            motion_crouch \
+           motion_jump \
+           motion_sprint \
            input \
            input_keys \
            input_mouse \

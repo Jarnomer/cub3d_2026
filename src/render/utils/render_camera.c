@@ -51,5 +51,10 @@ t_i32	camera_sprite_offset(t_game *game, t_f32 dist)
 
 t_f32	camera_get_height(t_game *game)
 {
-	return (crouch_height(&game->player.motion) + CAMERA_HEIGHT);
+	t_f32	crouch;
+	t_f32	jump;
+
+	crouch = crouch_height(&game->player.motion);
+	jump = jump_height(&game->player.motion);
+	return (crouch + jump + CAMERA_HEIGHT);
 }
