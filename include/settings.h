@@ -87,6 +87,25 @@
 # define WEAPON_OFFSET_Y		-130
 # define WEAPON_SCALE			3.0f
 
+# define SWAY_IDLE_FREQ			1.5f
+# define SWAY_IDLE_AMP_X		5.0f
+# define SWAY_IDLE_AMP_Y		3.0f
+# define SWAY_MOVE_AMP_X		16.0f
+# define SWAY_MOVE_AMP_Y		12.0f
+# define SWAY_CROUCH_MULT		0.6f
+# define SWAY_LERP_SPEED		10.0f
+
+# define INERTIA_STRENGTH		8.0f
+# define INERTIA_MAX_X			100.0f
+# define INERTIA_MAX_Y			25.0f
+# define INERTIA_VEL_DECAY		15.0f
+# define INERTIA_POS_DECAY		15.0f
+
+# define WEAPON_BOB_IDLE_AMP	1.5f
+# define WEAPON_BOB_MOVE_AMP	5.0f
+# define WEAPON_BOB_CROUCH_MULT	0.6f
+# define WEAPON_BOB_LERP		12.0f
+
 /* ************************************************************************** */
 /*    GAMEPLAY SETTINGS                                                       */
 /* ************************************************************************** */

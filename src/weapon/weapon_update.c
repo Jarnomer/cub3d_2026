@@ -59,4 +59,7 @@ void	weapon_update(t_weapon *wpn, t_game *game, t_f32 dt)
 	else if (wpn->state == STATE_RELOADING)
 		update_reloading(wpn, game);
 	update_recoil(wpn, dt);
+	sway_update(&wpn->sway, &game->player.motion, dt);
+	inertia_update(&wpn->sway, game->input.mouse_delta, dt);
+	weapon_bob_update(wpn, &game->player.motion, dt);
 }

@@ -24,9 +24,13 @@ static t_vec2i	calc_weapon_base(t_render *render)
 static t_vec2i	calc_weapon_offset(t_player *player)
 {
 	t_vec2i	offset;
+	t_vec2	sway;
+	t_vec2	inertia;
 
-	offset.x = (t_i32)(player->weapon.sway.x);
-	offset.y = (t_i32)(-player->weapon.sway.y - player->weapon.bob);
+	sway = sway_get_offset(&player->weapon.sway);
+	inertia = inertia_get_offset(&player->weapon.sway);
+	offset.x = (t_i32)(sway.x + inertia.x);
+	offset.y = (t_i32)(-sway.y - inertia.y - player->weapon.bob);
 	offset.y -= (t_i32)(player->weapon.recoil);
 	return (offset);
 }

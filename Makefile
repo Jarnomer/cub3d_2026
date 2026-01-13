@@ -100,6 +100,9 @@ SOURCES := main \
            weapon_action \
            weapon_update \
            weapon_state \
+           weapon_sway \
+           weapon_inertia \
+           weapon_bob \
            weapon_utils \
            motion \
            motion_move \
@@ -140,7 +143,6 @@ SOURCES := main \
            thread_floor \
            thread_walls \
            thread_sprites \
-           blit \
            blit_sample \
            blit_pos \
            blit_render \

@@ -18,6 +18,7 @@
 # include <defs.h>
 
 typedef struct s_game	t_game;
+typedef struct s_motion	t_motion;
 
 typedef struct s_wpndef
 {
@@ -37,12 +38,21 @@ typedef struct s_wpndef
 	bool		automatic;
 }	t_wpndef;
 
+typedef struct s_sway
+{
+	t_vec2	current;
+	t_vec2	target;
+	t_vec2	inertia;
+	t_vec2	velocity;
+	t_f32	phase;
+}	t_sway;
+
 typedef struct s_weapon
 {
 	t_wpn_id	id;
 	t_state		state;
 	t_anim		anim;
-	t_vec2		sway;
+	t_sway		sway;
 	t_f32		timer;
 	t_f32		bob;
 	t_f32		recoil;
@@ -61,6 +71,15 @@ void		weapon_update(t_weapon *wpn, t_game *game, t_f32 dt);
 void		weapon_set_state(t_weapon *wpn, t_state state, t_game *game);
 bool		weapon_can_fire(t_weapon *wpn, t_game *game);
 bool		weapon_can_reload(t_weapon *wpn, t_game *game);
+
+void		sway_init(t_sway *sway);
+void		sway_update(t_sway *sway, t_motion *motion, t_f32 dt);
+t_vec2		sway_get_offset(t_sway *sway);
+
+void		inertia_update(t_sway *sway, t_vec2 mouse_delta, t_f32 dt);
+t_vec2		inertia_get_offset(t_sway *sway);
+
+void		weapon_bob_update(t_weapon *wpn, t_motion *motion, t_f32 dt);
 
 void		weapon_fire_all_pellets(t_game *game, t_wpndef *def);
 
