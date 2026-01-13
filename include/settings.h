@@ -84,7 +84,7 @@
 # define WEAPON_RECOIL_DECAY	12.0f
 
 # define WEAPON_OFFSET_X		125
-# define WEAPON_OFFSET_Y		0
+# define WEAPON_OFFSET_Y		-130
 # define WEAPON_SCALE			3.0f
 
 /* ************************************************************************** */

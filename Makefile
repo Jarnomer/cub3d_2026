@@ -140,6 +140,10 @@ SOURCES := main \
            thread_floor \
            thread_walls \
            thread_sprites \
+           blit \
+           blit_sample \
+           blit_pos \
+           blit_render \
            parse \
            parse_file \
            parse_elem \

@@ -12,37 +12,23 @@
 
 #include <game.h>
 
-static void	draw_weapon_row(t_game *game, t_sheet *sheet, t_vec2i pos, t_i32 y)
-{
-	t_i32	frame;
-	t_u32	color;
-	t_vec2i	dst;
-	t_vec2i	src;
-	t_i32	x;
-
-	frame = weapon_get_frame(&game->player.weapon, game);
-	dst.y = pos.y - (t_i32)(sheet->height * WEAPON_SCALE) + y;
-	src.y = y / (t_i32)WEAPON_SCALE;
-	x = 0;
-	while (x < (t_i32)(sheet->width * WEAPON_SCALE))
-	{
-		dst.x = pos.x - (t_i32)(sheet->width * WEAPON_SCALE) / 2 + x;
-		src.x = x / (t_i32)WEAPON_SCALE;
-		color = sheet_sample(sheet, frame, src.x, src.y);
-		if (color_is_opaque(color))
-			render_pixel_safe(game->render.overlay, dst.x, dst.y, color);
-		x++;
-	}
-}
-
-static void	calc_weapon_pos(t_game *game, t_weapon *wpn, t_vec2i *pos)
+static t_vec2i	calc_weapon_base(t_render *render)
 {
 	t_vec2i	base;
 
-	base.x = game->render.width / 2 + WEAPON_OFFSET_X;
-	base.y = game->render.height + WEAPON_OFFSET_Y;
-	pos->x = base.x + (t_i32)(wpn->sway.x);
-	pos->y = base.y + (t_i32)(wpn->sway.y - wpn->bob - wpn->recoil);
+	base.x = render->width / 2 + WEAPON_OFFSET_X;
+	base.y = render->height + WEAPON_OFFSET_Y;
+	return (base);
+}
+
+static t_vec2i	calc_weapon_offset(t_player *player)
+{
+	t_vec2i	offset;
+
+	offset.x = (t_i32)(player->weapon.sway.x);
+	offset.y = (t_i32)(-player->weapon.sway.y - player->weapon.bob);
+	offset.y -= (t_i32)(player->weapon.recoil);
+	return (offset);
 }
 
 void	render_weapon(t_game *game)
@@ -50,8 +36,8 @@ void	render_weapon(t_game *game)
 	t_weapon	*wpn;
 	t_wpndef	*def;
 	t_sheet		*sheet;
-	t_vec2i		pos;
-	t_i32		y;
+	t_i32		frame;
+	t_blit		blit;
 
 	wpn = &game->player.weapon;
 	if (wpn->id == WEAPON_NONE)
@@ -62,11 +48,10 @@ void	render_weapon(t_game *game)
 	sheet = assets_get_sheet(&game->assets, def->sheet_id);
 	if (!sheet || !sheet->tex.pixels)
 		return ;
-	calc_weapon_pos(game, wpn, &pos);
-	y = 0;
-	while (y < (t_i32)(sheet->height * WEAPON_SCALE))
-	{
-		draw_weapon_row(game, sheet, pos, y);
-		y++;
-	}
+	frame = weapon_get_frame(wpn, game);
+	blit_from_sheet(&blit, sheet, frame, WEAPON_SCALE);
+	blit_set_centered(&blit, calc_weapon_base(&game->render));
+	blit_apply_offset(&blit, calc_weapon_offset(&game->player));
+	blit_clip_bounds(&blit, game->render.width, game->render.height);
+	blit_render(&blit, game->render.overlay);
 }

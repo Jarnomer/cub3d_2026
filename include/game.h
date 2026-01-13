@@ -48,6 +48,7 @@
 # include <weapon.h>
 # include <motion.h>
 # include <render.h>
+# include <blit.h>
 # include <grid.h>
 # include <anim.h>
 # include <pool.h>
