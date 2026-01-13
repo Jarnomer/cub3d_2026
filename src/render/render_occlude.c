@@ -53,14 +53,16 @@ static t_i32	calc_tex_x(t_occlude *occ, t_i32 tex_w)
 
 static t_i32	calc_tex_y(t_game *game, t_occlude *occ, t_i32 y, t_i32 tex_h)
 {
-	t_i32	wall_h;
-	t_i32	wall_top;
-	t_i32	pitch_off;
+	t_i32	height;
+	t_i32	top;
+	t_i32	pitch;
+	t_i32	offset;
 
-	wall_h = (t_i32)(game->render.height / occ->door_dist);
-	pitch_off = (t_i32)(game->camera.pitch * game->render.height);
-	wall_top = game->render.height / 2 - wall_h / 2 + pitch_off;
-	return (clampi((y - wall_top) * tex_h / wall_h, 0, tex_h - 1));
+	height = (t_i32)(game->render.height / occ->door_dist);
+	pitch = (t_i32)(game->camera.pitch * game->render.height);
+	offset = camera_wall_offset(game, occ->door_dist);
+	top = game->render.height / 2 - height / 2 + pitch + offset;
+	return (clampi((y - top) * tex_h / height, 0, tex_h - 1));
 }
 
 bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
