@@ -43,7 +43,6 @@ static void	calc_weapon_pos(t_game *game, t_weapon *wpn, t_vec2i *pos)
 	base.y = game->render.height + WEAPON_OFFSET_Y;
 	pos->x = base.x + (t_i32)(wpn->sway.x);
 	pos->y = base.y + (t_i32)(wpn->sway.y - wpn->bob - wpn->recoil);
-	pos->y -= (t_i32)bob_get_weapon_offset(&game->player.motion);
 }
 
 void	render_weapon(t_game *game)

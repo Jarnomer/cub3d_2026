@@ -36,30 +36,24 @@ static void	draw_floor_row(t_game *game, t_floor *floor, t_tex *tex, t_i32 y)
 
 static void	calc_floor_step(t_floor *floor, t_game *game)
 {
-	t_f32	step_scale;
+	t_f32	step;
 
-	step_scale = floor->dist / (t_f32)game->render.width;
+	step = floor->dist / (t_f32)game->render.width;
 	floor->step = vec2_sub(floor->right, floor->left);
-	floor->step = vec2_mul(floor->step, step_scale);
+	floor->step = vec2_mul(floor->step, step);
 	floor->grid.x = game->camera.pos.x + floor->left.x * floor->dist;
 	floor->grid.y = game->camera.pos.y + floor->left.y * floor->dist;
 }
 
 static void	init_row_ctx(t_floor *floor, t_game *game, t_i32 y)
 {
-	t_camera	cam;
-	t_i32		row_offset;
-	t_i32		pitch;
+	t_i32	offset;
 
-	cam = game->camera;
-	pitch = cam.pitch * game->render.height;
-	floor->horizon = game->render.height / 2 + pitch;
-	floor->left = vec2_sub(cam.dir, cam.plane);
-	floor->right = vec2_add(cam.dir, cam.plane);
-	row_offset = absi(y - floor->horizon);
-	if (row_offset == 0)
-		row_offset = 1;
-	floor->dist = (0.5f * game->render.height) / (t_f32)row_offset;
+	offset = (t_i32)(game->camera.pitch * game->render.height);
+	floor->horizon = game->render.height / 2 + offset;
+	floor->left = vec2_sub(game->camera.dir, game->camera.plane);
+	floor->right = vec2_add(game->camera.dir, game->camera.plane);
+	floor->dist = camera_floor_offset(game, y);
 }
 
 void	render_floor_row(t_game *game, t_i32 y)

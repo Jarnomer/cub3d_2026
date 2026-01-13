@@ -48,6 +48,8 @@ static t_vec2	get_direction(t_game *game, t_f32 dt)
 {
 	t_vec2	input;
 	t_vec2	move;
+	t_f32	base;
+	t_f32	speed;
 
 	input = vec2_zero();
 	if (input_key_down(&game->input, MLX_KEY_W))
@@ -62,7 +64,9 @@ static t_vec2	get_direction(t_game *game, t_f32 dt)
 		return (vec2_zero());
 	move = vec2_add(vec2_mul(game->camera.dir, input.y),
 			vec2_mul(vec2_perp(game->camera.dir), input.x));
-	return (vec2_mul(vec2_normalize(move), PLAYER_SPEED * dt));
+	base = crouch_get_mult(&game->player.motion);
+	speed = base * PLAYER_SPEED * dt;
+	return (vec2_mul(vec2_normalize(move), speed));
 }
 
 void	player_move(t_game *game, t_f32 dt)

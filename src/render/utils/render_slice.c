@@ -39,15 +39,30 @@ t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w)
 	return (slice);
 }
 
-void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 scr_h)
+void	slice_apply_pitch(t_slice *slice, t_game *game)
 {
-	slice->offset = (t_i32)(cam->pitch * scr_h);
+	slice->offset = (t_i32)(game->camera.pitch * game->render.height);
 	slice->start = slice->top + slice->offset;
 	slice->end = slice->bottom + slice->offset;
 	if (slice->start < 0)
 		slice->start = 0;
-	if (slice->end >= scr_h)
-		slice->end = scr_h - 1;
+	if (slice->end >= game->render.height)
+		slice->end = game->render.height - 1;
+}
+
+void	slice_apply_height(t_slice *slice, t_game *game)
+{
+	t_i32	offset;
+
+	offset = camera_wall_offset(game, slice->dist);
+	slice->top += offset;
+	slice->bottom += offset;
+	slice->start = slice->top;
+	slice->end = slice->bottom;
+	if (slice->start < 0)
+		slice->start = 0;
+	if (slice->end >= game->render.height)
+		slice->end = game->render.height - 1;
 }
 
 void	slice_calc_tex_step(t_slice *slice, t_i32 tex_h)

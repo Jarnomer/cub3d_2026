@@ -59,17 +59,15 @@ static void	game_loop(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	time_update(&game->time, game->mlx);
 	input_update(game);
+	time_update(&game->time, game->mlx->delta_time);
 	if (input_key_pressed(&game->input, MLX_KEY_ESCAPE))
 		return ((void)mlx_close_window(game->mlx));
 	player_update(game, game->time.delta);
 	weapon_update(&game->player.weapon, game, game->time.delta);
+	motion_update(&game->player.motion, game->time.delta);
 	entity_update_all(game, game->time.delta);
 	anim_update_entities(game, game->time.delta);
-	motion_update(&game->player.motion, game, game->time.delta);
-	shake_update(&game->player.shake, game->time.delta);
-	flash_update(&game->player.flash, game->time.delta);
 	overlay_clear(&game->render);
 	arena_reset(&game->arena);
 	render_floor(game);

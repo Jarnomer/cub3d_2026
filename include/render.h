@@ -183,7 +183,8 @@ t_vec2i	proj_sprite_size(t_entity *ent, t_proj *proj, t_render *render);
 t_i32	proj_apply_pitch(t_proj *proj, t_camera *cam, t_render *render);
 
 t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w);
-void	slice_apply_pitch(t_slice *slice, t_camera *cam, t_i32 scr_h);
+void	slice_apply_pitch(t_slice *slice, t_game *game);
+void	slice_apply_height(t_slice *slice, t_game *game);
 void	slice_calc_tex_step(t_slice *slice, t_i32 tex_h);
 
 t_vec2	trans_world_to_cam(t_camera *cam, t_vec2 pos);
@@ -195,5 +196,10 @@ t_i32	trans_sprite_tex_y(t_proj *proj, t_i32 scr_y, t_i32 tex_h);
 t_f32	zbuf_read(t_render *render, t_i32 x);
 void	zbuf_write(t_render *render, t_i32 x, t_f32 dist);
 bool	zbuf_test(t_render *render, t_i32 x, t_f32 dist);
+
+t_f32	camera_floor_offset(t_game *game, t_i32 y);
+t_i32	camera_wall_offset(t_game *game, t_f32 dist);
+t_i32	camera_sprite_offset(t_game *game, t_f32 dist);
+t_f32	camera_get_height(t_game *game);
 
 #endif

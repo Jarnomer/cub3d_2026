@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   player_actions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/13 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/13 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-void	time_init(t_time *time)
+static void	handle_crouch(t_game *game)
 {
-	*time = (t_time){0};
+	t_motion	*motion;
+
+	motion = &game->player.motion;
+	if (input_key_down(&game->input, KEY_CROUCH))
+	{
+		if (!motion->is_crouching)
+			crouch_start(motion);
+	}
+	else
+	{
+		if (motion->is_crouching)
+			crouch_end(motion);
+	}
 }
 
-void	time_update(t_time *time, t_f32 dt)
+void	player_actions(t_game *game)
 {
-	time->delta = dt;
-	if (time->delta > MAX_DELTA)
-		time->delta = MAX_DELTA;
-	time->current += time->delta;
-	time->fps_timer += time->delta;
-	time->frame_count++;
-	time->fps_frames++;
-	if (time->fps_timer >= 1.0)
-	{
-		time->fps = (t_f32)time->fps_frames / time->fps_timer;
-		time->fps_timer = 0.0;
-		time->fps_frames = 0;
-	}
+	handle_crouch(game);
 }

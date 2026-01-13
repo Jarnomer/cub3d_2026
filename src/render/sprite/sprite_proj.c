@@ -26,13 +26,16 @@ static void	calc_sprite_bounds(t_proj *proj, t_render *render)
 
 static void	calc_screen_pos(t_game *game, t_entity *ent, t_proj *proj)
 {
-	t_i32	z_shift;
+	t_i32	shift;
+	t_i32	offset;
 
 	proj->screen.x = proj_screen_x(proj, &game->render);
 	proj->screen.y = game->render.height / 2;
 	proj->screen.y = proj_apply_pitch(proj, &game->camera, &game->render);
-	z_shift = proj_z_offset(ent, proj, &game->render);
-	proj->screen.y -= z_shift;
+	shift = proj_z_offset(ent, proj, &game->render);
+	proj->screen.y -= shift;
+	offset = camera_sprite_offset(game, proj->trans.y);
+	proj->screen.y += offset;
 	proj->size = proj_sprite_size(ent, proj, &game->render);
 }
 

@@ -57,6 +57,7 @@ void	render_door_column(t_game *game, t_hit *hit, t_i32 x)
 	if (!init_door_ctx(game, hit, &door))
 		return ;
 	slice = slice_from_hit(hit, game->render.height, door.sheet->width);
-	slice_apply_pitch(&slice, &game->camera, game->render.height);
+	slice_apply_height(&slice, game);
+	slice_apply_pitch(&slice, game);
 	draw_door_column(game, x, &slice, &door);
 }

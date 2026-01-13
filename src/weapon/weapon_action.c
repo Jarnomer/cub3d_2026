@@ -16,6 +16,7 @@ void	weapon_fire(t_weapon *wpn, t_game *game)
 {
 	t_wpndef	*def;
 	t_player	*player;
+	t_f32		recoil;
 
 	if (!weapon_can_fire(wpn, game))
 		return ;
@@ -24,8 +25,8 @@ void	weapon_fire(t_weapon *wpn, t_game *game)
 	if (!player_use_ammo(player, def->ammo_type, 1))
 		return ;
 	weapon_set_state(wpn, STATE_FIRING, game);
-	shake_add(&game->player.shake, SHAKE_FIRE_INTENSITY, SHAKE_FIRE_DURATION);
-	wpn->recoil = minf(wpn->recoil + WEAPON_RECOIL_MAX, WEAPON_RECOIL_MAX);
+	recoil = wpn->recoil + WEAPON_RECOIL_MAX;
+	wpn->recoil = minf(recoil, WEAPON_RECOIL_MAX);
 	wpn->timer = def->fire_rate;
 	wpn->ready = false;
 	weapon_fire_all_pellets(game, def);

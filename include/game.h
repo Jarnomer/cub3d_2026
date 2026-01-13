@@ -147,7 +147,7 @@ void	player_update(t_game *game, t_f32 dt);
 void	player_interact(t_game *game);
 
 void	time_init(t_time *time);
-void	time_update(t_time *time, mlx_t *mlx);
+void	time_update(t_time *time, t_f32 dt);
 
 void	camera_init(t_camera *cam, t_map *map, t_f32 fov);
 void	camera_update(t_camera *cam);

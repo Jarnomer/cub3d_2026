@@ -71,8 +71,8 @@
 # define AMMO_MAX_CELL			100
 # define AMMO_MAX_EXPLOSIVE		25
 
-# define AMMO_START_SHELL		12
-# define AMMO_START_BULLET		50
+# define AMMO_START_SHELL		50
+# define AMMO_START_BULLET		200
 # define AMMO_START_CELL		0
 # define AMMO_START_EXPLOSIVE	0
 
@@ -80,10 +80,6 @@
 /*    WEAPON SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define WEAPON_BOB_SPEED		8.0f
-# define WEAPON_BOB_AMOUNT		4.0f
-# define WEAPON_SWAY_AMOUNT		0.002f
-# define WEAPON_SWAY_SMOOTH		0.1f
 # define WEAPON_RECOIL_MAX		8.0f
 # define WEAPON_RECOIL_DECAY	12.0f
 
@@ -99,6 +95,13 @@
 # define DOOR_TIMER				3.0f
 # define DOOR_AUTO_CLOSE		1
 
+# define STAMINA_MAX			100.0f
+# define STAMINA_REGEN			20.0f
+
+/* ************************************************************************** */
+/*    MOTION SETTINGS                                                         */
+/* ************************************************************************** */
+
 # define MOVE_ACCEL				12.0f
 # define MOVE_DECEL				8.0f
 # define MOVE_FRICTION			6.0f
@@ -110,27 +113,8 @@
 # define CROUCH_HEIGHT			0.3f
 # define CROUCH_SPEED_MULT		0.5f
 # define CROUCH_LERP_SPEED		8.0f
-
-# define STAMINA_MAX			100.0f
-# define STAMINA_REGEN			20.0f
-
-/* ************************************************************************** */
-/*    EFFECT SETTINGS                                                         */
-/* ************************************************************************** */
-
-# define HEAD_BOB_SPEED			10.0f
-# define HEAD_BOB_AMOUNT		0.015f
-# define BOB_LERP				10.0f
-
-# define IDLE_SPEED				1.5f
-# define IDLE_AMOUNT			0.003f
-# define WEAPON_IDLE_AMOUNT		2.0f
-
-# define SHAKE_DECAY			0.9f
-# define SHAKE_FIRE_INTENSITY	3.0f
-# define SHAKE_FIRE_DURATION	0.1f
-# define SHAKE_DAMAGE_INTENSITY	8.0f
-# define SHAKE_DAMAGE_DURATION	0.2f
+# define CROUCH_HEIGHT_OFFSET	0.25f
+# define CROUCH_THRESHOLD		0.01f
 
 /* ************************************************************************** */
 /*    INPUT SETTINGS                                                          */

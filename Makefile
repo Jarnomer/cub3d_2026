@@ -93,6 +93,7 @@ SOURCES := main \
            player_move \
            player_rotate \
            player_interact \
+           player_actions \
            player_health \
            player_ammo \
            weapon \
@@ -101,9 +102,7 @@ SOURCES := main \
            weapon_state \
            weapon_utils \
            motion \
-           motion_update \
-           motion_bob \
-           shake \
+           motion_crouch \
            input \
            input_keys \
            input_mouse \
@@ -123,6 +122,7 @@ SOURCES := main \
            render_sprites \
            render_fog \
            render_occlude \
+           render_camera \
            render_overlay \
            render_flash \
            render_weapon \
@@ -200,7 +200,6 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCS) $^ $(LIBFTDIR)/$(LIBFTBIN) \
 	$(MLXFLAGS) $(MLXDIR)/$(BUILDDIR)/$(MLXBIN) -o $(NAME)
-	echo \'$(call expand, config, texture sheet entity anim weapon)\'
 	printf "$(V)$(B)Binary:$(T)$(Y) $(NAME) $(T)\n"
 
 $(OBJECTS): $(LIBFTDIR)/$(LIBFTBIN)

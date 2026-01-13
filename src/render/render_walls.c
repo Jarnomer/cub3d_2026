@@ -44,7 +44,8 @@ static void	render_wall(t_game *game, t_hit *hit, t_i32 x)
 
 	tex = &game->assets.textures[hit->dir];
 	slice = slice_from_hit(hit, game->render.height, tex->width);
-	slice_apply_pitch(&slice, &game->camera, game->render.height);
+	slice_apply_height(&slice, game);
+	slice_apply_pitch(&slice, game);
 	zbuf_write(&game->render, x, hit->dist);
 	draw_wall_column(game, x, &slice, tex);
 }
