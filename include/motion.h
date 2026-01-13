@@ -35,6 +35,10 @@ typedef struct s_motion
 void	motion_init(t_motion *motion);
 void	motion_update(t_motion *motion, t_f32 dt);
 
+void	move_accelerate(t_motion *motion, t_vec2 target, t_f32 dt);
+void	move_apply_friction(t_motion *motion, t_f32 dt);
+t_vec2	move_get_velocity(t_motion *motion);
+
 void	crouch_start(t_motion *motion);
 void	crouch_end(t_motion *motion);
 void	crouch_update(t_motion *motion, t_f32 dt);

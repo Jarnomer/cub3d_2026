@@ -102,9 +102,9 @@
 /*    MOTION SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define MOVE_ACCEL				12.0f
-# define MOVE_DECEL				8.0f
-# define MOVE_FRICTION			6.0f
+# define MOVE_ACCEL				6.0f
+# define MOVE_FRICTION			10.0f
+# define MOVE_STOP_THRESHOLD    0.01f
 
 # define JUMP_VELOCITY			2.8f
 # define JUMP_SPEED_MULT		0.8f

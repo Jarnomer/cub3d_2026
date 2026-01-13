@@ -44,11 +44,10 @@ static void	apply_movement(t_camera *cam, t_map *map, t_vec2 move)
 		cam->pos.y = dst.y;
 }
 
-static t_vec2	get_direction(t_game *game, t_f32 dt)
+static t_vec2	get_target_velocity(t_game *game)
 {
 	t_vec2	input;
-	t_vec2	move;
-	t_f32	base;
+	t_vec2	dir;
 	t_f32	speed;
 
 	input = vec2_zero();
@@ -62,18 +61,25 @@ static t_vec2	get_direction(t_game *game, t_f32 dt)
 		input.x += 1.0f;
 	if (input.x == 0.0f && input.y == 0.0f)
 		return (vec2_zero());
-	move = vec2_add(vec2_mul(game->camera.dir, input.y),
+	dir = vec2_add(vec2_mul(game->camera.dir, input.y),
 			vec2_mul(vec2_perp(game->camera.dir), input.x));
-	base = crouch_get_mult(&game->player.motion);
-	base *= sprint_get_mult(&game->player.motion);
-	speed = base * PLAYER_SPEED * dt;
-	return (vec2_mul(vec2_normalize(move), speed));
+	speed = crouch_get_mult(&game->player.motion);
+	speed *= sprint_get_mult(&game->player.motion);
+	return (vec2_mul(vec2_normalize(dir), speed * PLAYER_SPEED));
 }
 
 void	player_move(t_game *game, t_f32 dt)
 {
-	t_vec2	dir;
+	t_motion	*motion;
+	t_vec2		target;
+	t_vec2		move;
 
-	dir = get_direction(game, dt);
-	apply_movement(&game->camera, game->map, dir);
+	motion = &game->player.motion;
+	target = get_target_velocity(game);
+	if (vec2_len(target) > 0.0f)
+		move_accelerate(motion, target, dt);
+	else
+		move_apply_friction(motion, dt);
+	move = vec2_mul(move_get_velocity(motion), dt);
+	apply_movement(&game->camera, game->map, move);
 }

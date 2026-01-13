@@ -102,6 +102,7 @@ SOURCES := main \
            weapon_state \
            weapon_utils \
            motion \
+           motion_move \
            motion_crouch \
            motion_jump \
            motion_sprint \
