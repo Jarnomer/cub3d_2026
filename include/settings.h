@@ -106,6 +106,14 @@
 # define WEAPON_BOB_CROUCH_MULT	0.6f
 # define WEAPON_BOB_LERP		12.0f
 
+# define SPRINT_DROP_Y			20.0f
+# define SPRINT_TILT_Y			35.0f
+# define SPRINT_SWAY_MULT		1.0f
+# define SPRINT_BOB_MULT		2.0f
+# define SPRINT_THRUST_AMP		8.0f
+# define SPRINT_THRUST_MULT		2.0f
+# define SPRINT_LERP			8.0f
+
 /* ************************************************************************** */
 /*    GAMEPLAY SETTINGS                                                       */
 /* ************************************************************************** */

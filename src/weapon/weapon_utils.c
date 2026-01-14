@@ -48,3 +48,19 @@ void	weapon_fire_all_pellets(t_game *game, t_wpndef *def)
 		i++;
 	}
 }
+
+t_vec2	sprint_get_offset(t_sway *sway, t_bob *bob)
+{
+	t_vec2	offset;
+	t_f32	thrust;
+
+	offset.x = 0.0f;
+	offset.y = sway->sprint * SPRINT_DROP_Y;
+	offset.y += sway->sprint * SPRINT_TILT_Y;
+	if (SPRINT_THRUST_MULT <= 0.0f)
+		thrust = 0.0f;
+	else
+		thrust = (1.0f - absf(sinf(bob->phase))) * SPRINT_THRUST_AMP;
+	offset.y += thrust * sway->sprint * SPRINT_THRUST_MULT;
+	return (offset);
+}

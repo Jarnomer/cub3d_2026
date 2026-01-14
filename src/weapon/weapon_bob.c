@@ -12,32 +12,28 @@
 
 #include <game.h>
 
-static t_f32	calc_bob_idle(t_bob *bob)
+static t_f32	get_bob_mult(t_sway *sway, t_motion *motion)
 {
-	return (sinf(bob->phase * 2.0f) * WEAPON_BOB_IDLE_AMP);
-}
+	t_f32	mult;
 
-static t_f32	calc_bob_move(t_bob *bob, t_f32 crouch_mult)
-{
-	t_f32	amp;
-
-	amp = WEAPON_BOB_MOVE_AMP * crouch_mult;
-	return (sinf(bob->phase) * amp);
+	mult = 1.0f;
+	if (motion->is_crouching)
+		mult *= WEAPON_BOB_CROUCH_MULT;
+	mult += sway->sprint * SPRINT_BOB_MULT;
+	return (mult);
 }
 
 void	weapon_bob_update(t_weapon *wpn, t_motion *motion, t_f32 dt)
 {
 	t_f32	target;
 	t_f32	speed;
-	t_f32	crouch_mult;
+	t_f32	amp;
 
 	speed = vec2_len(motion->velocity);
-	crouch_mult = 1.0f;
-	if (motion->is_crouching)
-		crouch_mult = WEAPON_BOB_CROUCH_MULT;
+	amp = get_bob_mult(&wpn->sway, motion) * WEAPON_BOB_MOVE_AMP;
 	if (speed < MOVE_STOP_THRESHOLD)
-		target = calc_bob_idle(&motion->bob);
+		target = sinf(motion->bob.phase * 2.0f) * WEAPON_BOB_IDLE_AMP;
 	else
-		target = calc_bob_move(&motion->bob, crouch_mult);
+		target = (1.0f - absf(sinf(motion->bob.phase))) * amp;
 	wpn->bob = lerpf(wpn->bob, target, WEAPON_BOB_LERP * dt);
 }

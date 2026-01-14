@@ -20,7 +20,7 @@ void	weapon_init(t_weapon *wpn, t_wpn_id id, t_game *game)
 	def = weapon_get_def(game, id);
 	if (def)
 		anim_init(&wpn->anim, def->anim_idle);
-	sway_init(&wpn->sway);
+	wpn->sway = (t_sway){0};
 }
 
 t_i32	weapon_get_frame(t_weapon *wpn, t_game *game)
