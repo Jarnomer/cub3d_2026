@@ -66,6 +66,15 @@ typedef enum e_state
 	STATE_COUNT
 }	t_state;
 
+typedef enum e_surface
+{
+	SURFACE_STONE,
+	SURFACE_METAL,
+	SURFACE_WOOD,
+	SURFACE_FLESH,
+	SURFACE_COUNT
+}	t_surface;
+
 typedef enum e_tex_id
 {
 	TEXTURE_WALL_N,
@@ -94,6 +103,18 @@ typedef enum e_sheet_id
 	SHEET_SHOTGUN,
 	SHEET_COUNT
 }	t_sheet_id;
+
+typedef enum e_part_id
+{
+	PARTICLE_NONE,
+	PARTICLE_SPARK_METAL,
+	PARTICLE_SPARK_ORANGE,
+	PARTICLE_DEBRIS_STONE,
+	PARTICLE_DEBRIS_WOOD,
+	PARTICLE_DUST,
+	PARTICLE_BLOOD,
+	PARTICLE_COUNT
+}	t_part_id;
 
 typedef enum e_anim_id
 {

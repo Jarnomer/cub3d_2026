@@ -26,3 +26,8 @@ t_vec2	vec2_from_angle(t_f32 angle)
 {
 	return ((t_vec2){cosf(angle), sinf(angle)});
 }
+
+t_vec2	vec2_to_vec3(t_vec3 v)
+{
+	return ((t_vec2){v.x, v.y});
+}

@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec2_arith.c                                       :+:      :+:    :+:   */
+/*   vec4i.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/15 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/15 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_vec2	vec2_add(t_vec2 a, t_vec2 b)
+t_vec4i	vec4i_new(t_i32 x, t_i32 y, t_i32 w, t_i32 h)
 {
-	return ((t_vec2){a.x + b.x, a.y + b.y});
+	return ((t_vec4i){x, y, w, h});
 }
 
-t_vec2	vec2_sub(t_vec2 a, t_vec2 b)
+bool	vec4i_contains(t_vec4i v, t_i32 x, t_i32 y)
 {
-	return ((t_vec2){a.x - b.x, a.y - b.y});
-}
-
-t_vec2	vec2_mul(t_vec2 v, t_f32 scalar)
-{
-	return ((t_vec2){v.x * scalar, v.y * scalar});
-}
-
-t_vec2	vec2_div(t_vec2 v, t_f32 scalar)
-{
-	if (absf(scalar) < EPSILON)
-		return (vec2_zero());
-	return ((t_vec2){v.x / scalar, v.y / scalar});
+	if (x < v.x || x >= v.x + v.w)
+		return (false);
+	if (y < v.y || y >= v.y + v.h)
+		return (false);
+	return (true);
 }

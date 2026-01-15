@@ -32,6 +32,8 @@ static void	process_weapon(char **fields, void *ctx)
 	def.pellets = ft_atoi(fields[7]);
 	def.mag_size = ft_atoi(fields[8]);
 	def.fire_rate = ft_atof(fields[9]);
+	def.spread = ft_atof(fields[10]);
+	def.range = ft_atof(fields[11]);
 	defs[def.id] = def;
 }
 

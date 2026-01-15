@@ -13,26 +13,33 @@
 #ifndef CONFIG_H
 # define CONFIG_H
 
+# include <types.h>
 # include <defs.h>
 
-typedef struct s_assets	t_assets;
-typedef struct s_entdef	t_entdef;
-typedef struct s_anidef	t_anidef;
-typedef struct s_wpndef	t_wpndef;
+typedef struct s_assets		t_assets;
+typedef struct s_entdef		t_entdef;
+typedef struct s_partdef	t_partdef;
+typedef struct s_surfdef	t_surfdef;
+typedef struct s_anidef		t_anidef;
+typedef struct s_wpndef		t_wpndef;
 
 # define TEXDEF_FIELD_COUNT		3
 # define SHEETDEF_FIELD_COUNT	4
 # define ENTDEF_FIELD_COUNT		6
+# define PARTDEF_FIELD_COUNT	12
+# define SURFDEF_FIELD_COUNT	4
 # define ANIMDEF_FIELD_COUNT	7
-# define WPNDEF_FIELD_COUNT		10
+# define WPNDEF_FIELD_COUNT		12
 
-# define CONFIG_FILE_EXT		".def"
+# define CONFIG_FILE_EXT		".conf"
 
-# define PATH_CONFIG_TEXTURE	"config/texture.def"
-# define PATH_CONFIG_ENTITY		"config/entity.def"
-# define PATH_CONFIG_SHEET		"config/sheet.def"
-# define PATH_CONFIG_ANIM		"config/anim.def"
-# define PATH_CONFIG_WEAPON		"config/weapon.def"
+# define PATH_CONFIG_TEXTURE	"config/texture.conf"
+# define PATH_CONFIG_ENTITY		"config/entity.conf"
+# define PATH_CONFIG_PARTICLE	"config/particle.conf"
+# define PATH_CONFIG_SURFACE	"config/surface.conf"
+# define PATH_CONFIG_SHEET		"config/sheet.conf"
+# define PATH_CONFIG_ANIM		"config/anim.conf"
+# define PATH_CONFIG_WEAPON		"config/weapon.conf"
 
 typedef void	(*t_cfg_proc)(char **fields, void *ctx);
 
@@ -50,14 +57,16 @@ typedef struct s_cfgload
 	void			*ctx;
 }	t_cfgload;
 
-void		config_load_all(t_assets *assets);
-void		config_parse_file(t_cfgload *cfg);
-t_i32		config_str_to_id(const char *str);
+void	config_load_all(t_assets *assets);
+void	config_parse_file(t_cfgload *cfg);
+t_i32	config_str_to_id(const char *str);
 
-void		config_load_textures(t_assets *assets);
-void		config_load_sheets(t_assets *assets);
-void		config_load_entities(t_entdef *defs);
-void		config_load_anims(t_anidef *defs);
-void		config_load_weapons(t_wpndef *defs);
+void	config_load_textures(t_assets *assets);
+void	config_load_sheets(t_assets *assets);
+void	config_load_entities(t_entdef *defs);
+void	config_load_particles(t_partdef *defs);
+void	config_load_surfaces(t_surfdef *defs);
+void	config_load_anims(t_anidef *defs);
+void	config_load_weapons(t_wpndef *defs);
 
 #endif

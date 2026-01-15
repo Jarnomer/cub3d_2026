@@ -13,10 +13,6 @@
 #ifndef GAME_H
 # define GAME_H
 
-/* ************************************************************************** */
-/*    STANDARD LIBRARY                                                        */
-/* ************************************************************************** */
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -27,27 +23,20 @@
 # include <sys/time.h>
 # include <errno.h>
 
-/* ************************************************************************** */
-/*    EXTERNAL LIBRARIES                                                      */
-/* ************************************************************************** */
-
 # include <MLX42.h>
 # include <libft.h>
 
-/* ************************************************************************** */
-/*    PROJECT HEADERS                                                         */
-/* ************************************************************************** */
-
 # include <settings.h>
+# include <config.h>
 # include <parse.h>
 # include <input.h>
-# include <config.h>
 # include <assets.h>
 # include <entity.h>
 # include <player.h>
 # include <weapon.h>
 # include <motion.h>
 # include <render.h>
+# include <particle.h>
 # include <blit.h>
 # include <grid.h>
 # include <anim.h>
@@ -60,21 +49,11 @@
 # include <types.h>
 # include <defs.h>
 
-typedef struct s_game	t_game;
-
-/* ************************************************************************** */
-/*    SPAWN STRUCTURE                                                         */
-/* ************************************************************************** */
-
 typedef struct s_spawn
 {
 	t_vec2	pos;
 	t_type	type;
 }	t_spawn;
-
-/* ************************************************************************** */
-/*    MAP STRUCTURE                                                           */
-/* ************************************************************************** */
 
 typedef struct s_map
 {
@@ -91,10 +70,6 @@ typedef struct s_map
 	t_u32	player_count;
 }	t_map;
 
-/* ************************************************************************** */
-/*    TIME STRUCTURE                                                          */
-/* ************************************************************************** */
-
 typedef struct s_time
 {
 	t_f64	current;
@@ -104,10 +79,6 @@ typedef struct s_time
 	t_f32	fps_timer;
 	t_u32	fps_frames;
 }	t_time;
-
-/* ************************************************************************** */
-/*    CAMERA STRUCTURE                                                        */
-/* ************************************************************************** */
 
 typedef struct s_camera
 {
@@ -119,11 +90,7 @@ typedef struct s_camera
 	t_vec2	plane;
 }	t_camera;
 
-/* ************************************************************************** */
-/*    MAIN GAME STRUCTURE                                                     */
-/* ************************************************************************** */
-
-struct s_game
+typedef struct s_game
 {
 	mlx_t		*mlx;
 	t_map		*map;
@@ -134,18 +101,16 @@ struct s_game
 	t_assets	assets;
 	t_player	player;
 	t_darray	entities;
+	t_emitter	emitter;
 	t_grid		grid;
 	t_arena		arena;
 	t_lookup	lookup;
 	bool		running;
-};
+}	t_game;
 
 void	game_init(t_game *game, t_map *map);
 void	game_destroy(t_game *game);
 void	game_run(t_game *game);
-
-void	player_update(t_game *game, t_f32 dt);
-void	player_interact(t_game *game);
 
 void	time_init(t_time *time);
 void	time_update(t_time *time, t_f32 dt);

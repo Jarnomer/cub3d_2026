@@ -46,9 +46,9 @@ void	render_flash(t_game *game, t_flash *flash)
 	if (!flash->active || flash->duration <= 0.0f)
 		return ;
 	alpha_f = (flash->timer / flash->duration) * FLASH_MAX_ALPHA;
-	alpha = (t_u8)clampf(alpha_f, 0.0f, COLOR_MAX);
+	alpha = (t_u8)clampf(alpha_f, 0.0f, COLOR_CHANNEL_MAX);
 	if (alpha < 10)
 		return ;
-	color = (flash->color & 0x00FFFFFF) | ((t_u32)alpha << 24);
+	color = color_with_alpha(flash->color, alpha);
 	overlay_fill(&game->render, color);
 }

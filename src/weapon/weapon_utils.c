@@ -27,14 +27,17 @@ static t_vec2	apply_spread(t_vec2 dir, t_f32 spread)
 static void	fire_pellet(t_game *game, t_wpndef *def)
 {
 	t_ray	ray;
-	t_vec2	dir;
 	t_hit	hit;
+	t_vec2	dir;
 
 	dir = apply_spread(game->camera.dir, def->spread);
 	ray_init(&ray, game->camera.pos, dir);
 	hit = perform_dda(&ray, game, def->range);
-	if (hit.hit && hit.entity != INVALID_ID)
+	if (!hit.hit)
+		return ;
+	if (hit.entity != INVALID_ID)
 		entity_damage(game, hit.entity, def->damage);
+	particle_emit_impact(game, &hit);
 }
 
 void	weapon_fire_all_pellets(t_game *game, t_wpndef *def)

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec2_arith.c                                       :+:      :+:    :+:   */
+/*   vec3_arith.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/15 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/15 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-t_vec2	vec2_add(t_vec2 a, t_vec2 b)
+t_vec3	vec3_add(t_vec3 a, t_vec3 b)
 {
-	return ((t_vec2){a.x + b.x, a.y + b.y});
+	return ((t_vec3){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
-t_vec2	vec2_sub(t_vec2 a, t_vec2 b)
+t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 {
-	return ((t_vec2){a.x - b.x, a.y - b.y});
+	return ((t_vec3){a.x - b.x, a.y - b.y, a.z - b.z});
 }
 
-t_vec2	vec2_mul(t_vec2 v, t_f32 scalar)
+t_vec3	vec3_mul(t_vec3 v, t_f32 scalar)
 {
-	return ((t_vec2){v.x * scalar, v.y * scalar});
-}
-
-t_vec2	vec2_div(t_vec2 v, t_f32 scalar)
-{
-	if (absf(scalar) < EPSILON)
-		return (vec2_zero());
-	return ((t_vec2){v.x / scalar, v.y / scalar});
+	return ((t_vec3){v.x * scalar, v.y * scalar, v.z * scalar});
 }

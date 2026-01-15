@@ -70,12 +70,14 @@ SOURCES := main \
            game \
            time \
            camera \
-           $(call expand, config, texture sheet entity anim weapon) \
+           $(call expand, config, texture sheet entity surface particle anim weapon) \
            config \
            config \
            config_texture \
            config_sheet \
            config_entity \
+           config_particle \
+           config_surface \
            config_anim \
            config_weapon \
            assets \
@@ -137,6 +139,11 @@ SOURCES := main \
            render_slice \
            render_trans \
            render_zbuf \
+           particle \
+           particle_spawn \
+           particle_update \
+           particle_render \
+           particle_surface \
            sprite_proj \
            sprite_sort \
            sprite_utils \
@@ -179,6 +186,10 @@ SOURCES := main \
            vec2_arith \
            vec2_trans \
            vec2i \
+           vec3 \
+           vec3_arith \
+           vec3_trans \
+           vec4i \
            map_utils \
            err_exit \
            err_print \

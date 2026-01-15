@@ -26,7 +26,7 @@
 /*    RENDERING SETTINGS                                                      */
 /* ************************************************************************** */
 
-# define BASE_FOV			66.0f
+# define BASE_FOV				66.0f
 # define RAY_MAX_DIST			64.0f
 # define ALPHA_THRESHOLD		128
 # define ALPHA_OPAQUE			250
@@ -198,5 +198,20 @@
 # define FOG_END_R				0
 # define FOG_END_G				0
 # define FOG_END_B				0
+
+/* ************************************************************************** */
+/*    PARTICLE SETTINGS                                                       */
+/* ************************************************************************** */
+
+# define PARTICLE_POOL_SIZE		256
+# define PARTICLE_BASE_SIZE		8.0f
+# define PARTICLE_WALL_OFFSET	0.1f
+# define PARTICLE_SPAWN_Z		0.0f
+# define PARTICLE_FLOOR_Z		-0.4f
+# define PARTICLE_CEILING_Z		0.4f
+# define PARTICLE_Z_MULT		0.5f
+# define PARTICLE_GRAVITY		9.8f
+# define PARTICLE_STOP_VEL		0.1f
+# define PARTICLE_FLOOR_FRIC	0.7f
 
 #endif

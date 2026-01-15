@@ -20,7 +20,7 @@ static int	parse_color_value(char *str)
 	if (!ft_isdigit(*str))
 		err_exit_msg(MSG_COLOR_FMT);
 	value = ft_atoi(str);
-	if (value < 0 || value > COLOR_MAX)
+	if (value < 0 || value > COLOR_CHANNEL_MAX)
 		err_exit_msg(MSG_COLOR_VAL);
 	return (value);
 }
@@ -40,7 +40,7 @@ static t_u32	extract_rgb(char **parts)
 	r = parse_color_value(parts[0]);
 	g = parse_color_value(parts[1]);
 	b = parse_color_value(parts[2]);
-	return (color_rgba(r, g, b, COLOR_MAX));
+	return (color_rgba(r, g, b, COLOR_CHANNEL_MAX));
 }
 
 static void	validate_color_format(char *str)

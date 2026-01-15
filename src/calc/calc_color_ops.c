@@ -22,13 +22,13 @@ t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor)
 
 	if (factor == 0)
 		return (c1);
-	if (factor == COLOR_MAX)
+	if (factor == COLOR_CHANNEL_MAX)
 		return (c2);
-	inv = COLOR_MAX - factor;
-	r = (color_r(c1) * inv + color_r(c2) * factor) / COLOR_MAX;
-	g = (color_g(c1) * inv + color_g(c2) * factor) / COLOR_MAX;
-	b = (color_b(c1) * inv + color_b(c2) * factor) / COLOR_MAX;
-	a = (color_a(c1) * inv + color_a(c2) * factor) / COLOR_MAX;
+	inv = COLOR_CHANNEL_MAX - factor;
+	r = (color_r(c1) * inv + color_r(c2) * factor) / COLOR_CHANNEL_MAX;
+	g = (color_g(c1) * inv + color_g(c2) * factor) / COLOR_CHANNEL_MAX;
+	b = (color_b(c1) * inv + color_b(c2) * factor) / COLOR_CHANNEL_MAX;
+	a = (color_a(c1) * inv + color_a(c2) * factor) / COLOR_CHANNEL_MAX;
 	return (color_rgba(r, g, b, a));
 }
 
@@ -41,13 +41,18 @@ t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha)
 
 	if (alpha == 0)
 		return (dst);
-	if (alpha == COLOR_MAX)
+	if (alpha == COLOR_CHANNEL_MAX)
 		return (src);
-	inv = COLOR_MAX - alpha;
-	r = (color_r(src) * alpha + color_r(dst) * inv) / COLOR_MAX;
-	g = (color_g(src) * alpha + color_g(dst) * inv) / COLOR_MAX;
-	b = (color_b(src) * alpha + color_b(dst) * inv) / COLOR_MAX;
-	return (color_rgba(r, g, b, COLOR_MAX));
+	inv = COLOR_CHANNEL_MAX - alpha;
+	r = (color_r(src) * alpha + color_r(dst) * inv) / COLOR_CHANNEL_MAX;
+	g = (color_g(src) * alpha + color_g(dst) * inv) / COLOR_CHANNEL_MAX;
+	b = (color_b(src) * alpha + color_b(dst) * inv) / COLOR_CHANNEL_MAX;
+	return (color_rgba(r, g, b, COLOR_CHANNEL_MAX));
+}
+
+t_u32	color_with_alpha(t_u32 color, t_u8 alpha)
+{
+	return ((color & COLOR_RGB_MASK) | ((t_u32)alpha << 24));
 }
 
 bool	color_is_opaque(t_u32 color)
