@@ -150,9 +150,9 @@ SOURCES := main \
            thread_floor \
            thread_walls \
            thread_sprites \
-           blit_sample \
            blit_pos \
            blit_render \
+           blit_utils \
            parse \
            parse_file \
            parse_elem \
@@ -189,7 +189,9 @@ SOURCES := main \
            vec3 \
            vec3_arith \
            vec3_trans \
-           vec4i \
+           rect \
+           rect_ops \
+           rect_utils \
            map_utils \
            err_exit \
            err_print \

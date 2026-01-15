@@ -34,13 +34,13 @@ typedef struct s_vec3
 	t_f32	z;
 }	t_vec3;
 
-typedef struct s_vec4i
+typedef struct s_rect
 {
 	t_i32	x;
 	t_i32	y;
 	t_i32	w;
 	t_i32	h;
-}	t_vec4i;
+}	t_rect;
 
 t_vec2		vec2_new(t_f32 x, t_f32 y);
 t_vec2		vec2_zero(void);
@@ -70,7 +70,11 @@ t_vec3		vec3_mul(t_vec3 v, t_f32 scalar);
 
 t_f32		vec3_len(t_vec3 v);
 
-t_vec4i		vec4i_new(t_i32 x, t_i32 y, t_i32 w, t_i32 h);
-bool		vec4i_contains(t_vec4i v, t_i32 x, t_i32 y);
+t_rect		rect_new(t_i32 x, t_i32 y, t_i32 w, t_i32 h);
+t_rect		rect_centered(t_vec2i center, t_vec2i size);
+
+t_rect		rect_clip(t_rect rect, t_rect bounds);
+
+bool		rect_is_valid(t_rect rect);
 
 #endif

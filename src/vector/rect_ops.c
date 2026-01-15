@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec4i.c                                            :+:      :+:    :+:   */
+/*   rect_ops.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,16 +12,17 @@
 
 #include <game.h>
 
-t_vec4i	vec4i_new(t_i32 x, t_i32 y, t_i32 w, t_i32 h)
+t_rect	rect_clip(t_rect rect, t_rect bounds)
 {
-	return ((t_vec4i){x, y, w, h});
-}
+	t_rect	clipped;
+	t_i32	right;
+	t_i32	bottom;
 
-bool	vec4i_contains(t_vec4i v, t_i32 x, t_i32 y)
-{
-	if (x < v.x || x >= v.x + v.w)
-		return (false);
-	if (y < v.y || y >= v.y + v.h)
-		return (false);
-	return (true);
+	clipped.x = maxi(rect.x, bounds.x);
+	clipped.y = maxi(rect.y, bounds.y);
+	right = mini(rect.x + rect.w, bounds.x + bounds.w);
+	bottom = mini(rect.y + rect.h, bounds.y + bounds.h);
+	clipped.w = maxi(0, right - clipped.x);
+	clipped.h = maxi(0, bottom - clipped.y);
+	return (clipped);
 }
