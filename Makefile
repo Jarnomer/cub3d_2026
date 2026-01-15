@@ -146,7 +146,6 @@ SOURCES := main \
            particle_surface \
            sprite_proj \
            sprite_sort \
-           sprite_utils \
            thread_floor \
            thread_walls \
            thread_sprites \

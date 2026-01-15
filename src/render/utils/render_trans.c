@@ -42,20 +42,20 @@ t_vec2	trans_ray_dir(t_camera *cam, t_i32 x, t_i32 scr_w)
 
 t_i32	trans_sprite_tex_x(t_proj *proj, t_i32 scr_x, t_i32 tex_w)
 {
-	t_i32	spr_x;
-	t_i32	tex_x;
+	t_i32	sprite_start;
+	t_i32	sprite_x;
 
-	spr_x = scr_x - (proj->screen.x - proj->size.x / 2);
-	tex_x = spr_x * tex_w / proj->size.x;
-	return (clampi(tex_x, 0, tex_w - 1));
+	sprite_start = proj->screen.x - proj->size.x / 2;
+	sprite_x = scr_x - sprite_start;
+	return (clampi(sprite_x * tex_w / proj->size.x, 0, tex_w - 1));
 }
 
 t_i32	trans_sprite_tex_y(t_proj *proj, t_i32 scr_y, t_i32 tex_h)
 {
-	t_i32	spr_y;
-	t_i32	tex_y;
+	t_i32	sprite_start;
+	t_i32	sprite_y;
 
-	spr_y = scr_y - (proj->screen.y - proj->size.y / 2);
-	tex_y = spr_y * tex_h / proj->size.y;
-	return (clampi(tex_y, 0, tex_h - 1));
+	sprite_start = proj->screen.y - proj->size.y / 2;
+	sprite_y = scr_y - sprite_start;
+	return (clampi(sprite_y * tex_h / proj->size.y, 0, tex_h - 1));
 }

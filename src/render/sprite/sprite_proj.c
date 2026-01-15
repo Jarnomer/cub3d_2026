@@ -5,43 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/15 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/15 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static void	calc_sprite_bounds(t_proj *proj, t_render *render)
+static t_i32	proj_calc_z_shift(t_render *render, t_proj *proj)
 {
-	proj->start.x = proj->screen.x - proj->size.x / 2;
-	proj->start.y = proj->screen.y - proj->size.y / 2;
-	proj->end.x = proj->screen.x + proj->size.x / 2;
-	proj->end.y = proj->screen.y + proj->size.y / 2;
-	proj->start.x = maxi(proj->start.x, 0);
-	proj->start.y = maxi(proj->start.y, 0);
-	proj->end.x = mini(proj->end.x, render->width - 1);
-	proj->end.y = mini(proj->end.y, render->height - 1);
+	t_f32	scale;
+
+	if (proj->trans.y < EPSILON)
+		return (0);
+	scale = render->height / proj->trans.y;
+	return ((t_i32)(proj->trans.z * scale));
 }
 
-static void	calc_screen_pos(t_game *game, t_entity *ent, t_proj *proj)
+static t_vec2i	proj_calc_screen(t_game *game, t_render *render, t_camera *cam,
+	t_proj *proj)
 {
+	t_vec2i	screen;
 	t_i32	shift;
 	t_i32	offset;
+	t_f32	ratio;
 
-	proj->screen.x = proj_screen_x(proj, &game->render);
-	proj->screen.y = game->render.height / 2;
-	proj->screen.y = proj_apply_pitch(proj, &game->camera, &game->render);
-	shift = proj_z_offset(ent, proj, &game->render);
-	proj->screen.y -= shift;
+	if (proj->trans.y < EPSILON)
+		ratio = 0.5f;
+	else
+		ratio = 1.0f + proj->trans.x / proj->trans.y;
+	screen.x = (t_i32)((render->width / 2) * ratio);
+	screen.y = render->height / 2;
+	screen.y += (t_i32)(cam->pitch * render->height);
+	shift = proj_calc_z_shift(render, proj);
 	offset = camera_sprite_offset(game, proj->trans.y);
-	proj->screen.y += offset;
-	proj->size = proj_sprite_size(ent, proj, &game->render);
+	screen.y = screen.y - shift + offset;
+	return (screen);
 }
 
-static void	init_sprite_ent_ctx(t_entity *ent, t_proj *proj)
+static t_vec2i	proj_calc_size(t_render *render, t_entity *ent, t_proj *proj)
 {
-	proj->dist = proj->trans.y;
+	t_vec2i	size;
+	t_f32	factor;
+
+	if (proj->trans.y < EPSILON)
+		factor = ent->scale;
+	else
+		factor = ent->scale / proj->trans.y;
+	size.x = absi((t_i32)(render->width * factor));
+	size.y = absi((t_i32)(render->height * factor));
+	return (size);
+}
+
+static void	init_sprite_context(t_entity *ent, t_proj *proj, t_vec3 *world,
+	t_vec2 *plane)
+{
+	proj->pos = vec3_new(world->x, world->y, world->z);
+	proj->trans = vec3_new(plane->x, plane->y, world->z);
+	proj->dist = plane->y;
 	proj->tex_id = ent->spr_id;
 	proj->use_sheet = ent->use_sheet;
 	proj->sheet_id = ent->sheet_id;
@@ -50,13 +71,17 @@ static void	init_sprite_ent_ctx(t_entity *ent, t_proj *proj)
 
 bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj)
 {
-	proj->trans = trans_world_to_cam(&game->camera, ent->pos);
-	if (trans_behind_camera(proj->trans.y))
+	t_vec3	world;
+	t_vec2	plane;
+
+	world = vec3_new(ent->pos.x, ent->pos.y, ent->z_offset);
+	plane = trans_world_to_cam(&game->camera, vec2_from_vec3(world));
+	if (trans_behind_camera(plane.y))
 		return (false);
-	init_sprite_ent_ctx(ent, proj);
-	calc_screen_pos(game, ent, proj);
-	calc_sprite_bounds(proj, &game->render);
-	if (proj->end.x < 0 || proj->start.x >= game->render.width)
-		return (false);
-	return (true);
+	init_sprite_context(ent, proj, &world, &plane);
+	proj->screen = proj_calc_screen(game, &game->render, &game->camera, proj);
+	proj->size = proj_calc_size(&game->render, ent, proj);
+	proj->bounds = rect_centered(proj->screen, proj->size);
+	rect_clip(&proj->bounds, game->render.width, game->render.height);
+	return (!rect_is_offscreen(proj->bounds));
 }

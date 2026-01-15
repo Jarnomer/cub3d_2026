@@ -12,17 +12,24 @@
 
 #include <game.h>
 
-t_rect	rect_clip(t_rect rect, t_rect bounds)
+void	rect_clip(t_rect *rect, t_i32 max_w, t_i32 max_h)
 {
-	t_rect	clipped;
-	t_i32	right;
-	t_i32	bottom;
-
-	clipped.x = maxi(rect.x, bounds.x);
-	clipped.y = maxi(rect.y, bounds.y);
-	right = mini(rect.x + rect.w, bounds.x + bounds.w);
-	bottom = mini(rect.y + rect.h, bounds.y + bounds.h);
-	clipped.w = maxi(0, right - clipped.x);
-	clipped.h = maxi(0, bottom - clipped.y);
-	return (clipped);
+	if (rect->x < 0)
+	{
+		rect->w += rect->x;
+		rect->x = 0;
+	}
+	if (rect->y < 0)
+	{
+		rect->h += rect->y;
+		rect->y = 0;
+	}
+	if (rect->x + rect->w > max_w)
+		rect->w = max_w - rect->x;
+	if (rect->y + rect->h > max_h)
+		rect->h = max_h - rect->y;
+	if (rect->w < 0)
+		rect->w = 0;
+	if (rect->h < 0)
+		rect->h = 0;
 }

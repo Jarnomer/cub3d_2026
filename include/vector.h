@@ -45,7 +45,7 @@ typedef struct s_rect
 t_vec2		vec2_new(t_f32 x, t_f32 y);
 t_vec2		vec2_zero(void);
 t_vec2		vec2_from_angle(t_f32 angle);
-t_vec2		vec2_to_vec3(t_vec3 v);
+t_vec2		vec2_from_vec3(t_vec3 v);
 
 t_vec2		vec2_add(t_vec2 a, t_vec2 b);
 t_vec2		vec2_sub(t_vec2 a, t_vec2 b);
@@ -73,8 +73,11 @@ t_f32		vec3_len(t_vec3 v);
 t_rect		rect_new(t_i32 x, t_i32 y, t_i32 w, t_i32 h);
 t_rect		rect_centered(t_vec2i center, t_vec2i size);
 
-t_rect		rect_clip(t_rect rect, t_rect bounds);
+void		rect_clip(t_rect *rect, t_i32 max_w, t_i32 max_h);
 
 bool		rect_is_valid(t_rect rect);
+bool		rect_is_offscreen(t_rect rect);
+t_i32		rect_bottom(t_rect rect);
+t_i32		rect_right(t_rect rect);
 
 #endif

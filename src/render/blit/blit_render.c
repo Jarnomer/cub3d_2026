@@ -37,33 +37,29 @@ static t_u32	blit_sample(t_blit *blit, t_i32 x, t_i32 y)
 
 static void	blit_row(t_blit *blit, t_mlxi *img, t_i32 y)
 {
-	t_pixels	pixels;
-	t_u32		color;
-	t_i32		x;
+	t_u32	color;
+	t_i32	x;
 
-	pixels = (t_pixels)img->pixels;
 	x = blit->bounds.x;
-	while (x < blit->bounds.x + blit->bounds.w)
+	while (x < rect_right(blit->bounds))
 	{
 		color = blit_sample(blit, x, y);
-		if ((color >> 24) >= ALPHA_THRESHOLD)
-			pixels[y * img->width + x] = color;
+		if (color_is_opaque(color))
+			render_pixel(img, x, y, color);
 		x++;
 	}
 }
 
 void	blit_render(t_blit *blit, t_mlxi *img)
 {
-	t_i32	height;
 	t_i32	y;
 
 	if (!img || (!blit->tex && !blit->sheet))
 		return ;
 	if (!rect_is_valid(blit->bounds))
 		return ;
-	height = blit->bounds.y + blit->bounds.h;
 	y = blit->bounds.y;
-	while (y < height)
+	while (y < rect_bottom(blit->bounds))
 	{
 		blit_row(blit, img, y);
 		y++;

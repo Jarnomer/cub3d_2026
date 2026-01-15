@@ -36,14 +36,9 @@ void	blit_apply_offset(t_blit *blit, t_vec2i offset)
 
 void	blit_clip_bounds(t_blit *blit, t_i32 scr_w, t_i32 scr_h)
 {
-	t_rect	screen;
-	t_rect	clipped;
-
-	screen = rect_new(0, 0, scr_w, scr_h);
-	clipped = rect_clip(blit->bounds, screen);
-	if (blit->bounds.x < 0)
-		blit->offset.x = -blit->bounds.x;
-	if (blit->bounds.y < 0)
-		blit->offset.y = -blit->bounds.y;
-	blit->bounds = clipped;
+	rect_clip(&blit->bounds, scr_w, scr_h);
+	if (blit->bounds.x > blit->pos.x - blit->size.x / 2)
+		blit->offset.x = blit->bounds.x - (blit->pos.x - blit->size.x / 2);
+	if (blit->bounds.y > blit->pos.y - blit->size.y / 2)
+		blit->offset.y = blit->bounds.y - (blit->pos.y - blit->size.y / 2);
 }

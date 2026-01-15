@@ -81,15 +81,15 @@ typedef struct s_door
 
 typedef struct s_proj
 {
-	t_vec2		trans;
+	t_vec3		pos;
+	t_vec3		trans;
 	t_vec2i		screen;
 	t_vec2i		size;
-	t_vec2i		start;
-	t_vec2i		end;
-	t_u32		tex_id;
-	t_u32		sheet_id;
-	t_i32		frame;
+	t_rect		bounds;
 	t_f32		dist;
+	t_spr_id	tex_id;
+	t_sheet_id	sheet_id;
+	t_i32		frame;
 	bool		use_sheet;
 }	t_proj;
 
@@ -176,11 +176,6 @@ void	render_flash(t_game *game, t_flash *flash);
 bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj);
 void	sprites_sort(t_proj *projs, t_u32 count);
 t_u32	sprites_collect(t_game *game, t_proj *projs);
-
-t_i32	proj_screen_x(t_proj *proj, t_render *render);
-t_i32	proj_z_offset(t_entity *ent, t_proj *proj, t_render *render);
-t_vec2i	proj_sprite_size(t_entity *ent, t_proj *proj, t_render *render);
-t_i32	proj_apply_pitch(t_proj *proj, t_camera *cam, t_render *render);
 
 t_slice	slice_from_hit(t_hit *hit, t_i32 scr_h, t_i32 tex_w);
 void	slice_apply_pitch(t_slice *slice, t_game *game);

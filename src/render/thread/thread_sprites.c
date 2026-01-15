@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/05 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/15 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,28 @@ static void	init_sprite_ctx(t_thread *thread, t_game *game, t_proj *projs,
 	}
 }
 
+static void	render_column_range(t_thread *thread, t_proj *proj, t_i32 x)
+{
+	t_i32	end;
+
+	end = mini(rect_right(proj->bounds), thread->end);
+	while (x < end)
+	{
+		if (zbuf_test(&thread->game->render, x, proj->dist))
+		{
+			if (proj->use_sheet)
+				render_sheet_column(thread->game, proj, x);
+			else
+				render_sprite_column(thread->game, proj, x);
+		}
+		x++;
+	}
+}
+
 static void	*sprite_worker(void *arg)
 {
 	t_thread	*thread;
+	t_proj		*proj;
 	t_i32		x;
 	t_u32		i;
 
@@ -43,18 +62,9 @@ static void	*sprite_worker(void *arg)
 	i = 0;
 	while (i < thread->count)
 	{
-		x = maxi(thread->projs[i].start.x, thread->start);
-		while (x < thread->projs[i].end.x && x < thread->end)
-		{
-			if (zbuf_test(&thread->game->render, x, thread->projs[i].dist))
-			{
-				if (thread->projs[i].use_sheet)
-					render_sheet_column(thread->game, &thread->projs[i], x);
-				else
-					render_sprite_column(thread->game, &thread->projs[i], x);
-			}
-			x++;
-		}
+		proj = &thread->projs[i];
+		x = maxi(proj->bounds.x, thread->start);
+		render_column_range(thread, proj, x);
 		i++;
 	}
 	return (NULL);
