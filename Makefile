@@ -180,6 +180,8 @@ SOURCES := main \
            calc_angle \
            calc_scalar \
            calc_scalar_int \
+           calc_range \
+           calc_rangei \
            calc_rand \
            calc_utils \
            vec2 \

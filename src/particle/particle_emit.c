@@ -44,7 +44,7 @@ static void	emit_particles(t_game *game, t_surfdef *def, t_hit *hit)
 
 	pos = calc_impact_pos(game, hit);
 	dir = calc_reflect_dir(game->camera.dir, hit);
-	count = rand_rangei(def->count_min, def->count_max + 1);
+	count = rangei_random(def->count);
 	i = 0;
 	while (i < count)
 	{

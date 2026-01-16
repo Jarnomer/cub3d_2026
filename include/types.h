@@ -13,9 +13,12 @@
 #ifndef TYPES_H
 # define TYPES_H
 
+# include <pthread.h>
 # include <stdint.h>
 # include <stdbool.h>
 # include <stddef.h>
+
+# include <MLX42.h>
 
 typedef uint8_t			t_u8;
 typedef uint16_t		t_u16;

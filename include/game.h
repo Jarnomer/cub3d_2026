@@ -35,17 +35,17 @@
 # include <player.h>
 # include <weapon.h>
 # include <motion.h>
-# include <render.h>
-# include <particle.h>
-# include <blit.h>
-# include <grid.h>
 # include <anim.h>
+# include <render.h>
+# include <blit.h>
+# include <particle.h>
+# include <grid.h>
 # include <pool.h>
-# include <calc.h>
-# include <vector.h>
 # include <lookup.h>
 # include <error.h>
 # include <utils.h>
+# include <vector.h>
+# include <calc.h>
 # include <types.h>
 # include <defs.h>
 

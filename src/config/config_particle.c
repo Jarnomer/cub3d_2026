@@ -39,10 +39,10 @@ static t_u32	parse_hex_color(const char *str)
 
 static void	parse_partdef_values(t_partdef *def, char **f)
 {
-	def->speed_min = ft_atof(f[3]);
-	def->speed_max = ft_atof(f[4]);
-	def->life_min = ft_atof(f[5]);
-	def->life_max = ft_atof(f[6]);
+	def->speed.min = ft_atof(f[3]);
+	def->speed.max = ft_atof(f[4]);
+	def->life.min = ft_atof(f[5]);
+	def->life.max = ft_atof(f[6]);
 	def->gravity = ft_atof(f[7]);
 	def->spread = ft_atof(f[8]);
 	def->size = ft_atof(f[9]);
@@ -61,8 +61,8 @@ static void	process_particle(char **fields, void *ctx)
 	if (id <= PARTICLE_NONE || id >= PARTICLE_COUNT)
 		return ;
 	def = (t_partdef){.id = id};
-	def.color_start = parse_hex_color(fields[1]);
-	def.color_end = parse_hex_color(fields[2]);
+	def.color.start = parse_hex_color(fields[1]);
+	def.color.end = parse_hex_color(fields[2]);
 	parse_partdef_values(&def, fields);
 	defs[id] = def;
 }

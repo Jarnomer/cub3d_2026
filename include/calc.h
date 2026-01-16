@@ -16,51 +16,83 @@
 # include <vector.h>
 # include <types.h>
 
-# define PI				3.14159265358979323846f
-# define TAU			6.28318530717958647692f
-# define DEG2RAD		0.01745329251994329577f
-# define RAD2DEG		57.2957795130823208768f
+# define PI			3.14159265358979323846f
+# define TAU		6.28318530717958647692f
+# define DEG2RAD	0.01745329251994329577f
+# define RAD2DEG	57.2957795130823208768f
 
-# define INFINITE		1e30f
-# define EPSILON		0.0001f
+# define INFINITE	1e30f
+# define EPSILON	0.0001f
+# define U32_MAX	4294967295U
 
-# define COLOR_CHANNEL_MAX		255
-# define COLOR_RGB_MASK	0x00FFFFFF
+# define COLOR_CHANNEL_MAX	255
+# define COLOR_RGB_MASK		0x00FFFFFF
 
-# define U32_MAX		4294967295U
+typedef struct s_range
+{
+	t_f32	min;
+	t_f32	max;
+}	t_range;
 
-t_u8	color_r(t_u32 c);
-t_u8	color_g(t_u32 c);
-t_u8	color_b(t_u32 c);
-t_u8	color_a(t_u32 c);
-t_u32	color_rgba(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
+typedef struct s_rangei
+{
+	t_i32	min;
+	t_i32	max;
+}	t_rangei;
 
-t_u32	color_lerp(t_u32 c1, t_u32 c2, t_u8 factor);
-t_u32	color_blend(t_u32 src, t_u32 dst, t_u8 alpha);
-t_u32	color_with_alpha(t_u32 color, t_u8 alpha);
-bool	color_is_opaque(t_u32 color);
-bool	color_is_solid(t_u32 color);
+typedef struct s_rangeu
+{
+	t_u32	start;
+	t_u32	end;
+}	t_rangeu;
 
-t_f32	rad_to_deg(t_f32 rad);
-t_f32	deg_to_rad(t_f32 deg);
-t_f32	angle_normalize(t_f32 angle);
+t_u8		color_r(t_u32 c);
+t_u8		color_g(t_u32 c);
+t_u8		color_b(t_u32 c);
+t_u8		color_a(t_u32 c);
+t_u32		color_rgba(t_u8 r, t_u8 g, t_u8 b, t_u8 a);
 
-t_f32	minf(t_f32 a, t_f32 b);
-t_f32	maxf(t_f32 a, t_f32 b);
-t_f32	clampf(t_f32 val, t_f32 lo, t_f32 hi);
-t_f32	absf(t_f32 val);
-t_f32	iabsf(t_f32 val);
-t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t);
+t_u32		color_lerp(t_u32 c1, t_u32 c2, t_u8 factor);
+t_u32		color_blend(t_u32 src, t_u32 dst, t_u8 alpha);
+t_u32		color_with_alpha(t_u32 color, t_u8 alpha);
+bool		color_is_opaque(t_u32 color);
+bool		color_is_solid(t_u32 color);
 
-t_i32	mini(t_i32 a, t_i32 b);
-t_i32	maxi(t_i32 a, t_i32 b);
-t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi);
-t_i32	absi(t_i32 val);
+t_f32		rad_to_deg(t_f32 rad);
+t_f32		deg_to_rad(t_f32 deg);
+t_f32		angle_normalize(t_f32 angle);
 
-void	rand_seed(t_u32 seed);
-t_u32	rand_next(void);
-t_f32	rand_float(void);
-t_f32	rand_range(t_f32 lo, t_f32 hi);
-t_i32	rand_rangei(t_i32 lo, t_i32 hi);
+t_f32		minf(t_f32 a, t_f32 b);
+t_f32		maxf(t_f32 a, t_f32 b);
+t_f32		clampf(t_f32 val, t_f32 lo, t_f32 hi);
+t_f32		absf(t_f32 val);
+t_f32		iabsf(t_f32 val);
+t_f32		lerpf(t_f32 a, t_f32 b, t_f32 t);
+
+t_i32		mini(t_i32 a, t_i32 b);
+t_i32		maxi(t_i32 a, t_i32 b);
+t_i32		clampi(t_i32 val, t_i32 lo, t_i32 hi);
+t_i32		absi(t_i32 val);
+
+void		rand_seed(t_u32 seed);
+t_u32		rand_next(void);
+t_f32		rand_float(void);
+t_f32		rand_range(t_f32 lo, t_f32 hi);
+t_i32		rand_rangei(t_i32 lo, t_i32 hi);
+
+t_range		range_new(t_f32 min, t_f32 max);
+t_f32		range_lerp(t_range r, t_f32 t);
+t_f32		range_random(t_range r);
+t_f32		range_clamp(t_range r, t_f32 val);
+bool		range_contains(t_range r, t_f32 val);
+
+t_rangei	rangei_new(t_i32 min, t_i32 max);
+t_i32		rangei_lerp(t_rangei r, t_f32 t);
+t_i32		rangei_random(t_rangei r);
+t_i32		rangei_clamp(t_rangei r, t_i32 val);
+bool		rangei_contains(t_rangei r, t_i32 val);
+
+// t_lerp	lerp_new(t_u32 start, t_u32 end);
+// t_u32	lerp_at(t_colorlerp c, t_f32 t);
 
 #endif

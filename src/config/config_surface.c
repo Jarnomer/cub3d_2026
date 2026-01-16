@@ -24,8 +24,8 @@ static void	process_surface(char **fields, void *ctx)
 		return ;
 	def = (t_surfdef){.type = type};
 	def.particle = config_str_to_id(fields[1]);
-	def.count_min = ft_atoi(fields[2]);
-	def.count_max = ft_atoi(fields[3]);
+	def.count.min = ft_atoi(fields[2]);
+	def.count.max = ft_atoi(fields[3]);
 	defs[type] = def;
 }
 

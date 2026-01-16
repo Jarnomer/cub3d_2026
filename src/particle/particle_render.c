@@ -36,13 +36,11 @@ static t_u32	calc_particle_color(t_particle *particle, t_partdef *def)
 	t_f32	factor;
 	t_u32	base;
 	t_u8	alpha;
-	t_f32	life;
 
-	if (particle->lifespan <= 0.0f)
-		return (def->color_start);
-	life = particle->life / particle->lifespan;
-	factor = clampf(1.0f - life, 0.0f, 1.0f);
-	base = color_lerp(def->color_start, def->color_end,
+	if (particle->life.max <= 0.0f)
+		return (def->color.start);
+	factor = clampf(1.0f - particle->life.min / particle->life.max, 0.0f, 1.0f);
+	base = color_lerp(def->color.start, def->color.end,
 			(t_u8)(factor * COLOR_CHANNEL_MAX));
 	if (!def->is_faded)
 		return (base);

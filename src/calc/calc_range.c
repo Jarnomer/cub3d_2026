@@ -1,48 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar_int.c                                  :+:      :+:    :+:   */
+/*   calc_range.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/16 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#include <calc.h>
 
-t_i32	mini(t_i32 a, t_i32 b)
+t_range	range_new(t_f32 min, t_f32 max)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	return ((t_range){min, max});
 }
 
-t_i32	maxi(t_i32 a, t_i32 b)
+t_f32	range_lerp(t_range r, t_f32 t)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	return (lerpf(r.min, r.max, t));
 }
 
-t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi)
+t_f32	range_random(t_range r)
 {
-	if (val < lo)
-		return (lo);
-	if (val > hi)
-		return (hi);
-	return (val);
+	return (rand_range(r.min, r.max));
 }
 
-t_i32	absi(t_i32 val)
+t_f32	range_clamp(t_range r, t_f32 val)
 {
-	if (val < 0)
-		return (-val);
-	return (val);
+	return (clampf(val, r.min, r.max));
 }
 
-t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t)
+bool	range_contains(t_range r, t_f32 val)
 {
-	return (a + (b - a) * t);
+	return (val >= r.min && val <= r.max);
 }

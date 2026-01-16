@@ -13,8 +13,7 @@
 #ifndef PARTICLE_H
 # define PARTICLE_H
 
-# include <vector.h>
-# include <types.h>
+# include <calc.h>
 # include <defs.h>
 
 typedef struct s_game	t_game;
@@ -23,12 +22,9 @@ typedef struct s_hit	t_hit;
 typedef struct s_partdef
 {
 	t_part_id	id;
-	t_u32		color_start;
-	t_u32		color_end;
-	t_f32		speed_min;
-	t_f32		speed_max;
-	t_f32		life_min;
-	t_f32		life_max;
+	t_rangeu	color;
+	t_range		speed;
+	t_range		life;
 	t_f32		gravity;
 	t_f32		spread;
 	t_f32		size;
@@ -40,16 +36,14 @@ typedef struct s_surfdef
 {
 	t_surface	type;
 	t_part_id	particle;
-	t_i32		count_min;
-	t_i32		count_max;
+	t_rangei	count;
 }	t_surfdef;
 
 typedef struct s_particle
 {
 	t_vec3		pos;
 	t_vec3		vel;
-	t_f32		life;
-	t_f32		lifespan;
+	t_range		life;
 	t_part_id	type;
 	bool		is_active;
 }	t_particle;

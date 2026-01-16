@@ -32,11 +32,11 @@ static void	init_particle(t_particle *particle,
 {
 	t_f32	speed;
 
-	speed = rand_range(def->speed_min, def->speed_max);
+	speed = range_random(def->speed);
 	*particle = (t_particle){.pos = pos, .type = def->id};
 	particle->vel = vec3_mul(apply_spread(dir, def->spread), speed);
-	particle->life = rand_range(def->life_min, def->life_max);
-	particle->lifespan = particle->life;
+	particle->life.min = range_random(def->life);
+	particle->life.max = particle->life.min;
 	particle->is_active = true;
 }
 

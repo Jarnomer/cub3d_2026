@@ -68,8 +68,8 @@ void	particle_update_all(t_emitter *emitter, t_f32 dt)
 		if (particle->is_active)
 		{
 			def = &emitter->partdefs[particle->type];
-			particle->life -= dt;
-			if (particle->life <= 0.0f)
+			particle->life.min -= dt;
+			if (particle->life.min <= 0.0f)
 				particle->is_active = false;
 			else
 				update_particle(particle, def, dt);

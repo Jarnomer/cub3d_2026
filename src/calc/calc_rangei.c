@@ -1,48 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_scalar_int.c                                  :+:      :+:    :+:   */
+/*   calc_rangei.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/16 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#include <calc.h>
 
-t_i32	mini(t_i32 a, t_i32 b)
+t_rangei	rangei_new(t_i32 min, t_i32 max)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	return ((t_rangei){min, max});
 }
 
-t_i32	maxi(t_i32 a, t_i32 b)
+t_i32	rangei_lerp(t_rangei r, t_f32 t)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	return ((t_i32)lerpf((t_f32)r.min, (t_f32)r.max, t));
 }
 
-t_i32	clampi(t_i32 val, t_i32 lo, t_i32 hi)
+t_i32	rangei_random(t_rangei r)
 {
-	if (val < lo)
-		return (lo);
-	if (val > hi)
-		return (hi);
-	return (val);
+	return (rand_rangei(r.min, r.max));
 }
 
-t_i32	absi(t_i32 val)
+t_i32	rangei_clamp(t_rangei r, t_i32 val)
 {
-	if (val < 0)
-		return (-val);
-	return (val);
+	return (clampi(val, r.min, r.max));
 }
 
-t_f32	lerpf(t_f32 a, t_f32 b, t_f32 t)
+bool	rangei_contains(t_rangei r, t_i32 val)
 {
-	return (a + (b - a) * t);
+	return (val >= r.min && val <= r.max);
 }
