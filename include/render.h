@@ -61,6 +61,7 @@ typedef struct s_slice
 	t_f32	step;
 	t_f32	dist;
 	t_i32	offset;
+	t_i32	frame;
 }	t_slice;
 
 typedef struct s_floor
@@ -72,12 +73,6 @@ typedef struct s_floor
 	t_vec2	grid;
 	t_i32	horizon;
 }	t_floor;
-
-typedef struct s_door
-{
-	t_sheet	*sheet;
-	t_i32	frame;
-}	t_door;
 
 typedef struct s_proj
 {
@@ -103,12 +98,13 @@ typedef struct s_flash
 
 typedef struct s_occlude
 {
-	bool	has_door;
-	t_f32	door_dist;
-	t_i32	entity_idx;
-	t_f32	wall_x;
-	int		axis;
-	t_dir	dir;
+	t_f32	dist;
+	t_i32	entity;
+	t_rect	tex;
+	t_i32	height;
+	t_i32	top;
+	t_f32	step;
+	bool	is_active;
 }	t_occlude;
 
 typedef struct s_render
@@ -149,9 +145,8 @@ void	overlay_clear(t_render *render);
 void	overlay_fill(t_render *render, t_u32 color);
 void	overlay_apply(t_render *render);
 
-bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist);
-void	occlude_clear(t_game *game, t_i32 x);
 void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
+bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 dist);
 
 void	render_walls(t_game *game);
 void	render_floor(t_game *game);

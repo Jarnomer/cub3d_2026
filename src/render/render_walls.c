@@ -50,7 +50,7 @@ static void	render_wall(t_game *game, t_hit *hit, t_i32 x)
 	draw_wall_column(game, x, &slice, tex);
 }
 
-static void	handle_door(t_game *game, t_hit *hit, t_i32 x)
+static void	render_door(t_game *game, t_hit *hit, t_i32 x)
 {
 	t_entity	*ent;
 
@@ -73,14 +73,15 @@ void	render_wall_column(t_game *game, t_i32 x)
 	t_hit	wall;
 	t_hit	door;
 
-	occlude_clear(game, x);
 	dir = trans_ray_dir(&game->camera, x, game->render.width);
 	ray_init(&ray, game->camera.pos, dir);
+	if (game->render.occlude)
+		game->render.occlude[x] = (t_occlude){0};
 	wall = passthr_dda(&ray, game, RAY_MAX_DIST, &door);
 	if (wall.hit && wall.cell != CELL_DOOR)
 		render_wall(game, &wall, x);
 	if (door.entity != INVALID_ID)
-		handle_door(game, &door, x);
+		render_door(game, &door, x);
 	else if (wall.cell == CELL_DOOR)
-		handle_door(game, &wall, x);
+		render_door(game, &wall, x);
 }

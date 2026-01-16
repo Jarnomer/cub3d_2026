@@ -6,83 +6,86 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-void	occlude_store(t_game *game, t_hit *hit, t_i32 x)
+static void	calc_slice(t_occlude *occ, t_game *game, t_i32 tex_h)
 {
-	t_occlude	*occ;
+	t_i32	height;
+	t_i32	pitch;
+	t_i32	offset;
 
-	if (!game->render.occlude)
-		return ;
-	if (x < 0 || x >= game->render.width)
-		return ;
-	occ = &game->render.occlude[x];
-	occ->has_door = true;
-	occ->door_dist = hit->dist;
-	occ->entity_idx = hit->entity;
-	occ->wall_x = hit->wall_x;
-	occ->axis = hit->axis;
-	occ->dir = hit->dir;
+	if (occ->dist < EPSILON)
+		occ->height = game->render.height;
+	else
+		occ->height = game->render.height / occ->dist;
+	pitch = (t_i32)(game->camera.pitch * game->render.height);
+	offset = camera_wall_offset(game, occ->dist);
+	height = game->render.height / 2 - occ->height / 2;
+	occ->top = height + pitch + offset;
+	occ->step = (t_f32)tex_h / (t_f32)occ->height;
 }
 
-void	occlude_clear(t_game *game, t_i32 x)
-{
-	if (!game->render.occlude)
-		return ;
-	if (x < 0 || x >= game->render.width)
-		return ;
-	game->render.occlude[x] = (t_occlude){0};
-}
-
-static t_i32	calc_tex_x(t_occlude *occ, t_i32 tex_w)
+void	init_hit_ctx(t_occlude *occ, t_hit *hit, t_sheet *sheet)
 {
 	t_i32	tex_x;
 	bool	flip;
 
-	tex_x = (t_i32)(occ->wall_x * (t_f32)tex_w);
-	flip = (occ->axis == AXIS_X && occ->dir == WALL_EAST)
-		|| (occ->axis == AXIS_Y && occ->dir == WALL_SOUTH);
+	occ->dist = hit->dist;
+	occ->entity = hit->entity;
+	occ->tex.h = sheet->height;
+	occ->tex.w = sheet->width;
+	tex_x = (t_i32)(hit->wall_x * (t_f32)occ->tex.w);
+	flip = (hit->axis == AXIS_X && hit->dir == WALL_EAST)
+		|| (hit->axis == AXIS_Y && hit->dir == WALL_SOUTH);
 	if (flip)
-		tex_x = tex_w - tex_x - 1;
-	return (clampi(tex_x, 0, tex_w - 1));
+		tex_x = occ->tex.w - tex_x - 1;
+	occ->tex.x = clampi(tex_x, 0, occ->tex.w - 1);
+	occ->is_active = true;
 }
 
-static t_i32	calc_tex_y(t_game *game, t_occlude *occ, t_i32 y, t_i32 tex_h)
+void	occlude_store(t_game *game, t_hit *hit, t_i32 x)
 {
-	t_i32	height;
-	t_i32	top;
-	t_i32	pitch;
-	t_i32	offset;
+	t_occlude	*occ;
+	t_entity	*ent;
+	t_sheet		*sheet;
 
-	height = (t_i32)(game->render.height / occ->door_dist);
-	pitch = (t_i32)(game->camera.pitch * game->render.height);
-	offset = camera_wall_offset(game, occ->door_dist);
-	top = game->render.height / 2 - height / 2 + pitch + offset;
-	return (clampi((y - top) * tex_h / height, 0, tex_h - 1));
+	if (!game->render.occlude || x < 0 || x >= game->render.width)
+		return ;
+	ent = darray_get(&game->entities, hit->entity);
+	if (!ent || !ent->is_active)
+		return ;
+	sheet = assets_get_sheet(&game->assets, ent->sheet_id);
+	if (!sheet || !sheet->tex.pixels)
+		return ;
+	occ = &game->render.occlude[x];
+	init_hit_ctx(occ, hit, sheet);
+	calc_slice(occ, game, sheet->height);
 }
 
-bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 sprite_dist)
+bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 dist)
 {
 	t_occlude	*occ;
 	t_entity	*ent;
 	t_sheet		*sheet;
 	t_u32		color;
+	t_i32		frame;
 
 	occ = &game->render.occlude[x];
-	if (!occ->has_door || sprite_dist < occ->door_dist)
+	if (!occ->is_active || dist < occ->dist)
 		return (false);
-	ent = darray_get(&game->entities, occ->entity_idx);
+	ent = darray_get(&game->entities, occ->entity);
 	if (!ent || !ent->is_active)
 		return (false);
 	sheet = assets_get_sheet(&game->assets, ent->sheet_id);
 	if (!sheet || !sheet->tex.pixels)
 		return (false);
-	color = sheet_sample(sheet, door_get_frame(ent, &game->assets),
-			calc_tex_x(occ, sheet->width),
-			calc_tex_y(game, occ, y, sheet->height));
+	occ->tex.y = (t_i32)((y - occ->top) * occ->step);
+	occ->tex.y = clampi(occ->tex.y, 0, occ->tex.h - 1);
+	frame = door_get_frame(ent, &game->assets);
+	color = sheet_sample(sheet, frame, occ->tex.x, occ->tex.y);
 	return (color_is_opaque(color));
 }
