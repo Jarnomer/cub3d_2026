@@ -27,7 +27,7 @@ typedef struct s_entdef
 	t_sheet_id	sheet_id;
 	t_anim_id	anim_id;
 	t_f32		scale;
-	t_f32		z_offset;
+	t_f32		offset;
 	t_i32		health;
 	bool		is_solid;
 	bool		use_sheet;
@@ -35,16 +35,15 @@ typedef struct s_entdef
 
 typedef struct s_entity
 {
-	t_vec2		pos;
+	t_vec3		pos;
 	t_type		type;
 	t_state		state;
 	t_anim		anim;
-	t_spr_id	spr_id;
-	t_sheet_id	sheet_id;
 	t_f32		scale;
-	t_f32		z_offset;
 	t_i32		health;
 	t_f32		cooldown;
+	t_sheet_id	sheet_id;
+	t_spr_id	spr_id;
 	bool		is_active;
 	bool		is_solid;
 	bool		has_anim;

@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	apply_entity_def(t_entity *ent, const t_entdef *def)
 {
 	ent->spr_id = def->spr_id;
 	ent->scale = def->scale;
-	ent->z_offset = def->z_offset;
+	ent->pos.z = def->offset;
 	ent->health = def->health;
 	ent->is_solid = def->is_solid;
 }
 
-static t_entity	entity_create(t_assets *assets, t_type type, t_vec2 pos)
+static t_entity	entity_create(t_assets *assets, t_type type, t_vec3 pos)
 {
 	const t_entdef	*def;
 	t_entity		ent;

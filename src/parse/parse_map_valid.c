@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	save_spawn(t_parse *ctx, int x, int y, char c)
 	spawn = &ctx->map->spawns[ctx->map->spawn_count];
 	spawn->pos.x = (t_f32)x + CELL_CENTER;
 	spawn->pos.y = (t_f32)y + CELL_CENTER;
+	spawn->pos.z = 0.0f;
 	spawn->type = charmap_to_entity(c);
 	ctx->map->grid[y][x] = CHAR_EMPTY;
 	ctx->map->spawn_count++;
@@ -32,9 +33,9 @@ static void	save_player(t_parse *ctx, int x, int y, char c)
 	ctx->map->spawn_pos.y = (t_f32)y + CELL_CENTER;
 	if (c == PLAYER_DIR_N)
 		ctx->map->spawn_angle = 3.0f * PI / 2.0f;
-	if (c == PLAYER_DIR_S)
+	else if (c == PLAYER_DIR_S)
 		ctx->map->spawn_angle = PI / 2.0f;
-	if (c == PLAYER_DIR_E)
+	else if (c == PLAYER_DIR_E)
 		ctx->map->spawn_angle = 0.0f;
 	else
 		ctx->map->spawn_angle = PI;

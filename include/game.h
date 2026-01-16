@@ -51,7 +51,7 @@
 
 typedef struct s_spawn
 {
-	t_vec2	pos;
+	t_vec3	pos;
 	t_type	type;
 }	t_spawn;
 

@@ -57,7 +57,7 @@ static t_vec2i	proj_calc_size(t_render *render, t_entity *ent, t_proj *proj)
 	return (size);
 }
 
-static void	init_sprite_context(t_entity *ent, t_proj *proj, t_vec3 *world,
+static void	init_sprite_ctx(t_entity *ent, t_proj *proj, t_vec3 *world,
 	t_vec2 *plane)
 {
 	proj->pos = vec3_new(world->x, world->y, world->z);
@@ -74,11 +74,11 @@ bool	sprite_project(t_game *game, t_entity *ent, t_proj *proj)
 	t_vec3	world;
 	t_vec2	plane;
 
-	world = vec3_new(ent->pos.x, ent->pos.y, ent->z_offset);
+	world = vec3_new(ent->pos.x, ent->pos.y, ent->pos.z);
 	plane = trans_world_to_cam(&game->camera, vec2_from_vec3(world));
 	if (trans_behind_camera(plane.y))
 		return (false);
-	init_sprite_context(ent, proj, &world, &plane);
+	init_sprite_ctx(ent, proj, &world, &plane);
 	proj->screen = proj_calc_screen(game, &game->render, &game->camera, proj);
 	proj->size = proj_calc_size(&game->render, ent, proj);
 	proj->bounds = rect_centered(proj->screen, proj->size);
