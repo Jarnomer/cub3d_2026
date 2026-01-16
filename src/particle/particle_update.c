@@ -60,7 +60,7 @@ void	particle_update_all(t_emitter *emitter, t_f32 dt)
 	t_partdef	*def;
 	t_u32		i;
 
-	emitter->active_count = 0;
+	emitter->active = 0;
 	i = 0;
 	while (i < emitter->capacity)
 	{
@@ -74,7 +74,7 @@ void	particle_update_all(t_emitter *emitter, t_f32 dt)
 			else
 				update_particle(particle, def, dt);
 			if (particle->is_active)
-				emitter->active_count++;
+				emitter->active++;
 		}
 		i++;
 	}

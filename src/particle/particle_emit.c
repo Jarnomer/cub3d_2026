@@ -59,7 +59,7 @@ void	particle_emit_impact(t_game *game, t_hit *hit)
 
 	if (!hit->hit)
 		return ;
-	def = surface_get_def(&game->emitter, hit->entity);
+	def = surface_get_def(&game->emitter, hit);
 	if (!def || def->particle <= PARTICLE_NONE)
 		return ;
 	emit_particles(game, def, hit);

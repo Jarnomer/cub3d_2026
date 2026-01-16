@@ -60,7 +60,7 @@ typedef struct s_emitter
 	t_partdef	partdefs[PARTICLE_COUNT];
 	t_surfdef	surfdefs[SURFACE_COUNT];
 	t_u32		capacity;
-	t_u32		active_count;
+	t_u32		active;
 }	t_emitter;
 
 void		particle_init(t_emitter *emitter, size_t capacity);
@@ -75,6 +75,6 @@ void		particle_spawn(t_emitter *emitter,
 void		render_particles(t_game *game);
 
 t_particle	*particle_get_inactive(t_emitter *emitter);
-t_surfdef	*surface_get_def(t_emitter *emitter, t_type type);
+t_surfdef	*surface_get_def(t_emitter *emitter, t_hit *hit);
 
 #endif

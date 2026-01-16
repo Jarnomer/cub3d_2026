@@ -50,17 +50,17 @@ static t_u32	calc_particle_color(t_particle *particle, t_partdef *def)
 	return (color_with_alpha(base, alpha));
 }
 
-static t_rect	calc_particle_bounds(t_game *game, t_particle *particle,
-	t_partdef *def, t_vec2 trans)
+static t_rect	calc_particle_bounds(t_game *game,
+	t_particle *particle, t_partdef *def, t_vec2 trans)
 {
 	t_vec2i	screen;
 	t_i32	size;
-	t_i32	h;
+	t_i32	height;
 
-	h = game->render.height;
+	height = game->render.height;
 	screen.x = (t_i32)((game->render.width / 2) * (1.0f + trans.x / trans.y));
-	screen.y = h / 2 - (t_i32)(particle->pos.z * h / trans.y);
-	screen.y += (t_i32)(game->camera.pitch * h);
+	screen.y = height / 2 - (t_i32)(particle->pos.z * height / trans.y);
+	screen.y += (t_i32)(game->camera.pitch * height);
 	size = maxi(1, (t_i32)(def->size * PARTICLE_BASE_SIZE / trans.y));
 	return (rect_new(screen.x - size, screen.y - size, size, size));
 }
@@ -88,7 +88,7 @@ void	render_particles(t_game *game)
 	t_u32		i;
 
 	emitter = &game->emitter;
-	if (emitter->active_count == 0)
+	if (emitter->active == 0)
 		return ;
 	i = 0;
 	while (i < emitter->capacity)

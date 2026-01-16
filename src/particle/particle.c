@@ -38,5 +38,5 @@ void	particle_clear(t_emitter *emitter)
 		emitter->particles[i].is_active = false;
 		i++;
 	}
-	emitter->active_count = 0;
+	emitter->active = 0;
 }

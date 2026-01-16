@@ -26,20 +26,26 @@ t_particle	*particle_get_inactive(t_emitter *emitter)
 	return (NULL);
 }
 
-static t_surface	surface_from_entity(t_type entity_type)
+static t_surface	surface_from_entity(t_type type)
 {
-	if (entity_type == ENTITY_DOOR)
+	if (type == ENTITY_DOOR)
 		return (SURFACE_METAL);
-	if (entity_type == ENTITY_BARREL)
+	if (type == ENTITY_BARREL)
 		return (SURFACE_METAL);
-	if (entity_type == ENTITY_ENEMY)
+	if (type == ENTITY_ENEMY)
 		return (SURFACE_FLESH);
 	return (SURFACE_STONE);
 }
 
-t_surfdef	*surface_get_def(t_emitter *emitter, t_type type)
+t_surfdef	*surface_get_def(t_emitter *emitter, t_hit *hit)
 {
-	if (type < 0 || type >= ENTITY_NONE)
-		return (&emitter->surfdefs[SURFACE_STONE]);
-	return (&emitter->surfdefs[surface_from_entity(type)]);
+	t_surface	surf;
+
+	if (hit->cell == CELL_WALL)
+		surf = SURFACE_METAL;
+	else if (hit->cell == CELL_DOOR)
+		surf = surface_from_entity(ENTITY_DOOR);
+	else
+		surf = surface_from_entity((t_type)hit->entity);
+	return (&emitter->surfdefs[surf]);
 }

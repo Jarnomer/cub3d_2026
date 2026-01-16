@@ -20,10 +20,10 @@ static t_vec3	apply_spread(t_vec3 dir, t_f32 spread)
 	if (spread <= 0.0f)
 		return (dir);
 	angle = atan2f(dir.y, dir.x);
-	offset = rand_range(-spread, spread);
+	offset = rand_range(-PI / 2, PI / 2);
 	dir.x = cosf(angle + offset);
 	dir.y = sinf(angle + offset);
-	dir.z += rand_range(-spread, spread);
+	dir.z = rand_range(-spread, spread);
 	return (dir);
 }
 
@@ -33,8 +33,7 @@ static void	init_particle(t_particle *particle,
 	t_f32	speed;
 
 	speed = rand_range(def->speed_min, def->speed_max);
-	*particle = (t_particle){.pos = pos};
-	particle->type = def->id;
+	*particle = (t_particle){.pos = pos, .type = def->id};
 	particle->vel = vec3_mul(apply_spread(dir, def->spread), speed);
 	particle->life = rand_range(def->life_min, def->life_max);
 	particle->lifespan = particle->life;
@@ -56,5 +55,5 @@ void	particle_spawn(t_emitter *emitter,
 	if (!def)
 		return ;
 	init_particle(particle, def, pos, dir);
-	emitter->active_count++;
+	emitter->active++;
 }
