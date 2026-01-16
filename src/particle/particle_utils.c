@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   particle.c                                         :+:      :+:    :+:   */
+/*   particle_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,31 +12,34 @@
 
 #include <game.h>
 
-void	particle_init(t_emitter *emitter, size_t capacity)
-{
-	*emitter = (t_emitter){.capacity = capacity};
-	emitter->particles = safe_calloc(sizeof(t_particle) * capacity);
-	config_load_particles(emitter->partdefs);
-	config_load_surfaces(emitter->surfdefs);
-}
-
-void	particle_destroy(t_emitter *emitter)
-{
-	if (!emitter)
-		return ;
-	free(emitter->particles);
-	*emitter = (t_emitter){0};
-}
-
-void	particle_clear(t_emitter *emitter)
+t_particle	*particle_get_inactive(t_emitter *emitter)
 {
 	t_u32	i;
 
 	i = 0;
 	while (i < emitter->capacity)
 	{
-		emitter->particles[i].is_active = false;
+		if (!emitter->particles[i].is_active)
+			return (&emitter->particles[i]);
 		i++;
 	}
-	emitter->active_count = 0;
+	return (NULL);
+}
+
+static t_surface	surface_from_entity(t_type entity_type)
+{
+	if (entity_type == ENTITY_DOOR)
+		return (SURFACE_METAL);
+	if (entity_type == ENTITY_BARREL)
+		return (SURFACE_METAL);
+	if (entity_type == ENTITY_ENEMY)
+		return (SURFACE_FLESH);
+	return (SURFACE_STONE);
+}
+
+t_surfdef	*surface_get_def(t_emitter *emitter, t_type type)
+{
+	if (type < 0 || type >= ENTITY_NONE)
+		return (&emitter->surfdefs[SURFACE_STONE]);
+	return (&emitter->surfdefs[surface_from_entity(type)]);
 }

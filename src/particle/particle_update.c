@@ -5,36 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/14 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/14 00:00:00 by jmertane         ###   ########.fr       */
+/*   Created: 2026/01/16 00:00:00 by jmertane          #+#    #+#             */
+/*   Updated: 2026/01/16 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-static void	handle_floor_bounce(t_particle *particle, t_partdef *def)
+static void	handle_bounce(t_particle *particle, t_partdef *def)
 {
-	if (absf(particle->velocity) < PARTICLE_STOP_VEL)
+	if (absf(particle->vel.z) < PARTICLE_STOP_VEL)
 	{
-		particle->velocity = 0.0f;
-		particle->vel = vec2_mul(particle->vel, PARTICLE_FLOOR_FRIC);
+		particle->vel.z = 0.0f;
+		particle->vel.x *= PARTICLE_FLOOR_FRIC;
+		particle->vel.y *= PARTICLE_FLOOR_FRIC;
 	}
 	else
 	{
-		particle->velocity = -particle->velocity * def->bounce;
-		particle->vel = vec2_mul(particle->vel, def->bounce);
+		particle->vel.z = -particle->vel.z * def->bounce;
+		particle->vel.x *= def->bounce;
+		particle->vel.y *= def->bounce;
 	}
+}
+
+static void	handle_floor_collision(t_particle *particle, t_partdef *def)
+{
+	if (particle->pos.z > PARTICLE_FLOOR_Z)
+		return ;
+	particle->pos.z = PARTICLE_FLOOR_Z;
+	handle_bounce(particle, def);
+}
+
+static void	handle_ceiling_collision(t_particle *particle, t_partdef *def)
+{
+	if (particle->pos.z < PARTICLE_CEILING_Z)
+		return ;
+	particle->pos.z = PARTICLE_CEILING_Z;
+	particle->vel.z = -particle->vel.z * def->bounce;
 }
 
 static void	update_particle(t_particle *particle, t_partdef *def, t_f32 dt)
 {
-	particle->velocity -= def->gravity * PARTICLE_GRAVITY * dt;
-	particle->pos = vec2_add(particle->pos, vec2_mul(particle->vel, dt));
-	particle->offset += particle->velocity * dt;
-	if (particle->offset > PARTICLE_FLOOR_Z)
-		return ;
-	particle->offset = PARTICLE_FLOOR_Z;
-	handle_floor_bounce(particle, def);
+	particle->vel.z -= def->gravity * PARTICLE_GRAVITY * dt;
+	particle->pos.x += particle->vel.x * dt;
+	particle->pos.y += particle->vel.y * dt;
+	particle->pos.z += particle->vel.z * dt;
+	handle_floor_collision(particle, def);
+	handle_ceiling_collision(particle, def);
 }
 
 void	particle_update_all(t_emitter *emitter, t_f32 dt)

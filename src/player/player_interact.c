@@ -42,7 +42,7 @@ static t_entity	*find_interactable(t_game *game)
 		if (ent->is_active && is_interactable(ent))
 		{
 			dist = vec2_len(vec2_sub(
-				vec2_from_vec3(ent->pos), game->camera.pos));
+						vec2_from_vec3(ent->pos), game->camera.pos));
 			if (dist < nearest && dist <= INTERACT_RANGE)
 			{
 				object = ent;

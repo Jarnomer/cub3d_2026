@@ -140,10 +140,11 @@ SOURCES := main \
            render_trans \
            render_zbuf \
            particle \
-           particle_spawn \
            particle_update \
+           particle_spawn \
+           particle_emit \
            particle_render \
-           particle_surface \
+           particle_utils \
            sprite_proj \
            sprite_sort \
            thread_floor \

@@ -206,12 +206,11 @@
 # define PARTICLE_POOL_SIZE		256
 # define PARTICLE_BASE_SIZE		8.0f
 # define PARTICLE_WALL_OFFSET	0.1f
-# define PARTICLE_SPAWN_Z		0.0f
-# define PARTICLE_FLOOR_Z		-0.4f
+# define PARTICLE_FLOOR_Z		-0.6f
 # define PARTICLE_CEILING_Z		0.4f
-# define PARTICLE_Z_MULT		0.5f
 # define PARTICLE_GRAVITY		9.8f
 # define PARTICLE_STOP_VEL		0.1f
 # define PARTICLE_FLOOR_FRIC	0.7f
+# define PARTICLE_PITCH_SCALE	0.5f
 
 #endif
