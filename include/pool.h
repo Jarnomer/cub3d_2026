@@ -21,6 +21,7 @@
 # define DARRAY_GROWTH_FACTOR	2
 # define ARENA_ALIGNMENT		8
 # define FRAME_ARENA_SIZE		65536
+# define DEFAULT_POOL_SIZE		256
 
 typedef struct s_pool
 {

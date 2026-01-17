@@ -34,7 +34,7 @@ typedef struct s_sheet
 	t_i32	height;
 	t_i32	cols;
 	t_i32	rows;
-	t_i32	count;
+	t_i32	frames;
 }	t_sheet;
 
 typedef struct s_assets
@@ -42,9 +42,9 @@ typedef struct s_assets
 	t_tex		textures[TEXTURE_COUNT];
 	t_tex		sprites[SPRITE_COUNT];
 	t_sheet		sheets[SHEET_COUNT];
-	t_anidef	anidefs[ANIM_COUNT];
 	t_entdef	entdefs[ENTITY_COUNT];
 	t_wpndef	wpndefs[WEAPON_COUNT];
+	t_anidef	anidefs[ANIM_COUNT];
 	bool		loaded;
 }	t_assets;
 
@@ -53,12 +53,12 @@ void	assets_destroy(t_assets *assets);
 
 void	texture_load(t_tex *tex, const char *path);
 void	texture_destroy(t_tex *tex);
-t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y);
+t_u32	texture_sample(t_tex *tex, t_i32 u, t_i32 v);
 t_u32	texture_sample_wrap(t_tex *tex, t_f32 u, t_f32 v);
 
 void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows);
 void	sheet_destroy(t_sheet *sheet);
-t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y);
+t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 u, t_i32 v);
 
 t_tex	*assets_get_texture(t_assets *assets, t_tex_id id);
 t_tex	*assets_get_sprite(t_assets *assets, t_spr_id id);

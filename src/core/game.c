@@ -30,7 +30,8 @@ void	game_init(t_game *game, t_map *map)
 	input_mouse_init(game);
 	lookup_init(&game->lookup);
 	assets_init(&game->assets, game->map);
-	particle_init(&game->emitter, PARTICLE_POOL_SIZE);
+	particle_init(&game->emitter, DEFAULT_POOL_SIZE);
+	decal_init(&game->decals, DEFAULT_POOL_SIZE);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	darray_init(&game->entities, sizeof(t_entity), 32);
 	grid_init(&game->grid, map->width, map->height);
@@ -51,6 +52,7 @@ void	game_destroy(t_game *game)
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	darray_destroy(&game->entities);
+	decal_destroy(&game->decals);
 	arena_destroy(&game->arena);
 	grid_destroy(&game->grid);
 	map_destroy(game->map);

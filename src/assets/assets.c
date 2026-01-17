@@ -23,7 +23,7 @@ static void	load_walls(t_assets *assets, t_map *map)
 void	assets_init(t_assets *assets, t_map *map)
 {
 	*assets = (t_assets){0};
-	config_load_all(assets);
+	config_load_assets(assets);
 	load_walls(assets, map);
 	assets->loaded = true;
 }

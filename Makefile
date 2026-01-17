@@ -70,15 +70,11 @@ SOURCES := main \
            game \
            time \
            camera \
-           $(call expand, config, texture sheet entity surface particle anim weapon) \
-           config \
            config \
            config_texture \
-           config_sheet \
            config_entity \
            config_particle \
-           config_surface \
-           config_anim \
+           config_impact \
            config_weapon \
            assets \
            assets_texture \
@@ -106,6 +102,10 @@ SOURCES := main \
            weapon_inertia \
            weapon_bob \
            weapon_utils \
+           input \
+           input_keys \
+           input_mouse \
+           input_mouse_keys \
            motion \
            motion_move \
            motion_fov \
@@ -113,10 +113,6 @@ SOURCES := main \
            motion_crouch \
            motion_jump \
            motion_sprint \
-           input \
-           input_keys \
-           input_mouse \
-           input_mouse_keys \
            anim \
            anim_update \
            anim_utils \
@@ -145,6 +141,7 @@ SOURCES := main \
            particle_emit \
            particle_render \
            particle_utils \
+           decal \
            sprite_proj \
            sprite_sort \
            thread_floor \

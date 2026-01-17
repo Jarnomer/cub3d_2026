@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/07 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/17 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_partdef	t_partdef;
 typedef struct s_surfdef	t_surfdef;
 typedef struct s_anidef		t_anidef;
 typedef struct s_wpndef		t_wpndef;
+typedef struct s_decaldef	t_decaldef;
+typedef struct s_decalmgr	t_decalmgr;
 
 # define TEXDEF_FIELD_COUNT		3
 # define SHEETDEF_FIELD_COUNT	4
@@ -30,6 +32,8 @@ typedef struct s_wpndef		t_wpndef;
 # define SURFDEF_FIELD_COUNT	4
 # define ANIMDEF_FIELD_COUNT	7
 # define WPNDEF_FIELD_COUNT		12
+# define DECALDEF_FIELD_COUNT	7
+# define IMPACTDEF_FIELD_COUNT	3
 
 # define CONFIG_FILE_EXT		".conf"
 
@@ -40,8 +44,10 @@ typedef struct s_wpndef		t_wpndef;
 # define PATH_CONFIG_SHEET		"config/sheet.conf"
 # define PATH_CONFIG_ANIM		"config/anim.conf"
 # define PATH_CONFIG_WEAPON		"config/weapon.conf"
+# define PATH_CONFIG_DECAL		"config/decal.conf"
+# define PATH_CONFIG_IMPACT		"config/impact.conf"
 
-typedef void	(*t_cfg_proc)(char **fields, void *ctx);
+typedef void	(*t_cfgproc)(char **fields, void *ctx);
 
 typedef struct s_str_id
 {
@@ -51,22 +57,28 @@ typedef struct s_str_id
 
 typedef struct s_cfgload
 {
-	const char		*path;
-	t_i32			fields;
-	t_cfg_proc		process;
-	void			*ctx;
+	const char	*path;
+	t_i32		fields;
+	t_cfgproc	process;
+	void		*ctx;
 }	t_cfgload;
 
-void	config_load_all(t_assets *assets);
+void	config_load_assets(t_assets *assets);
 void	config_parse_file(t_cfgload *cfg);
 t_i32	config_str_to_id(const char *str);
 
 void	config_load_textures(t_assets *assets);
 void	config_load_sheets(t_assets *assets);
+
 void	config_load_entities(t_entdef *defs);
+void	config_load_anims(t_anidef *defs);
+
 void	config_load_particles(t_partdef *defs);
 void	config_load_surfaces(t_surfdef *defs);
-void	config_load_anims(t_anidef *defs);
+
+void	config_load_impacts(t_decalmgr *mgr);
+void	config_load_decals(t_decaldef *defs);
+
 void	config_load_weapons(t_wpndef *defs);
 
 #endif

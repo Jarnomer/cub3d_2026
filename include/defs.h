@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/06 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/01/17 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef enum e_sheet_id
 	SHEET_DOOR,
 	SHEET_BARREL,
 	SHEET_SHOTGUN,
+	SHEET_IMPACTS,
 	SHEET_COUNT
 }	t_sheet_id;
 
@@ -116,6 +117,19 @@ typedef enum e_part_id
 	PARTICLE_COUNT
 }	t_part_id;
 
+typedef enum e_decal_id
+{
+	DECAL_NONE,
+	DECAL_BULLET_STONE,
+	DECAL_BULLET_METAL,
+	DECAL_BULLET_WOOD,
+	DECAL_SHELL_STONE,
+	DECAL_SHELL_METAL,
+	DECAL_SHELL_WOOD,
+	DECAL_SCORCH,
+	DECAL_COUNT
+}	t_decal_id;
+
 typedef enum e_anim_id
 {
 	ANIM_NONE,
@@ -127,6 +141,9 @@ typedef enum e_anim_id
 	ANIM_SHOTGUN_IDLE,
 	ANIM_SHOTGUN_FIRE,
 	ANIM_SHOTGUN_RELOAD,
+	ANIM_IMPACT_BULLET,
+	ANIM_IMPACT_SHELL,
+	ANIM_IMPACT_EXPLODE,
 	ANIM_COUNT
 }	t_anim_id;
 

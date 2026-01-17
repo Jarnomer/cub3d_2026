@@ -17,7 +17,7 @@ void	sheet_load(t_sheet *sheet, const char *path, t_i32 cols, t_i32 rows)
 	texture_load(&sheet->tex, path);
 	sheet->cols = cols;
 	sheet->rows = rows;
-	sheet->count = cols * rows;
+	sheet->frames = cols * rows;
 	sheet->width = sheet->tex.width / cols;
 	sheet->height = sheet->tex.height / rows;
 }
@@ -28,19 +28,18 @@ void	sheet_destroy(t_sheet *sheet)
 	*sheet = (t_sheet){0};
 }
 
-t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 x, t_i32 y)
+t_u32	sheet_sample(t_sheet *sheet, t_i32 frame, t_i32 u, t_i32 v)
 {
+	t_vec2i	tex;
 	t_i32	col;
 	t_i32	row;
-	t_i32	sheet_x;
-	t_i32	sheet_y;
 
-	frame = clampi(frame, 0, sheet->count - 1);
+	frame = clampi(frame, 0, sheet->frames - 1);
 	col = frame % sheet->cols;
 	row = frame / sheet->cols;
-	x = clampi(x, 0, sheet->width - 1);
-	y = clampi(y, 0, sheet->height - 1);
-	sheet_x = col * sheet->width + x;
-	sheet_y = row * sheet->height + y;
-	return (texture_sample(&sheet->tex, sheet_x, sheet_y));
+	u = clampi(u, 0, sheet->width - 1);
+	v = clampi(v, 0, sheet->height - 1);
+	tex.x = col * sheet->width + u;
+	tex.y = row * sheet->height + v;
+	return (texture_sample(&sheet->tex, tex.x, tex.y));
 }

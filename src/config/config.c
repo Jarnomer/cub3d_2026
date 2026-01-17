@@ -95,7 +95,7 @@ void	config_parse_file(t_cfgload *cfg)
 	close(fd);
 }
 
-void	config_load_all(t_assets *assets)
+void	config_load_assets(t_assets *assets)
 {
 	config_load_textures(assets);
 	config_load_sheets(assets);

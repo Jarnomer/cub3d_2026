@@ -203,7 +203,6 @@
 /*    PARTICLE SETTINGS                                                       */
 /* ************************************************************************** */
 
-# define PARTICLE_POOL_SIZE		256
 # define PARTICLE_BASE_SIZE		8.0f
 # define PARTICLE_WALL_OFFSET	0.1f
 # define PARTICLE_FLOOR_Z		-0.6f

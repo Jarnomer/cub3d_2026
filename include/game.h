@@ -39,6 +39,7 @@
 # include <render.h>
 # include <blit.h>
 # include <particle.h>
+# include <decal.h>
 # include <grid.h>
 # include <pool.h>
 # include <lookup.h>
@@ -102,6 +103,7 @@ typedef struct s_game
 	t_player	player;
 	t_darray	entities;
 	t_emitter	emitter;
+	t_decalmgr	decals;
 	t_grid		grid;
 	t_arena		arena;
 	t_lookup	lookup;

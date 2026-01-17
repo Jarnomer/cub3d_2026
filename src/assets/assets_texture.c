@@ -17,7 +17,7 @@ void	texture_load(t_tex *tex, const char *path)
 	tex->mlx_tex = safe_load_png(path);
 	tex->width = tex->mlx_tex->width;
 	tex->height = tex->mlx_tex->height;
-	tex->pixels = (t_u32 *)tex->mlx_tex->pixels;
+	tex->pixels = (t_pixels)tex->mlx_tex->pixels;
 }
 
 void	texture_destroy(t_tex *tex)
@@ -27,28 +27,26 @@ void	texture_destroy(t_tex *tex)
 	*tex = (t_tex){0};
 }
 
-t_u32	texture_sample(t_tex *tex, t_i32 x, t_i32 y)
+t_u32	texture_sample(t_tex *tex, t_i32 u, t_i32 v)
 {
 	t_i32	idx;
 
-	x = clampi(x, 0, tex->width - 1);
-	y = clampi(y, 0, tex->height - 1);
-	idx = y * tex->width + x;
+	u = clampi(u, 0, tex->width - 1);
+	v = clampi(v, 0, tex->height - 1);
+	idx = v * tex->width + u;
 	return (tex->pixels[idx]);
 }
 
 t_u32	texture_sample_wrap(t_tex *tex, t_f32 u, t_f32 v)
 {
 	t_i32	idx;
-	t_i32	x;
-	t_i32	y;
 
-	x = (t_i32)(u * tex->width) % tex->width;
-	y = (t_i32)(v * tex->height) % tex->height;
-	if (x < 0)
-		x += tex->width;
-	if (y < 0)
-		y += tex->height;
-	idx = y * tex->width + x;
+	u = (t_i32)(u * tex->width) % tex->width;
+	v = (t_i32)(v * tex->height) % tex->height;
+	if (u < 0)
+		u += tex->width;
+	if (v < 0)
+		v += tex->height;
+	idx = v * tex->width + u;
 	return (tex->pixels[idx]);
 }
