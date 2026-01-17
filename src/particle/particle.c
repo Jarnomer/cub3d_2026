@@ -12,31 +12,31 @@
 
 #include <game.h>
 
-void	particle_init(t_emitter *emitter, size_t capacity)
+void	particle_init(t_prtclmgr *mgr, size_t capacity)
 {
-	*emitter = (t_emitter){.capacity = capacity};
-	emitter->particles = safe_calloc(sizeof(t_particle) * capacity);
-	config_load_particles(emitter->partdefs);
-	config_load_surfaces(emitter->surfdefs);
+	*mgr = (t_prtclmgr){.capacity = capacity};
+	mgr->particles = safe_calloc(sizeof(t_particle) * capacity);
+	config_load_particles(mgr->partdefs);
+	config_load_surfaces(mgr->surfdefs);
 }
 
-void	particle_destroy(t_emitter *emitter)
+void	particle_destroy(t_prtclmgr *mgr)
 {
-	if (!emitter)
+	if (!mgr)
 		return ;
-	free(emitter->particles);
-	*emitter = (t_emitter){0};
+	free(mgr->particles);
+	*mgr = (t_prtclmgr){0};
 }
 
-void	particle_clear(t_emitter *emitter)
+void	particle_clear(t_prtclmgr *mgr)
 {
 	t_u32	i;
 
 	i = 0;
-	while (i < emitter->capacity)
+	while (i < mgr->capacity)
 	{
-		emitter->particles[i].is_active = false;
+		mgr->particles[i].is_active = false;
 		i++;
 	}
-	emitter->active = 0;
+	mgr->active = 0;
 }

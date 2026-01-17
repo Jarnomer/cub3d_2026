@@ -48,7 +48,7 @@ static void	emit_particles(t_game *game, t_surfdef *def, t_hit *hit)
 	i = 0;
 	while (i < count)
 	{
-		particle_spawn(&game->emitter, def->particle, pos, dir);
+		particle_spawn(&game->particles, def->particle, pos, dir);
 		i++;
 	}
 }
@@ -59,7 +59,7 @@ void	particle_emit_impact(t_game *game, t_hit *hit)
 
 	if (!hit->hit)
 		return ;
-	def = surface_get_def(&game->emitter, hit);
+	def = surface_get_def(&game->particles, hit);
 	if (!def || def->particle <= PARTICLE_NONE)
 		return ;
 	emit_particles(game, def, hit);

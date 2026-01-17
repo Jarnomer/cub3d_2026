@@ -48,27 +48,27 @@ typedef struct s_particle
 	bool		is_active;
 }	t_particle;
 
-typedef struct s_emitter
+typedef struct s_prtclmgr
 {
 	t_particle	*particles;
 	t_partdef	partdefs[PARTICLE_COUNT];
 	t_surfdef	surfdefs[SURFACE_COUNT];
 	t_u32		capacity;
 	t_u32		active;
-}	t_emitter;
+}	t_prtclmgr;
 
-void		particle_init(t_emitter *emitter, size_t capacity);
-void		particle_destroy(t_emitter *emitter);
-void		particle_clear(t_emitter *emitter);
-void		particle_update_all(t_emitter *emitter, t_f32 dt);
+void		particle_init(t_prtclmgr *mgr, size_t capacity);
+void		particle_destroy(t_prtclmgr *mgr);
+void		particle_clear(t_prtclmgr *mgr);
+void		particle_update_all(t_prtclmgr *mgr, t_f32 dt);
 
 void		particle_emit_impact(t_game *game, t_hit *hit);
-void		particle_spawn(t_emitter *emitter,
+void		particle_spawn(t_prtclmgr *mgr,
 				t_part_id type, t_vec3 pos, t_vec3 dir);
 
 void		render_particles(t_game *game);
 
-t_particle	*particle_get_inactive(t_emitter *emitter);
-t_surfdef	*surface_get_def(t_emitter *emitter, t_hit *hit);
+t_particle	*particle_get_inactive(t_prtclmgr *mgr);
+t_surfdef	*surface_get_def(t_prtclmgr *mgr, t_hit *hit);
 
 #endif

@@ -80,21 +80,21 @@ static void	draw_particle(t_game *game, t_particle *particle, t_partdef *def)
 
 void	render_particles(t_game *game)
 {
-	t_emitter	*emitter;
+	t_prtclmgr	*mgr;
 	t_particle	*particle;
 	t_partdef	*def;
 	t_u32		i;
 
-	emitter = &game->emitter;
-	if (emitter->active == 0)
+	mgr = &game->particles;
+	if (mgr->active == 0)
 		return ;
 	i = 0;
-	while (i < emitter->capacity)
+	while (i < mgr->capacity)
 	{
-		particle = &emitter->particles[i];
+		particle = &mgr->particles[i];
 		if (particle->is_active)
 		{
-			def = &emitter->partdefs[particle->type];
+			def = &mgr->partdefs[particle->type];
 			draw_particle(game, particle, def);
 		}
 		i++;

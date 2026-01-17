@@ -54,27 +54,27 @@ static void	update_particle(t_particle *particle, t_partdef *def, t_f32 dt)
 	handle_ceiling_collision(particle, def);
 }
 
-void	particle_update_all(t_emitter *emitter, t_f32 dt)
+void	particle_update_all(t_prtclmgr *mgr, t_f32 dt)
 {
 	t_particle	*particle;
 	t_partdef	*def;
 	t_u32		i;
 
-	emitter->active = 0;
+	mgr->active = 0;
 	i = 0;
-	while (i < emitter->capacity)
+	while (i < mgr->capacity)
 	{
-		particle = &emitter->particles[i];
+		particle = &mgr->particles[i];
 		if (particle->is_active)
 		{
-			def = &emitter->partdefs[particle->type];
+			def = &mgr->partdefs[particle->type];
 			particle->life.min -= dt;
 			if (particle->life.min <= 0.0f)
 				particle->is_active = false;
 			else
 				update_particle(particle, def, dt);
 			if (particle->is_active)
-				emitter->active++;
+				mgr->active++;
 		}
 		i++;
 	}

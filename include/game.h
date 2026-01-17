@@ -102,7 +102,7 @@ typedef struct s_game
 	t_assets	assets;
 	t_player	player;
 	t_darray	entities;
-	t_emitter	emitter;
+	t_prtclmgr	particles;
 	t_decalmgr	decals;
 	t_grid		grid;
 	t_arena		arena;

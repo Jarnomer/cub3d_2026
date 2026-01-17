@@ -40,7 +40,7 @@ static void	init_particle(t_particle *particle,
 	particle->is_active = true;
 }
 
-void	particle_spawn(t_emitter *emitter,
+void	particle_spawn(t_prtclmgr *mgr,
 			t_part_id type, t_vec3 pos, t_vec3 dir)
 {
 	t_particle	*particle;
@@ -48,12 +48,12 @@ void	particle_spawn(t_emitter *emitter,
 
 	if (type <= PARTICLE_NONE || type >= PARTICLE_COUNT)
 		return ;
-	particle = particle_get_inactive(emitter);
+	particle = particle_get_inactive(mgr);
 	if (!particle)
 		return ;
-	def = &emitter->partdefs[type];
+	def = &mgr->partdefs[type];
 	if (!def)
 		return ;
 	init_particle(particle, def, pos, dir);
-	emitter->active++;
+	mgr->active++;
 }

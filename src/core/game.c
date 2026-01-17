@@ -30,7 +30,7 @@ void	game_init(t_game *game, t_map *map)
 	input_mouse_init(game);
 	lookup_init(&game->lookup);
 	assets_init(&game->assets, game->map);
-	particle_init(&game->emitter, DEFAULT_POOL_SIZE);
+	particle_init(&game->particles, DEFAULT_POOL_SIZE);
 	decal_init(&game->decals, DEFAULT_POOL_SIZE);
 	arena_init(&game->arena, FRAME_ARENA_SIZE);
 	darray_init(&game->entities, sizeof(t_entity), 32);
@@ -48,7 +48,7 @@ void	game_destroy(t_game *game)
 {
 	assets_destroy(&game->assets);
 	render_destroy(&game->render);
-	particle_destroy(&game->emitter);
+	particle_destroy(&game->particles);
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	darray_destroy(&game->entities);
@@ -71,7 +71,7 @@ static void	game_loop(void *param)
 	weapon_update(&game->player.weapon, game, game->time.delta);
 	motion_update(&game->player.motion, game->time.delta);
 	entity_update_all(game, game->time.delta);
-	particle_update_all(&game->emitter, game->time.delta);
+	particle_update_all(&game->particles, game->time.delta);
 	anim_update_entities(game, game->time.delta);
 	overlay_clear(&game->render);
 	arena_reset(&game->arena);

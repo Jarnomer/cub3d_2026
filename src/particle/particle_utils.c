@@ -12,15 +12,15 @@
 
 #include <game.h>
 
-t_particle	*particle_get_inactive(t_emitter *emitter)
+t_particle	*particle_get_inactive(t_prtclmgr *mgr)
 {
 	t_u32	i;
 
 	i = 0;
-	while (i < emitter->capacity)
+	while (i < mgr->capacity)
 	{
-		if (!emitter->particles[i].is_active)
-			return (&emitter->particles[i]);
+		if (!mgr->particles[i].is_active)
+			return (&mgr->particles[i]);
 		i++;
 	}
 	return (NULL);
@@ -37,7 +37,7 @@ static t_surface	surface_from_entity(t_type type)
 	return (SURFACE_STONE);
 }
 
-t_surfdef	*surface_get_def(t_emitter *emitter, t_hit *hit)
+t_surfdef	*surface_get_def(t_prtclmgr *mgr, t_hit *hit)
 {
 	t_surface	surf;
 
@@ -47,5 +47,5 @@ t_surfdef	*surface_get_def(t_emitter *emitter, t_hit *hit)
 		surf = surface_from_entity(ENTITY_DOOR);
 	else
 		surf = surface_from_entity((t_type)hit->entity);
-	return (&emitter->surfdefs[surf]);
+	return (&mgr->surfdefs[surf]);
 }
