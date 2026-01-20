@@ -21,7 +21,7 @@
 
 typedef struct s_texture
 {
-	t_mlxt		*mlx_tex;
+	t_mlxt		*texture;
 	t_pixels	pixels;
 	t_i32		width;
 	t_i32		height;

@@ -17,26 +17,14 @@ void	fov_init(t_fov *fov)
 	*fov = (t_fov){.base = BASE_FOV, .current = BASE_FOV, .target = BASE_FOV};
 }
 
-void	fov_set_target(t_fov *fov, t_f32 target)
+void	fov_update(t_motion *motion, t_f32 dt)
 {
-	fov->target = target;
-}
+	t_fov	*fov;
 
-void	fov_reset(t_fov *fov)
-{
-	fov->target = fov->base;
-}
-
-void	fov_update(t_fov *fov, t_motion *motion, t_f32 dt)
-{
+	fov = &motion->fov;
 	if (motion->is_sprinting)
 		fov->target = fov->base + FOV_SPRINT_OFFSET;
 	else
 		fov->target = fov->base;
 	fov->current = lerpf(fov->current, fov->target, FOV_LERP_SPEED * dt);
-}
-
-t_f32	fov_get_current(t_fov *fov)
-{
-	return (fov->current);
 }

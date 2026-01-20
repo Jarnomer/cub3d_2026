@@ -14,16 +14,16 @@
 
 void	texture_load(t_tex *tex, const char *path)
 {
-	tex->mlx_tex = safe_load_png(path);
-	tex->width = tex->mlx_tex->width;
-	tex->height = tex->mlx_tex->height;
-	tex->pixels = (t_pixels)tex->mlx_tex->pixels;
+	tex->texture = safe_load_png(path);
+	tex->width = tex->texture->width;
+	tex->height = tex->texture->height;
+	tex->pixels = (t_pixels)tex->texture->pixels;
 }
 
 void	texture_destroy(t_tex *tex)
 {
-	if (tex->mlx_tex)
-		mlx_delete_texture(tex->mlx_tex);
+	if (tex->texture)
+		mlx_delete_texture(tex->texture);
 	*tex = (t_tex){0};
 }
 

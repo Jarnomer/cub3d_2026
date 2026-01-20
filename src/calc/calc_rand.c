@@ -21,7 +21,7 @@ void	rand_seed(t_u32 seed)
 	g_prng_state = seed;
 }
 
-t_u32	rand_next(void)
+static t_u32	rand_next(void)
 {
 	g_prng_state ^= g_prng_state << 13;
 	g_prng_state ^= g_prng_state >> 17;

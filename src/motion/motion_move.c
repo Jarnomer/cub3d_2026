@@ -12,13 +12,13 @@
 
 #include <game.h>
 
-void	move_accelerate(t_motion *motion, t_vec2 target, t_f32 dt)
+void	move_apply_acceleration(t_motion *motion, t_vec2 target, t_f32 dt)
 {
 	t_vec2	diff;
 	t_f32	accel;
 
 	diff = vec2_sub(target, motion->velocity);
-	accel = MOVE_ACCEL * dt;
+	accel = MOVE_ACCELERATION * dt;
 	if (vec2_len(diff) < accel)
 		motion->velocity = target;
 	else
@@ -41,9 +41,4 @@ void	move_apply_friction(t_motion *motion, t_f32 dt)
 		motion->velocity = vec2_zero();
 	else
 		motion->velocity = vec2_mul(motion->velocity, (speed - drop) / speed);
-}
-
-t_vec2	move_get_velocity(t_motion *motion)
-{
-	return (motion->velocity);
 }

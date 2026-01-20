@@ -39,15 +39,15 @@ static t_u32	parse_hex_color(const char *str)
 
 static void	process_particle(char **fields, void *ctx)
 {
-	t_partdef	*defs;
-	t_partdef	def;
+	t_prtcldef	*defs;
+	t_prtcldef	def;
 	t_i32		id;
 
-	defs = (t_partdef *)ctx;
+	defs = (t_prtcldef *)ctx;
 	id = config_str_to_id(fields[0]);
 	if (id <= PARTICLE_NONE || id >= PARTICLE_COUNT)
 		return ;
-	def = (t_partdef){.id = id};
+	def = (t_prtcldef){.id = id};
 	def.color.start = parse_hex_color(fields[1]);
 	def.color.end = parse_hex_color(fields[2]);
 	def.speed.min = ft_atof(fields[3]);
@@ -62,13 +62,13 @@ static void	process_particle(char **fields, void *ctx)
 	defs[id] = def;
 }
 
-void	config_load_particles(t_partdef *defs)
+void	config_load_particles(t_prtcldef *defs)
 {
 	t_cfgload	cfg;
 
 	cfg = (t_cfgload){
 		.path = PATH_CONFIG_PARTICLE,
-		.fields = PARTDEF_FIELD_COUNT,
+		.fields = PRTCLDEF_FIELD_COUNT,
 		.process = process_particle,
 		.ctx = defs
 	};

@@ -61,24 +61,24 @@ typedef struct s_map
 	char	**grid;
 	t_i32	width;
 	t_i32	height;
-	t_vec2	spawn_pos;
-	t_f32	spawn_angle;
+	t_u32	players;
+	t_vec2	position;
+	t_f32	angle;
+	t_spawn	spawns[MAX_ENTITIES];
+	t_u32	entities;
 	char	*textures[4];
-	t_u32	floor_col;
-	t_u32	ceil_col;
-	t_spawn	spawns[ENTITY_COUNT];
-	t_u32	spawn_count;
-	t_u32	player_count;
+	t_u32	ceiling;
+	t_u32	floor;
 }	t_map;
 
 typedef struct s_time
 {
 	t_f64	current;
 	t_f64	delta;
-	t_u64	frame_count;
 	t_f32	fps;
-	t_f32	fps_timer;
-	t_u32	fps_frames;
+	t_f32	accumulator;
+	t_u64	frames;
+	t_u32	samples;
 }	t_time;
 
 typedef struct s_camera

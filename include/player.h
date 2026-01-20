@@ -28,7 +28,7 @@ typedef struct s_player_player
 	t_i32		ammo[AMMO_COUNT];
 	t_weapon	weapon;
 	t_motion	motion;
-	bool		alive;
+	bool		is_alive;
 }	t_player;
 
 void	player_init(t_player *player, t_game *game);
@@ -36,8 +36,8 @@ void	player_update(t_game *game, t_f32 dt);
 
 void	player_move(t_game *game, t_f32 dt);
 void	player_rotate(t_game *game, t_f32 dt);
-void	player_actions(t_game *game);
 void	player_interact(t_game *game);
+void	player_actions(t_game *game);
 
 void	player_take_damage(t_player *player, t_i32 amount);
 void	player_add_health(t_player *player, t_i32 amount);

@@ -29,7 +29,7 @@ void	weapon_fire(t_weapon *wpn, t_game *game)
 	wpn->recoil = minf(recoil, WEAPON_RECOIL_MAX);
 	wpn->timer = def->fire_rate;
 	wpn->ready = false;
-	weapon_fire_all_pellets(game, def);
+	weapon_fire_pellets(game, def);
 }
 
 void	weapon_reload(t_weapon *wpn, t_game *game)

@@ -26,8 +26,7 @@ void	blit_from_tex(t_blit *blit, t_tex *tex, t_f32 scale)
 {
 	if (!tex || !tex->pixels)
 		return ;
-	*blit = (t_blit){0};
-	blit->tex = tex;
+	*blit = (t_blit){.tex = tex};
 	blit_calc_size(blit, tex->width, tex->height, scale);
 }
 
@@ -35,8 +34,6 @@ void	blit_from_sheet(t_blit *blit, t_sheet *sheet, t_i32 frame, t_f32 scale)
 {
 	if (!sheet || !sheet->tex.pixels)
 		return ;
-	*blit = (t_blit){0};
-	blit->sheet = sheet;
-	blit->frame = frame;
+	*blit = (t_blit){.sheet = sheet, .frame = frame};
 	blit_calc_size(blit, sheet->width, sheet->height, scale);
 }

@@ -15,13 +15,13 @@
 static void	advance_frame(t_anim *anim, const t_anidef *def)
 {
 	anim->frame++;
-	if (anim->frame >= def->total)
+	if (anim->frame >= def->frames)
 	{
 		if (def->is_looping)
 			anim->frame = 0;
 		else
 		{
-			anim->frame = def->total - 1;
+			anim->frame = def->frames - 1;
 			anim->is_finished = true;
 			anim->is_playing = false;
 		}

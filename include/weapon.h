@@ -36,7 +36,7 @@ typedef struct s_wpndef
 	t_f32		reload_time;
 	t_f32		spread;
 	t_f32		range;
-	bool		automatic;
+	bool		is_automatic;
 }	t_wpndef;
 
 typedef struct s_sway
@@ -78,7 +78,7 @@ void		weapon_sway_update(t_sway *sway, t_motion *motion, t_f32 dt);
 void		weapon_inertia_update(t_sway *sway, t_vec2 mouse_delta, t_f32 dt);
 void		weapon_bob_update(t_weapon *wpn, t_motion *motion, t_f32 dt);
 
-void		weapon_fire_all_pellets(t_game *game, t_wpndef *def);
+void		weapon_fire_pellets(t_game *game, t_wpndef *def);
 t_vec2		sprint_get_offset(t_sway *sway, t_bob *bob);
 
 #endif

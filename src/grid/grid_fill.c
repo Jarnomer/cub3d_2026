@@ -14,7 +14,7 @@
 
 static t_axis	detect_axis(t_map *map, t_i32 x, t_i32 y)
 {
-	bool	walls[4];
+	bool	walls[WALL_COUNT];
 
 	walls[WALL_NORTH] = map_is_wall(map, x, y - 1);
 	walls[WALL_SOUTH] = map_is_wall(map, x, y + 1);

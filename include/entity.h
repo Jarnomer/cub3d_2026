@@ -53,7 +53,7 @@ typedef struct s_entity
 void		entity_load_spawns(t_game *game);
 void		entity_update_all(t_game *game, t_f32 dt);
 
-void		entity_damage(t_game *game, t_i32 entity_idx, t_i32 amount);
+void		entity_damage(t_game *game, t_i32 idx, t_i32 amount);
 void		entity_death(t_entity *ent);
 
 void		door_init(t_entity *ent);

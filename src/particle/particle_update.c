@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	handle_bounce(t_particle *particle, t_partdef *def)
+static void	handle_bounce(t_particle *particle, t_prtcldef *def)
 {
 	if (absf(particle->vel.z) < PARTICLE_STOP_VEL)
 	{
@@ -28,7 +28,7 @@ static void	handle_bounce(t_particle *particle, t_partdef *def)
 	}
 }
 
-static void	handle_floor_collision(t_particle *particle, t_partdef *def)
+static void	handle_floor_collision(t_particle *particle, t_prtcldef *def)
 {
 	if (particle->pos.z > PARTICLE_FLOOR_Z)
 		return ;
@@ -36,7 +36,7 @@ static void	handle_floor_collision(t_particle *particle, t_partdef *def)
 	handle_bounce(particle, def);
 }
 
-static void	handle_ceiling_collision(t_particle *particle, t_partdef *def)
+static void	handle_ceiling_collision(t_particle *particle, t_prtcldef *def)
 {
 	if (particle->pos.z < PARTICLE_CEILING_Z)
 		return ;
@@ -44,7 +44,7 @@ static void	handle_ceiling_collision(t_particle *particle, t_partdef *def)
 	particle->vel.z = -particle->vel.z * def->bounce;
 }
 
-static void	update_particle(t_particle *particle, t_partdef *def, t_f32 dt)
+static void	update_particle(t_particle *particle, t_prtcldef *def, t_f32 dt)
 {
 	particle->vel.z -= def->gravity * PARTICLE_GRAVITY * dt;
 	particle->pos.x += particle->vel.x * dt;
@@ -57,7 +57,7 @@ static void	update_particle(t_particle *particle, t_partdef *def, t_f32 dt)
 void	particle_update_all(t_prtclmgr *mgr, t_f32 dt)
 {
 	t_particle	*particle;
-	t_partdef	*def;
+	t_prtcldef	*def;
 	t_u32		i;
 
 	mgr->active = 0;
@@ -67,7 +67,7 @@ void	particle_update_all(t_prtclmgr *mgr, t_f32 dt)
 		particle = &mgr->particles[i];
 		if (particle->is_active)
 		{
-			def = &mgr->partdefs[particle->type];
+			def = &mgr->prtcldefs[particle->type];
 			particle->life.min -= dt;
 			if (particle->life.min <= 0.0f)
 				particle->is_active = false;

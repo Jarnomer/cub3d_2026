@@ -16,7 +16,7 @@ void	particle_init(t_prtclmgr *mgr, size_t capacity)
 {
 	*mgr = (t_prtclmgr){.capacity = capacity};
 	mgr->particles = safe_calloc(sizeof(t_particle) * capacity);
-	config_load_particles(mgr->partdefs);
+	config_load_particles(mgr->prtcldefs);
 	config_load_surfaces(mgr->surfdefs);
 }
 

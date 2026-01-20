@@ -19,10 +19,10 @@
 typedef struct s_game	t_game;
 typedef struct s_hit	t_hit;
 
-typedef struct s_partdef
+typedef struct s_prtcldef
 {
 	t_part_id	id;
-	t_rangeu	color;
+	t_blend		color;
 	t_range		speed;
 	t_range		life;
 	t_f32		gravity;
@@ -30,7 +30,7 @@ typedef struct s_partdef
 	t_f32		size;
 	t_f32		bounce;
 	bool		is_faded;
-}	t_partdef;
+}	t_prtcldef;
 
 typedef struct s_surfdef
 {
@@ -51,7 +51,7 @@ typedef struct s_particle
 typedef struct s_prtclmgr
 {
 	t_particle	*particles;
-	t_partdef	partdefs[PARTICLE_COUNT];
+	t_prtcldef	prtcldefs[PARTICLE_COUNT];
 	t_surfdef	surfdefs[SURFACE_COUNT];
 	t_u32		capacity;
 	t_u32		active;

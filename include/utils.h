@@ -32,6 +32,4 @@ void	safe_image_to_window(mlx_t *mlx, t_mlxi *img, t_i32 x, t_i32 y);
 t_mlxi	*safe_image(mlx_t *mlx, t_u32 w, t_u32 h);
 t_mlxt	*safe_load_png(const char *path);
 
-t_f32	ft_atof(const char *str);
-
 #endif

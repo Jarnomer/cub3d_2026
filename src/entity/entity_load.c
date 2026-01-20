@@ -29,15 +29,16 @@ static void	apply_entity_def(t_entity *ent, const t_entdef *def)
 	ent->is_solid = def->is_solid;
 }
 
-static t_entity	entity_create(t_assets *assets, t_type type, t_vec3 pos)
+static t_entity	entity_create(t_assets *assets, t_spawn *spawn)
 {
 	const t_entdef	*def;
 	t_entity		ent;
 
-	ent = (t_entity){.pos = pos, .type = type, .is_active = true};
-	def = &assets->entdefs[type];
+	ent = (t_entity){.pos = spawn->pos, .type = spawn->type};
+	def = &assets->entdefs[ent.type];
 	apply_entity_def(&ent, def);
-	init_entity_ctx(&ent, type);
+	init_entity_ctx(&ent, ent.type);
+	ent.is_active = true;
 	return (ent);
 }
 
@@ -48,10 +49,10 @@ void	entity_load_spawns(t_game *game)
 	t_u32		i;
 
 	i = 0;
-	while (i < game->map->spawn_count)
+	while (i < game->map->entities)
 	{
 		spawn = &game->map->spawns[i];
-		ent = entity_create(&game->assets, spawn->type, spawn->pos);
+		ent = entity_create(&game->assets, spawn);
 		darray_push(&game->entities, &ent);
 		i++;
 	}

@@ -14,14 +14,13 @@
 
 static t_u32	fog_gradient_color(t_f32 t)
 {
-	t_u32	start;
-	t_u32	end;
+	t_blend	color;
 	t_u8	alpha;
 
-	start = color_rgba(FOG_START_R, FOG_START_G, FOG_START_B, 0);
-	end = color_rgba(FOG_END_R, FOG_END_G, FOG_END_B, COLOR_CHANNEL_MAX);
+	color.start = color_rgba(FOG_START_R, FOG_START_G, FOG_START_B, 0);
+	color.end = color_rgba(FOG_END_R, FOG_END_G, FOG_END_B, COLOR_CHANNEL_MAX);
 	alpha = (t_u8)(clampf(t, 0.0f, 1.0f) * COLOR_CHANNEL_MAX);
-	return (color_lerp(start, end, alpha));
+	return (color_lerp(color.start, color.end, alpha));
 }
 
 static void	init_fog_table(t_lookup *lut)

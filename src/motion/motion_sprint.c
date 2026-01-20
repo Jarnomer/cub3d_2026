@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-bool	sprint_can_start(t_motion *motion)
+static bool	sprint_can_start(t_motion *motion)
 {
 	if (motion->is_crouching)
 		return (false);
@@ -30,7 +30,7 @@ void	sprint_start(t_motion *motion)
 	motion->is_sprinting = true;
 }
 
-void	sprint_stop(t_motion *motion)
+void	sprint_end(t_motion *motion)
 {
 	motion->is_sprinting = false;
 }
@@ -40,7 +40,7 @@ void	sprint_update(t_motion *motion, t_f32 dt)
 	if (motion->is_sprinting)
 	{
 		if (!sprint_can_start(motion))
-			sprint_stop(motion);
+			sprint_end(motion);
 		else
 			motion->stamina -= SPRINT_STAMINA_DRAIN * dt;
 	}

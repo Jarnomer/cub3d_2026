@@ -50,14 +50,16 @@ t_cell	grid_check_cell(t_game *game, t_vec2i pos, t_i32 *entity)
 	return (CELL_EMPTY);
 }
 
-void	grid_set_entity(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
+bool	grid_door_block(t_game *game, t_i32 entity)
 {
-	t_i32	idx;
+	t_entity	*ent;
 
-	if (!grid_valid(grid, x, y))
-		return ;
-	idx = grid_index(grid->width, x, y);
-	grid->cells[idx] = entity;
+	if (entity == INVALID_ID)
+		return (false);
+	ent = darray_get(&game->entities, entity);
+	if (!ent || !ent->is_active)
+		return (false);
+	return (ent->state == STATE_IDLE);
 }
 
 t_i32	grid_get_entity(t_grid *grid, t_i32 x, t_i32 y)
@@ -70,14 +72,12 @@ t_i32	grid_get_entity(t_grid *grid, t_i32 x, t_i32 y)
 	return (grid->cells[idx]);
 }
 
-bool	grid_door_block(t_game *game, t_i32 entity)
+void	grid_set_entity(t_grid *grid, t_i32 x, t_i32 y, t_i32 entity)
 {
-	t_entity	*ent;
+	t_i32	idx;
 
-	if (entity == INVALID_ID)
-		return (false);
-	ent = darray_get(&game->entities, entity);
-	if (!ent || !ent->is_active)
-		return (false);
-	return (ent->state == STATE_IDLE);
+	if (!grid_valid(grid, x, y))
+		return ;
+	idx = grid_index(grid->width, x, y);
+	grid->cells[idx] = entity;
 }

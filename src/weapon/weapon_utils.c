@@ -40,7 +40,7 @@ static void	fire_pellet(t_game *game, t_wpndef *def)
 	particle_emit_impact(game, &hit);
 }
 
-void	weapon_fire_all_pellets(t_game *game, t_wpndef *def)
+void	weapon_fire_pellets(t_game *game, t_wpndef *def)
 {
 	t_i32	i;
 

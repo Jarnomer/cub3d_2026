@@ -14,27 +14,26 @@
 
 static bool	is_valid_pos(t_map *map, t_vec2 pos)
 {
-	t_i32	x;
-	t_i32	y;
+	t_vec2i	dst;
 
-	x = (t_i32)pos.x;
-	y = (t_i32)pos.y;
-	if (map_is_wall(map, x, y))
+	dst.x = (t_i32)pos.x;
+	dst.y = (t_i32)pos.y;
+	if (map_is_wall(map, dst.x, dst.y))
 		return (false);
-	if (map_is_wall(map, (t_i32)(pos.x + PLAYER_RADIUS), y))
+	if (map_is_wall(map, (t_i32)(pos.x + PLAYER_RADIUS), dst.y))
 		return (false);
-	if (map_is_wall(map, (t_i32)(pos.x - PLAYER_RADIUS), y))
+	if (map_is_wall(map, (t_i32)(pos.x - PLAYER_RADIUS), dst.y))
 		return (false);
-	if (map_is_wall(map, x, (t_i32)(pos.y + PLAYER_RADIUS)))
+	if (map_is_wall(map, dst.x, (t_i32)(pos.y + PLAYER_RADIUS)))
 		return (false);
-	if (map_is_wall(map, x, (t_i32)(pos.y - PLAYER_RADIUS)))
+	if (map_is_wall(map, dst.x, (t_i32)(pos.y - PLAYER_RADIUS)))
 		return (false);
 	return (true);
 }
 
 static void	apply_movement(t_camera *cam, t_map *map, t_vec2 move)
 {
-	t_vec2		dst;
+	t_vec2	dst;
 
 	dst = vec2_new(cam->pos.x + move.x, cam->pos.y);
 	if (is_valid_pos(map, dst))
@@ -52,13 +51,13 @@ static t_vec2	get_target_velocity(t_game *game)
 
 	input = vec2_zero();
 	if (input_key_down(&game->input, MLX_KEY_W))
-		input.y += 1.0f;
+		input.y += MOVE_MAGNITUDE;
 	if (input_key_down(&game->input, MLX_KEY_S))
-		input.y -= 1.0f;
+		input.y -= MOVE_MAGNITUDE;
 	if (input_key_down(&game->input, MLX_KEY_A))
-		input.x -= 1.0f;
+		input.x -= MOVE_MAGNITUDE;
 	if (input_key_down(&game->input, MLX_KEY_D))
-		input.x += 1.0f;
+		input.x += MOVE_MAGNITUDE;
 	if (input.x == 0.0f && input.y == 0.0f)
 		return (vec2_zero());
 	dir = vec2_add(vec2_mul(game->camera.dir, input.y),
@@ -77,9 +76,9 @@ void	player_move(t_game *game, t_f32 dt)
 	motion = &game->player.motion;
 	target = get_target_velocity(game);
 	if (vec2_len(target) > 0.0f)
-		move_accelerate(motion, target, dt);
+		move_apply_acceleration(motion, target, dt);
 	else
 		move_apply_friction(motion, dt);
-	move = vec2_mul(move_get_velocity(motion), dt);
+	move = vec2_mul(motion->velocity, dt);
 	apply_movement(&game->camera, game->map, move);
 }

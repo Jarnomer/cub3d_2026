@@ -28,7 +28,7 @@ static t_vec3	apply_spread(t_vec3 dir, t_f32 spread)
 }
 
 static void	init_particle(t_particle *particle,
-			t_partdef *def, t_vec3 pos, t_vec3 dir)
+			t_prtcldef *def, t_vec3 pos, t_vec3 dir)
 {
 	t_f32	speed;
 
@@ -44,14 +44,14 @@ void	particle_spawn(t_prtclmgr *mgr,
 			t_part_id type, t_vec3 pos, t_vec3 dir)
 {
 	t_particle	*particle;
-	t_partdef	*def;
+	t_prtcldef	*def;
 
 	if (type <= PARTICLE_NONE || type >= PARTICLE_COUNT)
 		return ;
 	particle = particle_get_inactive(mgr);
 	if (!particle)
 		return ;
-	def = &mgr->partdefs[type];
+	def = &mgr->prtcldefs[type];
 	if (!def)
 		return ;
 	init_particle(particle, def, pos, dir);

@@ -23,13 +23,13 @@ void	time_update(t_time *time, t_f32 dt)
 	if (time->delta > MAX_DELTA)
 		time->delta = MAX_DELTA;
 	time->current += time->delta;
-	time->fps_timer += time->delta;
-	time->frame_count++;
-	time->fps_frames++;
-	if (time->fps_timer >= 1.0)
+	time->accumulator += time->delta;
+	time->frames++;
+	time->samples++;
+	if (time->accumulator >= 1.0)
 	{
-		time->fps = (t_f32)time->fps_frames / time->fps_timer;
-		time->fps_timer = 0.0;
-		time->fps_frames = 0;
+		time->fps = (t_f32)time->samples / time->accumulator;
+		time->accumulator = 0.0;
+		time->samples = 0;
 	}
 }

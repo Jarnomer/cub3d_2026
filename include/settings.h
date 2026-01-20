@@ -129,7 +129,8 @@
 /*    MOTION SETTINGS                                                         */
 /* ************************************************************************** */
 
-# define MOVE_ACCEL				6.0f
+# define MOVE_MAGNITUDE 		1.0f
+# define MOVE_ACCELERATION		6.0f
 # define MOVE_FRICTION			10.0f
 # define MOVE_STOP_THRESHOLD    0.01f
 

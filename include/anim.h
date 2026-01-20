@@ -22,8 +22,8 @@ typedef struct s_anidef
 {
 	t_anim_id	id;
 	t_u16		start;
-	t_u16		total;
 	t_u16		next;
+	t_u16		frames;
 	t_f32		duration;
 	bool		is_looping;
 	bool		is_reversed;

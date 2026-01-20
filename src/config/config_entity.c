@@ -56,7 +56,7 @@ static void	process_anim(char **fields, void *ctx)
 		return ;
 	def = (t_anidef){.id = id};
 	def.start = (t_u16)ft_atoi(fields[1]);
-	def.total = (t_u16)ft_atoi(fields[2]);
+	def.frames = (t_u16)ft_atoi(fields[2]);
 	def.duration = ft_atof(fields[3]);
 	def.next = (t_u16)ft_atoi(fields[4]);
 	def.is_looping = (ft_atoi(fields[5]) != 0);

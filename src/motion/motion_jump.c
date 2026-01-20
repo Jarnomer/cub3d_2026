@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-bool	jump_can_start(t_motion *motion)
+static bool	jump_can_start(t_motion *motion)
 {
 	if (!motion->is_grounded)
 		return (false);
@@ -29,28 +29,28 @@ void	jump_start(t_motion *motion)
 		return ;
 	motion->is_jumping = true;
 	motion->is_grounded = false;
-	motion->jump_velocity = JUMP_VELOCITY;
+	motion->jump.velocity = JUMP_VELOCITY;
 }
 
-static void	jump_land(t_motion *motion)
+void	jump_end(t_motion *motion)
 {
 	motion->is_jumping = false;
 	motion->is_grounded = true;
-	motion->jump_offset = 0.0f;
-	motion->jump_velocity = 0.0f;
+	motion->jump.offset = 0.0f;
+	motion->jump.velocity = 0.0f;
 }
 
 void	jump_update(t_motion *motion, t_f32 dt)
 {
 	if (!motion->is_jumping)
 		return ;
-	motion->jump_velocity -= GRAVITY * dt;
-	motion->jump_offset += motion->jump_velocity * dt;
-	if (motion->jump_offset <= 0.0f)
-		jump_land(motion);
+	motion->jump.velocity -= GRAVITY * dt;
+	motion->jump.offset += motion->jump.velocity * dt;
+	if (motion->jump.offset <= 0.0f)
+		jump_end(motion);
 }
 
-t_f32	jump_height(t_motion *motion)
+t_f32	jump_get_height(t_motion *motion)
 {
-	return (-motion->jump_offset);
+	return (-motion->jump.offset);
 }

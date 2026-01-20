@@ -31,7 +31,7 @@ static void	draw_particle_rect(t_game *game, t_rect b, t_f32 dist, t_u32 color)
 	}
 }
 
-static t_u32	calc_particle_color(t_particle *particle, t_partdef *def)
+static t_u32	calc_particle_color(t_particle *particle, t_prtcldef *def)
 {
 	t_f32	factor;
 	t_u32	base;
@@ -49,7 +49,7 @@ static t_u32	calc_particle_color(t_particle *particle, t_partdef *def)
 }
 
 static t_rect	calc_particle_bounds(t_game *game,
-	t_particle *particle, t_partdef *def, t_vec2 trans)
+	t_particle *particle, t_prtcldef *def, t_vec2 trans)
 {
 	t_vec2i	screen;
 	t_i32	size;
@@ -63,7 +63,7 @@ static t_rect	calc_particle_bounds(t_game *game,
 	return (rect_new(screen.x - size, screen.y - size, size, size));
 }
 
-static void	draw_particle(t_game *game, t_particle *particle, t_partdef *def)
+static void	draw_particle(t_game *game, t_particle *particle, t_prtcldef *def)
 {
 	t_vec2	trans;
 	t_rect	bounds;
@@ -82,7 +82,7 @@ void	render_particles(t_game *game)
 {
 	t_prtclmgr	*mgr;
 	t_particle	*particle;
-	t_partdef	*def;
+	t_prtcldef	*def;
 	t_u32		i;
 
 	mgr = &game->particles;
@@ -94,7 +94,7 @@ void	render_particles(t_game *game)
 		particle = &mgr->particles[i];
 		if (particle->is_active)
 		{
-			def = &mgr->partdefs[particle->type];
+			def = &mgr->prtcldefs[particle->type];
 			draw_particle(game, particle, def);
 		}
 		i++;

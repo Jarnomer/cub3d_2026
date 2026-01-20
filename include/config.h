@@ -18,7 +18,7 @@
 
 typedef struct s_assets		t_assets;
 typedef struct s_entdef		t_entdef;
-typedef struct s_partdef	t_partdef;
+typedef struct s_prtcldef	t_prtcldef;
 typedef struct s_surfdef	t_surfdef;
 typedef struct s_anidef		t_anidef;
 typedef struct s_wpndef		t_wpndef;
@@ -28,24 +28,24 @@ typedef struct s_decalmgr	t_decalmgr;
 # define TEXDEF_FIELD_COUNT		3
 # define SHEETDEF_FIELD_COUNT	4
 # define ENTDEF_FIELD_COUNT		6
-# define PARTDEF_FIELD_COUNT	12
-# define SURFDEF_FIELD_COUNT	4
 # define ANIMDEF_FIELD_COUNT	7
-# define WPNDEF_FIELD_COUNT		12
+# define PRTCLDEF_FIELD_COUNT	12
+# define SURFDEF_FIELD_COUNT	4
 # define DECALDEF_FIELD_COUNT	7
 # define IMPACTDEF_FIELD_COUNT	3
+# define WPNDEF_FIELD_COUNT		12
 
 # define CONFIG_FILE_EXT		".conf"
 
 # define PATH_CONFIG_TEXTURE	"config/texture.conf"
+# define PATH_CONFIG_SHEET		"config/sheet.conf"
 # define PATH_CONFIG_ENTITY		"config/entity.conf"
+# define PATH_CONFIG_ANIM		"config/anim.conf"
 # define PATH_CONFIG_PARTICLE	"config/particle.conf"
 # define PATH_CONFIG_SURFACE	"config/surface.conf"
-# define PATH_CONFIG_SHEET		"config/sheet.conf"
-# define PATH_CONFIG_ANIM		"config/anim.conf"
-# define PATH_CONFIG_WEAPON		"config/weapon.conf"
 # define PATH_CONFIG_DECAL		"config/decal.conf"
 # define PATH_CONFIG_IMPACT		"config/impact.conf"
+# define PATH_CONFIG_WEAPON		"config/weapon.conf"
 
 typedef void	(*t_cfgproc)(char **fields, void *ctx);
 
@@ -73,7 +73,7 @@ void	config_load_sheets(t_assets *assets);
 void	config_load_entities(t_entdef *defs);
 void	config_load_anims(t_anidef *defs);
 
-void	config_load_particles(t_partdef *defs);
+void	config_load_particles(t_prtcldef *defs);
 void	config_load_surfaces(t_surfdef *defs);
 
 void	config_load_impacts(t_decalmgr *mgr);

@@ -14,27 +14,27 @@
 
 void	player_take_damage(t_player *player, t_i32 amount)
 {
-	t_i32	armor_absorb;
+	t_i32	absorb;
 
-	if (!player->alive || amount <= 0)
+	if (!player->is_alive || amount <= 0)
 		return ;
 	if (player->armor > 0)
 	{
-		armor_absorb = mini(player->armor, amount / 2);
-		player->armor -= armor_absorb;
-		amount -= armor_absorb;
+		absorb = mini(player->armor, amount / 2);
+		player->armor -= absorb;
+		amount -= absorb;
 	}
 	player->health -= amount;
 	if (player->health <= 0)
 	{
 		player->health = 0;
-		player->alive = false;
+		player->is_alive = false;
 	}
 }
 
 void	player_add_health(t_player *player, t_i32 amount)
 {
-	if (!player->alive || amount <= 0)
+	if (!player->is_alive || amount <= 0)
 		return ;
 	player->health += amount;
 	if (player->health > PLAYER_MAX_HEALTH)
@@ -43,7 +43,7 @@ void	player_add_health(t_player *player, t_i32 amount)
 
 void	player_add_armor(t_player *player, t_i32 amount)
 {
-	if (amount <= 0)
+	if (!player->is_alive || amount <= 0)
 		return ;
 	player->armor += amount;
 	if (player->armor > PLAYER_MAX_ARMOR)

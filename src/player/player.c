@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-static void	init_player_ammo(t_player *player)
+static void	init_start_ammo(t_player *player)
 {
 	player->ammo[AMMO_SHELL] = AMMO_START_SHELL;
 	player->ammo[AMMO_BULLET] = AMMO_START_BULLET;
@@ -22,12 +22,12 @@ static void	init_player_ammo(t_player *player)
 
 void	player_init(t_player *player, t_game *game)
 {
-	*player = (t_player){.alive = true};
+	*player = (t_player){.is_alive = true};
 	player->health = PLAYER_START_HEALTH;
 	player->armor = PLAYER_START_ARMOR;
-	init_player_ammo(player);
 	weapon_init(&player->weapon, WEAPON_SHOTGUN, game);
 	motion_init(&player->motion);
+	init_start_ammo(player);
 }
 
 static void	handle_inputs(t_game *game)

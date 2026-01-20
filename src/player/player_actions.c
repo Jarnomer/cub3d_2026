@@ -12,41 +12,33 @@
 
 #include <game.h>
 
-static bool	is_moving_forward(t_game *game)
+static bool	is_moving_forward(t_input *input)
 {
 	if (SPRINT_ALLOW_STRAFE)
-		return (input_key_down(&game->input, MLX_KEY_W)
-			|| input_key_down(&game->input, MLX_KEY_A)
-			|| input_key_down(&game->input, MLX_KEY_S)
-			|| input_key_down(&game->input, MLX_KEY_D));
-	return (input_key_down(&game->input, MLX_KEY_W));
+		return (input_key_down(input, MLX_KEY_W)
+			|| input_key_down(input, MLX_KEY_A)
+			|| input_key_down(input, MLX_KEY_S)
+			|| input_key_down(input, MLX_KEY_D));
+	return (input_key_down(input, MLX_KEY_W));
 }
 
-static void	handle_sprint(t_game *game)
+static void	handle_sprint(t_game *game, t_motion *motion)
 {
-	t_motion	*motion;
-
-	motion = &game->player.motion;
-	if (input_key_down(&game->input, KEY_SPRINT) && is_moving_forward(game))
+	if (input_key_down(&game->input, KEY_SPRINT)
+		&& is_moving_forward(&game->input))
 		sprint_start(motion);
 	else
-		sprint_stop(motion);
+		sprint_end(motion);
 }
 
-static void	handle_jump(t_game *game)
+static void	handle_jump(t_game *game, t_motion *motion)
 {
-	t_motion	*motion;
-
-	motion = &game->player.motion;
 	if (input_key_pressed(&game->input, KEY_JUMP))
 		jump_start(motion);
 }
 
-static void	handle_crouch(t_game *game)
+static void	handle_crouch(t_game *game, t_motion *motion)
 {
-	t_motion	*motion;
-
-	motion = &game->player.motion;
 	if (input_key_down(&game->input, KEY_CROUCH))
 	{
 		if (!motion->is_crouching)
@@ -61,7 +53,10 @@ static void	handle_crouch(t_game *game)
 
 void	player_actions(t_game *game)
 {
-	handle_crouch(game);
-	handle_jump(game);
-	handle_sprint(game);
+	t_motion	*motion;
+
+	motion = &game->player.motion;
+	handle_crouch(game, motion);
+	handle_jump(game, motion);
+	handle_sprint(game, motion);
 }

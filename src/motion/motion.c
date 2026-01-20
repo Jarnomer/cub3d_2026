@@ -23,6 +23,6 @@ void	motion_update(t_motion *motion, t_f32 dt)
 	crouch_update(motion, dt);
 	jump_update(motion, dt);
 	sprint_update(motion, dt);
-	bob_update(&motion->bob, motion, dt);
-	fov_update(&motion->fov, motion, dt);
+	bob_update(motion, dt);
+	fov_update(motion, dt);
 }

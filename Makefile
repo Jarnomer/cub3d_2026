@@ -75,7 +75,7 @@ SOURCES := main \
            config_entity \
            config_particle \
            config_impact \
-           config_weapon \
+           config_player \
            assets \
            assets_texture \
            assets_sheet \
@@ -180,7 +180,6 @@ SOURCES := main \
            calc_range \
            calc_rangei \
            calc_rand \
-           calc_utils \
            vec2 \
            vec2_arith \
            vec2_trans \

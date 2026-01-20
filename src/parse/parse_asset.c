@@ -80,9 +80,9 @@ void	parse_color(t_parse *ctx, t_elem type)
 	color = extract_rgb(parts);
 	free_arr(parts);
 	if (type == ELEM_F)
-		ctx->map->floor_col = color;
+		ctx->map->floor = color;
 	else
-		ctx->map->ceil_col = color;
+		ctx->map->ceiling = color;
 }
 
 void	parse_texture(t_parse *ctx, t_elem type)

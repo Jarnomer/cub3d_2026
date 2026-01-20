@@ -25,7 +25,7 @@ static bool	is_interactable(t_entity *ent)
 	return (false);
 }
 
-static t_entity	*find_interactable(t_game *game)
+static t_entity	*find_interactable(t_game *game, t_camera *cam)
 {
 	t_entity	*ent;
 	t_entity	*object;
@@ -41,8 +41,7 @@ static t_entity	*find_interactable(t_game *game)
 		ent = darray_get(&game->entities, i);
 		if (ent->is_active && is_interactable(ent))
 		{
-			dist = vec2_len(vec2_sub(
-						vec2_from_vec3(ent->pos), game->camera.pos));
+			dist = vec2_len(vec2_sub(vec2_from_vec3(ent->pos), cam->pos));
 			if (dist < nearest && dist <= INTERACT_RANGE)
 			{
 				object = ent;
@@ -58,7 +57,7 @@ void	player_interact(t_game *game)
 {
 	t_entity	*target;
 
-	target = find_interactable(game);
+	target = find_interactable(game, &game->camera);
 	if (target)
 		interact_with_target(target);
 }

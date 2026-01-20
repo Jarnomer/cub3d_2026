@@ -23,11 +23,11 @@ typedef struct s_blit
 {
 	t_vec2i		pos;
 	t_vec2i		size;
-	t_vec2i		offset;
-	t_rect		bounds;
 	t_vec2i		source;
 	t_f32		scale;
 	t_f32		inverse;
+	t_vec2i		offset;
+	t_rect		bounds;
 	t_i32		frame;
 	t_sheet		*sheet;
 	t_tex		*tex;

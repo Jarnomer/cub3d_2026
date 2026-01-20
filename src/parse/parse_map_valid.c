@@ -16,31 +16,31 @@ static void	save_spawn(t_parse *ctx, int x, int y, char c)
 {
 	t_spawn	*spawn;
 
-	if (ctx->map->spawn_count >= MAX_ENTITIES)
+	if (ctx->map->entities >= MAX_ENTITIES)
 		err_exit_msg(MSG_MAP_ENTITY);
-	spawn = &ctx->map->spawns[ctx->map->spawn_count];
+	spawn = &ctx->map->spawns[ctx->map->entities];
 	spawn->pos.x = (t_f32)x + CELL_CENTER;
 	spawn->pos.y = (t_f32)y + CELL_CENTER;
 	spawn->pos.z = 0.0f;
 	spawn->type = charmap_to_entity(c);
 	ctx->map->grid[y][x] = CHAR_EMPTY;
-	ctx->map->spawn_count++;
+	ctx->map->entities++;
 }
 
 static void	save_player(t_parse *ctx, int x, int y, char c)
 {
-	ctx->map->spawn_pos.x = (t_f32)x + CELL_CENTER;
-	ctx->map->spawn_pos.y = (t_f32)y + CELL_CENTER;
+	ctx->map->position.x = (t_f32)x + CELL_CENTER;
+	ctx->map->position.y = (t_f32)y + CELL_CENTER;
 	if (c == PLAYER_DIR_N)
-		ctx->map->spawn_angle = 3.0f * PI / 2.0f;
+		ctx->map->angle = 3.0f * PI / 2.0f;
 	else if (c == PLAYER_DIR_S)
-		ctx->map->spawn_angle = PI / 2.0f;
+		ctx->map->angle = PI / 2.0f;
 	else if (c == PLAYER_DIR_E)
-		ctx->map->spawn_angle = 0.0f;
+		ctx->map->angle = 0.0f;
 	else
-		ctx->map->spawn_angle = PI;
+		ctx->map->angle = PI;
 	ctx->map->grid[y][x] = CHAR_EMPTY;
-	ctx->map->player_count++;
+	ctx->map->players++;
 }
 
 static void	validate_characters(t_parse *ctx)
@@ -96,7 +96,7 @@ void	parse_map_validate(t_parse *ctx)
 {
 	calculate_dimensions(ctx);
 	validate_characters(ctx);
-	if (ctx->map->player_count != 1)
+	if (ctx->map->players != 1)
 		err_exit_msg(MSG_MAP_PLAYER);
 	parse_map_walls(ctx);
 }
