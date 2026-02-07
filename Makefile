@@ -101,7 +101,6 @@ SOURCES := main \
            weapon_sway \
            weapon_inertia \
            weapon_bob \
-           weapon_utils \
            input \
            input_keys \
            input_mouse \
@@ -142,11 +141,17 @@ SOURCES := main \
            particle_render \
            particle_utils \
            decal \
+           decal_update \
+           decal_spawn \
+           decal_anim \
+           decal_render \
+           decal_utils \
            sprite_proj \
            sprite_sort \
            thread_floor \
            thread_walls \
            thread_sprites \
+           thread_decals \
            blit_pos \
            blit_render \
            blit_utils \

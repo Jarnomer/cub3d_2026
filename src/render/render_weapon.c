@@ -12,13 +12,20 @@
 
 #include <game.h>
 
-static t_vec2i	calc_weapon_base(t_render *render)
+static t_vec2	sprint_get_offset(t_sway *sway, t_bob *bob)
 {
-	t_vec2i	base;
+	t_vec2	offset;
+	t_f32	thrust;
 
-	base.x = render->width / 2 + WEAPON_OFFSET_X;
-	base.y = render->height + WEAPON_OFFSET_Y;
-	return (base);
+	offset.x = 0.0f;
+	offset.y = sway->sprint * SPRINT_DROP_Y;
+	offset.y += sway->sprint * SPRINT_TILT_Y;
+	if (SPRINT_THRUST_MULT <= 0.0f)
+		thrust = 0.0f;
+	else
+		thrust = (1.0f - absf(sinf(bob->phase))) * SPRINT_THRUST_AMP;
+	offset.y += thrust * sway->sprint * SPRINT_THRUST_MULT;
+	return (offset);
 }
 
 static t_vec2i	calc_weapon_offset(t_player *player)
@@ -35,6 +42,15 @@ static t_vec2i	calc_weapon_offset(t_player *player)
 	offset.y = (t_i32)(-sway.y - inertia.y + sprint.y - player->weapon.bob);
 	offset.y -= (t_i32)(player->weapon.recoil);
 	return (offset);
+}
+
+static t_vec2i	calc_weapon_base(t_render *render)
+{
+	t_vec2i	base;
+
+	base.x = render->width / 2 + WEAPON_OFFSET_X;
+	base.y = render->height + WEAPON_OFFSET_Y;
+	return (base);
 }
 
 void	render_weapon(t_game *game)

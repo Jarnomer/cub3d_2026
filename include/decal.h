@@ -42,6 +42,7 @@ typedef struct s_decal
 {
 	t_vec3		pos;
 	t_dir		dir;
+	t_anim		anim;
 	t_f32		wall_x;
 	t_f32		dist;
 	t_f32		life;
@@ -49,7 +50,6 @@ typedef struct s_decal
 	t_f32		opacity;
 	t_decal_id	type;
 	t_i32		frame;
-	bool		is_animating;
 	bool		is_active;
 }	t_decal;
 
@@ -66,15 +66,19 @@ void		decal_init(t_decalmgr *mgr, t_u32 capacity);
 void		decal_destroy(t_decalmgr *mgr);
 void		decal_clear(t_decalmgr *mgr);
 
-// void		decal_spawn(t_game *game, t_hit *hit, t_ammo ammo);
-// void		decal_update_all(t_decalmgr *mgr, t_f32 dt);
+void		decal_update_all(t_game *game, t_f32 dt);
 
-// void		render_decals(t_game *game);
+void		decal_spawn(t_game *game, t_hit *hit, t_ammo ammo);
 
-// t_decal_id	decal_lookup_impact(t_decalmgr *mgr, t_ammo ammo, t_type target);
+bool		decal_project(t_game *game, t_decal *decal, t_proj *proj);
+t_u32		decals_collect(t_game *game, t_proj *projs);
+
+void		decal_start_anim(t_decal *decal, t_decaldef *def, t_game *game);
+void		decal_update_anim(t_decal *d, t_decaldef *def, t_game *g, t_f32 dt);
+
+t_decal_id	decal_lookup_impact(t_decalmgr *mgr, t_ammo ammo, t_type target);
 
 t_decal		*decal_get(t_decalmgr *mgr, t_u32 index);
 t_decaldef	*decal_get_def(t_decalmgr *mgr, t_decal_id id);
-
 
 #endif

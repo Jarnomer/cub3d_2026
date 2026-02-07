@@ -72,14 +72,16 @@ static void	game_loop(void *param)
 	motion_update(&game->player.motion, game->time.delta);
 	particle_update_all(&game->particles, game->time.delta);
 	entity_update_all(game, game->time.delta);
+	decal_update_all(game, game->time.delta);
 	anim_update_entities(game, game->time.delta);
 	overlay_clear(&game->render);
 	arena_reset(&game->arena);
 	render_floor(game);
 	render_walls(game);
 	render_sprites(game);
-	render_weapon(game);
+	render_decals(game);
 	render_particles(game);
+	render_weapon(game);
 }
 
 void	game_run(t_game *game)

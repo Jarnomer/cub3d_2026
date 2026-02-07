@@ -15,7 +15,7 @@
 void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 {
 	t_sheet		*sheet;
-	t_vec2i		tex_uv;
+	t_vec2i		tex;
 	t_u32		color;
 	t_u32		fog;
 	t_i32		y;
@@ -24,14 +24,14 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 	if (!sheet || !sheet->tex.pixels)
 		return ;
 	fog = lookup_fog(&game->lookup, proj->dist);
-	tex_uv.x = trans_sprite_tex_x(proj, x, sheet->width);
+	tex.x = trans_sprite_tex_x(proj, x, sheet->width);
 	y = proj->bounds.y;
 	while (y < rect_bottom(proj->bounds))
 	{
 		if (!occlude_pixel(game, x, y, proj->dist))
 		{
-			tex_uv.y = trans_sprite_tex_y(proj, y, sheet->height);
-			color = sheet_sample(sheet, proj->frame, tex_uv.x, tex_uv.y);
+			tex.y = trans_sprite_tex_y(proj, y, sheet->height);
+			color = sheet_sample(sheet, proj->frame, tex.x, tex.y);
 			if (color_is_opaque(color))
 				render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		}
@@ -41,24 +41,24 @@ void	render_sheet_column(t_game *game, t_proj *proj, t_i32 x)
 
 void	render_sprite_column(t_game *game, t_proj *proj, t_i32 x)
 {
-	t_tex		*tex;
-	t_vec2i		tex_uv;
+	t_tex		*sprite;
+	t_vec2i		tex;
 	t_u32		color;
 	t_u32		fog;
 	t_i32		y;
 
-	tex = assets_get_sprite(&game->assets, proj->tex_id);
-	if (!tex || !tex->pixels)
+	sprite = assets_get_sprite(&game->assets, proj->tex_id);
+	if (!sprite || !sprite->pixels)
 		return ;
 	fog = lookup_fog(&game->lookup, proj->dist);
-	tex_uv.x = trans_sprite_tex_x(proj, x, tex->width);
+	tex.x = trans_sprite_tex_x(proj, x, sprite->width);
 	y = proj->bounds.y;
 	while (y < rect_bottom(proj->bounds))
 	{
 		if (!occlude_pixel(game, x, y, proj->dist))
 		{
-			tex_uv.y = trans_sprite_tex_y(proj, y, tex->height);
-			color = texture_sample(tex, tex_uv.x, tex_uv.y);
+			tex.y = trans_sprite_tex_y(proj, y, sprite->height);
+			color = texture_sample(sprite, tex.x, tex.y);
 			if (color_is_opaque(color))
 				render_pixel(game->render.frame, x, y, fog_apply(color, fog));
 		}

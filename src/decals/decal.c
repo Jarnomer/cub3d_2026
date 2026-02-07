@@ -36,7 +36,7 @@ static void	debug_print_decals(t_decalmgr *mgr)
 			mgr->impacts[i].decal);
 		i++;
 	}
-	ft_printf("=== POOL: cap=%u ===\n\n", mgr->pool.capacity);
+	ft_printf("\n=== POOL: cap=%u ===\n\n", mgr->pool.capacity);
 }
 
 void	decal_init(t_decalmgr *mgr, t_u32 capacity)
@@ -60,16 +60,4 @@ void	decal_clear(t_decalmgr *mgr)
 {
 	pool_reset(&mgr->pool);
 	mgr->active = 0;
-}
-
-t_decal	*decal_get(t_decalmgr *mgr, t_u32 index)
-{
-	return ((t_decal *)pool_get(&mgr->pool, index));
-}
-
-t_decaldef	*decal_get_def(t_decalmgr *mgr, t_decal_id id)
-{
-	if (id <= DECAL_NONE || id >= DECAL_COUNT)
-		return (NULL);
-	return (&mgr->defs[id]);
 }

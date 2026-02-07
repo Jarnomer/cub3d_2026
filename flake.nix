@@ -20,22 +20,13 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            # Build tools
-            cmake
             gcc
             gnumake
-            
-            # Graphics
             mlx42
             glfw
-            
-            # Development
             valgrind
             norminette
             gdb
-            
-            # Threading
-            perf
           ];
 
           shellHook = ''

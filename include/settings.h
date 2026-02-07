@@ -213,4 +213,11 @@
 # define PARTICLE_FLOOR_FRIC	0.8f
 # define PARTICLE_PITCH_SCALE	0.5f
 
+/* ************************************************************************** */
+/*    DECAL SETTINGS                                                          */
+/* ************************************************************************** */
+
+# define DECAL_WALL_OFFSET		0.001f
+# define DECAL_ZBUF_BIAS		0.01f
+
 #endif

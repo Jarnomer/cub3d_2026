@@ -65,10 +65,10 @@ void		weapon_init(t_weapon *wpn, t_wpn_id id, t_game *game);
 t_i32		weapon_get_frame(t_weapon *wpn, t_game *game);
 t_wpndef	*weapon_get_def(t_game *game, t_wpn_id id);
 
+void		weapon_update(t_weapon *wpn, t_game *game, t_f32 dt);
+
 void		weapon_fire(t_weapon *wpn, t_game *game);
 void		weapon_reload(t_weapon *wpn, t_game *game);
-
-void		weapon_update(t_weapon *wpn, t_game *game, t_f32 dt);
 
 void		weapon_set_state(t_weapon *wpn, t_state state, t_game *game);
 bool		weapon_can_fire(t_weapon *wpn, t_game *game);
@@ -77,8 +77,5 @@ bool		weapon_can_reload(t_weapon *wpn, t_game *game);
 void		weapon_sway_update(t_sway *sway, t_motion *motion, t_f32 dt);
 void		weapon_inertia_update(t_sway *sway, t_vec2 mouse_delta, t_f32 dt);
 void		weapon_bob_update(t_weapon *wpn, t_motion *motion, t_f32 dt);
-
-void		weapon_fire_pellets(t_game *game, t_wpndef *def);
-t_vec2		sprint_get_offset(t_sway *sway, t_bob *bob);
 
 #endif

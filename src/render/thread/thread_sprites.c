@@ -33,7 +33,7 @@ static void	init_sprite_ctx(t_thread *thread, t_game *game, t_proj *projs,
 	}
 }
 
-static void	render_column_range(t_thread *thread, t_proj *proj, t_i32 x)
+static void	render_sprite_range(t_thread *thread, t_proj *proj, t_i32 x)
 {
 	t_i32	end;
 
@@ -64,7 +64,7 @@ static void	*sprite_worker(void *arg)
 	{
 		proj = &thread->projs[i];
 		x = maxi(proj->bounds.x, thread->start);
-		render_column_range(thread, proj, x);
+		render_sprite_range(thread, proj, x);
 		i++;
 	}
 	return (NULL);
