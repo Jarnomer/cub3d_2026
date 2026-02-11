@@ -59,18 +59,20 @@ static void	decal_init_proj(t_proj *proj, t_decal *decal, t_decaldef *def,
 bool	decal_project(t_game *game, t_decal *decal, t_proj *proj)
 {
 	t_decaldef	*def;
-	t_vec2		world;
 	t_vec2		trans;
+	t_f32		wall_h;
 
 	def = decal_get_def(&game->decals, decal->type);
 	if (!def)
 		return (false);
-	world = vec2_new(decal->pos.x, decal->pos.y);
-	trans = trans_world_to_cam(&game->camera, world);
+	trans = trans_world_to_cam(&game->camera,
+			vec2_new(decal->pos.x, decal->pos.y));
 	if (trans_behind_camera(trans.y))
 		return (false);
 	decal_init_proj(proj, decal, def, trans);
 	proj->screen = decal_calc_screen(game, trans);
+	wall_h = (t_f32)game->render.height / maxf(trans.y, EPSILON);
+	proj->screen.y -= (t_i32)(decal->pos.z * wall_h);
 	proj->size = decal_calc_size(game, def, trans.y);
 	proj->bounds = rect_centered(proj->screen, proj->size);
 	rect_clip(&proj->bounds, game->render.width, game->render.height);

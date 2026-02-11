@@ -23,16 +23,24 @@ static t_vec3	calc_reflect_dir(t_vec2 shot_dir, t_hit *hit)
 	return (dir);
 }
 
-static t_vec3	calc_impact_pos(t_game *game, t_hit *hit)
+static t_vec3	calc_impact_pos(t_hit *hit)
 {
-	t_vec2	pos;
-	t_f32	z;
+	t_vec3	pos;
 
-	pos = vec2_mul(game->camera.dir, hit->dist - PARTICLE_WALL_OFFSET);
-	pos = vec2_add(game->camera.pos, pos);
-	z = game->camera.pitch * hit->dist * PARTICLE_PITCH_SCALE;
-	z = clampf(z, PARTICLE_FLOOR_Z, PARTICLE_CEILING_Z);
-	return (vec3_new(pos.x, pos.y, z));
+	pos.z = hit->z_offset;
+	if (hit->dir == WALL_NORTH || hit->dir == WALL_SOUTH)
+		pos.x = (t_f32)hit->grid.x + hit->wall_x;
+	else
+		pos.y = (t_f32)hit->grid.y + hit->wall_x;
+	if (hit->dir == WALL_NORTH)
+		pos.y = (t_f32)hit->grid.y + 1.0f - PARTICLE_WALL_OFFSET;
+	else if (hit->dir == WALL_SOUTH)
+		pos.y = (t_f32)hit->grid.y + PARTICLE_WALL_OFFSET;
+	else if (hit->dir == WALL_EAST)
+		pos.x = (t_f32)hit->grid.x + 1.0f - PARTICLE_WALL_OFFSET;
+	else
+		pos.x = (t_f32)hit->grid.x + PARTICLE_WALL_OFFSET;
+	return (pos);
 }
 
 static void	emit_particles(t_game *game, t_surfdef *def, t_hit *hit)
@@ -42,7 +50,7 @@ static void	emit_particles(t_game *game, t_surfdef *def, t_hit *hit)
 	t_i32	count;
 	t_i32	i;
 
-	pos = calc_impact_pos(game, hit);
+	pos = calc_impact_pos(hit);
 	dir = calc_reflect_dir(game->camera.dir, hit);
 	count = rangei_random(def->count);
 	i = 0;

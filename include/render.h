@@ -46,6 +46,7 @@ typedef struct s_hit
 	t_vec2i	grid;
 	t_u8	cell;
 	t_i32	entity;
+	t_f32	z_offset;
 }	t_hit;
 
 typedef struct s_slice

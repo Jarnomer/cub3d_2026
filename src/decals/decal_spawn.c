@@ -25,37 +25,29 @@ static t_type	get_target_type(t_game *game, t_hit *hit)
 	return (ENTITY_NONE);
 }
 
-static t_vec3	calc_decal_pos(t_hit *hit)
+static t_vec3	calc_impact_pos(t_hit *hit)
 {
 	t_vec3	pos;
 
-	pos.z = 0.0f;
-	if (hit->dir == WALL_NORTH)
-	{
-		pos.x = hit->grid.x + hit->wall_x;
-		pos.y = hit->grid.y + 1.0f - DECAL_WALL_OFFSET;
-	}
-	else if (hit->dir == WALL_SOUTH)
-	{
-		pos.x = hit->grid.x + hit->wall_x;
-		pos.y = hit->grid.y + DECAL_WALL_OFFSET;
-	}
-	else if (hit->dir == WALL_EAST)
-	{
-		pos.x = hit->grid.x + DECAL_WALL_OFFSET;
-		pos.y = hit->grid.y + hit->wall_x;
-	}
+	pos.z = hit->z_offset;
+	if (hit->dir == WALL_NORTH || hit->dir == WALL_SOUTH)
+		pos.x = (t_f32)hit->grid.x + hit->wall_x;
 	else
-	{
-		pos.x = hit->grid.x + 1.0f - DECAL_WALL_OFFSET;
-		pos.y = hit->grid.y + hit->wall_x;
-	}
+		pos.y = (t_f32)hit->grid.y + hit->wall_x;
+	if (hit->dir == WALL_NORTH)
+		pos.y = (t_f32)hit->grid.y + 1.0f - DECAL_WALL_OFFSET;
+	else if (hit->dir == WALL_SOUTH)
+		pos.y = (t_f32)hit->grid.y + DECAL_WALL_OFFSET;
+	else if (hit->dir == WALL_EAST)
+		pos.x = (t_f32)hit->grid.x + 1.0f - DECAL_WALL_OFFSET;
+	else
+		pos.x = (t_f32)hit->grid.x + DECAL_WALL_OFFSET;
 	return (pos);
 }
 
 static void	init_decal(t_decal *decal, t_decaldef *def, t_hit *hit)
 {
-	decal->pos = calc_decal_pos(hit);
+	decal->pos = calc_impact_pos(hit);
 	decal->dir = hit->dir;
 	decal->wall_x = hit->wall_x;
 	decal->dist = hit->dist;

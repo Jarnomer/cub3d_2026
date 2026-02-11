@@ -83,6 +83,9 @@
 # define WEAPON_RECOIL_MAX		8.0f
 # define WEAPON_RECOIL_DECAY	12.0f
 
+# define SPREAD_HORIZ_SCALE		0.5f
+# define SPREAD_VERT_SCALE		1.5f
+
 # define WEAPON_OFFSET_X		125
 # define WEAPON_OFFSET_Y		-130
 # define WEAPON_SCALE			3.0f

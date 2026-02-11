@@ -12,15 +12,18 @@
 
 #include <game.h>
 
-static t_vec2	apply_spread(t_vec2 dir, t_f32 spread)
+static t_vec2	apply_spread(t_vec2 dir, t_f32 spread, t_f32 *z_off)
 {
 	t_f32	angle;
-	t_f32	offset;
+	t_f32	radius;
 
+	*z_off = 0.0f;
 	if (spread <= 0.0f)
 		return (dir);
-	offset = (rand_float() - 0.5f) * spread;
-	angle = atan2f(dir.y, dir.x) + offset;
+	angle = rand_float() * TAU;
+	radius = rand_float() * spread;
+	*z_off = sinf(angle) * radius * SPREAD_VERT_SCALE;
+	angle = atan2f(dir.y, dir.x) + cosf(angle) * radius * SPREAD_HORIZ_SCALE;
 	return (vec2_from_angle(angle));
 }
 
@@ -29,12 +32,14 @@ static void	fire_pellet(t_game *game, t_wpndef *def)
 	t_ray	ray;
 	t_hit	hit;
 	t_vec2	dir;
+	t_f32	z_off;
 
-	dir = apply_spread(game->camera.dir, def->spread);
+	dir = apply_spread(game->camera.dir, def->spread, &z_off);
 	ray_init(&ray, game->camera.pos, dir);
 	hit = perform_dda(&ray, game, def->range);
 	if (!hit.hit)
 		return ;
+	hit.z_offset = z_off;
 	if (hit.entity != INVALID_ID)
 		entity_damage(game, hit.entity, def->damage);
 	particle_emit_impact(game, &hit);

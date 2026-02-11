@@ -12,33 +12,6 @@
 
 #include <game.h>
 
-static void	debug_print_decals(t_decalmgr *mgr)
-{
-	t_decaldef	*def;
-	t_i32		i;
-
-	ft_printf("\n=== DECAL DEFINITIONS ===\n");
-	i = 1;
-	while (i < DECAL_COUNT)
-	{
-		def = &mgr->defs[i];
-		ft_printf("[%d] sheet:%d anim:%d frame:%d scale:%.2f life:%.1f\n",
-			i, def->sheet_id, def->anim_id, def->decal_frame,
-			(double)def->scale, (double)def->lifespan);
-		i++;
-	}
-	ft_printf("\n=== IMPACT MAPPINGS (%u) ===\n", mgr->impact_count);
-	i = 0;
-	while ((t_u32)i < mgr->impact_count)
-	{
-		ft_printf("[%d] ammo:%d target:%d -> decal:%d\n", i,
-			mgr->impacts[i].ammo, mgr->impacts[i].target,
-			mgr->impacts[i].decal);
-		i++;
-	}
-	ft_printf("\n=== POOL: cap=%u ===\n\n", mgr->pool.capacity);
-}
-
 void	decal_init(t_decalmgr *mgr, t_u32 capacity)
 {
 	*mgr = (t_decalmgr){0};
@@ -46,7 +19,6 @@ void	decal_init(t_decalmgr *mgr, t_u32 capacity)
 	pool_init(&mgr->pool, capacity, sizeof(t_decal));
 	config_load_decals(mgr->defs);
 	config_load_impacts(mgr);
-	debug_print_decals(mgr);
 }
 
 void	decal_destroy(t_decalmgr *mgr)
