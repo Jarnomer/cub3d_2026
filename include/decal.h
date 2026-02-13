@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/17 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/02/14 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_impactdef
 typedef struct s_decal
 {
 	t_vec3		pos;
+	t_vec2i		grid;
 	t_dir		dir;
 	t_anim		anim;
 	t_f32		wall_x;
@@ -69,9 +70,6 @@ void		decal_clear(t_decalmgr *mgr);
 void		decal_update_all(t_game *game, t_f32 dt);
 
 void		decal_spawn(t_game *game, t_hit *hit, t_ammo ammo);
-
-bool		decal_project(t_game *game, t_decal *decal, t_proj *proj);
-t_u32		decals_collect(t_game *game, t_proj *projs);
 
 void		decal_start_anim(t_decal *decal, t_decaldef *def, t_game *game);
 void		decal_update_anim(t_decal *d, t_decaldef *def, t_game *g, t_f32 dt);

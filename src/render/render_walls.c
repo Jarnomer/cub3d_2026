@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/08 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/02/14 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	render_wall_column(t_game *game, t_i32 x)
 		game->render.occlude[x] = (t_occlude){0};
 	wall = passthr_dda(&ray, game, RAY_MAX_DIST, &door);
 	if (wall.hit && wall.cell != CELL_DOOR)
+	{
 		render_wall(game, &wall, x);
+		render_decals(game, &wall, x);
+	}
 	if (door.entity != INVALID_ID)
 		render_door(game, &door, x);
 	else if (wall.cell == CELL_DOOR)

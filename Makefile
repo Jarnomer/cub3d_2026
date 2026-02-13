@@ -123,6 +123,7 @@ SOURCES := main \
            render \
            render_floor \
            render_walls \
+           render_decals \
            render_door \
            render_sprites \
            render_fog \
@@ -144,14 +145,12 @@ SOURCES := main \
            decal_update \
            decal_spawn \
            decal_anim \
-           decal_render \
            decal_utils \
            sprite_proj \
            sprite_sort \
            thread_floor \
            thread_walls \
            thread_sprites \
-           thread_decals \
            blit_pos \
            blit_render \
            blit_utils \

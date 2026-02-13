@@ -152,7 +152,7 @@ bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 dist);
 void	render_walls(t_game *game);
 void	render_floor(t_game *game);
 void	render_sprites(t_game *game);
-void	render_decals(t_game *game);
+void	render_decals(t_game *game, t_hit *hit, t_i32 x);
 void	render_weapon(t_game *game);
 
 void	render_floor_row(t_game *game, t_i32 y);

@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/04 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/02/14 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	game_loop(void *param)
 	render_floor(game);
 	render_walls(game);
 	render_sprites(game);
-	render_decals(game);
 	render_particles(game);
 	render_weapon(game);
 }

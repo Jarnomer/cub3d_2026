@@ -6,7 +6,7 @@
 /*   By: jmertane <jmertane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 00:00:00 by jmertane          #+#    #+#             */
-/*   Updated: 2026/01/17 00:00:00 by jmertane         ###   ########.fr       */
+/*   Updated: 2026/02/14 00:00:00 by jmertane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static t_vec3	calc_impact_pos(t_hit *hit)
 static void	init_decal(t_decal *decal, t_decaldef *def, t_hit *hit)
 {
 	decal->pos = calc_impact_pos(hit);
+	decal->grid = hit->grid;
 	decal->dir = hit->dir;
 	decal->wall_x = hit->wall_x;
 	decal->dist = hit->dist;
