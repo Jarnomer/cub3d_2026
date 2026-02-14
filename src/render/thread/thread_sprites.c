@@ -94,7 +94,7 @@ static void	thread_sprites(t_game *game, t_proj *projs, t_u32 count)
 	}
 }
 
-void	render_sprites(t_game *game)
+void	render_thread_sprites(t_game *game)
 {
 	t_proj	*projs;
 	t_u32	count;

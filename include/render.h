@@ -128,14 +128,14 @@ typedef struct s_thread
 	t_i32	id;
 }	t_thread;
 
-t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
-bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
-t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door);
-
 void	ray_init(t_ray *ray, t_vec2 origin, t_vec2 dir);
 void	ray_hit(t_hit *hit, t_ray *ray, int axis);
 void	ray_step(t_ray *ray, int *axis);
 t_f32	ray_dist(t_ray *ray, int axis);
+
+t_hit	perform_dda(t_ray *ray, t_game *game, t_f32 max_dist);
+bool	hitscan_dda(t_vec2 from, t_vec2 to, t_game *game);
+t_hit	passthr_dda(t_ray *ray, t_game *game, t_f32 max_dist, t_hit *door);
 
 void	render_init(t_game *game);
 void	render_destroy(t_render *render);
@@ -149,9 +149,9 @@ void	overlay_apply(t_render *render);
 void	occlude_store(t_game *game, t_hit *door_hit, t_i32 x);
 bool	occlude_pixel(t_game *game, t_i32 x, t_i32 y, t_f32 dist);
 
-void	render_walls(t_game *game);
-void	render_floor(t_game *game);
-void	render_sprites(t_game *game);
+void	render_thread_walls(t_game *game);
+void	render_thread_floor(t_game *game);
+void	render_thread_sprites(t_game *game);
 void	render_decals(t_game *game, t_hit *hit, t_i32 x);
 void	render_weapon(t_game *game);
 
@@ -193,6 +193,5 @@ t_f32	camera_floor_offset(t_game *game, t_i32 y);
 t_i32	camera_wall_offset(t_game *game, t_f32 dist);
 t_i32	camera_sprite_offset(t_game *game, t_f32 dist);
 t_f32	camera_get_height(t_game *game);
-t_f32	camera_get_bob_x(t_game *game);
 
 #endif

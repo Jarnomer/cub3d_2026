@@ -62,8 +62,3 @@ t_f32	camera_get_height(t_game *game)
 	bob = motion->bob.amount.y;
 	return (crouch + jump + bob + CAMERA_HEIGHT);
 }
-
-t_f32	camera_get_bob_x(t_game *game)
-{
-	return (game->player.motion.bob.amount.x);
-}

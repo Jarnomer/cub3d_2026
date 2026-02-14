@@ -46,7 +46,7 @@ static void	*wall_worker(void *arg)
 	return (NULL);
 }
 
-void	render_walls(t_game *game)
+void	render_thread_walls(t_game *game)
 {
 	pthread_t	threads[THREAD_COUNT];
 	t_thread	thread[THREAD_COUNT];

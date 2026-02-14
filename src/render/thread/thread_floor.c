@@ -46,7 +46,7 @@ static void	*floor_worker(void *arg)
 	return (NULL);
 }
 
-void	render_floor(t_game *game)
+void	render_thread_floor(t_game *game)
 {
 	pthread_t	threads[THREAD_COUNT];
 	t_thread	thread[THREAD_COUNT];

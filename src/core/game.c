@@ -76,9 +76,9 @@ static void	game_loop(void *param)
 	anim_update_entities(game, game->time.delta);
 	overlay_clear(&game->render);
 	arena_reset(&game->arena);
-	render_floor(game);
-	render_walls(game);
-	render_sprites(game);
+	render_thread_floor(game);
+	render_thread_walls(game);
+	render_thread_sprites(game);
 	render_particles(game);
 	render_weapon(game);
 }
